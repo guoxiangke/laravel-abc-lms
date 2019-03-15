@@ -44,4 +44,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+    /**
+     * for Horizon::auth
+     * @return boolean [description]
+     */
+    public function isSuperuser()
+    {
+        return $this->id == 1;
+    }
 }
