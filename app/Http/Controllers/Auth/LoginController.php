@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use App\Models\Profile;
 
 class LoginController extends Controller
 {
@@ -35,5 +38,56 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        $account = $request->get('username');
+        if(is_numeric($account)){
+            $field = 'id';
+            $account = Profile::select('target_id')->where('telephone', $account)->first();
+            $account = ($account==null)?0:$account->target_id;
+        }
+        elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        }else{
+            $field = 'name';
+        }
+        $password = $request->get('password');
+        return $this->guard()->attempt([$field => $account, 'password' => $password], $request->filled('remember'));
+    }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+//            'captcha' => 'required|captcha',
+        ]);
     }
 }

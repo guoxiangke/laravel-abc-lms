@@ -6,9 +6,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Models\Profile;
+
 class User extends Authenticatable
 {
     use Notifiable;
+   public function getProfile() {
+       //get_class($this) == User::class = (new \ReflectionClass($thisModel))->getName()
+       return Profile::where('target_type', get_class($this))
+           ->where('target_id', $this->id)
+           ->first();
+   }
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -25,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**

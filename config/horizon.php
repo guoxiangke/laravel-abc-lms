@@ -125,23 +125,40 @@ return [
     |
     */
 
-    'environments' => [
+     'environments' => [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
+                'queue' => env('REDIS_QUEUE', 'high,default,low'),
+                'balance' => 'auto',
                 'processes' => 10,
                 'tries' => 3,
             ],
         ],
-
+        'staging' => [
+            'supervisor-1' => [
+                'connection' => 'redis',
+                'queue' => env('REDIS_QUEUE', 'high,default,low'),
+                'balance' => 'auto',
+                'processes' => 5,
+                'tries' => 3,
+            ],
+        ],
+        'development' => [
+            'supervisor-1' => [
+                'connection' => 'redis',
+                'queue' => env('REDIS_QUEUE', 'high,default,low'),
+                'balance' => 'auto',
+                'processes' => 5,
+                'tries' => 3,
+            ],
+        ],
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
-                'processes' => 3,
+                'queue' => env('REDIS_QUEUE', 'high,default,low'),
+                'balance' => 'auto',
+                'processes' => 5,
                 'tries' => 3,
             ],
         ],
