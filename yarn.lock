@@ -3193,6 +3193,11 @@ ini@^1.3.4, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
+install@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.12.2.tgz#ea10e9b2cbb5b0484f25080b24b5b34429d9f564"
+  integrity sha512-+7thTb4Rpvs9mnlhHKGZFJbGOO6kyMgy+gg0sgM5vFzIFK0wrCYXqdlaM71Bi289DTuPHf61puMFsaZBcwDIrg==
+
 internal-ip@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/internal-ip/-/internal-ip-4.2.0.tgz#46e81b638d84c338e5c67e42b1a17db67d0814fa"
@@ -6232,7 +6237,7 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-cal@^1.43.1:
+vue-cal@^1.45.0:
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/vue-cal/-/vue-cal-1.45.0.tgz#17fe394cc2f4b55a4e9c3768efa5539cee986b28"
   integrity sha512-EJ8C6iuoXP6JWEyrnRkjtOs3VA3Dk78RSWfv8Vi9zQQfeuXXgwKdXv6Hbvii6dKCvbNnMznoqDOlIf2PJ0IfLQ==
@@ -6547,3 +6552,8 @@ yargs@^12.0.5:
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
+
+yarn@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.15.2.tgz#7a064ca81ca34235f16376ad2f796ed432f9e285"
+  integrity sha512-DhqaGe2FcYKduO42d2hByXk7y8k2k42H3uzYdWBMTvcNcgWKx7xCkJWsVAQikXvaEQN2GyJNrz8CboqUmaBRrw==
