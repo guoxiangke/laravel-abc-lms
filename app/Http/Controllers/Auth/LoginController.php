@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use App\Models\Profile;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -87,7 +88,55 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-//            'captcha' => 'required|captcha',
+            'captcha' => 'required|captcha',
         ]);
+    }
+
+     /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('github')->user();
+        //give premission of a developr todo!!!
+        dd($user);
+        // $user->token;
+    }
+
+
+    public function redirectToWechatProvider()
+    {
+        return Socialite::driver('wechat')->redirect();
+    }
+
+    public function handleWechatProviderCallback()
+    {
+        $user = Socialite::driver('wechat')->user();
+        dd($user);
+        // $user->token;
+    }
+
+    public function redirectToFacebookProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+    
+    public function handleFacebookProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        dd($user);
+        // $user->token;
     }
 }

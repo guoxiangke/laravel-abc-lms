@@ -48,6 +48,25 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <img 
+                                    id="captcha"
+                                    src="{{ captcha_src() }}" 
+                                    alt="验证码" 
+                                    title="刷新"
+                                    border="0" 
+                                    data-captcha-config="default"
+                                >
+                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus name="captcha" placeholder="{{ __('Captcha') }}">
+                                @if ($errors->has('captcha'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('captcha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -63,3 +82,5 @@
     </div>
 </div>
 @endsection
+
+@include('captcha')

@@ -42,7 +42,26 @@ return [
     */
 
     'disks' => [
+        'upyun' => [
+            'driver'        => 'upyun', 
+            'bucket'        => env('UPYUN_BUCKET_NAME'),
+            'operator'      => env('UPYUN_OPERATOR_NAME'),
+            'password'      => env('UPYUN_OPERATOR_PASSWORD'),
+            'domain'        => env('UPYUN_DOMAIN'),
+            'protocol'     => env('UPYUN_DOMAIN_HTTP'),
+        ],
 
+        'onedrive' => [
+            'driver'       => 'onedrive',
+            'access_token' => env('ONEDRIVE_ACCESSS_TOKEN'),
+
+            // Options only needed for ignited/flysystem-onedrive
+            // 'base_url'     => 'https://api.onedrive.com/v1.0/',
+            // 'use_logger'   => false,
+
+            // Option only used by nicolasbeauvais/flysystem-onedrive
+            // 'root'         => 'root',
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

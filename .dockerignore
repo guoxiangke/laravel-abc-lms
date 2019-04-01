@@ -1,0 +1,11 @@
+.dockerignore
+.git/
+vendor/
+node_modules/
+public/js/
+public/css/
+yarn-error.log
+.DS_Store
+.env.*
+.idea/
+cert/

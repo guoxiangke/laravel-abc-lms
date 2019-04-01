@@ -55,7 +55,6 @@
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
-                text-transform: uppercase;
             }
 
             .m-b-md {
@@ -81,18 +80,28 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    ABC LMS
                 </div>
 
+                @auth
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="/schools">Schools</a>
+                    <a href="/zooms">Zooms</a>
+                    <a href="/teachers">Teachers</a>
+                    <a href="/students">Students</a>
+                    <a href="/agencies">Agency</a>
+                    <a href="/products">Products</a>
+                    <a href="/orders">Orders</a>
+                    
+                    <a href="/rrules">Rrules</a>
+                    <a href="/classRecords">ClassRecords</a>
+                    <br>
+                    <br>
+                    <a href="/users">Users</a>
+                    <a href="/roles">Roles</a>
+                    <a href="/permissions">Permissions</a>
                 </div>
+                @endauth
             </div>
         </div>
     </body>

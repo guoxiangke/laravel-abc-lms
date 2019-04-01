@@ -38,6 +38,25 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
+                                <img 
+                                    id="captcha"
+                                    src="{{ captcha_src() }}" 
+                                    alt="验证码" 
+                                    title="刷新"
+                                    border="0" 
+                                    data-captcha-config="default"
+                                >
+                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus name="captcha" placeholder="{{ __('Captcha') }}">
+                                @if ($errors->has('captcha'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('captcha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -68,3 +87,6 @@
     </div>
 </div>
 @endsection
+
+@include('captcha')
+

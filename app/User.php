@@ -5,18 +5,84 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
+use App\Models\School;
+use App\Models\Teacher;
+use App\Models\Agency;
+use App\Models\Student;
 use App\Models\Profile;
+use App\Models\Paymethod;
 
-class User extends Authenticatable
+use Laravelista\Comments\Commenter;
+
+class User extends Authenticatable implements HasMedia
 {
     use Notifiable;
-   public function getProfile() {
-       //get_class($this) == User::class = (new \ReflectionClass($thisModel))->getName()
-       return Profile::where('target_type', get_class($this))
-           ->where('target_id', $this->id)
-           ->first();
-   }
+    use HasRoles;
+    use HasMediaTrait;
+    use Commenter;
+
+
+    public function registerMediaCollections()
+    {
+        $this
+            ->addMediaCollection('avatar')
+            // ->useDisk('s3')
+            ->singleFile();
+
+    }
+    // $yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
+    // $yourModel->getMedia('avatar')->count(); // returns 1
+    // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
+
+    const ROLES =[
+        'developer' => 'developer',// '开发者',
+        'manager' => 'manager',// '管理人员',
+        'editor' => 'editor',// '网站编辑',
+
+        'school' => 'school',// 'schoolMaster',
+        'teacher' => 'teacher',// 'Teacher',
+        'student' => 'student',// '学生',
+        'agency' => 'agency',// '代理',
+    ];
+
+    //@see ClassRecordPolicy 谁可以评论 //谁可以查看
+    const MANAGER_ROLES =['developer', 'manager'];//todo , 'editor'
+
+    public function school()
+    {
+        return $this->hasOne(School::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function agency()
+    {
+        return $this->hasOne(Agency::class);
+    }
+
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+
+    public function paymethod()
+    {
+        return $this->hasOne(Paymethod::class);
+    }
 
     /**
      * The attributes that are mass assignable.
