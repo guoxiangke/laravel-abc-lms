@@ -65,11 +65,6 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach( \App\User::with('profile')->get() as $user)
-                                    <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
-                                        {{$user->profile->name}}
-                                    </a>
-                                    @endforeach
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -82,6 +77,21 @@
                                 </div>
                             </li>
                         @endguest
+
+
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Switch <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @foreach( \App\User::with('profile')->get() as $user)
+                                    <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
+                                        {{$user->profile->name}}
+                                    </a>
+                                    @endforeach
+                                </div>
+                            </li>
                     </ul>
                 </div>
             </div>

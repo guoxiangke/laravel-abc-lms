@@ -52,10 +52,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:25', 'unique:users'],
+            'profile_name' => ['required', 'string', 'max:25'],
+            'sex' => ['required', 'boolean'],
+            'birthday' => ['required', 'string', 'max:25'],
+            'telephone' => ['required', 'digits_between:9,13', 'unique:profiles'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'telephone' => ['required', 'digits:11', 'unique:profiles'],
         ]);
     }
 
@@ -72,22 +75,22 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-         if($user && $data['telephone'] != ''){
-            $this->registerMobileNumber($user->id, $data['telephone']);
+
+        if($user){
+            Log::info(__CLASS__,[__FUNCTION__,__LINE__,'Create a User Named: ' . $user->name]);
+            try {
+                $userProfile = new Profile;
+                $userProfile->user_id = $user->id;
+                $userProfile->name = $data['profile_name'];
+                $userProfile->sex = $data['sex'];
+                $userProfile->birthday = $data['birthday'];
+                $userProfile->telephone = $data['telephone'];
+                $userProfile->save();
+                Log::info(__CLASS__,[__FUNCTION__,__LINE__,'Create an Profile for ' . $user->name]);
+            } catch (\Exception $e) {
+                Log::error(__CLASS__,[__FUNCTION__,__LINE__,$e->getMessage()]);
+            }
         }
         return $user;
-    }
-
-    public function registerMobileNumber($userId, $telephone) {
-        try {
-            $userProfile = new Profile;
-            $userProfile->target_type = User::class;
-            $userProfile->target_id = $userId;
-            $userProfile->telephone = $telephone;
-            $userProfile->save();
-            return $userProfile;
-        } catch (\Exception $e) {
-            Log::error(__CLASS__,[__FILE__,__LINE__,$e->getMessage()]);
-        }
     }
 }

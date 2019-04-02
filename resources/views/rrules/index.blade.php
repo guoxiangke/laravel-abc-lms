@@ -5,8 +5,10 @@
 @section('content')
 <div class="container">
 	<h1>Rrules</h1>
-
-  <button type="button" class="btn btn-outline-primary"><a href="{{ route('rrules.create') }}">Create</a></button>
+  
+  <div class="show-links">
+    <button type="button" class="btn btn-outline-primary"><a href="{{ route('rrules.create') }}">Create</a></button>
+  </div>
 
     <div class="col-md-12 col-sm-12"> 
         <div class="table-responsive">

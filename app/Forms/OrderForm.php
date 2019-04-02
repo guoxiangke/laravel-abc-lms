@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\School;
 use App\Models\Product;
 use App\Models\Zoom;
+use App\Models\Order;
 use App\User;
 
 class OrderForm extends Form
@@ -16,10 +17,10 @@ class OrderForm extends Form
     {
         $order = $this->getData('entity');
 
-        if($rrule){
+        if($order){
             $this->add('order', 'static', [
                     'label' => '订单Id',
-                    'value' => $rrule->order->title,
+                    'value' => $order->id,
                 ]);
         }else{
            //todo permission for orders!
@@ -40,12 +41,7 @@ class OrderForm extends Form
         $students = User::role('student')->with('profile')->get()->pluck('profile.name','id')->toArray();
         $teachers = User::role('teacher')->with('profile')->get()->pluck('profile.name','id')->toArray();
         $agencies = User::role('agency')->with('profile')->get()->pluck('profile.name','id')->toArray();
-        $this->add('product_id', 'select', [
-                'label' => 'Product*',
-                'rules' => 'required',
-                'choices' => Product::all()->pluck('name', 'id')->toArray(),
-                'empty_value' => '=== Select ==='
-            ])
+        $this
             ->add('user_id', 'select', [
                 'label' => 'Student*',
                 'rules' => 'required',

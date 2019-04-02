@@ -17,13 +17,11 @@ class Profile extends Model implements AuditableContract
         '男'
     ];
     protected $fillable = [
-    	'target_type',
-    	'target_id',
+    	'user_id',
     	'name',
     	'sex',
     	'birthday',
     	'telephone',
-    	'contact_id'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'birthday'];

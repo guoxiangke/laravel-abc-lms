@@ -12,8 +12,10 @@
             $goBackLink = route('classRecords.indexByRole');
         }
     ?>
-
-    <a href="{{ $goBackLink }}" class="btn btn-outline-dark btn-goback">Go Back</a>
+    <div class="show-links">
+        <a href="{{ $goBackLink }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+    </div>
+    
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 

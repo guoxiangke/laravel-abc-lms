@@ -5,9 +5,11 @@
 @section('content')
 <div class="container">
 	<h1>Create Rrule</h1>
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('rrules.index') }}">Go Back</a></button>
-    <br>
-    <br>
+
+    <div class="show-links">
+        <a href="{{ route('rrules.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 
             {!! form($form) !!}

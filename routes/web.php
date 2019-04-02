@@ -17,37 +17,16 @@ Route::get('/signout', 'AuthController@signout');
 Route::get('/dev/su/{id}', function($id){
     Auth::loginUsingId($id);
     return redirect('home');
-    //redirect()->back();
 })->name('sudo.su');
 
 Route::get('/', function () {
-
-    flashy()->success('创建成功');
-    // dd(
-    //     Storage::disk('onedrive')->put('00134.txt','00134'),
-    //     // Storage::disk('onedrive')->files('/')
-    // ) ;
-    // dd(
-    //     Storage::disk('upyun')->put('00134.txt','00134'),
-    //     Storage::disk('upyun')->files('/')
-    // ) ;
-
-    // $access_token = env('ONEDRIVE_ACCESSS_TOKEN');
-    // $graph = new Graph();
-    // $graph->setAccessToken($access_token);
-
-    // $adapter = new OneDriveAdapter($graph, 'root');
-    // $filesystem = new Filesystem($adapter);
-    // $path = '/tmp/test02.txt';
-    // $contents = 'Hello Flysystem of OneDriveAdapter';
-    // $response = $filesystem->write($path, $contents);
-    // dd($response);
     return view('welcome');
 });
 
 Auth::routes();
-
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/captcha/{config?}', function(\Mews\Captcha\Captcha $captcha, $config='default'){
+    //GD Library extension not available with this PHP installation.
     return $captcha->create($config);
 });
 
@@ -62,7 +41,6 @@ Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
  
-Route::get('/home', 'HomeController@index')->name('home');
 
 //admin
 Route::group( ['middleware' => ['auth']], function() {

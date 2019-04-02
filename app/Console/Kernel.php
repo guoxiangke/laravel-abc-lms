@@ -24,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('inspire')->everyMinute();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('classrecords:generate')->daily()->at('01:30');
         $schedule->command('backup:clean --disable-notifications')->daily()->at('01:00');

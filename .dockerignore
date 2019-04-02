@@ -9,3 +9,15 @@ yarn-error.log
 .env.*
 .idea/
 cert/
+
+bootstrap/cache/*
+storage/logs/*
+storage/debugbar/*
+storage/framework/views/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/testing/*
+
+storage/app/backup/*
+storage/app/backup-temp/*
+storage/app/public/*

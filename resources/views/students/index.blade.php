@@ -6,8 +6,10 @@
 
 <div class="container">
 	<h1>Students</h1>
-
-	<button type="button" class="btn btn-outline-primary"><a href="{{ route('students.create') }}">Create</a></button>
+	
+	<div class="show-links">
+		<button type="button" class="btn btn-outline-primary"><a href="{{ route('students.create') }}">Create</a></button>
+	</div>
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 

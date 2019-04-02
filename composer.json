@@ -27,6 +27,7 @@
         "nicolasbeauvais/flysystem-onedrive": "^1.0",
         "omnipay/paypal": "^3.0",
         "owen-it/laravel-auditing": "^9.0",
+        "predis/predis": "^1.1",
         "simshaun/recurr": "^4.0",
         "socialiteproviders/facebook": "dev-master",
         "socialiteproviders/weixin": "^4.0",
