@@ -39,7 +39,7 @@ class ClassRecordController extends Controller
             'rrule',
             'teacher', 'teacher.profile',
             'rrule.order.agency', 'rrule.order.agency.profile',
-            'rrule.order.user', 'rrule.order.user.profile',
+            'rrule.order.user', 'rrule.order.user.profiles',
             )->paginate(100);
         return view('classRecords.index', compact('classRecords'));
     }

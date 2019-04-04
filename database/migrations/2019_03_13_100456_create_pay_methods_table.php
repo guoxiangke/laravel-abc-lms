@@ -15,12 +15,12 @@ class CreatePayMethodsTable extends Migration
     {
         Schema::create('pay_methods', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable()->comment('用户id');
+            $table->unsignedBigInteger('user_id')->comment('用户id');
             // $table->nullableMorphs('target');
             // 'PayPal','AliPay','WechatPay','Bank','Skype',
             $table->unsignedTinyInteger('type')->comment('支付类型 0-4');
-            $table->string('number', 32)->comment('支付账户');
-            $table->text('remark')->comment('其他备注')->nullable();
+            $table->string('number')->comment('支付账户');
+            $table->text('remark')->comment('备注')->nullable();
             $table->timestamps();
             $table->softDeletes();
             

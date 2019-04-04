@@ -73,9 +73,9 @@ class User extends Authenticatable implements HasMedia
     }
 
 
-    public function profile()
+    public function profiles()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasMany(Profile::class);
     }
 
 

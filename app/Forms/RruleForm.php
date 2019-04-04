@@ -12,7 +12,7 @@ class RruleForm extends Form
     {
 
         $order = $this->getData('entity');
-        // $order->load(['user','user.profile']);
+        // $order->load(['user','user.profiles']);
         if($order){
             $this->add('order', 'static', [
                     'label' => '订单Id',

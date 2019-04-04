@@ -7,7 +7,8 @@
 	<h1>Schools</h1>
   
   <div class="show-links">
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('schools.create') }}">Create</a></button>
+    <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+    <a href="{{ route('schools.create') }}" class="btn btn-outline-primary">Create</a>
   </div>
 
   <div class="col-md-12 col-sm-12"> 
@@ -26,10 +27,10 @@
                     <th scope="row"><a href="#{{$school->id}}">{{$school->id}}</a></th>
                     <td data-label="Name">{{$school->name}}</td>
                     <td data-label="Email">{{$school->user->email}}</td>
-                    <td data-label="Sex">{{ App\Models\Profile::SEXS[$school->user->profile->sex] }}</td>
-                    <td data-label="Tel">{{$school->user->profile->telephone}}</td>
+                    <td data-label="Sex">{{ App\Models\Profile::SEXS[$school->user->profiles->first()->sex] }}</td>
+                    <td data-label="Tel">{{$school->user->profiles->first()->telephone}}</td>
                     <?php
-                      $contact = $school->user->profile->contact;
+                      $contact = $school->user->profiles->first()->contacts->first();
                       $paymethod = $school->user->paymethod;
                     ?>
                     <td data-label="Contact">{{ $contact ? App\Models\Contact::TYPES[$contact->type] . ":" . $contact->number : '-' }} </td>

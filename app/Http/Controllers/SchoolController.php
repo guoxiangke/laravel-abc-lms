@@ -28,7 +28,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::with('user', 'user.paymethod', 'user.profile', 'user.profile.contact')->paginate(10);
+        $schools = School::with('user', 'user.paymethod', 'user.profiles', 'user.profiles.contacts')->paginate(10);
         //'ContactRemark' , 'PayRemark'
         $tableHeader = ['Id', 'Name', 'Email', 'Sex',  'Tel', 'Contact', 'PayMent', 'Action'];
         return view('schools.index',compact('schools','tableHeader'));

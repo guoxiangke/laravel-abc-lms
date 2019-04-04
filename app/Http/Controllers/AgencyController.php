@@ -28,7 +28,7 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::with('user','user.profile','user.paymethod')->paginate(10);
+        $agencies = Agency::with('user','user.profiles','user.paymethod')->paginate(10);
         $tableHeader = ['Id','Name','Email','Sex','Birthday','Telephone','PayType','PayNo','推荐人','Action'];
         return view('agencies.index',compact('agencies','tableHeader'));
     }

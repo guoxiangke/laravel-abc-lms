@@ -18,7 +18,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('profile_id')->comment('用户资料id');
             // 'skype','wechat','qq','.','.',
             $table->unsignedTinyInteger('type')->default(0)->comment('类型 0:skype 1:wechat/qq 2:facebook');
-            $table->string('number', 32)->comment('账户');
+            $table->string('number')->comment('账户');
             $table->text('remark')->comment('其他备注')->nullable();
             $table->timestamps();
             $table->softDeletes();

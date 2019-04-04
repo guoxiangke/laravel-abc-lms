@@ -36,7 +36,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('user',
-            'user.paymethod', 'user.profile', 'user.profile.contact',)->paginate(10);
+            'user.paymethod', 'user.profiles', 'user.profiles.contact',)->paginate(10);
         $tableHeader = ['Id','Name','Sex','Birthday','Grade','Telephone','PayType','PayNo','推荐人','代理','Email','Action'];
         return view('students.index', compact('students','tableHeader'));
     }

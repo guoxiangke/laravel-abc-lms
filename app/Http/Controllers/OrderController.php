@@ -35,7 +35,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(
-            'user', 'user.profile',
+            'user', 'user.profiles',
             'teacher', 'teacher.profile',
             'agency', 'agency.profile',
             'schedules',
@@ -123,7 +123,7 @@ class OrderController extends Controller
             // return redirect()->back()->with('message', 'order is not Active.');
         }
         // $order->load('user');
-        // $order->load('user.profile');
+        // $order->load('user.profiles');
 
         // dd(
         //     // Rrule::find(1)->classRecords()->exceptions()->get()->toArray(),//->exceptions()->get()->toArray(),

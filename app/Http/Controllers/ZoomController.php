@@ -24,7 +24,7 @@ class ZoomController extends Controller
      */
     public function index()
     {
-        $zooms = Zoom::with('teacher','teacher.user.profile')
+        $zooms = Zoom::with('teacher','teacher.user.profiles')
                     ->orderBy('id','desc')
                     ->paginate(10);
         return view('zooms.index', compact('zooms'));

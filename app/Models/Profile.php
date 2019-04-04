@@ -17,11 +17,12 @@ class Profile extends Model implements AuditableContract
         '男'
     ];
     protected $fillable = [
-    	'user_id',
+        //$contact = $school->user->profiles->first()->contacts->first();
+    	'user_id',//可为空，一个用户可以有多个profiles，一个profile也可以对应多个contacts
     	'name',
     	'sex',
     	'birthday',
-    	'telephone',
+    	'telephone',//唯一，用于登陆！
         'recommend_uid',
     ];
 
@@ -29,22 +30,17 @@ class Profile extends Model implements AuditableContract
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     * @doc User 有profle， 学生和老师、代理也可以有一个proflie
+     * @doc User 有profles， 学生和老师、代理也可以有一个proflie
      * @useage
-     * $model = App\Models\Profile::find(1)->model;
+     * $model = App\Models\Profile::find(1)->contacts->first();
      * $modelId = $model->getKey(); // 1
      * $modelId = $model->getKeyName(); // id
      * $class = (new \ReflectionClass($model))->getShortName(); //"User"
      * $class = (new \ReflectionClass($model))->getName(); //"App\User"
      */
-    // public function model() {
-    //     return $this->hasOne($this->target_type,'id','target_id' );
-    // }
-    
-    //name sex birthday telephone 管理人员姓名 性别 年龄 手机等
-    public function contact()
+    public function contacts()
     {
-        return $this->hasOne(Contact::class);
+        return $this->hasMany(Contact::class);
     }
 
 

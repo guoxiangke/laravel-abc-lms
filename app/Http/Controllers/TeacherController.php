@@ -31,7 +31,7 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::with(
             'user','school','zoom', 
-            'user.paymethod', 'user.profile', 'user.profile.contact',
+            'user.paymethod', 'user.profiles', 'user.profiles.contact',
             'school',
         )->paginate(10);
         // dd($teachers->toArray());

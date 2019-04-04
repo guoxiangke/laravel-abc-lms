@@ -38,7 +38,7 @@ class RruleController extends Controller
         $rrules = Rrule::with(
             'order',
             'order.user',
-            'order.user.profile',
+            'order.user.profiles',
             'order.teacher',
             'order.teacher.profile',
             'order.agency',
