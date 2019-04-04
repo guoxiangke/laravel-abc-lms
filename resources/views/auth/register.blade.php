@@ -17,26 +17,11 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Login Name" required autofocus>
+                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="{{__('Your Name')}}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label for="profile_name" class="col-md-4 col-form-label text-md-right">{{ __('Profile Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="profile_name" type="text" class="form-control{{ $errors->has('profile_name') ? ' is-invalid' : '' }}" name="profile_name" value="{{ old('profile_name') }}"  placeholder="Profile Name" required autofocus>
-
-                                @if ($errors->has('profile_name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('profile_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -47,8 +32,8 @@
 
                             <div class="col-md-6">
                                 <select id="sex" class="form-control{{ $errors->has('sex') ? ' is-invalid' : '' }}" name="sex" required autofocus  selected="{{ old('sex') }}">
-                                    <option value="0" selected>{{ __('Mrs.') }}</option>
-                                    <option value="1">{{ __('Mr.') }}</option>
+                                    <option value="0" selected>{{ __('Female') }}</option>
+                                    <option value="1">{{ __('Male') }}</option>
                                 </select>
 
 
@@ -140,7 +125,7 @@
                                     border="0" 
                                     data-captcha-config="default"
                                 >
-                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus name="captcha" placeholder="{{ __('Captcha') }}" placeholder="Captcha">
+                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus autocomplete="off" name="captcha" placeholder="{{ __('Captcha') }}" placeholder="Captcha">
                             </div>
                             @if ($errors->has('captcha'))
                                 <span class="invalid-feedback" role="alert">
@@ -148,6 +133,8 @@
                                 </span>
                             @endif
                         </div>
+
+                        <input type="hidden" name="recommend_uid" required value="{{isset($uid)?$uid:1}}"/>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

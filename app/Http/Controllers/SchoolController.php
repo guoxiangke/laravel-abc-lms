@@ -41,15 +41,11 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        // FormBuilder $formBuilder
-        // $form = $formBuilder->create(SchoolForm::class, [
-        //     'method' => 'POST',
-        //     'url' => route('schools.store', [],false),
-        // ]); 
         $form = $this->form(SchoolForm::class, [
             'method' => 'POST',
             'url' => action('SchoolController@store')
-        ], ['is_admin' => true]); 
+            // 'url' => route('schools.store', [],false),
+        ]); 
         return view('schools.create', compact('form'));
     }
 
@@ -67,16 +63,12 @@ class SchoolController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
-        try {
-            $user = User::firstOrCreate([
-                'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-                'email' => $request->input('user_email'),
-                'password' => Hash::make($request->input('password')),
-            ]);
-        } catch (Exception $e) {
-            flash()->error('该学校用户已存在：'.$request->input('school_name'));
-            return back();
-        }
+        $user = User::firstOrNew([
+            'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
+            'email' => $request->input('user_email'),
+        ]);
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
         //give role
         $user->assignRole(User::ROLES['school']);
         //todo 
@@ -88,8 +80,8 @@ class SchoolController extends Controller
         $school = School::firstOrNew([
             'name' => $request->input('school_name'),
             'user_id' => $user->id,
-        ]);
-        $school = $user->school()->save($school);
+        ])->save();
+        // $school = $user->school()->save($school);
 
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -101,14 +93,15 @@ class SchoolController extends Controller
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
         ])->save();
-        $profile = $user->profile()->save($profile);
+        // $profile = $user->profile()->save($profile);
 
         $contact = Contact::firstOrNew([
+            'profile_id' => $profile->id,
             'type' => 0, //Contact::TYPES[0] = skype
             'number' => $request->input('contact_skype'),
             'remark' => $request->input('contact_remark'),
-        ]);
-        $contact = $profile->contact()->save($contact);
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
 
         $paymethod = PayMethod::firstOrNew([
             'type' => $request->input('pay_method'),
@@ -116,7 +109,7 @@ class SchoolController extends Controller
             'number' => $request->input('pay_number'),
             'remark' => $request->input('pay_remark'),
         ]);
-        $profile = $user->paymethod()->save($paymethod);
+        $user->paymethod()->save($paymethod);
 
         flashy()->success('成功创建：'.$request->input('school_name'));
         return redirect()->route('schools.index');

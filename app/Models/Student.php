@@ -21,9 +21,9 @@ class Student extends Model implements AuditableContract
         'grade',
         'level',
         'book_id',
-        'agency_uid',
-        'recommender_uid',
+        // 'agency_uid', //@see profile 'recommend_uid',
         'remark',
+        'name',//英文名字
     ];
     //0代表幼儿园 1-9年级 高中1-3(10-12) 大学1-4(13-16) 17成人
     const GRADES =[
@@ -52,15 +52,6 @@ class Student extends Model implements AuditableContract
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function agency()
-    {
-        return $this->hasOne(Agency::class, 'id', 'agency_uid');
-    }
-
-    public function recommender()
-    {
-        return $this->hasOne(User::class, 'id', 'recommender_uid');
-    }
 
     public function profile()
     {

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>LMS</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -82,8 +82,7 @@
                 <div class="title m-b-md">
                     ABC LMS
                 </div>
-
-                @auth
+                @auth('web')
                 <div class="links">
                     <a href="/schools">Schools</a>
                     <a href="/zooms">Zooms</a>

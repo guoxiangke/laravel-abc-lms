@@ -15,9 +15,9 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('profile_id')->nullable()->comment('用户资料id');
+            $table->unsignedBigInteger('profile_id')->comment('用户资料id');
             // 'skype','wechat','qq','.','.',
-            $table->unsignedTinyInteger('type')->comment('类型 0-2');
+            $table->unsignedTinyInteger('type')->default(0)->comment('类型 0:skype 1:wechat/qq 2:facebook');
             $table->string('number', 32)->comment('账户');
             $table->text('remark')->comment('其他备注')->nullable();
             $table->timestamps();

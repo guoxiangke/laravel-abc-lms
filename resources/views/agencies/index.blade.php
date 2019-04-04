@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Agencies')
+@section('title', __('Agencies'))
 
 @section('content')
 <div class="container">
-	<h1>Agencies</h1>
+	<h1>{{ __('Agencies') }}</h1>
 
 	<div class="show-links">
 		<button type="button" class="btn btn-outline-primary"><a href="{{ route('agencies.create') }}">Create</a></button>

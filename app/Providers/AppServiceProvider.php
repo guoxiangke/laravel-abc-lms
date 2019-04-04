@@ -38,11 +38,7 @@ class AppServiceProvider extends ServiceProvider
         // if(Config::get('app.env') === 'production') {
         //     URL::forceScheme('https');
         // }
-
-        Horizon::auth(function ($request) {
-            return $request->user() && $request->user()->isSuperuser();
-        });
-
+        
         // Flash::levels([
         //     'success' => 'alert-success',
         //     'warning' => 'alert-warning',

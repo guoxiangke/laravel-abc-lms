@@ -9,6 +9,7 @@ use App\Models\Profile;
 use App\Models\PayMethod;
 use App\Models\Zoom;
 use App\Forms\TeacherForm;
+use App\Forms\Register\TeacherRegisterForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -52,6 +53,34 @@ class TeacherController extends Controller
         return view('teachers.create', compact('form'));
     }
 
+    public function register()
+    {
+        //必须是没XX角色才可以注册
+        $this->authorize('create', Teacher::class,);
+        $form = $this->form(TeacherRegisterForm::class, [
+            'method' => 'POST',
+            'url' => action('TeacherController@registerStore')
+        ]); 
+        return view('teachers.register', compact('form'));
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function registerStore(Request $request, FormBuilder $formBuilder)
+    {
+        //必须是没XX角色才可以注册
+        $this->authorize('create', Teacher::class,);
+        $form = $formBuilder->create(TeacherRegisterForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $user = $request->user();
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -113,7 +142,7 @@ class TeacherController extends Controller
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
-        ])->save();
+        ]);
         $profile = $user->profile()->save($profile);
 
         $contact = Contact::firstOrNew([
@@ -121,18 +150,18 @@ class TeacherController extends Controller
             'type' => $request->input('contact_type'),
             'number' => $request->input('contact_number'),
             'remark' => $request->input('contact_remark'),
-        ]);
-        $contact = $profile->contact()->save($contact);
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
 
         //3. 中教必有 save payment
         if($request->input('pay_number')){
-            $paymethod = PayMethod::create([
+            $paymethod = PayMethod::firstOrNew([
                 'user_id' => $user->id,
                 'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
                 'number' => $request->input('pay_number'),
                 'remark' => $request->input('pay_remark'),
-            ]);
-            $paymethod = $user->paymethod()->save($paymethod);
+            ])->save();
+            // $paymethod = $user->paymethod()->save($paymethod);
         }
 
         flashy()->success('成功创建：'.$request->input('profile_name'));

@@ -12,19 +12,10 @@ $factory->define(Student::class, function (Faker $faker) {
                 ->create(['name'=>$name])
                 ->id;
         },
+        'name' => 'e_' . $faker->name, //英文名字
         'grade' =>  rand(0,17),
         //todo book_id
         'level' => $faker->randomDigit,
-        'agency_uid' =>  function () {
-            return factory(Agency::class)
-                ->create()
-                ->id;
-        },
-        // 'recommender_uid' =>  function () {
-        //     return factory(User::class)
-        //         ->create()
-        //         ->id;
-        // }, //todo 
         'remark' => $faker->paragraph,
     ];
 });

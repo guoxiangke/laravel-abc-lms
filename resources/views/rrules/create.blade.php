@@ -7,7 +7,7 @@
 	<h1>Create Rrule</h1>
 
     <div class="show-links">
-        <a href="{{ route('rrules.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+        <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
     </div>
 
     <div class="row justify-content-center">

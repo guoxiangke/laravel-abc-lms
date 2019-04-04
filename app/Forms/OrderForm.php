@@ -16,7 +16,6 @@ class OrderForm extends Form
     public function buildForm()
     {
         $order = $this->getData('entity');
-
         if($order){
             $this->add('order', 'static', [
                     'label' => '订单Id',
@@ -43,7 +42,7 @@ class OrderForm extends Form
         $agencies = User::role('agency')->with('profile')->get()->pluck('profile.name','id')->toArray();
         $this
             ->add('user_id', 'select', [
-                'label' => 'Student*',
+                'label' => 'Student',
                 'rules' => 'required',
                 'choices' => $students,
                 'empty_value' => '=== Select ==='
@@ -66,12 +65,12 @@ class OrderForm extends Form
             ])
             ->add('price', 'number', [
                 'rules' => 'required',
-                'label' => 'Price*',
+                'label' => 'Price',
                 'attr' => ['placeholder' => '成交价,单位元']
             ])
             ->add('period', 'number', [
                 'rules' => 'required',
-                'label' => 'Period*',
+                'label' => 'Period',
                 'attr' => ['placeholder' => '课时']
             ])
             ->add('rrule', 'repeated', [
@@ -79,7 +78,7 @@ class OrderForm extends Form
                 'second_name' => 'rrule_repeated',
                 'first_options' =>[
                     'rules' => 'required',
-                    'label' => '上课计划*',
+                    'label' => '上课计划',
                     'attr' => [
                         'rows' => 3,
                         'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"
@@ -105,7 +104,7 @@ class OrderForm extends Form
             ])
             ->add('expired_at', 'date', [
                 'rules' => 'required',
-                'label' => '有效期至*'
+                'label' => '有效期至'
             ])
             ->add('remark', 'textarea', [
                 'label' => '备注',

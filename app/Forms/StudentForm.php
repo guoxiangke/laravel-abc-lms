@@ -7,6 +7,7 @@ use App\Models\PayMethod;
 use App\Models\Contact;
 use App\Models\Student;
 use App\Models\Agency;
+use App\Models\Book;
 use App\User;
 
 class StudentForm extends Form
@@ -16,6 +17,9 @@ class StudentForm extends Form
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'label' => '姓名*',
+            ])
+            ->add('name', 'text', [
+                'label' => '英文名',
             ])
             ->add('profile_telephone', 'tel', [
                 'rules' => 'required|min:11',
@@ -50,23 +54,24 @@ class StudentForm extends Form
             ])
             ->add('profile_birthday', 'date', ['label' => '生日'])
             ->add('grade', 'select', [
-                'label' => '年级*',
+                'label' => '年级',
                 'rules' => 'required',
                 'choices' => Student::GRADES,
+                'empty_value' => '=== Select ==='
+            ])
+            ->add('book_id', 'select', [
+                'rules' => 'required',
+                'label' => '同步教材',
+                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('remark', 'textarea', [
                 'label' => '备注',
                 'attr' => ['rows' => 2],
             ])
-            ->add('agency_uid', 'select', [
-                'label' => '上级代理',
-                'choices' => Agency::with('profile')->get()->pluck('profile.name','id')->toArray(),
-                'empty_value' => '=== Select ==='
-            ])
-            ->add('recommender_uid', 'select', [
-                'label' => '介绍学员',
-                'choices' => Student::with('profile')->get()->pluck('profile.name','id')->toArray(),
+            ->add('recommend_uid', 'select', [
+                'label' => '介绍人',
+                'choices' => Student::with('profile')->get()->pluck('profile.name','id')->merge(Agency::with('profile')->get()->pluck('profile.name','id'))->unique()->toArray(), //包括代理/学生
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [

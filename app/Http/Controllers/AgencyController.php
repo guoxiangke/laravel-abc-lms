@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\AgencyForm;
+use App\Forms\Register\AgencyRegisterForm;
+
 
 class AgencyController extends Controller
 {
@@ -36,7 +38,7 @@ class AgencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
 
         $form = $this->form(AgencyForm::class, [
@@ -46,6 +48,36 @@ class AgencyController extends Controller
         return view('agencies.create', compact('form'));
     }
 
+    public function register(Request $request)
+    {
+        //必须是没XX角色才可以注册
+        $this->authorize('create', Agency::class);
+        $form = $this->form(AgencyRegisterForm::class, [
+            'method' => 'POST',
+            'url' => action('AgencyController@registerStore')
+        ]); 
+        return view('agencies.register', compact('form'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function registerStore(Request $request, FormBuilder $formBuilder)
+    {
+        //必须是没XX角色才可以注册
+        $this->authorize('create', Agency::class);
+        $form = $formBuilder->create(AgencyRegisterForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $user = $request->user();
+
+    }
+    
     /**
      * Store a newly created resource in storage.
      *

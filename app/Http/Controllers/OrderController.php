@@ -22,6 +22,11 @@ use App\Forms\OrderForm;
 class OrderController extends Controller
 {
     use FormBuilderTrait;
+
+    public function __construct() {
+        $this->middleware(['admin']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +38,11 @@ class OrderController extends Controller
             'user', 'user.profile',
             'teacher', 'teacher.profile',
             'agency', 'agency.profile',
+            'schedules',
+            'schedules.classRecords',
             'book',
             'product',
-        )->paginate(10);
+        )->paginate(10); //todo debug 第二页有N+1问题
         return view('orders.index', compact('orders'));
     }
 
@@ -80,17 +87,20 @@ class OrderController extends Controller
             // 'status' => 1, //default
         ]);
         //rrule && rrule_repeated
-        [$request->input('rrule'), $request->input('rrule_repeated')].map(function($rrule){
+        $rrules[] = $request->input('rrule');
+        $rrules[] = $request->input('rrule_repeated');
+        // dd($rrules);
+        foreach ($rrules as $rrule) {
+            if(is_null($rrule)) return;
             $rruleReslovedArray = Rrule::buildRrule($rrule);
+            // dd($rruleReslovedArray);
             Rrule::firstOrCreate([
                 'string' => $rruleReslovedArray['string'],
-                'text' => $rruleReslovedArray['text'],
-                'period' => $rruleReslovedArray['period'],
-
-                'order_id' => $order_id,
-                'type' => Rrule::TYPE_SCHEDULE,//'AOL','SCHEDULE',
+                'start_at' => $rruleReslovedArray['start_at'],
+                'order_id' => $order->id,
+                'type' => Rrule::TYPE_SCHEDULE,//2个都是上课计划
             ]);
-        });
+        }
 
   
         flashy()->success('创建成功');

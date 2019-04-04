@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ClassAol;
-use App\Models\ClassRecord;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+
 use App\User;
+use App\Models\Rrule;
 use App\Models\Product;
 use App\Models\Book;
-use App\Models\Rrule;
-use App\Traits\HasPriceField;
+use App\Models\ClassAol;
+use App\Models\ClassRecord;
 use App\Models\Order;
+use App\Traits\HasPriceField;
+
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;

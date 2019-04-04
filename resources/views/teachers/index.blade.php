@@ -29,11 +29,18 @@
 					      <td>{{$teacher->zoom->email}}</td>
 					      <td>{{$teacher->zoom->password}}</td>
 					      <td>{{ App\Models\Profile::SEXS[$teacher->user->profile->sex] }}</td>
-					      <td data-label="Birthday">{{$teacher->user->profile->birthday->format('y/m/d')}}</td>
+							<?php
+								$birthday =$teacher->user->profile->birthday; 
+								$school =$teacher->school; 
+								$paymethod = $teacher->user->paymethod; 
+							?>
+					      <td data-label="Birthday">
+					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}
+					      </td>
 					      <td>{{$teacher->user->profile->telephone}}</td>
-					      <td>{{ $teacher->school? $teacher->school->name : 'FreeLancer' }}</td>
-					      <td>{{$teacher->user->paymethod?App\Models\PayMethod::TYPES[$teacher->user->paymethod->type]:'-'}}</td>
-					      <td>{{$teacher->user->paymethod?$teacher->user->paymethod->number:'-'}}</td>
+					      <td>{{ $school ? $school->name : 'FreeLancer' }}</td>
+					      <td>{{$paymethod ? App\Models\PayMethod::TYPES[$paymethod->type] : '-'}}</td>
+					      <td>{{$paymethod ? $paymethod->number : '-'}}</td>
 					      <td><a href="{{ route('teachers.edit', $teacher->id) }}">Edit</a></td>
 					    </tr>
 					@endforeach

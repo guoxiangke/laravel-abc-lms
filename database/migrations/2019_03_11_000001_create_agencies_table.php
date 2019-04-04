@@ -18,18 +18,13 @@ class CreateAgenciesTable extends Migration
             $table->unsignedBigInteger('user_id')->comment('关联登陆用户id');
             $table->unsignedTinyInteger('type')->default(0)->comment('代理类型：1金牌 0银牌');
             $table->unsignedTinyInteger('discount')->default(100);//0-100 95%
-            $table->unsignedBigInteger('agency_uid')->nullable()->comment('上级代理uid');
+            // $table->unsignedBigInteger('agency_uid')->nullable()->comment('推荐关系');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('user_id')
                ->references('id')->on('users')
                ->onDelete('cascade');
-
-            $table->foreign('agency_uid')
-                ->references('id')
-                ->on('agencies')
-                ->onDelete('cascade');
         });
     }
 

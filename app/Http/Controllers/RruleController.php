@@ -9,6 +9,7 @@ use App\Forms\RruleForm;
 
 use App\Repositories\RruleRepository;
 use App\Models\Rrule;
+use App\Models\Order;
 
 class RruleController extends Controller
 {
@@ -31,10 +32,18 @@ class RruleController extends Controller
      */
     public function index()
     {
-        $limit = 10;
-        $columns = ['*'];
-        $rrules = $this->repository->paginate($limit, $columns);
-        // $rrules = Rrule::paginate(10);
+        // $limit = 10;
+        // $columns = ['*'];
+        // $rrules = $this->repository->paginate($limit, $columns);
+        $rrules = Rrule::with(
+            'order',
+            'order.user',
+            'order.user.profile',
+            'order.teacher',
+            'order.teacher.profile',
+            'order.agency',
+            'order.agency.profile',
+            )->paginate(10);
         return view('rrules.index', compact('rrules'));
     }
 
@@ -43,12 +52,12 @@ class RruleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Order $order)
     {
         $form = $this->form(RruleForm::class, [
             'method' => 'POST',
             'url' => action('RruleController@store')
-        ]); 
+        ], ['entity' => $order]); 
         return view('rrules.create', compact('form'));
     }
 

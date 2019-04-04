@@ -11,11 +11,10 @@ class Contact extends Model implements AuditableContract
 {
     use SoftDeletes;
     use Auditable;
-    // 'skype','wechat','qq','facebook','.',
+    // 'skype','wechat/qq','facebook','.',
     const TYPES =[
         'skype',
-        'wechat',
-        'qq',
+        'wechat/qq',
         'facebook',
     ];
     protected $fillable = [

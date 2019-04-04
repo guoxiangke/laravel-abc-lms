@@ -11,32 +11,19 @@ class RruleForm extends Form
     public function buildForm()
     {
 
-        $rrule = $this->getData('entity');
-        if($rrule){
+        $order = $this->getData('entity');
+        // $order->load(['user','user.profile']);
+        if($order){
             $this->add('order', 'static', [
                     'label' => '订单Id',
-                    'value' => $rrule->order->title,
-                ]);
-        }else{
-           //todo permission for orders!
-           $orders = Order::with('user')
-                        ->get()
-                        ->map(function($order){
-                            $order->title = $order->title;
-                            return $order;
-                        })
-                        ->pluck('title','id')
-                        ->toArray();
-            $this->add('order_id', 'select', [
-                    'label' => '针对订单*',
-                    'choices' => $orders,
+                    'value' => $order->title,
                 ]);
         }
         $this
             ->add('type', 'checkbox', [
                 'value' => 1,
                 'label' => '计划类型',
-                'checked' => $rrule?$rrule->type:false,
+                'checked' => false,
                 'help_block' => [
                     'text' => '默认是请假，如不是请打✓✔☑（即创建新的上课计划） ',
                     'tag' => 'small',
@@ -45,7 +32,6 @@ class RruleForm extends Form
             ])
             ->add('string', 'textarea', [
                 'label' => '计划*',
-                'value' => $rrule?$rrule->string:null,
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"

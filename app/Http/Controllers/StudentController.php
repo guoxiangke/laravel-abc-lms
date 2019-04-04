@@ -14,11 +14,19 @@ use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\StudentForm;
+use App\Forms\Register\StudentRegisterForm;
 
 class StudentController extends Controller
 {
     
     use FormBuilderTrait;
+
+    public function __construct(Student $Student) {
+        // $this->classRecord = $classRecord;
+        //中间件让具备指定权限的用户才能访问该资源
+        //只有管理员可以访问所有 /classRecords
+        $this->middleware(['admin'], ['only' => ['index']]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -40,12 +48,83 @@ class StudentController extends Controller
      */
     public function create()
     {
-
         $form = $this->form(StudentForm::class, [
             'method' => 'POST',
             'url' => action('StudentController@store')
         ]); 
         return view('students.create', compact('form'));
+    }
+
+    public function register()
+    {
+        //必须是没学生角色才可以注册
+        $this->authorize('create', Student::class);
+
+        $form = $this->form(StudentRegisterForm::class, [
+            'method' => 'POST',
+            'url' => action('StudentController@registerStore')
+        ]); 
+        return view('students.register', compact('form'));
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function registerStore(Request $request, FormBuilder $formBuilder)
+    {
+        //必须是没XX角色才可以注册
+        $this->authorize('create', Student::class);
+
+        $form = $formBuilder->create(StudentRegisterForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $user = $request->user();
+
+        //region profile 真实姓名/电话 推荐人uid关联 更改机会
+        $profileTelephone = $request->input('profile_telephone');
+        $profileName = $request->input('profile_name');
+        $recommendTelephone = $request->input('recommend_telephone');
+        $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
+        $userProfileNeedSave  = false;
+        if($recommendTelephone) {
+            $recommendUser = Profile::where('telephone', '86' + $recommendTelephone)->first();
+            if($recommendUser){
+                $userProfile->recommend_uid = $recommendUser->user_id;
+                $userProfileNeedSave  = true;
+            }
+        }
+        if($profileTelephone){
+            $userProfile->telephone = $profileTelephone;
+            $userProfileNeedSave  = true;
+        }
+        if($profileName){
+            $userProfile->name = $profileName;
+            $userProfileNeedSave  = true;
+        }
+        if($userProfileNeedSave){
+            $userProfile->save();
+        }
+        //endregion
+
+
+        // dd($request->all(),$request->user()->toArray());
+        
+        $student = Student::firstOrCreate([
+            'user_id' => $user->id,
+            'grade' =>  $request->input('grade'),
+            'name' => $request->input('english_name')?:$user->name, //英文名！
+        ]);
+        //创建关联关系？
+        // $student = $user->student()->save($student);
+        if($student){
+            $user->assignRole(User::ROLES['student']);
+            flashy()->success('成功');
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -85,9 +164,7 @@ class StudentController extends Controller
             'user_id' => $user->id,
             'grade' =>  $request->input('grade'),
             'remark' =>  $request->input('remark'),
-            // 'book_id' =>  $request->input('book_id'),//todo book_id
-            'agency_uid' => $request->input('agency_id'),
-            'recommender_uid' => $request->input('recommend_uid'),
+            'book_id' =>  $request->input('book_id'),
         ]);
         $student = $user->student()->save($student);
 
@@ -100,6 +177,7 @@ class StudentController extends Controller
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
+            'recommend_uid' => $request->input('recommend_uid'),
         ])->save();
         $profile = $user->profile()->save($profile);
 

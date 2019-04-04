@@ -14,17 +14,14 @@ class ZoomForm extends Form
         $this->add('email', 'email', [
                 'rules' => 'required',
                 'label' => '登陆邮箱',
-                'attr' => ['placeholder' => 'zoom17201@daxiangyingyu.com']
             ])
             ->add('password', 'text', [
                 'rules' => 'required',
                 'label' => '登陆密码',
-                'attr' => ['placeholder' => 'Love17201']
             ])
             ->add('pmi', 'text', [
                 'rules' => 'required',
                 'label' => 'PMI',
-                'attr' => ['placeholder' => '9849490463']
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

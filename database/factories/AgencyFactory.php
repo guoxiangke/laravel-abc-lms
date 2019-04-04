@@ -13,7 +13,6 @@ $factory->define(Agency::class, function (Faker $faker) {
         },
         'type' => rand(0,1),
         'discount' => rand(80,100),
-        // 'agency_uid'=> 0,
     ];
 });
 

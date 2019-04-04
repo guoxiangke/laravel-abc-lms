@@ -1,0 +1,114 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: laravel-redis
+    restart: always
+    network_mode: "bridge"
+  db:
+    image: mysql:latest
+    container_name: laravel-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - /tmp:/sql
+    restart: always
+    network_mode: "bridge"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+  app:
+    image: laravel-www
+    container_name: laravel-www
+    build:
+      context: .
+      # dockerfile: ./Dockerfile
+    depends_on:
+      - db
+      - redis
+    links:
+      - db:mysql
+      - redis
+    network_mode: "bridge"
+    restart: always
+    # ports:
+    #   - 8000:80
+    volumes:
+      - ./storage/app:/var/www/html/storage/app:rw
+      - .env.production:/var/www/html/.env
+      # for dev fast
+      - ./app:/var/www/html/app
+      - ./routes:/var/www/html/routes
+      - ./config:/var/www/html/config
+      - ./resources:/var/www/html/resources
+      - ./docker:/var/www/html/docker
+      - /tmp:/tmp
+    environment:
+      REDIS_PORT: 6379
+      # APP_ENV: production
+      VIRTUAL_HOST: lms.daxiangyingyu.com
+      LETSENCRYPT_HOST: lms.daxiangyingyu.com
+      LETSENCRYPT_EMAIL: dale.tel@139.com
+      APP_ENV: production
+      CONTAINER_ROLE: app
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+  scheduler:
+    image: laravel-www
+    container_name: laravel-scheduler
+    depends_on:
+      - app
+    links:
+      - db:mysql
+      - redis
+    network_mode: "bridge"
+    volumes:
+      - .env.production:/var/www/html/.env
+      # for dev fast
+      - ./app:/var/www/html/app
+      - ./routes:/var/www/html/routes
+      - ./config:/var/www/html/config
+      - ./resources:/var/www/html/resources
+      - ./docker:/var/www/html/docker
+      - /tmp:/tmp
+    environment:
+      REDIS_PORT: 6379
+      APP_ENV: production
+      CONTAINER_ROLE: scheduler
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+  queue:
+    image: laravel-www
+    container_name: laravel-queue
+    depends_on:
+      - app
+    links:
+      - db:mysql
+      - redis
+    network_mode: "bridge"
+    volumes:
+      - .env.production:/var/www/html/.env
+      # for dev fast
+      - ./app:/var/www/html/app
+      - ./routes:/var/www/html/routes
+      - ./config:/var/www/html/config
+      - ./resources:/var/www/html/resources
+      - ./docker:/var/www/html/docker
+      - /tmp:/tmp
+    environment:
+      REDIS_PORT: 6379
+      APP_ENV: production
+      CONTAINER_ROLE: queue
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+volumes:
+  db_data:

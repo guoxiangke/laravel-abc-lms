@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Pinyin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -52,13 +53,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:25', 'unique:users'],
-            'profile_name' => ['required', 'string', 'max:25'],
+            'name' => ['required', 'string', 'max:25'],//, 'unique:users'
+            // 'profile_name' => ['required', 'string', 'max:25'],
             'sex' => ['required', 'boolean'],
             'birthday' => ['required', 'string', 'max:25'],
             'telephone' => ['required', 'digits_between:9,13', 'unique:profiles'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'recommend_uid' => ['required', 'integer'],
         ]);
     }
 
@@ -70,8 +72,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $name = str_replace(' ', '', $data['name']);//去除空格
+        $name = implode('', pinyin($data['name'], 16));//PINYIN_NAME
+        if(!$name){
+            $name = implode('_', pinyin($data['name'], 64));//PINYIN_KEEP_ENGLISH
+        }
         $user = User::create([
-            'name' => $data['name'],
+            'name' => $name, //处理后的用户名
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -81,10 +88,12 @@ class RegisterController extends Controller
             try {
                 $userProfile = new Profile;
                 $userProfile->user_id = $user->id;
-                $userProfile->name = $data['profile_name'];
+                $userProfile->name = $data['name']; //原始姓名
                 $userProfile->sex = $data['sex'];
                 $userProfile->birthday = $data['birthday'];
                 $userProfile->telephone = $data['telephone'];
+                //如果没有推荐人，都指向用户1，前端默认值为1
+                $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
                 Log::info(__CLASS__,[__FUNCTION__,__LINE__,'Create an Profile for ' . $user->name]);
             } catch (\Exception $e) {
@@ -93,4 +102,15 @@ class RegisterController extends Controller
         }
         return $user;
     }
+
+    /**
+     * Show the application registration form.
+     * 推荐用户注册表单
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationFormByRecommend(User $user)
+    {
+        return view('auth.register', ['uid' => $user->id]);
+    }
+
 }

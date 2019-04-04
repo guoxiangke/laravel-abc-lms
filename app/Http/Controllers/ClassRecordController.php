@@ -54,6 +54,7 @@ class ClassRecordController extends Controller
         if(!$user->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             abort(403);
         }
+        //$this->authorize('indexByRole');
 
         $allowRolesMap = [
             'agency' => 'agency_uid',

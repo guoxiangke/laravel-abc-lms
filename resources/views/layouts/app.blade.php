@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @if(config('app.env') === 'production')
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129889764-2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -9,6 +10,7 @@
 
       gtag('config', 'UA-129889764-2');
     </script>
+    @endif
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -77,21 +79,21 @@
                                 </div>
                             </li>
                         @endguest
-
-
+                        @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Switch <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach( \App\User::with('profile')->get() as $user)
+                                    @foreach( \App\User::with('profile')->where('id','!=',auth()->user()->id)->get() as $user)
                                     <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
                                         {{$user->profile->name}}
                                     </a>
                                     @endforeach
                                 </div>
                             </li>
+                        @endauth
                     </ul>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Create Order')
+@section('title', __('Create Anency'))
 
 @section('content')
 <div class="container">
-	<h1>Create Anency</h1>
+	<h1>{{ __('Create Anency') }}</h1>
     <div class="show-links">
         <a href="{{ route('agencies.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
     </div>

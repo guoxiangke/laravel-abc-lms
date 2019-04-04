@@ -16,6 +16,7 @@ class ZoomController extends Controller
     public function __construct() {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +24,9 @@ class ZoomController extends Controller
      */
     public function index()
     {
-        $zooms = Zoom::with('teacher','teacher.user.profile')->paginate(10);
+        $zooms = Zoom::with('teacher','teacher.user.profile')
+                    ->orderBy('id','desc')
+                    ->paginate(10);
         return view('zooms.index', compact('zooms'));
     }
 
@@ -49,7 +52,15 @@ class ZoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $zoom = Zoom::firstOrCreate(
+            [
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+                'pmi' => str_replace(' ', '', $request->input('pmi')),
+            ]
+        );
+        flashy()->success('创建成功');
+        return redirect()->route('zooms.index'); //todo last page! or order
     }
 
     /**
@@ -60,7 +71,7 @@ class ZoomController extends Controller
      */
     public function show(Zoom $zoom)
     {
-        dd($zoom->toArray());
+        //
     }
 
     /**

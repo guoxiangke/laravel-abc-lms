@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Reset Password')
+@section('title', '2Reset Password')
 
 @section('content')
 <div class="container">
@@ -61,7 +61,7 @@
                                     border="0" 
                                     data-captcha-config="default"
                                 >
-                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus name="captcha" placeholder="{{ __('Captcha') }}">
+                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus autocomplete="off" name="captcha" placeholder="{{ __('Captcha') }}">
                                 @if ($errors->has('captcha'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('captcha') }}</strong>

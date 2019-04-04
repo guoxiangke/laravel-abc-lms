@@ -1,0 +1,10 @@
+#!/bin/sh
+# @see https://laravel-china.org/topics/2199/docker-container-configuration-plan-task-crontab-daocloud-docker-laravel-5
+set -e
+# 将环境变量保存至 /etc/default/locale
+rm -rf /etc/default/locale
+env >> /etc/default/locale
+# 启动 crontab
+/etc/init.d/cron start
+
+exec "$@"

@@ -16429,6 +16429,28 @@ readers do not read off random characters that represent icons */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+input[name=captcha] {
+  float: right;
+  width: 60%;
+  margin-left: 10px;
+}
+
+/* Adds : after labels */
+
+form label:after {
+  content: ":";
+}
+
+.required {
+  font-weight: bold;
+}
+
+.required:after {
+  color: #e32;
+  content: " *";
+  display: inline;
+}
+
 /* Simple Responsive Table in CSS https://codepen.io/AllThingsSmitty/pen/MyqmdM*/
 
 table caption {

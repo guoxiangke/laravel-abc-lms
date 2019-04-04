@@ -16,8 +16,10 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedTinyInteger('type');
-            $table->string('publisher');
+            $table->string('path')->nullable();//XXX.pdf
+            $table->unsignedTinyInteger('type');//0同步教材 1外交教材
+            $table->unsignedInteger('page')->default(0);//页数
+            $table->string('publisher')->nullable();//出版社
             $table->timestamps();
             $table->softDeletes();
         });

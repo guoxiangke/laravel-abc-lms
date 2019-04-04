@@ -12,10 +12,10 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $product = Product::create([
-            'name' => '5节课体验包',
+            'name' => '课程体验包',
             'description' => '新用户专享',
             'remark' => '只一次',
-            'price' => 159,
+            'price' => 99,
             // 'image' =>
         ]);
     }

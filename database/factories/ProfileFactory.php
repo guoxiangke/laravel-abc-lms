@@ -1,5 +1,6 @@
 <?php
 use App\Models\Profile;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Profile::class, function (Faker $faker) {
@@ -9,5 +10,11 @@ $factory->define(Profile::class, function (Faker $faker) {
         'sex' => $faker->boolean,
         'birthday' =>  $faker->dateTime,
         'telephone' =>  $faker->unique()->e164PhoneNumber,
+        'recommend_uid' => 1,
+        //  function () {
+        //     return factory(User::class)
+        //         ->create()
+        //         ->id;
+        // },
     ];
 });

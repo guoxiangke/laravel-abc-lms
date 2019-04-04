@@ -18,7 +18,8 @@ class CreateTeachersTable extends Migration
             $table->unsignedBigInteger('user_id')->comment('关联登陆用户id');
                 // contact_id -> skype
             $table->unsignedBigInteger('school_id')->nullable()->comment('学校id，NULL 为freelancer');
-            $table->unsignedBigInteger('zoom_id')->nullable()->comment('zoom_id');
+            $table->unsignedBigInteger('zoom_id')->nullable();
+            // $table->unsignedBigInteger('teacher_uid')->nullable()->comment('推荐关系');
             
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +33,10 @@ class CreateTeachersTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->foreign('zoom_id')
+                ->references('id')
+                ->on('zooms');
         });
     }
 

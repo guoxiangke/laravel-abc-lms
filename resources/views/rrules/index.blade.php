@@ -6,9 +6,9 @@
 <div class="container">
 	<h1>Rrules</h1>
   
-  <div class="show-links">
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('rrules.create') }}">Create</a></button>
-  </div>
+    <div class="show-links">
+        <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+    </div>
 
     <div class="col-md-12 col-sm-12"> 
         <div class="table-responsive">

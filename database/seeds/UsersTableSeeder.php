@@ -15,13 +15,13 @@ class UsersTableSeeder extends Seeder
     {
         $user = factory(User::class)->create([
             'email' => 'admin@daxiangyingyu.com',
-            'password' =>  Hash::make('12345678'),
+            'password' =>  Hash::make('Profero@1'),
             'name' => 'admin',
         ]);
 
         $user = factory(User::class)->create([
             'email' => 'monika@daxiangyingyu.com',
-            'password' =>  Hash::make('12345678'),
+            'password' =>  Hash::make('love0325'),
             'name' => 'monika',
         ]);
         $user->assignRole(User::ROLES['manager']);

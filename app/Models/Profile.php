@@ -22,6 +22,7 @@ class Profile extends Model implements AuditableContract
     	'sex',
     	'birthday',
     	'telephone',
+        'recommend_uid',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'birthday'];
@@ -44,5 +45,12 @@ class Profile extends Model implements AuditableContract
     public function contact()
     {
         return $this->hasOne(Contact::class);
+    }
+
+
+    // agency 
+    public function recommend()
+    {
+        return $this->hasOne(User::class, 'id', 'recommend_uid');
     }
 }

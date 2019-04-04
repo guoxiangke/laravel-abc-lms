@@ -19,13 +19,11 @@
               	<th scope="col">Teacher</th>
               	<th scope="col">Agency</th>
               	<th scope="col">Book</th>
-                <th scope="col">Procut</th>
+                <!-- <th scope="col">Product</th> -->
                 <th scope="col">Price</th>
                 <th scope="col">Period</th>
                 <th scope="col">已上</th>
                 <th scope="col">ExpireAt</th>
-                <th scope="col">Calendar</th>
-                <th scope="col">ClassRecords/todo</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -37,16 +35,24 @@
                     <td data-label="Teacher">{{$order->teacher->profile->name}}</td>
                     <td data-label="Agency">{{$order->agency->profile->name}}</td>
                     <td data-label="Book">《{{$order->book->name}}》</td>
-                    <td data-label="Price">{{$order->product->name}}</td>
+                    <!-- <td data-label="Price">{{$order->product->name}}</td> -->
                     <td data-label="Price">{{$order->price}}</td>
                     <td data-label="Period">{{$order->period}}</td>
                     <td data-label="已上">{{$order->classDoneRecords()->count()}}</td>
                     <td data-label="ExpireAt">{{$order->expired_at->format('y/m/d')}}</td>
-                    <td data-label="Calendar"><a href="{{ route('orders.show', $order->id) }}">Calendar</a></td>
-                    <td data-label="Remark">
-                      <a target="_blank" href="{{ route('classRecords.index') }}">classRecords</a>
+                   
+                    <td data-label="Action">
+                      <a href="{{ route('orders.show', $order->id) }}" class="fas fa-calendar-alt fa-lg" alt="上课日历" title="上课日历"></a>
+
+
+                      <a href="{{ route('classRecords.index') }}" class="fas fa-list fa-lg" alt="上课记录" title="上课记录"></a>
+                      
+                      <a href="{{ route('rrules.create', $order) }}" class="fas fa-calendar-times fa-lg" alt="创建计划" title="创建计划"></a>
+
+                      <a href="{{ route('rrules.show', $order) }}" class="fas fa-calendar-check fa-lg" alt="Plans" title="Plans"></a>
+
+                      <a href="{{ route('orders.edit', $order->id) }}"  class="fas fa-edit fa-lg"></a>
                     </td>
-                    <td data-label="Action"><a href="{{ route('orders.edit', $order->id) }}">Edit</a></td>
                   </tr>
               @endforeach
             </tbody>

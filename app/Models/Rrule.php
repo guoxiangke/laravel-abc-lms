@@ -180,7 +180,7 @@ class Rrule  extends Model implements AuditableContract
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasOne(Order::class,'id','order_id');
     }
 
     /**
