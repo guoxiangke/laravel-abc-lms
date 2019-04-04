@@ -27,12 +27,14 @@
                     <td data-label="Name">{{$school->name}}</td>
                     <td data-label="Email">{{$school->user->email}}</td>
                     <td data-label="Sex">{{ App\Models\Profile::SEXS[$school->user->profile->sex] }}</td>
-                    <!-- <td data-label="Birthday">{{$school->user->profile->birthday}}</td> -->
                     <td data-label="Tel">{{$school->user->profile->telephone}}</td>
+                    <?php
+                      $contact = $school->user->profile->contact;
+                      $paymethod = $school->user->paymethod;
+                    ?>
+                    <td data-label="Contact">{{ $contact ? App\Models\Contact::TYPES[$contact->type] . ":" . $contact->number : '-' }} </td>
 
-                    <td data-label="Contact">{{ App\Models\Contact::TYPES[$school->user->profile->contact->type] }} ：{{$school->user->profile->contact->number}} </td>
-
-                    <td data-label="PayMent">{{!is_null($school->user->paymethod)?App\Models\PayMethod::TYPES[$school->user->paymethod->type]:'-'}}：{{!is_null($school->user->paymethod)?$school->user->paymethod->number:'-'}}</td>
+                    <td data-label="PayMent">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number  :'-'}}</td>
                     <td data-label="Action"><a href="{{ route('schools.edit', $school->id) }}">Edit</a></td>
                   </tr>
               @endforeach

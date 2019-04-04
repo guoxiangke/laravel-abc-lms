@@ -65,7 +65,7 @@ class SchoolController extends Controller
         // create login user
         $user = User::firstOrNew([
             'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-            'email' => $request->input('user_email'),
+            'email' => $request->input('user_email')
         ]);
         $user->password = Hash::make($request->input('password'));
         $user->save();
@@ -77,7 +77,7 @@ class SchoolController extends Controller
         // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
 
         //0.save school
-        $school = School::firstOrNew([
+        School::firstOrNew([
             'name' => $request->input('school_name'),
             'user_id' => $user->id,
         ])->save();
@@ -87,7 +87,7 @@ class SchoolController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
-        $profile = $profile->fill([
+        $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
@@ -95,7 +95,7 @@ class SchoolController extends Controller
         ])->save();
         // $profile = $user->profile()->save($profile);
 
-        $contact = Contact::firstOrNew([
+        Contact::firstOrNew([
             'profile_id' => $profile->id,
             'type' => 0, //Contact::TYPES[0] = skype
             'number' => $request->input('contact_skype'),
