@@ -14,7 +14,7 @@ use App\Models\Teacher;
 use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Profile;
-use App\Models\Paymethod;
+use App\Models\PayMethod;
 
 use Laravelista\Comments\Commenter;
 
@@ -81,7 +81,7 @@ class User extends Authenticatable implements HasMedia
 
     public function paymethod()
     {
-        return $this->hasOne(Paymethod::class);
+        return $this->hasOne(PayMethod::class);
     }
 
     /**
