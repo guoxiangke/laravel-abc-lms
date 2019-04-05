@@ -25,7 +25,6 @@ class User extends Authenticatable implements HasMedia
     use HasMediaTrait;
     use Commenter;
 
-
     public function registerMediaCollections()
     {
         $this

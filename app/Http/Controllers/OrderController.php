@@ -76,26 +76,31 @@ class OrderController extends Controller
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        $order = Order::firstOrCreate([
+        $order = Order::firstOrNew([
             'user_id' => $request->input('user_id'),//student_uid
             'teacher_uid' => $request->input('teacher_uid')?:1,
             'agency_uid' =>  $request->input('agency_uid')?:1,
             'book_id' =>  $request->input('book_id')?:1 ,
             'product_id' => $request->input('product_id'),
-            'price' => $request->input('price'),
+            'price' => $request->input('price')*100, //价格需要*100才能new
             'period' => $request->input('period'),
             'expired_at' => $request->input('expired_at'),
             'remark' => $request->input('remark'),
             // 'status' => 1, //default
         ]);
+        if(isset($order->id)){
+            $order->price = $request->input('price'); //还原价格
+        }
+        $order->save();
         //rrule && rrule_repeated
         $rrules[] = $request->input('rrule');
         $rrules[] = $request->input('rrule_repeated');
-        // dd($rrules);
         foreach ($rrules as $rrule) {
-            if(is_null($rrule)) return;
+            // 如果没有填写第二个！
+            if(is_null($rrule)) {
+                continue;
+            }
             $rruleReslovedArray = Rrule::buildRrule($rrule);
-            // dd($rruleReslovedArray);
             Rrule::firstOrCreate([
                 'string' => $rruleReslovedArray['string'],
                 'start_at' => $rruleReslovedArray['start_at'],

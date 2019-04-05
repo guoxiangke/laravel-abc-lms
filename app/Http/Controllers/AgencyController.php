@@ -31,8 +31,7 @@ class AgencyController extends Controller
         $agencies = Agency::with('user','user.profiles','user.paymethod')
             ->orderBy('id','desc')
             ->paginate(100);
-        $tableHeader = ['Id','Name','Email','Sex','Birthday','Telephone','PayType','PayNo','推荐人','Action'];
-        return view('agencies.index',compact('agencies','tableHeader'));
+        return view('agencies.index',compact('agencies'));
     }
 
     /**
@@ -95,7 +94,7 @@ class AgencyController extends Controller
         }
         // create login user
         $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type');//0-4
+        $contactType = $request->input('contact_type');//0-3
         $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
         $user = User::where('email',$email)->first();
 
@@ -113,13 +112,13 @@ class AgencyController extends Controller
 
         $user->assignRole(User::ROLES['agency']);
 
-        $agency = Agency::firstOrNew([
+        Agency::firstOrNew([
             'user_id' => $user->id,
             'type' => $request->input('agency_type'),
             // 'discount' => $request->input('agency_discount'),
-            'agency_uid' => $request->input('agency_id'),
-        ]);
-        $agency = $user->agency()->save($agency);
+            // 'agency_uid' => $request->input('agency_id'),
+        ])->save();
+        // $agency = $user->agency()->save($agency);
 
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -130,6 +129,7 @@ class AgencyController extends Controller
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
+            'recommend_uid' => $request->input('agency_id'),
         ])->save();
         // $profile = $user->profile()->save($profile);
 

@@ -16,24 +16,32 @@
         	<div class="table-responsive">
 			  <table class="table">
 				  <thead>
-				    <tr>
-				    	@foreach($tableHeader as $value)
-				    	<th scope="col">{{ $value }}</th>
-				    	@endforeach
+				    <tr><th>Id</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Sex</th>
+					<th>Birthday</th>
+					<th>Telephone</th>
+					<th>PayMethod</th>
+					<th>推荐人</th>
+					<th>Action</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 					@foreach($agencies as $agency)
+						@php
+							$profile = $agency->user->profiles->first();
+							$paymethod = $agency->user->paymethod;
+						@endphp
 					    <tr>
 					      <th scope="row"><a href="#{{$agency->id}}">{{$agency->id}}</a></th>
-					      <td data-label="Name">{{$agency->user->profiles->first()->name}}</td>
+					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Email">{{$agency->user->email}}</td>
-					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$agency->user->profiles->first()->sex] }}</td>
-					      <td data-label="Birthday">{{$agency->user->profiles->first()->birthday->format('m/d')}}</td>
-					      <td data-label="Telephone">{{$agency->user->profiles->first()->telephone}}</td>
-					      <td data-label="PayType">{{!is_null($agency->user->paymethod)?App\Models\PayMethod::TYPES[$agency->user->paymethod->type]:'-'}}</td>
-					      <td data-label="PayNo">{{!is_null($agency->user->paymethod)?$agency->user->paymethod->number:'-'}}</td>
-					      <td data-label="推荐人">{{ $agency->reference?$agency->reference->profiles->first()->name:'No' }}</td>
+					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
+					      <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('m/d'):'-'}}</td>
+					      <td data-label="Telephone">{{$profile->telephone}}</td>
+					      <td data-label="PayMethod">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ': '.$paymethod->number  :'-'}}</td>
+					      <td data-label="推荐人">{{ $agency->reference?$agency->reference->profiles->first()->name:'-' }}</td>
 					      <td data-label="Action"><a href="{{ route('agencies.edit', $agency->id) }}">Edit</a></td>
 					    </tr>
 					@endforeach

@@ -23,52 +23,75 @@ class TeacherForm extends Form
         $this->add('school_id', 'select', [
                 'label' => 'School',
                 'choices' => School::all()->pluck('name', 'id')->toArray(),
-                'empty_value' => '=== Select or Freelancer ==='
+                'empty_value' => 'Freelancer/自由职业'
             ])
-            ->add('profile_name', 'text', ['label' => '姓名*'])
+            ->add('profile_name', 'text',
+                ['rules' => 'required','label' => '姓名']
+            )
             ->add('user_password', 'text', [
                 'label' => '登陆密码',
-                'attr' => ['placeholder' => '默认：Teacher123']
+                'help_block' => [
+                    'text' => '不填，默认为：Teacher123',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('profile_telephone', 'tel', [
                 'rules' => 'required|min:8',
-                'label' => '手机号*',
+                'label' => '手机号',
             ])
             ->add('contact_type', 'select', [
-                'label' => '联系方式*',
+                'label' => '联系方式',
                 'choices' => Contact::TYPES,
                 // 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
             ->add('contact_number', 'text',[
                 'rules' => 'required|min:4',
-                'label' => '联系方式账户ID*'
+                'label' => '联系方式账户ID'
             ])
             ->add('contact_remark', 'textarea', [
                 'label' => '联系方式备注',
-                'attr' => ['rows' => 2, 'placeholder'=>'登陆邮箱：teacher_name@wx/skype/qq.com'],
+                'help_block' => [
+                    'text' => '登陆邮箱：t_name@teacher.com',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
+                'attr' => ['rows' => 2],
             ])
             ->add('zoom_id', 'select', [
                 'label' => 'Zoom',
                 'choices' => $zooms,
                 'empty_value' => '=== Select ===',
                 'help_block' => [
-                    'text' => '选择一个已有的zoomId分配给新建的Teacher，或者填写下面3个内容创建一个新zoom',
+                    'text' => '选择一个已有的zoomId分配给新建的Teacher，或者填写下面3个内容同时创建一个新zoom',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
             ->add('zoom_email', 'email', [
                 'label' => 'Zoom邮箱',
-                'attr' => ['placeholder' => '新增Zoom登陆邮箱'],
+                'help_block' => [
+                    'text' => '新增Zoom登陆邮箱',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('zoom_password', 'text', [
                 'label' => 'Zoom密码',
-                'attr' => ['placeholder' => '新增Zoom登陆密码']
+                'help_block' => [
+                    'text' => '新增Zoom登陆密码',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
-            ->add('zoom_pmi', 'text', [
+            ->add('zoom_pmi', 'number', [
                 'label' => 'Zoom PMI',
-                'attr' => ['placeholder' => '新增ZoomPMI']
+                'help_block' => [
+                    'text' => '新增ZoomPMI',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('profile_sex', 'select', [
                 'label' => '性别',

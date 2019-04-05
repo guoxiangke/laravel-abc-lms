@@ -97,9 +97,9 @@ class TeacherController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
-        $teacherUserName = 'teacher_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type');//0-4
-        $teacherEmail = $teacherUserName.'@'. Contact::TYPES[$contactType] . '.com';
+        $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
+        $contactType = $request->input('contact_type')?:0;//0-4
+        $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
         $user = User::where('email',$teacherEmail)->first();
 
         if(!$user){
@@ -120,20 +120,21 @@ class TeacherController extends Controller
             'user_id' => $user->id,
             'school_id' => $request->input('school_id'),
         ]);
-        $teacher = $user->teacher()->save($teacher);
+        $user->teacher()->save($teacher);
 
 
-        if($zoomId = $request->input('zoom_id')){
-            $teacher->zoom_id = $zoomId;
-            $teacher->save();
-        }else{
-            $zoom = Zoom::firstOrCreate([
+        if(! $zoomId = $request->input('zoom_id')){
+            $zoom = Zoom::firstOrNew([
                 'email' => $request->input('zoom_email'),
                 'password' => $request->input('zoom_password'),
-                'pmi' => $request->input('zoom_pmi'),
+                'pmi' => 1111,//$request->input('zoom_pmi'),
             ]);
-            $zoom = $teacher->zoom()->save($zoom);
+            $zoomId = $zoom->id;
+            // $teacher->zoom()->save($zoom);
         }
+
+        $teacher->zoom_id = $zoomId;
+        $teacher->save();
         
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -149,7 +150,7 @@ class TeacherController extends Controller
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => $request->input('contact_type'),
+            'type' => $contactType,
             'number' => $request->input('contact_number'),
             'remark' => $request->input('contact_remark'),
         ])->save();

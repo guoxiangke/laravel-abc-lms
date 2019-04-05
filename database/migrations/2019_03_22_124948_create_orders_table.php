@@ -19,11 +19,11 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('teacher_uid')->nullable();
             $table->unsignedBigInteger('agency_uid')->default(1)->comment('1无代理');
             $table->unsignedBigInteger('book_id')->nullable();
-            $table->unsignedBigInteger('product_id')->unsigned();
-            $table->integer('price')->unsigned()->comment('单位分');
-            $table->integer('period')->unsigned()->comment('课时');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedInteger('price')->comment('单位分');
+            $table->unsignedInteger('period')->comment('课时');
             $table->timestamp('expired_at')->nullable();
-            // $table->unsignedBigInteger('rrule_id')->unsigned()->nullable();//上课计划
+            // $table->unsignedBigInteger('rrule_id')->nullable();//上课计划
             //0订单作废 1订单正常* 2订单完成  3订单暂停上课  4订单过期
             $table->unsignedTinyInteger('status')->default(1)->comment('订单状态');
             $table->text('remark')->nullable();

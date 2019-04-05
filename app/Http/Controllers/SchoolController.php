@@ -71,7 +71,7 @@ class SchoolController extends Controller
             'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
             'email' => $request->input('user_email')
         ]);
-        $user->password = Hash::make($request->input('password'));
+        $user->password = Hash::make($request->input('password')?:'Dxjy1234');
         $user->save();
         //give role
         $user->assignRole(User::ROLES['school']);

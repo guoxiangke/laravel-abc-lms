@@ -51,7 +51,8 @@
                         <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
                         <br/>
                         我的推荐码<br/>
-                        {!! QrCode::size(300)->generate($link); !!}
+                        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
+                        <br/>长按可保存到手机
                         <br/>
                         推荐链接： {{ $link }}
                     </div>

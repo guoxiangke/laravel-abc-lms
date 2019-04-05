@@ -18,7 +18,6 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->text('remark')->nullable();
-            $table->string('image')->nullable();
             $table->unsignedInteger('price')->default(15900);//0-100价格，单位分
             $table->timestamps();
             $table->softDeletes();

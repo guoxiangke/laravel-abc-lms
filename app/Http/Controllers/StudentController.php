@@ -143,8 +143,8 @@ class StudentController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
-        $userName = 'student_'.str_replace(' ', '', $request->input('profile_name'));
-        $email = $userName.'@dx.com';
+        $userName = 's_'.str_replace(' ', '', $request->input('profile_name'));
+        $email = $userName.'@student.com';
         $user = User::where('email', $email)->first();
 
         if(!$user){

@@ -16,7 +16,7 @@ class ZoomForm extends Form
                 'rules' => 'required',
                 'label' => '登陆密码',
             ])
-            ->add('pmi', 'text', [
+            ->add('pmi', 'number', [
                 'rules' => 'required',
                 'label' => 'PMI',
             ])

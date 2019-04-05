@@ -63,8 +63,8 @@ class LoginController extends Controller
         $account = $request->get('username');
         if(is_numeric($account)){
             $field = 'id';
-            $account = Profile::select('target_id')->where('telephone', $account)->first();
-            $account = ($account==null)?0:$account->target_id;
+            $account = Profile::select('user_id')->where('telephone', $account)->first();
+            $account = ($account==null)?0:$account->user_id;
         }
         elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';

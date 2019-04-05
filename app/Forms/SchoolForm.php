@@ -23,12 +23,14 @@ class SchoolForm extends Form
             ->add('user_email', 'email', [
                 'label' => '学校登陆邮箱',
                 'rules' => 'required',
-                'attr' => ['placeholder' => '学校登陆邮箱'],
             ])
             ->add('user_password', 'text', [
-                'rules' => 'required',
                 'label' => '学校登陆密码',
-                'attr' => ['placeholder' => '学校登陆密码']
+                'help_block' => [
+                    'text' => '可用于登陆，密码默认：Dxjy1234',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('profile_name', 'text', ['label' => '管理员姓名'])
             ->add('profile_sex', 'select', [
@@ -60,7 +62,7 @@ class SchoolForm extends Form
             ])
             ->add('pay_number', 'text',[
                 'rules' => 'required',
-                'label' => '付款账户ID*'
+                'label' => '付款账户ID'
             ])
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',

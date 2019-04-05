@@ -13,13 +13,14 @@ class ProductForm extends Form
     {
         $this->add('name', 'text', [
                 'rules' => 'required',
-                'label' => 'Name*',
+                'label' => 'Name',
             ])
             ->add('price', 'number', [
                 'rules' => 'required',
-                'label' => 'Price*',
+                'label' => 'Price',
             ])
             ->add('description', 'text', [
+                'rules' => 'required',
                 'label' => 'Description',
             ])
             ->add('image', 'file', [

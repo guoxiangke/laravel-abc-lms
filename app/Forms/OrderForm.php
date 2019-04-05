@@ -23,17 +23,13 @@ class OrderForm extends Form
                 ]);
         }else{
            //todo permission for orders!
-           $orders = Order::with('user')
-                        ->get()
-                        ->map(function($order){
-                            $order->title = $order->title;
-                            return $order;
-                        })
-                        ->pluck('title','id')
+           $products = Product::all()
+                        ->pluck('name','id')
                         ->toArray();
             $this->add('product_id', 'select', [
-                    'label' => 'Product*',
-                    'choices' => $orders,
+                    'label' => 'Product',
+                    'rules' => 'required',
+                    'choices' => $products,
                 ]);
         }
         
