@@ -54,6 +54,8 @@ Route::group( ['middleware' => ['auth']], function() {
         'orders' => 'OrderController',
         'classRecords' => 'ClassRecordController',
 
+        'books' => 'BookController',
+
         'rrules' => 'RruleController', //except create!!! create from order
     ]);
     //覆盖create！！！

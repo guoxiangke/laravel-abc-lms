@@ -6,6 +6,10 @@
 <div class="container">
   <h1>{{__('ClassRecords')}} {{isset($roleName)? ' - ' . $userName : ''}}</h1>
   
+  <div class="show-links">
+      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+  </div>
+
   <div class="col-md-12 col-sm-12">
       <div class="table-responsive">
         <table class="table">
@@ -63,9 +67,9 @@
                       </a>
                       @endif
                     </th>
-                    <td data-label="Teacher">{{$classRecord->user->profile->name}}</td>
-                    <td data-label="student">{{$classRecord->teacher->profile->name}}</td>
-                    <td data-label="agency">{{$classRecord->agency->profile->name}}</td>
+                    <td data-label="Teacher">{{$classRecord->user->profiles->first()->name}}</td>
+                    <td data-label="student">{{$classRecord->teacher->profiles->first()->name}}</td>
+                    <td data-label="agency">{{$classRecord->agency->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m.d H:i')}}</td>
                     <td data-label="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
                     </td>

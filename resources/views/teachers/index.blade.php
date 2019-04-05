@@ -6,7 +6,8 @@
 <div class="container">
 	<h1>Teachers</h1>
 	<div class="show-links">
-		<button type="button" class="btn btn-outline-primary"><a href="{{ route('teachers.create') }}">Create</a></button>
+    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+		<a href="{{ route('teachers.create') }}" class="btn btn-outline-primary">Create</a>
 	</div>
 
     <div class="row justify-content-center">
@@ -24,20 +25,20 @@
 					@foreach($teachers as $teacher)
 					    <tr>
 					      <th scope="row"><a href="#{{$teacher->id}}">{{$teacher->id}}</a></th>
-					      <td>{{$teacher->user->profile->name}}</td>
+					      <td>{{$teacher->user->profiles->first()->name}}</td>
 					      <td>{{$teacher->user->email}}</td>
 					      <td>{{$teacher->zoom->email}}</td>
 					      <td>{{$teacher->zoom->password}}</td>
-					      <td>{{ App\Models\Profile::SEXS[$teacher->user->profile->sex] }}</td>
+					      <td>{{ App\Models\Profile::SEXS[$teacher->user->profiles->first()->sex] }}</td>
 							<?php
-								$birthday =$teacher->user->profile->birthday; 
+								$birthday =$teacher->user->profiles->first()->birthday; 
 								$school =$teacher->school; 
 								$paymethod = $teacher->user->paymethod; 
 							?>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}
 					      </td>
-					      <td>{{$teacher->user->profile->telephone}}</td>
+					      <td>{{$teacher->user->profiles->first()->telephone}}</td>
 					      <td>{{ $school ? $school->name : 'FreeLancer' }}</td>
 					      <td>{{$paymethod ? App\Models\PayMethod::TYPES[$paymethod->type] : '-'}}</td>
 					      <td>{{$paymethod ? $paymethod->number : '-'}}</td>

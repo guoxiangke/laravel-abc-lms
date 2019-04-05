@@ -10,7 +10,7 @@ class SchoolForm extends Form
     {
         $this->add('school_name', 'text',
                 [
-                'label' => '学校名字*',
+                'label' => '学校名字',
                 'rules' => 'required|min:2',
                 'error_messages' => [
                     'title.required' => 'The school name field is mandatory.'
@@ -21,16 +21,16 @@ class SchoolForm extends Form
                 'attr' => ['placeholder' => '学校Logo']
             ])
             ->add('user_email', 'email', [
-                'label' => '学校登陆邮箱*',
+                'label' => '学校登陆邮箱',
                 'rules' => 'required',
                 'attr' => ['placeholder' => '学校登陆邮箱'],
             ])
             ->add('user_password', 'text', [
                 'rules' => 'required',
-                'label' => '学校登陆密码*',
+                'label' => '学校登陆密码',
                 'attr' => ['placeholder' => '学校登陆密码']
             ])
-            ->add('profile_name', 'text', ['label' => '管理员姓名*'])
+            ->add('profile_name', 'text', ['label' => '管理员姓名'])
             ->add('profile_sex', 'select', [
                 'label' => '管理员性别',
                 'rules' => 'required',
@@ -41,11 +41,11 @@ class SchoolForm extends Form
             ->add('profile_birthday', 'date', ['label' => '管理员生日'])
             ->add('profile_telephone', 'tel', [
                 'rules' => 'required|min:8',
-                'label' => '管理员手机号*',
+                'label' => '管理员手机号',
             ])
             ->add('contact_skype', 'text',[
                 'rules' => 'required|min:4',
-                'label' => '管理员/联系人Skype*'
+                'label' => '管理员/联系人Skype'
             ])// type =0 skype number=contact_skype
             ->add('contact_remark', 'textarea', [
                 'label' => '联系方式备注',

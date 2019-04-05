@@ -8,7 +8,8 @@
 	<h1>Students</h1>
 	
 	<div class="show-links">
-		<button type="button" class="btn btn-outline-primary"><a href="{{ route('students.create') }}">Create</a></button>
+    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+		<a href="{{ route('students.create') }}" class="btn btn-outline-primary">Create</a>
 	</div>
 
     <div class="row justify-content-center">
@@ -17,26 +18,43 @@
 			  <table class="table">
 				  <thead>
 				    <tr>
-				    	@foreach($tableHeader as $value)
-				    	<th scope="col">{{ $value }}</th>
-				    	@endforeach
+				    	<th>Id</th>
+						<th>Name</th>
+						<th>Sex</th>
+						<th>Birthday</th>
+						<th>Grade</th>
+						<th>登陆手机</th>
+						<th>QQ/Wechat</th>
+						<th>支付方式</th>
+						<th>推荐人</th>
+						<th>Action</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 					@foreach($students as $student)
 					    <tr>
 					      <th scope="row" data-label="Id"><a href="#{{$student->id}}">{{$student->id}}</a></th>
-					      <td data-label="Name">{{$student->user->profile->name}}</td>
-					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$student->user->profile->sex] }}</td>
-					      <td data-label="Birthday">{{$student->user->profile->birthday->format('m/d')}}</td>
+					      <td data-label="Name">{{$student->user->profiles->first()->name}}</td>
+					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$student->user->profiles->first()->sex] }}</td>
+					      <td data-label="Birthday">
+					      	@php
+					      		$birthday = $student->user->profiles->first()->birthday;
+					      		$paymethod = $student->user->paymethod;
+					      		$profile = $student->user->profiles->first();
+					      		$recommend = $profile->recommend;
+					      		$contact = $profile->contacts->first();
+					      	@endphp
+					      	{{$birthday?$birthday->format('m/d'):'-'}}
+					      </td>
 					      <td data-label="Grade">{{ App\Models\Student::GRADES[$student->grade] }}</td>
-					      <td data-label="Telephone">{{$student->user->profile->telephone}}</td>
-					      <td data-label="PayType">{{!is_null($student->user->paymethod)?App\Models\PayMethod::TYPES[$student->user->paymethod->type]:'-'}}</td>
-					      <td data-label="PayNo">{{!is_null($student->user->paymethod)?$student->user->paymethod->number:'-'}}</td>
-					      <td data-label="Recommender">{{ !is_null($student->recommender)?$student->recommender->profile->name:'No' }}</td>
-					      <td data-label="Email">{{$student->user->email}}</td>
-					      <td data-label="Agency">{{ !is_null($student->agency)?$student->agency->profile->name:'No' }}</td>
-					      <td data-label="Email">{{$student->user->email}}</td>
+					      <td data-label="登陆手机">{{$profile->telephone}}</td>
+					      <td data-label="QQ/Wechat">
+					      	{{ $contact ?  $contact->number : '-' }}
+					      </td>
+					      <td data-label="PayType">{{ $paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number :'-'}}</td>
+					      <td data-label="推荐人">{{  
+					      	$recommend ? $recommend->profiles->first()->name : '-' }}</td>
+					      
 					      <td data-label="Action"><a href="{{ route('students.edit', $student->id) }}">Edit</a></td>
 					    </tr>
 					@endforeach

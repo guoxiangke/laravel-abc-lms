@@ -66,13 +66,13 @@ class Order extends Model  implements AuditableContract
     public function getTitleAttribute(){
         //190101-studentName-TeacherName-AgencyName-20-159
         $title = $this->created_at->format('ymd') 
-                . '-' . $this->user->profile->name 
-                . '-' . $this->teacher->profile->name 
-                . '-' . $this->agency->profile->name 
+                . '-' . $this->user->profiles->first()->name 
+                . '-' . $this->teacher->profiles->first()->name 
+                . '-' . $this->agency->profiles->first()->name 
                 . '-' . $this->period ;
                 
         //学生和老师不显示价格
-        if(!Auth::user()->hasAnyRole(['student','teacher',])){
+        if(Auth::user() && !Auth::user()->hasAnyRole(['student','teacher',])){
             $title .= '-' . $this->price;
         }
         return $title;

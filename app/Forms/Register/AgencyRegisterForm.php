@@ -75,7 +75,7 @@ class AgencyRegisterForm extends Form
             ])//todo 0-100 check!
             ->add('agency_id', 'select', [
                 'label' => '上级代理/推荐人',
-                'choices' => Agency::with('profile')->get()->pluck('profile.name','id')->toArray(),
+                'choices' => Agency::with('profile')->get()->pluck('profiles.0.name','id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [

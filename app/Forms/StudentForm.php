@@ -16,34 +16,7 @@ class StudentForm extends Form
     {
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
-                'label' => '姓名*',
-            ])
-            ->add('name', 'text', [
-                'label' => '英文名',
-            ])
-            ->add('profile_telephone', 'tel', [
-                'rules' => 'required|min:11',
-                'label' => '手机号*',
-                'attr' => ['placeholder' => '可用于登陆']
-            ])
-            ->add('user_password', 'text', [
-                'rules' => 'required|min:8',
-                'label' => '登陆密码*',
-                'attr' => ['placeholder' => '默认：Teacher123']
-            ])
-            ->add('contact_type', 'select', [
-                'label' => '其他联系方式',
-                'rules' => 'required',
-                'choices' => Contact::TYPES,
-                'empty_value' => '=== Select ==='
-            ])
-            ->add('contact_number', 'text',[
-                'rules' => 'required|min:4',
-                'label' => '联系方式账户ID'
-            ])
-            ->add('contact_remark', 'textarea', [
-                'label' => '联系方式备注',
-                'attr' => ['rows' => 2, 'placeholder'=>'登陆邮箱：agency_name@teleNo.com'],
+                'label' => '姓名',
             ])
             ->add('profile_sex', 'select', [
                 'label' => '性别',
@@ -59,20 +32,42 @@ class StudentForm extends Form
                 'choices' => Student::GRADES,
                 'empty_value' => '=== Select ==='
             ])
+            ->add('profile_telephone', 'tel', [
+                'rules' => 'required|min:11',
+                'label' => '手机号',
+                'help_block' => [
+                    'text' => '可用于登陆，密码默认：dxjy1234',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
+            ])
+            ->add('name', 'text', [
+                'label' => '英文名',
+            ])
             ->add('book_id', 'select', [
-                'rules' => 'required',
                 'label' => '同步教材',
                 'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
+                'empty_value' => '=== Select ==='
+            ])
+            ->add('contact_number', 'text',[
+                'label' => 'Wechat/QQ/手机号',
+            ])
+            ->add('contact_remark', 'textarea', [
+                'label' => '联系方式备注',
+                'attr' => [
+                    'rows' => 2,
+                    'placeholder' => 'Wechat/QQ/手机号 可不填,备注写这里',
+
+                ], 
+            ])
+            ->add('recommend_uid', 'select', [
+                'label' => '介绍人',
+                'choices' => Student::with('profiles')->get()->pluck('profiles.0.name','id')->merge(Agency::with('profiles')->get()->pluck('profiles.0.name','id'))->unique()->toArray(), //包括代理/学生
                 'empty_value' => '=== Select ==='
             ])
             ->add('remark', 'textarea', [
                 'label' => '备注',
                 'attr' => ['rows' => 2],
-            ])
-            ->add('recommend_uid', 'select', [
-                'label' => '介绍人',
-                'choices' => Student::with('profile')->get()->pluck('profile.name','id')->merge(Agency::with('profile')->get()->pluck('profile.name','id'))->unique()->toArray(), //包括代理/学生
-                'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

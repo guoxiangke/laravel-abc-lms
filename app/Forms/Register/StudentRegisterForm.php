@@ -23,7 +23,6 @@ class StudentRegisterForm extends Form
             ])
             ->add('book_id', 'select', [
                 'label' => '同步教材',
-                'rules' => 'required',
                 'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
@@ -60,7 +59,7 @@ class StudentRegisterForm extends Form
                 ],
             ]);
             //如果是默认推荐人，给更改机会
-            if(auth()->user()->profile->recommend_uid === 1){
+            if(auth()->user()->profiles->first()->recommend_uid === 1){
                 $this->add('recommend_telephone', 'tel', [
                     'label' => '推荐人手机号',
                     'help_block' => [

@@ -28,6 +28,11 @@ class Teacher extends Model
         return $this->hasOne(School::class, 'id', 'school_id');
     }
 
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class, 'user_id', 'user_id');
+    }
+    
     public function zoom()
     {
         return $this->hasOne(Zoom::class, 'id', 'zoom_id');

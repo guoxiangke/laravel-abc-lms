@@ -13,9 +13,12 @@ class TeacherForm extends Form
     public function buildForm()
     {
         //select zooms un-used!
-        $zooms = Zoom::with('teacher')->get()->filter(function($zoom){
-            return !$zoom->teacher;
-        })->pluck('email','id')->toArray();
+        $zooms = Zoom::with('teacher')
+            ->orderBy('id','desc')->get()->filter(function($zoom){
+                return !$zoom->teacher;
+            })
+            ->pluck('email','id')
+            ->toArray();
 
         $this->add('school_id', 'select', [
                 'label' => 'School',

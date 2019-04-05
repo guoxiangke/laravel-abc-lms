@@ -28,7 +28,9 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::with('user','user.profiles','user.paymethod')->paginate(10);
+        $agencies = Agency::with('user','user.profiles','user.paymethod')
+            ->orderBy('id','desc')
+            ->paginate(100);
         $tableHeader = ['Id','Name','Email','Sex','Birthday','Telephone','PayType','PayNo','推荐人','Action'];
         return view('agencies.index',compact('agencies','tableHeader'));
     }
@@ -123,21 +125,21 @@ class AgencyController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
-        $profile = $profile->fill([
+        $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
         ])->save();
-        $profile = $user->profile()->save($profile);
+        // $profile = $user->profile()->save($profile);
 
-        $contact = Contact::firstOrNew([
+        Contact::firstOrNew([
             'profile_id' => $profile->id,
             'type' => $request->input('contact_type'),
             'number' => $request->input('contact_number'),
             'remark' => $request->input('contact_remark'),
-        ]);
-        $contact = $profile->contact()->save($contact);
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
 
         //3. 必有 save payment
         $paymethod = PayMethod::create([

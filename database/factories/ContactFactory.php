@@ -10,7 +10,7 @@ $factory->define(Contact::class, function (Faker $faker) {
                 ->create()
                 ->id;
         },
-        'type' => rand(0,3),
+        'type' => rand(0,2),
         'number' => $faker->randomNumber(8),
         'remark' => $faker->paragraph,
     ];

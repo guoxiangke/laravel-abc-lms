@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
+use App\Models\Book;
+use App\Forms\BookForm;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class BookController extends Controller
 {
+
+    use FormBuilderTrait;
+
+    public function __construct() {
+        $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::orderBy('id','desc')
+                    ->paginate(100);
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -24,7 +36,11 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $form = $this->form(BookForm::class, [
+            'method' => 'POST',
+            'url' => action('BookController@store')
+        ]); 
+        return view('books.create', compact('form'));
     }
 
     /**
@@ -35,7 +51,10 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = new Book;
+        $book->fill($request->all())->save();
+        flashy()->success('创建成功');
+        return redirect()->route('books.index');
     }
 
     /**

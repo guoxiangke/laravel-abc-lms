@@ -36,13 +36,15 @@ class OrderController extends Controller
     {
         $orders = Order::with(
             'user', 'user.profiles',
-            'teacher', 'teacher.profile',
-            'agency', 'agency.profile',
+            'teacher', 'teacher.profiles',
+            'agency', 'agency.profiles',
             'schedules',
             'schedules.classRecords',
             'book',
             'product',
-        )->paginate(10); //todo debug 第二页有N+1问题
+        )
+        ->orderBy('id','desc')
+        ->paginate(100);//todo debug 第二页有N+1问题
         return view('orders.index', compact('orders'));
     }
 

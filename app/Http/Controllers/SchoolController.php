@@ -28,7 +28,11 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::with('user', 'user.paymethod', 'user.profiles', 'user.profiles.contacts')->paginate(10);
+        $schools = School::with(
+                'user', 'user.paymethod', 'user.profiles', 'user.profiles.contacts'
+            )
+            ->orderBy('id','desc')
+            ->paginate(100);
         //'ContactRemark' , 'PayRemark'
         $tableHeader = ['Id', 'Name', 'Email', 'Sex',  'Tel', 'Contact', 'PayMent', 'Action'];
         return view('schools.index',compact('schools','tableHeader'));
@@ -93,7 +97,6 @@ class SchoolController extends Controller
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
         ])->save();
-        // $profile = $user->profile()->save($profile);
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,

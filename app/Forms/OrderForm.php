@@ -37,9 +37,9 @@ class OrderForm extends Form
                 ]);
         }
         
-        $students = User::role('student')->with('profile')->get()->pluck('profile.name','id')->toArray();
-        $teachers = User::role('teacher')->with('profile')->get()->pluck('profile.name','id')->toArray();
-        $agencies = User::role('agency')->with('profile')->get()->pluck('profile.name','id')->toArray();
+        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
         $this
             ->add('user_id', 'select', [
                 'label' => 'Student',

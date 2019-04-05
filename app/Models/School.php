@@ -21,6 +21,11 @@ class School extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class, 'user_id', 'user_id');
+    }
+
     public function teachers()
     {
         return $this->hasMany(Teacher::class);

@@ -41,9 +41,9 @@
                 <td data-label="#">
                   <a target="_blank" href="{{ route('classRecords.index') }}">RecordsByOrder</a>
                 </td>
-                <td data-label="Student">{{$order->user->profile->name}}</td>
-                <td data-label="Teacher">{{$order->teacher->profile->name}}</td>
-                <td data-label="Agency">{{$order->agency->profile->name}}</td>
+                <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
+                <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
+                <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
                 <td data-label="Period">{{$order->period}}</td>
                 <td data-label="已上(含今天)">{{$order->classDoneRecords()->count()}}</td>
                 <td data-label="老师请假">{{$order->classRecordsAolBy('teacher')->count()}}</td>

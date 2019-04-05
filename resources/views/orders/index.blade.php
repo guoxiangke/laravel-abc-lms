@@ -6,7 +6,8 @@
 <div class="container">
 	<h1>Orders</h1>
   <div class="show-links">
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('orders.create') }}">Create</a></button>
+      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+      <a href="{{ route('orders.create') }}" class="btn btn-outline-primary">Create</a>
   </div>
 
   <div class="col-md-12 col-sm-12"> 
@@ -31,9 +32,9 @@
               @foreach($orders as $order)
                   <tr>
                     <th scope="row">{{$order->id}}</th>
-                    <td data-label="Student">{{$order->user->profile->name}}</td>
-                    <td data-label="Teacher">{{$order->teacher->profile->name}}</td>
-                    <td data-label="Agency">{{$order->agency->profile->name}}</td>
+                    <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
+                    <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
+                    <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
                     <td data-label="Book">《{{$order->book->name}}》</td>
                     <!-- <td data-label="Price">{{$order->product->name}}</td> -->
                     <td data-label="Price">{{$order->price}}</td>

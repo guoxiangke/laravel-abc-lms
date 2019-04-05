@@ -36,9 +36,11 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('user',
-            'user.paymethod', 'user.profiles', 'user.profiles.contact',)->paginate(10);
-        $tableHeader = ['Id','Name','Sex','Birthday','Grade','Telephone','PayType','PayNo','推荐人','代理','Email','Action'];
-        return view('students.index', compact('students','tableHeader'));
+                'user.paymethod', 'user.profiles', 'user.profiles.contacts'
+            )
+            ->orderBy('id','desc')
+            ->paginate(100);
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -91,7 +93,7 @@ class StudentController extends Controller
         $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
         $userProfileNeedSave  = false;
         if($recommendTelephone) {
-            $recommendUser = Profile::where('telephone', '86' + $recommendTelephone)->first();
+            $recommendUser = Profile::where('telephone', $recommendTelephone)->first();
             if($recommendUser){
                 $userProfile->recommend_uid = $recommendUser->user_id;
                 $userProfileNeedSave  = true;
@@ -142,18 +144,14 @@ class StudentController extends Controller
         }
         // create login user
         $userName = 'student_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type');//0-4
-        $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
-        $user = User::where('email',$email)->first();
+        $email = $userName.'@dx.com';
+        $user = User::where('email', $email)->first();
 
         if(!$user){
-            if($password=$request->input('user_password')?:'Student1234'){
-                $password = Hash::make($password);
-            }
             $userData = [
                 'name' => $userName,
                 'email' => $email,
-                'password' => $password,
+                'password' => Hash::make('dxjy1234')
             ];
             $user = User::create($userData);
         }
@@ -172,22 +170,21 @@ class StudentController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
-        $profile = $profile->fill([
+        $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
             'recommend_uid' => $request->input('recommend_uid'),
         ])->save();
-        $profile = $user->profile()->save($profile);
 
-        $contact = Contact::firstOrNew([
+        Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => $request->input('contact_type'),
-            'number' => $request->input('contact_number'),
+            'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
+            'number' => $request->input('contact_number')?: $request->input('profile_telephone'),
             'remark' => $request->input('contact_remark'),
-        ]);
-        $contact = $profile->contact()->save($contact);
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
 
        
         flashy()->success('成功创建：'.$request->input('profile_name'));

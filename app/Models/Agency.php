@@ -33,9 +33,9 @@ class Agency extends Model
         return $this->hasOne(User::class, 'id', 'agency_uid');
     }
 
-    public function profile()
+    public function profiles()
     {
-        return $this->hasOne(Profile::class, 'user_id', 'user_id');
+        return $this->hasMany(Profile::class, 'user_id', 'user_id');
     }
 
     public function orders()

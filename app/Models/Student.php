@@ -53,9 +53,9 @@ class Student extends Model implements AuditableContract
     }
 
 
-    public function profile()
+    public function profiles()
     {
-        return $this->hasOne(Profile::class, 'user_id', 'user_id');
+        return $this->hasMany(Profile::class, 'user_id', 'user_id');
     }
 
 

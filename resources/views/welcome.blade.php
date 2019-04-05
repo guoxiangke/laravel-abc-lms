@@ -86,6 +86,7 @@
                 <div class="links">
                     <a href="/schools">Schools</a>
                     <a href="/zooms">Zooms</a>
+                        <a href="/books">Books</a>
                     <a href="/teachers">Teachers</a>
                     <a href="/students">Students</a>
                     <a href="/agencies">Agency</a>

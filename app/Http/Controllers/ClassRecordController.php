@@ -37,10 +37,12 @@ class ClassRecordController extends Controller
     {
         $classRecords = ClassRecord::with(
             'rrule',
-            'teacher', 'teacher.profile',
-            'rrule.order.agency', 'rrule.order.agency.profile',
+            'teacher', 'teacher.profiles',
+            'rrule.order.agency', 'rrule.order.agency.profiles',
             'rrule.order.user', 'rrule.order.user.profiles',
-            )->paginate(100);
+            )
+            ->orderBy('id','desc')
+            ->paginate(100);
         return view('classRecords.index', compact('classRecords'));
     }
 

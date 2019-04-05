@@ -7,7 +7,8 @@
 	<h1>Products</h1>
 
   <div class="show-links">
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('products.create') }}">Create</a></button>
+      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+      <a href="{{ route('products.create') }}" class="btn btn-outline-primary">Create</a>
   </div>
 
     <div class="col-md-12 col-sm-12"> 

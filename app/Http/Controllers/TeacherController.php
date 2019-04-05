@@ -30,10 +30,12 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with(
-            'user','school','zoom', 
-            'user.paymethod', 'user.profiles', 'user.profiles.contact',
-            'school',
-        )->paginate(10);
+                'user','school','zoom', 
+                'user.paymethod', 'user.profiles', 'user.profiles.contacts',
+                'school',
+            )
+            ->orderBy('id','desc')
+            ->paginate(100);
         // dd($teachers->toArray());
         $tableHeader = ['id', 'Name', 'Email', 'ZoomEmail', 'ZoomPassword', 'Sex','Birthday', 'telephone',  'School', 'PayType', 'PayNO', 'Action'];
         return view('teachers.index',compact('teachers','tableHeader'));
@@ -137,15 +139,15 @@ class TeacherController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
-        $profile = $profile->fill([
+        $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
-        ]);
-        $profile = $user->profile()->save($profile);
+        ])->save();
+        // $profile = $user->profiles()->save($profile);
 
-        $contact = Contact::firstOrNew([
+        Contact::firstOrNew([
             'profile_id' => $profile->id,
             'type' => $request->input('contact_type'),
             'number' => $request->input('contact_number'),

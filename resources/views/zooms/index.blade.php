@@ -6,7 +6,8 @@
 <div class="container">
 	<h1>Zooms</h1>
   <div class="show-links">
-    <button type="button" class="btn btn-outline-primary"><a href="{{ route('zooms.create') }}">Create</a></button>
+    <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+    <a href="{{ route('zooms.create') }}" class="btn btn-outline-primary">Create</a>
   </div>
 
     <div class="col-md-12 col-sm-12"> 
@@ -29,7 +30,7 @@
                       <td data-label="Email">{{$zoom->email}}</td>
                       <td data-label="Password">{{$zoom->password}}</td>
                       <td data-label="PMI">{{$zoom->pmi}}</td>
-                      <td data-label="Used">{{$zoom->teacher?$zoom->teacher->user->profile->name:'unused'}}</td>
+                      <td data-label="Used">{{$zoom->teacher?$zoom->teacher->user->profiles->first()->name:'unused'}}</td>
                       <td data-label="Action"><a href="{{ route('zooms.edit', $zoom->id) }}">Edit</a></td>
                     </tr>
                 @endforeach

@@ -40,10 +40,12 @@ class RruleController extends Controller
             'order.user',
             'order.user.profiles',
             'order.teacher',
-            'order.teacher.profile',
+            'order.teacher.profiles',
             'order.agency',
-            'order.agency.profile',
-            )->paginate(10);
+            'order.agency.profiles',
+            )
+            ->orderBy('id','desc')
+            ->paginate(100);
         return view('rrules.index', compact('rrules'));
     }
 
