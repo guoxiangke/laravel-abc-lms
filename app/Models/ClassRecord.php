@@ -9,15 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Laravelista\Comments\Commentable;
+
+use Actuallymab\LaravelComment\Contracts\Commentable;
+use Actuallymab\LaravelComment\HasComments;
+
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class ClassRecord extends Model implements AuditableContract, HasMedia
+class ClassRecord extends Model implements AuditableContract, HasMedia, Commentable
 {
 	use SoftDeletes;
 	use Auditable;
-    use Commentable;
+    use HasComments;
     use HasMediaTrait;
 
     public function registerMediaCollections()

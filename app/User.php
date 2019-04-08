@@ -15,15 +15,14 @@ use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Profile;
 use App\Models\PayMethod;
-
-use Laravelista\Comments\Commenter;
+use Actuallymab\LaravelComment\CanComment;
 
 class User extends Authenticatable implements HasMedia
 {
     use Notifiable;
     use HasRoles;
     use HasMediaTrait;
-    use Commenter;
+    use CanComment;
 
     public function registerMediaCollections()
     {
