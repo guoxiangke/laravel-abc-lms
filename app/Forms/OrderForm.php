@@ -9,6 +9,7 @@ use App\Models\School;
 use App\Models\Product;
 use App\Models\Zoom;
 use App\Models\Order;
+use App\Models\Book;
 use App\User;
 
 class OrderForm extends Form
@@ -36,6 +37,7 @@ class OrderForm extends Form
         $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
         $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
         $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+        $books = Book::where('type',1)->get()->pluck('name','id')->toArray();
         $this
             ->add('user_id', 'select', [
                 'label' => 'Student',
@@ -55,7 +57,7 @@ class OrderForm extends Form
             ])
             ->add('book_id', 'select', [
                 'label' => 'Book',
-                'choices' => $students,
+                'choices' => $books,
                 'selected' => 0,
                 'empty_value' => '=== Select ==='
             ])
