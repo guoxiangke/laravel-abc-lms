@@ -7,7 +7,8 @@ use App\Models\School;
 use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\PayMethod;
-use App\Forms\SchoolForm;
+use App\Forms\SchoolForm as CreateForm;
+use App\Forms\Edit\SchoolForm as EditForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -45,7 +46,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        $form = $this->form(SchoolForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('SchoolController@store')
             // 'url' => route('schools.store', [],false),
@@ -61,7 +62,7 @@ class SchoolController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(SchoolForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -137,7 +138,15 @@ class SchoolController extends Controller
      */
     public function edit(school $school)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('SchoolController@update', ['id'=>$school->id])
+            ],
+            ['entity' => $school],
+        ); 
+        return view('schools.edit', compact('form'));
     }
 
     /**
@@ -149,7 +158,64 @@ class SchoolController extends Controller
      */
     public function update(Request $request, school $school)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        // create login user
+        $user = $school->user;
+        $paymethod = $user->paymethod;
+        
+        $profile = $user->profiles->first();
+        $contact = $profile->contacts->first();
+
+        $user->fill([
+            'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
+            'email' => $request->input('user_email'),
+            'password' => Hash::make($request->input('password')?:'Dxjy1234')
+        ])->save();
+        //give role
+        // $user->assignRole(User::ROLES['school']);
+
+        //todo 
+        // dd(Storage::disk('onedrive')->put('/', $request->file('image'))) ;
+        // $user->addMedia($pathToImage)->toMediaCollection('avatar');
+        // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
+
+        //0.save school
+        $school->fill([
+            'name' => $request->input('school_name'),
+        ])->save();
+        // $school = $user->school()->save($school);
+
+        //确保只有一个手机号
+        $profile->fill([
+            'telephone' => $request->input('profile_telephone'),
+            // 'user_id' => $user->id,
+            'name' => $request->input('profile_name'),
+            'sex' => $request->input('profile_sex'),
+            'birthday' =>  $request->input('profile_birthday'),
+        ])->save();
+
+        $contact->fill([
+            // 'profile_id' => $profile->id,
+            'type' => 0, //Contact::TYPES[0] = skype
+            'number' => $request->input('contact_skype'),
+            'remark' => $request->input('contact_remark'),
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
+
+        $paymethod->fill([
+            'type' => $request->input('pay_method'),
+            //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'number' => $request->input('pay_number'),
+            'remark' => $request->input('pay_remark'),
+        ])->save();
+        // $user->paymethod()->save($paymethod);
+
+        flashy()->success('Update Success');
+        return redirect()->route('schools.index');
     }
 
     /**

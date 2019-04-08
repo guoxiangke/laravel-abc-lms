@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Zoom;
 use App\Models\Teacher;
-use App\Forms\ZoomForm;
+use App\Forms\ZoomForm as CreateForm;
+use App\Forms\Edit\ZoomForm as EditForm;
+
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Http\Request;
@@ -37,7 +39,7 @@ class ZoomController extends Controller
      */
     public function create()
     {
-        $form = $this->form(ZoomForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('ZoomController@store')
         ]); 
@@ -82,7 +84,15 @@ class ZoomController extends Controller
      */
     public function edit(Zoom $zoom)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('ZoomController@update', ['id'=>$zoom->id])
+            ],
+            ['entity' => $zoom],
+        ); 
+        return view('zooms.edit', compact('form'));
     }
 
     /**
@@ -92,9 +102,20 @@ class ZoomController extends Controller
      * @param  \App\Zoom  $zoom
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zoom $zoom)
+    public function update(Request $request, Zoom $zoom, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        // dd($rrule->toArray(),$form->isValid(),$form->getErrors());
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        //https://stackoverflow.com/questions/1809494/post-unchecked-html-checkboxes
+        $data = $request->all();
+        $zoom = $zoom->fill($data);
+        // dd($rrule->toArray());
+        $zoom->save();
+        flashy()->success('Update Success');
+        return redirect()->route('zooms.index');
     }
 
     /**

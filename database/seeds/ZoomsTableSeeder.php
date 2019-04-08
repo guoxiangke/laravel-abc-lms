@@ -55,5 +55,42 @@ class ZoomsTableSeeder extends Seeder
   			  	'pmi' => $pmi
   			]);
     	}
+
+        Zoom::create([
+            'email' => 'teacher4stef@daxiangyingyu.com',
+            'password' => 'j7PL2wjX',
+            'pmi' => '6485850514'
+        ]);
+
+        $str="teacher_32504 Lovejene 7666711926
+            teacher_32506 Loveging1 3952098558
+            teacher_32507 Lovedoll 550842582
+            teacher_32503 Lovegelyn 7373218271
+            teacher_32519 Lovehaxan 7145942980
+            teacher_32518 Lovecielo 3652976112
+            teacher_32501 Lovenice 5957616022
+            teacher_32520 Lovejane 3138828829
+            teacher_32514 Loveshin 7975148749
+            teacher_32508 Lovesebastian 3556986788
+            teacher_32540 Teacherapril1 3682895185
+            teacher_32510 Lovemae 6095902336
+            teacher_32524 Lovemari1 4215695517
+            teacher_32513 Lovestrawberry 4420613269";
+        $accounts = explode(PHP_EOL, $str);
+        foreach ($accounts as $account) {
+            $info = explode(' ', trim($account));
+            Zoom::create([
+                'email' => $info[0]. '@abc-chinaedu.com',
+                'password' =>  $info[1],
+                'pmi' => $info[2],
+            ]);
+        }
+
+        Zoom::create([
+            'email' => 'zooms@daxiangyingyu.com',
+            'password' => 'Love0325',
+            'pmi' => '6272029517'
+        ]);
+
     }
 }

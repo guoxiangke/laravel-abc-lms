@@ -8,7 +8,8 @@ use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\PayMethod;
 use App\Models\Zoom;
-use App\Forms\TeacherForm;
+use App\Forms\TeacherForm as CreateForm;
+use App\Forms\Edit\TeacherForm as EditForm;
 use App\Forms\Register\TeacherRegisterForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -48,7 +49,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $form = $this->form(TeacherForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('TeacherController@store')
         ]); 
@@ -91,7 +92,7 @@ class TeacherController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(TeacherForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -190,7 +191,15 @@ class TeacherController extends Controller
      */
     public function edit(teacher $teacher)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('TeacherController@update', ['id'=>$teacher->id])
+            ],
+            ['entity' => $teacher],
+        ); 
+        return view('teachers.edit', compact('form'));
     }
 
     /**
@@ -200,9 +209,88 @@ class TeacherController extends Controller
      * @param  \App\teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, teacher $teacher)
+    public function update(Request $request, teacher $teacher, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $user = $teacher->user;
+        $schoolId = $teacher->school?$teacher->school->id:0;
+        $zoomId = $teacher->zoom?$teacher->zoom->id:0;
+        // dd($zoomId);
+        $paymethod = $user->paymethod;
+        
+        $profile = $user->profiles->first();
+        // $profile = $teacher->profiles->first();
+        $contact = $profile->contacts->first();
+
+        // create login user
+        $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
+        $contactType = $request->input('contact_type')?:0;//0-4
+        $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
+
+        if($password=$request->input('user_password')?:'Teacher123'){
+            $password = Hash::make($password);
+        }
+        $userData = [
+            'name' => $teacherUserName,
+            'email' => $teacherEmail,
+            'password' => $password,
+        ];
+        $user->fill($userData)->save();
+
+        // $user->assignRole(User::ROLES['teacher']);
+
+        $zoomId = $request->input('zoom_id');
+        if(!$zoomId){
+            $zoom = Zoom::firstOrNew([
+                'email' => $request->input('zoom_email'),
+                'password' => $request->input('zoom_password'),
+                'pmi' => $request->input('zoom_pmi'),
+            ]);
+            $zoomId = $zoom->id;
+            // $teacher->zoom()->save($zoom);
+        }
+
+        $teacher->fill([
+            // 'user_id' => $user->id,
+            'zoom_id' => $zoomId,
+            'school_id' => $request->input('school_id'),
+        ])->save();
+        
+        //确保只有一个手机号
+        $profile->fill([
+            'telephone' => $request->input('profile_telephone'),
+            // 'user_id' => $user->id,
+            'name' => $request->input('profile_name'),
+            'sex' => $request->input('profile_sex'),
+            'birthday' =>  $request->input('profile_birthday'),
+        ])->save();
+        // $profile = $user->profiles()->save($profile);
+
+        $contact->fill([
+            // 'profile_id' => $profile->id,
+            'type' => $contactType,
+            'number' => $request->input('contact_number'),
+            'remark' => $request->input('contact_remark'),
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
+
+        //3. 中教必有 save payment
+        if($request->input('pay_number') || $request->input('pay_remark')){
+            $paymethod->fill([
+                // 'user_id' => $user->id,
+                'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                'number' => $request->input('pay_number'),
+                'remark' => $request->input('pay_remark'),
+            ])->save();
+            // $paymethod = $user->paymethod()->save($paymethod);
+        }
+
+        flashy()->success('Update Success');
+        return redirect()->route('teachers.index');
     }
 
     /**

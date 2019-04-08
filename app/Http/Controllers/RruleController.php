@@ -149,7 +149,6 @@ class RruleController extends Controller
         $rrule->save();
         flashy()->success('Update Success');
         return redirect()->back();
-        
     }
 
     /**
