@@ -17,4 +17,9 @@ class Book extends Model
     ];
     const TYPES = ['同步教材','外教教材'];
     const SYNC = 0; //同步教材
+
+
+    public function getNameAttribute($value){
+      return '【' . $this->publisher . '】' . $value;
+    }
 }

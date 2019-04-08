@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->command->info('Default Permissions added.');
         $this->call(ZoomsTableSeeder::class);
+        $this->call(BooksTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
     }
