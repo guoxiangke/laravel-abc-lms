@@ -31,8 +31,8 @@ class RruleObserver
      */
     public function updated(Rrule $rrule)
     {
-        if($rrule->type == Rrule::TYPE_SCHEDULE){
-            ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
-        }
+        // if($rrule->type == Rrule::TYPE_SCHEDULE){
+        //     ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
+        // }
     }
 }

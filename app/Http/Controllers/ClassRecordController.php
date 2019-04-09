@@ -112,7 +112,7 @@ class ClassRecordController extends Controller
             ],
             ['entity' => $classRecord],
         ); 
-        return view('classrecords.edit', compact('form', 'classRecord'));
+        return view('classRecords.edit', compact('form', 'classRecord'));
     }
 
     /**
