@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\RruleForm;
+use App\Forms\RruleForm as CreateForm;
+use App\Forms\Edit\RruleForm as EditForm;
 
 use App\Repositories\RruleRepository;
 use App\Models\Rrule;
@@ -56,7 +57,7 @@ class RruleController extends Controller
      */
     public function create(Order $order)
     {
-        $form = $this->form(RruleForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('RruleController@store')
         ], ['entity' => $order]); 
@@ -115,7 +116,7 @@ class RruleController extends Controller
     public function edit(Rrule $rrule)
     {
         $form = $this->form(
-            RruleForm::class, 
+            EditForm::class, 
             [
                 'method' => 'PUT',
                 'url' => action('RruleController@update', ['id'=>$rrule->id])
@@ -134,7 +135,7 @@ class RruleController extends Controller
      */
     public function update(Request $request, Rrule $rrule, FormBuilder $formBuilder)
     {
-        $form = $this->form(RruleForm::class);
+        $form = $this->form(EditForm::class);
         // dd($rrule->toArray(),$form->isValid(),$form->getErrors());
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -148,7 +149,7 @@ class RruleController extends Controller
         // dd($rrule->toArray());
         $rrule->save();
         flashy()->success('Update Success');
-        return redirect()->back();
+        return redirect()->route('rrules.index');
     }
 
     /**

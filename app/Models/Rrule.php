@@ -23,7 +23,7 @@ class Rrule  extends Model implements AuditableContract
     // RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU
     protected $fillable = [
         'string',//ori_sting withour first Line
-        'text',//TransformerText
+        // 'text',//TransformerText
         'type', //'AOL', 0 'SCHEDULE',1
         'order_id',
         'start_at',

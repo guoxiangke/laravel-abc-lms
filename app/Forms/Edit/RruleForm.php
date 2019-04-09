@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Forms;
+namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
 use App\Models\Rrule;
@@ -10,11 +10,18 @@ class RruleForm extends Form
 {
     public function buildForm()
     {
-        $this
+
+        $rrule = $this->getData('entity');
+        if(!$rrule) return;
+        
+        $this->add('order', 'static', [
+                    'label' => '订单Id',
+                    'value' => $rrule->order->title,
+            ])
             ->add('type', 'checkbox', [
                 'value' => 1,
                 'label' => '计划类型',
-                'checked' => false,
+                'checked' => $rrule->type,
                 'help_block' => [
                     'text' => '默认是请假，如不是请打✓✔☑（即创建新的上课计划） ',
                     'tag' => 'small',
@@ -23,6 +30,7 @@ class RruleForm extends Form
             ])
             ->add('string', 'textarea', [
                 'label' => '计划*',
+                'value' => $rrule->string,
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"

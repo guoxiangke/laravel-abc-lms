@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\OrderForm;
+use App\Forms\OrderForm as CreateForm;
+use App\Forms\Edit\OrderForm as EditForm;
 
 class OrderController extends Controller
 {
@@ -56,7 +57,7 @@ class OrderController extends Controller
     public function create()
     {
 
-        $form = $this->form(OrderForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('OrderController@store')
         ]); 
@@ -71,7 +72,7 @@ class OrderController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(OrderForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -86,7 +87,7 @@ class OrderController extends Controller
             'period' => $request->input('period'),
             'expired_at' => $request->input('expired_at'),
             'remark' => $request->input('remark'),
-            // 'status' => 1, //default
+            'status' => $request->input('status'),
         ]);
         if(isset($order->id)){
             $order->price = $request->input('price'); //还原价格
@@ -206,20 +207,20 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\order  $order
+     * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(order $order)
+    public function edit(Order $order)
     {
         $form = $this->form(
-            OrderForm::class, 
+            EditForm::class, 
             [
                 'method' => 'PUT',
-                'url' => action('OrderController@update', ['id'=>$order->id])
+                'url' => action('OrderController@update', ['id' => $order->id])
             ],
             ['entity' => $order],
         ); 
-        return view('rrules.edit', compact('form'));
+        return view('orders.edit', compact('form'));
     }
 
     /**
@@ -229,9 +230,29 @@ class OrderController extends Controller
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, order $order)
+    public function update(Request $request, Order $order, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $order->fill([
+            'user_id' => $request->input('user_id'),//student_uid
+            'teacher_uid' => $request->input('teacher_uid')?:1,
+            'agency_uid' =>  $request->input('agency_uid')?:1,
+            'book_id' =>  $request->input('book_id')?:1 ,
+            'product_id' => $request->input('product_id'),
+            'price' => $request->input('price'),
+            'period' => $request->input('period'),
+            'expired_at' => $request->input('expired_at'),
+            'remark' => $request->input('remark'),
+            'status' => $request->input('status'),
+        ])->save();
+        
+        $order->rrules->first()->fill(['string'=>$request->input('rrule')])->save();
+        flashy()->success('Update Success');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -240,7 +261,7 @@ class OrderController extends Controller
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(order $order)
+    public function destroy(Order $order)
     {
         //
     }

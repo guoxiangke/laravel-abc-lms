@@ -72,7 +72,8 @@ class AgencyForm extends Form
                 'selected' => 0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('agency_discount', 'text',[
+            ->add('agency_discount', 'number',[
+                'rules' => 'min:0|max:100',
                 'label' => '优惠折扣0-100'
             ])//todo 0-100 check!
             ->add('agency_id', 'select', [
