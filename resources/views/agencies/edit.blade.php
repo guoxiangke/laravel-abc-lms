@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Create Book')
+@section('title', __('Edit Anency'))
 
 @section('content')
 <div class="container">
-	<h1>Create Book</h1>
-
+	<h1>{{ __('Edit Anency') }}</h1>
     <div class="show-links">
-        <a href="{{ route('zooms.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+        <a href="{{ route('agencies.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
     </div>
 
     <div class="row justify-content-center">

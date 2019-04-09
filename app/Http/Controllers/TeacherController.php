@@ -124,18 +124,10 @@ class TeacherController extends Controller
         $user->teacher()->save($teacher);
 
 
-        if(! $zoomId = $request->input('zoom_id')){
-            $zoom = Zoom::firstOrNew([
-                'email' => $request->input('zoom_email'),
-                'password' => $request->input('zoom_password'),
-                'pmi' => 1111,//$request->input('zoom_pmi'),
-            ]);
-            $zoomId = $zoom->id;
-            // $teacher->zoom()->save($zoom);
+        if($zoomId = $request->input('zoom_id')){
+            $teacher->zoom_id = $zoomId;
+            $teacher->save();
         }
-
-        $teacher->zoom_id = $zoomId;
-        $teacher->save();
         
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -242,22 +234,10 @@ class TeacherController extends Controller
         $user->fill($userData)->save();
 
         // $user->assignRole(User::ROLES['teacher']);
-
-        $zoomId = $request->input('zoom_id');
-        if(!$zoomId){
-            $zoom = Zoom::firstOrNew([
-                'email' => $request->input('zoom_email'),
-                'password' => $request->input('zoom_password'),
-                'pmi' => $request->input('zoom_pmi'),
-            ]);
-            $zoomId = $zoom->id;
-            // $teacher->zoom()->save($zoom);
-        }
-
         $teacher->fill([
             // 'user_id' => $user->id,
-            'zoom_id' => $zoomId,
-            'school_id' => $request->input('school_id'),
+            'zoom_id' => $request->input('zoom_id')?:NULL,
+            'school_id' => $request->input('school_id')?:NULL,
         ])->save();
         
         //确保只有一个手机号
@@ -266,7 +246,7 @@ class TeacherController extends Controller
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' => $request->input('profile_birthday'),
         ])->save();
         // $profile = $user->profiles()->save($profile);
 

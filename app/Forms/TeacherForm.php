@@ -69,30 +69,6 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('zoom_email', 'email', [
-                'label' => 'Zoom邮箱',
-                'help_block' => [
-                    'text' => '新增Zoom登陆邮箱',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
-                ],
-            ])
-            ->add('zoom_password', 'text', [
-                'label' => 'Zoom密码',
-                'help_block' => [
-                    'text' => '新增Zoom登陆密码',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
-                ],
-            ])
-            ->add('zoom_pmi', 'number', [
-                'label' => 'Zoom PMI',
-                'help_block' => [
-                    'text' => '新增ZoomPMI',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
-                ],
-            ])
             ->add('profile_sex', 'select', [
                 'label' => '性别',
                 'rules' => 'required',

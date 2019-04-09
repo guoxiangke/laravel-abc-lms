@@ -12,7 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\AgencyForm;
+
+
+use App\Forms\AgencyForm as CreateForm;
+use App\Forms\Edit\AgencyForm as EditForm;
+
 use App\Forms\Register\AgencyRegisterForm;
 
 
@@ -42,7 +46,7 @@ class AgencyController extends Controller
     public function create(Request $request)
     {
 
-        $form = $this->form(AgencyForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('AgencyController@store')
         ]); 
@@ -87,7 +91,7 @@ class AgencyController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(AgencyForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -173,7 +177,15 @@ class AgencyController extends Controller
      */
     public function edit(agency $agency)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('AgencyController@update', ['id'=>$agency->id])
+            ],
+            ['entity' => $agency],
+        ); 
+        return view('agencies.edit', compact('form'));
     }
 
     /**
@@ -183,9 +195,69 @@ class AgencyController extends Controller
      * @param  \App\agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, agency $agency)
+    public function update(Request $request, agency $agency, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $user = $agency->user;
+        $paymethod = $user->paymethod;
+        
+        $profile = $user->profiles->first();
+        $contact = $profile->contacts->first();
+
+
+        // create login user
+        $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
+        $contactType = $request->input('contact_type');//0-3
+        $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
+
+        if($password=$request->input('user_password')?:'Agency1234'){
+            $password = Hash::make($password);
+        }
+        $userData = [
+            'name' => $userName,
+            'email' => $email,
+            'password' => $password,
+        ];
+        $user->fill($userData)->save();
+        // $user->assignRole(User::ROLES['agency']);
+
+        $agency->fill([
+            // 'user_id' => $user->id,
+            'type' => $request->input('agency_type'),
+            'discount' => $request->input('agency_discount'),
+        ])->save();
+        // $agency = $user->agency()->save($agency);
+
+        $profile->fill([
+            'telephone' => $request->input('profile_telephone'),
+            // 'user_id' => $user->id,
+            'name' => $request->input('profile_name'),
+            'sex' => $request->input('profile_sex'),
+            'birthday' =>  $request->input('profile_birthday'),
+            'recommend_uid' => $request->input('agency_id'),
+        ])->save();
+
+        $contact->fill([
+            // 'profile_id' => $profile->id,
+            'type' => $request->input('contact_type'),
+            'number' => $request->input('contact_number'),
+            'remark' => $request->input('contact_remark'),
+        ])->save();
+
+        //3. 必有 save payment
+        $paymethod->fill([
+            // 'user_id' => $user->id,
+            'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'number' => $request->input('pay_number'),
+            'remark' => $request->input('pay_remark'),
+        ])->save();
+
+        flashy()->success('Update Success');
+        return redirect()->route('agencies.index');
     }
 
     /**

@@ -13,7 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\StudentForm;
+
+use App\Forms\StudentForm as CreateForm;
+use App\Forms\Edit\StudentForm as EditForm;
+
 use App\Forms\Register\StudentRegisterForm;
 
 class StudentController extends Controller
@@ -50,7 +53,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $form = $this->form(StudentForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('StudentController@store')
         ]); 
@@ -137,19 +140,19 @@ class StudentController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(StudentForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
-        $userName = 's_'.str_replace(' ', '', $request->input('profile_name'));
+        $userName = 's_'.str_replace(' ', '', $request->input('name'));
         $email = $userName.'@student.com';
         $user = User::where('email', $email)->first();
 
         if(!$user){
             $userData = [
-                'name' => $userName,
+                'name' => $userName,//英文名！
                 'email' => $email,
                 'password' => Hash::make('dxjy1234')
             ];
@@ -194,7 +197,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
     public function show(agency $agency)
@@ -205,33 +208,96 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(agency $agency)
+    public function edit(Student $student)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('StudentController@update', ['id'=>$student->id])
+            ],
+            ['entity' => $student],
+        ); 
+        return view('students.edit', compact('form'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, agency $agency)
+    public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $user = $student->user;
+        // dd($zoomId);
+        $paymethod = $user->paymethod;
+        
+        $profile = $user->profiles->first();
+        // $profile = $teacher->profiles->first();
+        $contact = $profile->contacts->first();
+
+
+        // create login user
+        $userName = 's_'.str_replace(' ', '', $request->input('name'));
+        $email = $userName.'@student.com';
+
+        if($password=$request->input('user_password')?:'dxjy1234'){
+            $password = Hash::make($password);
+        }
+        $userData = [
+            'name' => $userName,//英文名！
+            'email' => $email,
+            'password' => $password
+        ];
+        $user->fill($userData)->save();
+        // $user->assignRole(User::ROLES['student']);
+
+        $student->fill([
+            // 'user_id' => $user->id,
+            'grade' =>  $request->input('grade'),
+            'remark' =>  $request->input('remark'),
+            'book_id' =>  $request->input('book_id'),
+        ])->save();
+
+        //确保只有一个手机号
+        $profile->fill([
+            'telephone' => $request->input('profile_telephone'),
+            // 'user_id' => $user->id,
+            'name' => $request->input('profile_name'),
+            'sex' => $request->input('profile_sex'),
+            'birthday' =>  $request->input('profile_birthday'),
+            'recommend_uid' => $request->input('recommend_uid')?:null,
+        ])->save();
+
+        $contact->fill([
+            // 'profile_id' => $profile->id,
+            // 'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
+            'number' => $request->input('contact_number')?: $request->input('profile_telephone'),
+            'remark' => $request->input('contact_remark'),
+        ])->save();
+        // $contact = $profile->contact()->save($contact);
+
+        flashy()->success('Update Success');
+        return redirect()->route('students.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(agency $agency)
+    public function destroy(Student $student)
     {
         //
     }
