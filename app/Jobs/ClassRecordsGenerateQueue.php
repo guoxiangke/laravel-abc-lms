@@ -18,13 +18,15 @@ class ClassRecordsGenerateQueue implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $order;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
+        $this->order = $order;
     }
 
     /**
@@ -34,40 +36,37 @@ class ClassRecordsGenerateQueue implements ShouldQueue
      */
     public function handle()
     {
-        //https://github.com/laravel/framework/blob/747577b6f03171f16c2c1e1413efdb83485a78ab/src/Illuminate/Database/Concerns/BuildsQueries.php#L51-L67 each or chunk
-        Order::active()
-            ->each(function (Order $order) {
-                //找出今天/昨天需要上的2节课 的时间H:i
-                $byDay = Carbon::now()->subDays(0);//sub方便为过去的日期生成记录！！
-                $todayClassTimes = $order->hasClass($byDay); //H:i
-                // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
+        $order = $this->order;
+        
+        //找出今天/昨天需要上的2节课 的时间H:i
+        $byDay = Carbon::now()->subDays(0);//sub方便为过去的日期生成记录！！
+        $todayClassTimes = $order->hasClass($byDay); //H:i
+        // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
 
-                Log::info('todayClassTimes', [$todayClassTimes]);
-                //2节课的情况 + 请假情况！！
-                foreach ($order->schedules as $rrule) {
-                    if(in_array($rrule->start_at->format('H:i'), $todayClassTimes)){
-                        try {
-                            $classRecord = ClassRecord::firstOrCreate([
-                                'rrule_id' => $rrule->id,
-                                'teacher_uid' => $order->teacher_uid,
-                                'generated_at' => $byDay->format('Y-m-d ' . $rrule->start_at->format('H:i') .':00' ),
-                                //必须，固定为生成当天的XX开始时间，避免重复生产
-                                //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
-                                'user_id' => $order->user_id,//'student_uid',
-                                'agency_uid' => $order->agency_uid,
-                                'order_id' => $order->id,
-                            ]);
+        Log::info('todayClassTimes', [$todayClassTimes]);
+        //2节课的情况 + 请假情况！！
+        foreach ($order->schedules as $rrule) {
+            if(in_array($rrule->start_at->format('H:i'), $todayClassTimes)){
+                try {
+                    $classRecord = ClassRecord::firstOrCreate([
+                        'rrule_id' => $rrule->id,
+                        'teacher_uid' => $order->teacher_uid,
+                        'generated_at' => $byDay->format('Y-m-d ' . $rrule->start_at->format('H:i') .':00' ),
+                        //必须，固定为生成当天的XX开始时间，避免重复生产
+                        //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
+                        'user_id' => $order->user_id,//'student_uid',
+                        'agency_uid' => $order->agency_uid,
+                        'order_id' => $order->id,
+                    ]);
 
-                            if($classRecord->wasRecentlyCreated){
-                                //todo more notication : XXX has class today!!!
-                                Log::info('ClassRecordsGenerateQueue', [$order->title]);
-                            }
-                        } catch (\Exception $e) {
-                            Log::info('ClassRecordsGenerateQueue', [$e->getMessage(), 'UniqueKeyException']);
-                        }
+                    if($classRecord->wasRecentlyCreated){
+                        //todo more notication : XXX has class today!!!
+                        Log::info('ClassRecordsGenerateQueue', [$order->title]);
                     }
+                } catch (\Exception $e) {
+                    Log::info('ClassRecordsGenerateQueue', [$e->getMessage(), 'UniqueKeyException']);
                 }
-            
-            });
+            }
+        }
     }
 }

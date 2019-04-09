@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Config;
 
 use App\Models\ClassRecord;
 use App\Observers\ClassRecordObserver;
+use App\Models\Rrule;
+use App\Observers\RruleObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,5 +48,6 @@ class AppServiceProvider extends ServiceProvider
         // ]);
         //observes
         ClassRecord::observe(ClassRecordObserver::class);
+        Rrule::observe(RruleObserver::class);
     }
 }

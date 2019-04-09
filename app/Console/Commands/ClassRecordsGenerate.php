@@ -38,8 +38,9 @@ class ClassRecordsGenerate extends Command
      */
     public function handle()
     {
-        ClassRecordsGenerateQueue::dispatch()
-            //env('REDIS_QUEUE', 'high,default,low')
-            ->onQueue('high');
+        Order::active()
+            ->each(function (Order $order) {
+                ClassRecordsGenerateQueue::dispatch($order)->onQueue('high');
+            });
     }
 }

@@ -175,7 +175,7 @@ class StudentController extends Controller
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
             'birthday' =>  $request->input('profile_birthday'),
-            'recommend_uid' => $request->input('recommend_uid'),
+            'recommend_uid' => $request->input('recommend_uid')?:null,
         ])->save();
 
         Contact::firstOrNew([
