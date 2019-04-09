@@ -6,11 +6,13 @@ use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\ClassRecordForm;
+// use App\Forms\ClassRecordForm as CreateForm;
+use App\Forms\Edit\ClassRecordForm as EditForm;
 
 use App\Models\Order;
 use App\Models\RRule;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class ClassRecordController extends Controller
@@ -105,14 +107,14 @@ class ClassRecordController extends Controller
         $this->authorize('edit', $classRecord);
 
         $form = $this->form(
-            ClassRecordForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('ClassRecordController@update', ['id' => $classRecord->id])
             ],
             ['entity' => $classRecord],
         ); 
-        return view('classRecords.edit', compact('form', 'classRecord'));
+        return view('classRecords.edit', compact('form'));
     }
 
     /**
@@ -124,7 +126,7 @@ class ClassRecordController extends Controller
      */
     public function update(Request $request, ClassRecord $classRecord, FormBuilder $formBuilder)
     {
-        $form = $this->form(ClassRecordForm::class);
+        $form = $this->form(EditForm::class);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -145,10 +147,20 @@ class ClassRecordController extends Controller
         }
         // $newsItem->getMedia('mp3')->first()->getUrl('thumb');
         // \Log::error(__FUNCTION__,[__CLASS__, $fileMp3Adder,$fileMp4Adder]);
-        $classRecord = $classRecord->fill($request->all());
-        $classRecord->save();
-        flashy()->success('更新成功');
-        return redirect(route('classRecords.show',  $classRecord));
+        
+        $data = $request->all();
+        $generated_at = $request->input('generated_at');
+        if($generated_at) {
+            $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at);//2019-04-09T06:00
+            $data['generated_at'] = $generated_at;
+        }
+        $classRecord = $classRecord->fill($data)->save();
+        flashy()->success('Update Success');
+
+        if(Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
+            return redirect(route('classRecords.indexByRole'));
+        }
+        return redirect(route('classRecords.index'));
     }
 
     //todo
