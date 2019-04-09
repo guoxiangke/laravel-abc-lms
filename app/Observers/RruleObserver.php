@@ -21,4 +21,18 @@ class RruleObserver
         }
         
     }
+
+
+    /**
+     * Handle the class record "updated" event.
+     *
+     * @param  \App\ClassRecord  $classRecord
+     * @return void
+     */
+    public function updated(Rrule $rrule)
+    {
+        if($rrule->type == Rrule::TYPE_SCHEDULE){
+            ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
+        }
+    }
 }
