@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>LMS</title>
+        <title>大象教育后台管理系统</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -80,28 +80,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    ABC LMS
+                    大象教育 LMS
                 </div>
-                @auth('web')
-                <div class="links">
-                    <a href="/schools">Schools</a>
-                    <a href="/zooms">Zooms</a>
-                        <a href="/books">Books</a>
-                    <a href="/teachers">Teachers</a>
-                    <a href="/students">Students</a>
-                    <a href="/agencies">Agency</a>
-                    <a href="/products">Products</a>
-                    <a href="/orders">Orders</a>
-                    
-                    <a href="/rrules">Rrules</a>
-                    <a href="/classRecords">ClassRecords</a>
-                    <br>
-                    <br>
-                    <a href="/users">Users</a>
-                    <a href="/roles">Roles</a>
-                    <a href="/permissions">Permissions</a>
-                </div>
-                @endauth
             </div>
         </div>
     </body>
