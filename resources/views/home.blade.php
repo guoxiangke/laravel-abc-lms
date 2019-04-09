@@ -56,6 +56,16 @@
 
                         @role('agency')
                             <p>欢迎您，xxx 代理</p>
+                        
+                            <div class="qr" >
+                                <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
+                                <br/>
+                                我的推荐码<br/>
+                                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
+                                <br/>长按可保存到手机
+                                <br/>
+                                推荐链接： {{ $link }}
+                            </div>
                         @endrole
 
                         @hasanyrole('student|agency|teacher')
@@ -67,16 +77,6 @@
                         <a href="{{ route('teachers.register') }}" class="btn btn-outline-dark"><i class="fas fa-chalkboard-teacher fa-large"></i> I'm a teacher</a>
                         
                         @endhasanyrole
-                    </div>
-
-                    <div class="qr" >
-                        <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
-                        <br/>
-                        我的推荐码<br/>
-                        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
-                        <br/>长按可保存到手机
-                        <br/>
-                        推荐链接： {{ $link }}
                     </div>
                     
                 </div>

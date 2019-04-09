@@ -16,15 +16,24 @@
 			  <table class="table">
 				  <thead>
 				    <tr>
-				    	@foreach($tableHeader as $value)
-				    	<th scope="col">{{ $value }}</th>
-				    	@endforeach
+				    	<th scope="col">Action</th>
+						<th scope="col">Name</th>
+						<th scope="col">Email</th>
+						<th scope="col">ZoomEmail</th>
+						<th scope="col">ZoomPassword</th>
+						<th scope="col">Sex</th>
+						<th scope="col">Birthday</th>
+						<th scope="col">telephone</th>
+						<th scope="col">School</th>
+						<th scope="col">PayMethod</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 					@foreach($teachers as $teacher)
 					    <tr>
-					      <th scope="row"><a href="#{{$teacher->id}}">{{$teacher->id}}</a></th>
+					      <th scope="row">
+					      	<a href="{{ route('teachers.edit', $teacher->id) }}">Edit {{$teacher->id}}</a>
+					      </th>
 					      <td>{{$teacher->user->profiles->first()->name}}</td>
 					      <td>{{$teacher->user->email}}</td>
 					      <td>{{$teacher->zoom->email}}</td>
@@ -40,9 +49,8 @@
 					      </td>
 					      <td>{{$teacher->user->profiles->first()->telephone}}</td>
 					      <td>{{ $school ? $school->name : 'FreeLancer' }}</td>
-					      <td>{{$paymethod ? App\Models\PayMethod::TYPES[$paymethod->type] : '-'}}</td>
-					      <td>{{$paymethod ? $paymethod->number : '-'}}</td>
-					      <td><a href="{{ route('teachers.edit', $teacher->id) }}">Edit</a></td>
+
+                    	  <td data-label="PayMent">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number  :'-'}}</td>
 					    </tr>
 					@endforeach
 				  </tbody>

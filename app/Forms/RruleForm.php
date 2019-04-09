@@ -22,7 +22,8 @@ class RruleForm extends Form
                 ],
             ])
             ->add('string', 'textarea', [
-                'label' => '计划*',
+                'label' => '计划',
+                'rules' => 'required',
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"

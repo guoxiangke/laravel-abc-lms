@@ -250,7 +250,10 @@ class OrderController extends Controller
             'status' => $request->input('status'),
         ])->save();
         
-        $order->rrules->first()->fill(['string'=>$request->input('rrule')])->save();
+        $start_at = $request->input('start_at');
+        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
+        $string = $request->input('rrule');
+        $order->rrules->first()->fill(compact('start_at','string'))->save();
         flashy()->success('Update Success');
         return redirect()->route('orders.index');
     }

@@ -27,13 +27,12 @@
 						<th>QQ/Wechat</th>
 						<th>支付方式</th>
 						<th>推荐人</th>
-						<th>Action</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 					@foreach($students as $student)
 					    <tr>
-					      <th scope="row" data-label="Id"><a href="#{{$student->id}}">{{$student->id}}</a></th>
+					      <th scope="row" data-label="Id"><a href="{{ route('students.edit', $student->id) }}">Edit {{$student->id}}</a></th>
 					      <td data-label="Name">{{$student->user->profiles->first()->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$student->user->profiles->first()->sex] }}</td>
 					      <td data-label="Birthday">
@@ -55,7 +54,6 @@
 					      <td data-label="推荐人">{{  
 					      	$recommend ? $recommend->profiles->first()->name : '-' }}</td>
 					      
-					      <td data-label="Action"><a href="{{ route('students.edit', $student->id) }}">Edit</a></td>
 					    </tr>
 					@endforeach
 				  </tbody>

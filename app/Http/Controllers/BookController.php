@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Forms\BookForm;
+use App\Forms\BookForm as CreateForm;
+use App\Forms\Edit\BookForm as EditForm;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -36,7 +37,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $form = $this->form(BookForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('BookController@store')
         ]); 
@@ -76,7 +77,15 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('BookController@update', ['id'=>$book->id])
+            ],
+            ['entity' => $book],
+        ); 
+        return view('books.edit', compact('form'));
     }
 
     /**
@@ -86,9 +95,15 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request, Book $book, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $book->fill($request->all())->save();
+        flashy()->success('Update Success');
+        return redirect()->route('books.index');
     }
 
     /**

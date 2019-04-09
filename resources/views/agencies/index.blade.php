@@ -16,15 +16,15 @@
         	<div class="table-responsive">
 			  <table class="table">
 				  <thead>
-				    <tr><th>Id</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Sex</th>
-					<th>Birthday</th>
-					<th>Telephone</th>
-					<th>PayMethod</th>
-					<th>推荐人</th>
-					<th>Action</th>
+				    <tr>
+				    	<th>Action</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Sex</th>
+						<th>Birthday</th>
+						<th>Telephone</th>
+						<th>PayMethod</th>
+						<th>推荐人</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -34,7 +34,9 @@
 							$paymethod = $agency->user->paymethod;
 						@endphp
 					    <tr>
-					      <th scope="row"><a href="#{{$agency->id}}">{{$agency->id}}</a></th>
+					      <th scope="row">
+					      	<a href="{{ route('agencies.edit', $agency->id) }}">Edit {{$agency->id}}</a>
+					      </th>
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Email">{{$agency->user->email}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
@@ -42,7 +44,6 @@
 					      <td data-label="Telephone">{{$profile->telephone}}</td>
 					      <td data-label="PayMethod">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ': '.$paymethod->number  :'-'}}</td>
 					      <td data-label="推荐人">{{ $agency->reference?$agency->reference->profiles->first()->name:'-' }}</td>
-					      <td data-label="Action"><a href="{{ route('agencies.edit', $agency->id) }}">Edit</a></td>
 					    </tr>
 					@endforeach
 				  </tbody>

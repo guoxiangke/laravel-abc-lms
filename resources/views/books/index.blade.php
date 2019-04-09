@@ -19,21 +19,19 @@
                 	<th scope="col">Name</th>
                 	<th scope="col">type</th>
                 	<th scope="col">publisher</th>
-                	<th scope="col">path</th>
                 	<th scope="col">page</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">path</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($books as $book)
                     <tr>
-                      <th scope="row"><a href="#{{$book->id}}">{{$book->id}}</a></th>
+                      <th scope="row"><a href="{{ route('books.edit', $book->id) }}">Edit {{$book->id}}</a></th>
                       <td data-label="Email">{{$book->name}}</td>
                       <td data-label="Password">{{$book->type}}</td>
                       <td data-label="PMI">{{$book->publisher}}</td>
-                      <td data-label="PMI">{{$book->path}}</td>
                       <td data-label="PMI">{{$book->page}}</td>
-                      <td data-label="Action"><a href="{{ route('books.edit', $book->id) }}">Edit</a></td>
+                      <td data-label="PMI">{{$book->path}}</td>
                     </tr>
                 @endforeach
               </tbody>

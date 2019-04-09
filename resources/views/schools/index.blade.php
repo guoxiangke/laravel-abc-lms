@@ -16,15 +16,21 @@
         <table class="table">
             <thead>
               <tr>
-                  @foreach($tableHeader as $title)
-                  <th scope="col">{{ $title }}</th>
-                  @endforeach
+                  <th>Action</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Sex</th>
+                  <th>Tel</th>
+                  <th>Contact</th>
+                  <th>PayMent</th>
               </tr>
             </thead>
             <tbody>
               @foreach($schools as $school)
                   <tr>
-                    <th scope="row"><a href="#{{$school->id}}">{{$school->id}}</a></th>
+                    <th scope="row">
+                      <a href="{{ route('schools.edit', $school->id) }}">Edit {{$school->id}}</a>
+                    </th>
                     <td data-label="Name">{{$school->name}}</td>
                     <td data-label="Email">{{$school->user->email}}</td>
                     <td data-label="Sex">{{ App\Models\Profile::SEXS[$school->user->profiles->first()->sex] }}</td>
@@ -36,7 +42,6 @@
                     <td data-label="Contact">{{ $contact ? App\Models\Contact::TYPES[$contact->type] . ":" . $contact->number : '-' }} </td>
 
                     <td data-label="PayMent">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number  :'-'}}</td>
-                    <td data-label="Action"><a href="{{ route('schools.edit', $school->id) }}">Edit</a></td>
                   </tr>
               @endforeach
             </tbody>

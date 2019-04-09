@@ -20,18 +20,16 @@
                 	<th scope="col">Password</th>
                 	<th scope="col">PMI</th>
                 	<th scope="col">Used By</th>
-                	<th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($zooms as $zoom)
                     <tr>
-                      <th scope="row"><a href="#{{$zoom->id}}">{{$zoom->id}}</a></th>
+                      <th scope="row"><a href="{{ route('zooms.edit', $zoom->id) }}">Edit {{$zoom->id}}</a></th>
                       <td data-label="Email">{{$zoom->email}}</td>
                       <td data-label="Password">{{$zoom->password}}</td>
                       <td data-label="PMI">{{$zoom->pmi}}</td>
                       <td data-label="Used">{{$zoom->teacher?$zoom->teacher->user->profiles->first()->name:'unused'}}</td>
-                      <td data-label="Action"><a href="{{ route('zooms.edit', $zoom->id) }}">Edit</a></td>
                     </tr>
                 @endforeach
               </tbody>

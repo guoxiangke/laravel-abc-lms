@@ -11,6 +11,7 @@ use App\Forms\Edit\RruleForm as EditForm;
 use App\Repositories\RruleRepository;
 use App\Models\Rrule;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class RruleController extends Controller
 {
@@ -141,12 +142,10 @@ class RruleController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         //https://stackoverflow.com/questions/1809494/post-unchecked-html-checkboxes
-        $data = $request->all();
-        if (!$request->input('type')){
-            $data['type'] = false;
-        }
-        $rrule = $rrule->fill($data);
-        // dd($rrule->toArray());
+        $start_at = $request->input('start_at');
+        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
+        $string = $request->input('string');
+        $rrule = $rrule->fill(compact('start_at','string'));
         $rrule->save();
         flashy()->success('Update Success');
         return redirect()->route('rrules.index');

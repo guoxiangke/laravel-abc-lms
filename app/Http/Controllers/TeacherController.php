@@ -37,9 +37,7 @@ class TeacherController extends Controller
             )
             ->orderBy('id','desc')
             ->paginate(100);
-        // dd($teachers->toArray());
-        $tableHeader = ['id', 'Name', 'Email', 'ZoomEmail', 'ZoomPassword', 'Sex','Birthday', 'telephone',  'School', 'PayType', 'PayNO', 'Action'];
-        return view('teachers.index',compact('teachers','tableHeader'));
+        return view('teachers.index',compact('teachers'));
     }
 
     /**

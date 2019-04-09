@@ -18,6 +18,7 @@ class OrderForm extends Form
     {
         $order = $this->getData('entity');
         if(!$order) return;
+        $rrule = $order->rrules->first();
         $this->add('order', 'static', [
                 'label' => '订单Id',
                 'value' => $order->id,
@@ -76,16 +77,21 @@ class OrderForm extends Form
                 'value' => $order->period,
                 'attr' => ['placeholder' => '课时']
             ])
+            ->add('start_at', 'datetime-local', [
+                'label' => '日期时间',
+                'rules' => 'required',
+                'value' => $rrule->start_at->format('Y-m-d\TH:i')
+            ])
             ->add('rrule', 'textarea', [
                 'rules' => 'required',
                 'label' => '上课计划',
-                'value' => $order->rrules->first()->string,
+                'value' => $rrule->string,
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"
                 ],
                 'help_block' => [
-                    'text' => '共2行，第一行：第一次上课日期+时间，第二行：上课规律 <a target="_blank" href="https://jakubroztocil.github.io/rrule/">Gen a rule.toString()/点击生成内容</a>',
+                    'text' => '上课规律 <a target="_blank" href="https://jakubroztocil.github.io/rrule/">Gen a rule.toString()/点击生成内容</a>,只要第二行的内容，第一行的填👆的日期时间',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']
                 ],

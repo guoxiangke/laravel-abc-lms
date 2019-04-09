@@ -16,21 +16,18 @@ class RruleForm extends Form
         
         $this->add('order', 'static', [
                     'label' => '订单Id',
+                    'rules' => 'required',
                     'value' => $rrule->order->title,
             ])
-            ->add('type', 'checkbox', [
-                'value' => 1,
-                'label' => '计划类型',
-                'checked' => $rrule->type,
-                'help_block' => [
-                    'text' => '默认是请假，如不是请打✓✔☑（即创建新的上课计划） ',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
-                ],
+            ->add('start_at', 'datetime-local', [
+                'label' => '日期时间',
+                'rules' => 'required',
+                'value' => $rrule->start_at->format('Y-m-d\TH:i')
             ])
             ->add('string', 'textarea', [
-                'label' => '计划*',
+                'label' => '计划',
                 'value' => $rrule->string,
+                'rules' => 'required',
                 'attr' => [
                     'rows' => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU"

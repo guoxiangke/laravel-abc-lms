@@ -28,13 +28,13 @@
               <tbody>
                 @foreach($products as $product)
                     <tr>
-                      <th scope="row"><a href="#{{$product->id}}">{{$product->id}}</a></th>
+                      <th scope="row"><a href="{{ route('products.edit', $product->id) }}">Edit {{$product->id}}</a></th>
                       <td data-label="Name">{{$product->name}}</td>
                       <td data-label="Description">{{$product->description}}</td>
                       <td data-label="Price">{{$product->price}}</td>
                       <td data-label="Image">{{$product->image}}</td>
                       <td data-label="Remark">{{$product->remark}}</td>
-                      <td data-label="Action"><a href="{{ route('products.edit', $product->id) }}">Edit</a></td>
+                      <td data-label="Action"></td>
                     </tr>
                 @endforeach
               </tbody>

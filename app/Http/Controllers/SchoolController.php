@@ -34,9 +34,7 @@ class SchoolController extends Controller
             )
             ->orderBy('id','desc')
             ->paginate(100);
-        //'ContactRemark' , 'PayRemark'
-        $tableHeader = ['Id', 'Name', 'Email', 'Sex',  'Tel', 'Contact', 'PayMent', 'Action'];
-        return view('schools.index',compact('schools','tableHeader'));
+        return view('schools.index',compact('schools'));
     }
 
     /**
