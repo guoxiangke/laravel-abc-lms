@@ -65,10 +65,21 @@
           </small>
           @endif
 
-          @can('comment', $classRecord)
-              @comments(['model' => $classRecord])
-              @endcomments
-          @endcan 
+
+          @if($mp4)
+            @if(Auth::user()->hasRole('manager'))
+            <video width="100%" height="auto" 
+              controls
+              preload="none"
+              controlsList="nodownload">
+              <source src="{{$classRecord->getUrl('mp4')}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            2x 1.5x 
+            var vid = document.getElementById("myVideo");
+            vid.playbackRate = 0.5;
+            @endif
+          @endif
         </div>
     </div>
 </div>

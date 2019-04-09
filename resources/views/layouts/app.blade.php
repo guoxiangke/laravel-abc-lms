@@ -79,12 +79,12 @@
                                 </div>
                             </li>
                         @endguest
-                        @auth
+                        @role('manager')
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Switch <span class="caret"></span>
                                 </a>
-
+                                
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @foreach( \App\User::with('profiles')->where('id','!=',auth()->user()->id)->get() as $user)
                                     <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
@@ -93,7 +93,7 @@
                                     @endforeach
                                 </div>
                             </li>
-                        @endauth
+                        @endrole
                     </ul>
                 </div>
             </div>

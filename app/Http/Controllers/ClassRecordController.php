@@ -69,7 +69,7 @@ class ClassRecordController extends Controller
             if(!$user->hasRole($role)){
                 continue;
             }
-            $userName = $user->profile->name;
+            $userName = $user->profiles->first()->name;
             $classRecords = ClassRecord::with(
                 'rrule',
                 )

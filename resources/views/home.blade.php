@@ -15,13 +15,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    @hasanyrole('manager')
                     <div class="links">
                         <a href="/schools">Schools</a>
                         <a href="/zooms">Zooms</a>
                         <a href="/teachers">Teachers</a>
                         <a href="/agencies">Agency</a>
-                        <br><br>
                         <a href="/books">Books</a>
                         <a href="/students">Students</a>
                         <a href="/products">Products</a>
@@ -30,24 +29,47 @@
                         <a href="/rrules">Rrules</a>
                         <a href="/classRecords">ClassRecords</a>
                         <br><br>
+                        @if(Auth::user()->isSuperuser())
                         <a href="/users">Users</a>
                         <a href="/roles">Roles</a>
                         <a href="/permissions">Permissions</a>
+                        @endif
                     </div>
+                    @endhasanyrole
                     <div class="links-2">
                         <br>
+                        <?php //dd(Auth::user()->getRoleNames()->toArray());?>
+                        @role('student')
+                            <p>欢迎您，xxx 学员</p>
+                            <a href="/class-records" class="btn btn-outline-dark">我的上课记录</a>
+                            @unlessrole('agency')
+                            <a href="{{ route('agencies.register') }}" class="btn btn-outline-dark"><i class="fas fa-handshake fa-large"></i> 成为代理</a>
+                            @endunlessrole
+                        @endrole
+
+
+                        @role('teacher')
+                            <p>Welcome，Teacher</p>
+                            <a href="/class-records" class="btn btn-outline-dark">ClassRecords</a>
+                        @endrole
+
+
+                        @role('agency')
+                            <p>欢迎您，xxx 代理</p>
+                        @endrole
+
                         @hasanyrole('student|agency|teacher')
-                        <p>如果不是三个角色任意的，则显示</p>
+                        @else
                         <a href="{{ route('students.register') }}" class="btn btn-outline-dark"><i class="fas fa-graduation-cap fa-large"></i> 学生入口</a>
 
                         <a href="{{ route('agencies.register') }}" class="btn btn-outline-dark"><i class="fas fa-handshake fa-large"></i> 代理入口</a>
 
                         <a href="{{ route('teachers.register') }}" class="btn btn-outline-dark"><i class="fas fa-chalkboard-teacher fa-large"></i> I'm a teacher</a>
-                        @else
+                        
                         @endhasanyrole
                     </div>
 
-                    <div class="qr " >
+                    <div class="qr" >
                         <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
                         <br/>
                         我的推荐码<br/>

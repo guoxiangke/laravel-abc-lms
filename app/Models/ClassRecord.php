@@ -163,6 +163,9 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
         return config('filesystems.disks.upyun.protocol') .'://'. config('filesystems.disks.upyun.domain')  .  $this->mp3;
     }
     
+    public function getUrl($type='mp3'){
+        return config('filesystems.disks.upyun.protocol') .'://'. config('filesystems.disks.upyun.domain')  .  $this->{$type};
+    }
 
     public function getMp4Attribute(){
         return $this->getFirstMediaUrl('mp4');

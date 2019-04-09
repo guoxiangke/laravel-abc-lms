@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02aa598fde954422af924a1f922a2725",
+    "content-hash": "564b796ee315fbe3408a460f69aec386",
     "packages": [
         {
             "name": "actuallymab/laravel-comment",

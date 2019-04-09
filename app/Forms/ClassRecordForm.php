@@ -14,7 +14,7 @@ class ClassRecordForm extends Form
         if($classRecord){
             $generated_at = $classRecord->generated_at->format('Y-m-d H:i');
             $rrule_id = $classRecord->rrule->order->title;
-            $teacher_uid =  $classRecord->teacher->profile->name;
+            $teacher_uid =  $classRecord->teacher->profiles->first()->name;
             $remark =  $classRecord->remark;
             $exception =  $classRecord->exception;
         }
