@@ -14,8 +14,8 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 class Product extends Model implements HasMedia
 {
 	use SoftDeletes;
-    use HasPriceField;
-    // use HasMediaTrait;
+    // use HasPriceField;
+    use HasMediaTrait;
     protected $fillable = [
     	'name',
     	'description',

@@ -13,6 +13,8 @@ use App\Models\ClassRecord;
 use App\Observers\ClassRecordObserver;
 use App\Models\Rrule;
 use App\Observers\RruleObserver;
+use App\Models\Order;
+use App\Observers\OrderObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,5 +51,6 @@ class AppServiceProvider extends ServiceProvider
         //observes
         ClassRecord::observe(ClassRecordObserver::class);
         Rrule::observe(RruleObserver::class);
+        Order::observe(OrderObserver::class);
     }
 }

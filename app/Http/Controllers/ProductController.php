@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
-use App\Forms\ProductForm;
+use App\Forms\ProductForm as CreateForm;
+use App\Forms\Edit\ProductForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 
@@ -36,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $form = $this->form(ProductForm::class, [
+        $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('ProductController@store')
         ]); 
@@ -51,7 +52,7 @@ class ProductController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(ProductForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -88,7 +89,15 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $form = $this->form(
+            EditForm::class, 
+            [
+                'method' => 'PUT',
+                'url' => action('ProductController@update', ['id'=>$product->id])
+            ],
+            ['entity' => $product],
+        ); 
+        return view('products.edit', compact('form'));
     }
 
     /**
@@ -98,9 +107,16 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, FormBuilder $formBuilder)
     {
-        //
+        $form = $this->form(EditForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        $data = $request->all();
+        $product->fill($data)->save();
+        flashy()->success('Update Success');
+        return redirect()->route('products.index');
     }
 
     /**

@@ -22,7 +22,6 @@
                 	<th scope="col">Price</th>
                 	<th scope="col">Image</th>
                 	<th scope="col">Remark</th>
-                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,7 +33,6 @@
                       <td data-label="Price">{{$product->price}}</td>
                       <td data-label="Image">{{$product->image}}</td>
                       <td data-label="Remark">{{$product->remark}}</td>
-                      <td data-label="Action"></td>
                     </tr>
                 @endforeach
               </tbody>
