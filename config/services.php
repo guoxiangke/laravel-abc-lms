@@ -56,7 +56,7 @@ return [
         'redirect' => env('APP_URL', 'https://abc.dev') . env('FACEBOOK_REDIRECT_URI')
     ],
 
-    'weixin' => [
+    'wechat' => [
         'client_id' => env('WEIXIN_KEY'),
         'client_secret' => env('WEIXIN_SECRET'),
         'redirect' => env('APP_URL', 'https://abc.dev') . env('WEIXIN_REDIRECT_URI'),
