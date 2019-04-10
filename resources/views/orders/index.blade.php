@@ -35,7 +35,7 @@
                     <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
                     <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
                     <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
-                    <td data-label="Book">《{{$order->book->name}}》</td>
+                    <td data-label="Book">{{$order->book->name}}</td>
                     <!-- <td data-label="Price">{{$order->product->name}}</td> -->
                     <td data-label="Price">{{$order->price}}</td>
                     <td data-label="Period">{{$order->period}}</td>

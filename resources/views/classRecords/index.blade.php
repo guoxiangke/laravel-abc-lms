@@ -70,7 +70,7 @@
                     <td data-label="Teacher">{{$classRecord->user->profiles->first()->name}}</td>
                     <td data-label="student">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="agency">{{$classRecord->agency->profiles->first()->name}}</td>
-                    <td data-label="ClassAt">{{$classRecord->generated_at->format('m.d H:i')}}</td>
+                    <td data-label="ClassAt">{{$classRecord->generated_at->format('n/j H:i 周N')}}</td>
                     <td data-label="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
                     </td>
                     @if(!isset($roleName))

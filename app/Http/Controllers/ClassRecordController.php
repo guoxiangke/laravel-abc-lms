@@ -43,7 +43,7 @@ class ClassRecordController extends Controller
             'rrule.order.agency', 'rrule.order.agency.profiles',
             'rrule.order.user', 'rrule.order.user.profiles',
             )
-            ->orderBy('id','desc')
+            ->orderBy('generated_at','desc')
             ->paginate(100);
         return view('classRecords.index', compact('classRecords'));
     }

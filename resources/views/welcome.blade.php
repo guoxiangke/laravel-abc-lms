@@ -84,9 +84,9 @@
                 </div>
                     <div class="links">
                         <p>立即成为会员，加入在线学习行列</p>
-                        <p>¥99/年，课程记录随意回放</p>
-                        <a href="#" class="btn btn-outline-dark">支付宝支付99</a>
-                        <a href="#" class="btn btn-outline-dark">微信支付99</a>
+                        <p>¥199/年，课程记录随意回放</p>
+                        <a href="#" class="btn btn-outline-dark">支付宝支付199</a>
+                        <a href="#" class="btn btn-outline-dark">微信支付199</a>
                     </div>
             </div>
         </div>
