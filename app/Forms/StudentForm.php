@@ -49,9 +49,6 @@ class StudentForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('name', 'text', [
-                'label' => '英文名',
-            ])
             ->add('book_id', 'select', [
                 'label' => '同步教材',
                 'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
