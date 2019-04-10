@@ -15,7 +15,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @hasanyrole('manager')
+                    @hasanyrole('manager|admin')
                     <div class="links">
                         <a href="/schools">Schools</a>
                         <a href="/zooms">Zooms</a>
@@ -29,11 +29,11 @@
                         <a href="/rrules">Rrules</a>
                         <a href="/classRecords">ClassRecords</a>
                         <br><br>
-                        @if(Auth::user()->isSuperuser())
+                        @role('admin')
                         <a href="/users">Users</a>
                         <a href="/roles">Roles</a>
                         <a href="/permissions">Permissions</a>
-                        @endif
+                        @endrole
                     </div>
                     @endhasanyrole
                     <div class="links-2">

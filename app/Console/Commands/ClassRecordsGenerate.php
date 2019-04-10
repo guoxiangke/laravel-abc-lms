@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Jobs\ClassRecordsGenerateQueue;
+use App\Models\Order;
 
 class ClassRecordsGenerate extends Command
 {
