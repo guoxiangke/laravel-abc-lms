@@ -15,7 +15,13 @@ class SchoolForm extends Form
         $paymethod = $user->paymethod;
         
         $profile = $user->profiles->first();
-        $contact = $profile->contacts->first();
+        $contact = null;
+        $paymethod = null;
+        if($profile){
+            $contact = $profile->contacts->first();
+            // $paymethod = $school->user->paymethod;
+        }
+        // $contact = $profile->contacts->first();
         $this->add('school_name', 'text',
                 [
                 'label' => '学校名字',
@@ -44,31 +50,31 @@ class SchoolForm extends Form
             ])
             ->add('profile_name', 'text', [
                 'label' => '管理员姓名',
-                'value' => $profile->name,
+                'value' => $profile?$profile->name:null,
             ])
             ->add('profile_sex', 'select', [
                 'label' => '管理员性别',
                 'rules' => 'required',
                 'choices' => ['女','男'],
-                'selected' => $profile->sex,
+                'selected' => $profile?$profile->sex:null,
                 'empty_value' => '=== Select ==='
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '管理员生日',
-                'value' => $profile->birthday?$profile->birthday->format('Y-m-d'):NULL,
+                'value' => $profile?($profile->birthday?$profile->birthday->format('Y-m-d'):NULL):NULL,
             ])
             ->add('profile_telephone', 'tel', [
-                'value' => $profile->telephone,
+                'value' => $profile?$profile->telephone:NULL,
                 'rules' => 'required|min:8',
                 'label' => '管理员手机号',
             ])
             ->add('contact_skype', 'text',[
-                'value' => $contact->number,
+                'value' => $contact?$contact->number:null,
                 'rules' => 'required|min:4',
                 'label' => '管理员/联系人Skype'
             ])// type =0 skype number=contact_skype
             ->add('contact_remark', 'textarea', [
-                'value' => $contact->remark,
+                'value' => $contact?$contact->remark:null,
                 'label' => '联系方式备注',
                 'attr' => ['rows' => 2],
             ])
@@ -76,17 +82,17 @@ class SchoolForm extends Form
                 'label' => '付款方式',
                 'rules' => 'required',
                 'choices' => PayMethod::TYPES,
-                'selected' => $paymethod->type,
+                'selected' => $paymethod?$paymethod->type:null,
                 'empty_value' => '=== Select ==='
             ])
             ->add('pay_number', 'text',[
                 'rules' => 'required',
-                'value' => $paymethod->number,
+                'value' => $paymethod?$paymethod->number:null,
                 'label' => '付款账户ID'
             ])
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',
-                'value' => $paymethod->remark,
+                'value' => $paymethod?$paymethod->remark:null,
                 'attr' => ['rows' => 2],
             ])
             ->add('submit', 'submit', [

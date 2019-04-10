@@ -33,12 +33,17 @@
                     </th>
                     <td data-label="Name">{{$school->name}}</td>
                     <td data-label="Email">{{$school->user->email}}</td>
-                    <td data-label="Sex">{{ App\Models\Profile::SEXS[$school->user->profiles->first()->sex] }}</td>
-                    <td data-label="Tel">{{$school->user->profiles->first()->telephone}}</td>
-                    <?php
-                      $contact = $school->user->profiles->first()->contacts->first();
-                      $paymethod = $school->user->paymethod;
-                    ?>
+                    @php
+                      $profile = $school->user->profiles->first();
+                      $contact = null;
+                      $paymethod = null;
+                      if($profile){
+                        $contact = $profile->contacts->first();
+                        $paymethod = $school->user->paymethod;
+                      }
+                    @endphp
+                    <td data-label="Sex">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
+                    <td data-label="Tel">{{$profile?$profile->telephone:'-'}}</td>
                     <td data-label="Contact">{{ $contact ? App\Models\Contact::TYPES[$contact->type] . ":" . $contact->number : '-' }} </td>
 
                     <td data-label="PayMent">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number  :'-'}}</td>

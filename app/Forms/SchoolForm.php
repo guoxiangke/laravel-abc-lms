@@ -32,7 +32,10 @@ class SchoolForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('profile_name', 'text', ['label' => '管理员姓名'])
+            ->add('profile_name', 'text', [
+                'label' => '管理员姓名',
+                'rules' => 'required|min:2',
+            ])
             ->add('profile_sex', 'select', [
                 'label' => '管理员性别',
                 'rules' => 'required',
