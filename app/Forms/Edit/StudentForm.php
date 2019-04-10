@@ -63,7 +63,7 @@ class StudentForm extends Form
                 ],
             ])
             ->add('name', 'text', [
-                'value' => $profile->name,
+                'value' => $user->name,
                 'label' => '英文名',
             ])
             ->add('book_id', 'select', [
