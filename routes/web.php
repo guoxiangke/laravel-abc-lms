@@ -34,6 +34,10 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('login/weixin', 'Auth\LoginController@redirectToWechatProvider');
 Route::get('login/weixin/callback', 'Auth\LoginController@handleWechatProviderCallback');
 
+Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
+    return 'TneROHDiBDphZRvS';
+});
+
 Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
