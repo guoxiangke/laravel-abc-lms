@@ -18,7 +18,7 @@ use App\Forms\AgencyForm as CreateForm;
 use App\Forms\Edit\AgencyForm as EditForm;
 
 use App\Forms\Register\AgencyRegisterForm;
-
+use Carbon\Carbon;
 
 class AgencyController extends Controller
 {
@@ -128,11 +128,16 @@ class AgencyController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            //1966-11-18
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' =>  $birthday,
             'recommend_uid' => $request->input('agency_id'),
         ])->save();
         // $profile = $user->profile()->save($profile);
@@ -232,12 +237,17 @@ class AgencyController extends Controller
         ])->save();
         // $agency = $user->agency()->save($agency);
 
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            //1966-11-18
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'telephone' => $request->input('profile_telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' =>  $birthday,
             'recommend_uid' => $request->input('agency_id'),
         ])->save();
 

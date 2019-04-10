@@ -18,6 +18,7 @@ use App\Forms\StudentForm as CreateForm;
 use App\Forms\Edit\StudentForm as EditForm;
 
 use App\Forms\Register\StudentRegisterForm;
+use Carbon\Carbon;
 
 class StudentController extends Controller
 {
@@ -178,11 +179,15 @@ class StudentController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' => $birthday,
             'recommend_uid' => $request->input('recommend_uid')?:null,
         ])->save();
 
@@ -273,12 +278,16 @@ class StudentController extends Controller
         ])->save();
 
         //确保只有一个手机号
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'telephone' => $request->input('profile_telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' =>  $birthday,
             'recommend_uid' => $request->input('recommend_uid')?:null,
         ])->save();
 

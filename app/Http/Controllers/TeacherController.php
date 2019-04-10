@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Carbon\Carbon;
 
 class TeacherController extends Controller
 {
@@ -131,11 +132,16 @@ class TeacherController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            //1966-11-18
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' =>  $birthday,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 
@@ -239,12 +245,17 @@ class TeacherController extends Controller
         ])->save();
         
         //确保只有一个手机号
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            //1966-11-18
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'telephone' => $request->input('profile_telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' => $request->input('profile_birthday'),
+            'birthday' => $birthday,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 

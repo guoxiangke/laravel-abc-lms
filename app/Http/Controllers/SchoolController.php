@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class SchoolController extends Controller
 {
@@ -90,11 +91,15 @@ class SchoolController extends Controller
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('profile_telephone'),
         ]);
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' => $birthday,
         ])->save();
 
         Contact::firstOrNew([
@@ -188,12 +193,16 @@ class SchoolController extends Controller
         // $school = $user->school()->save($school);
 
         //确保只有一个手机号
+        $birthday = $request->input('profile_birthday');
+        if($birthday){
+            $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
         $profile->fill([
             'telephone' => $request->input('profile_telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
-            'birthday' =>  $request->input('profile_birthday'),
+            'birthday' =>  $birthday,
         ])->save();
 
         $contact->fill([
