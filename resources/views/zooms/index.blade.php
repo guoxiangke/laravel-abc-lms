@@ -24,8 +24,8 @@
               </thead>
               <tbody>
                 @foreach($zooms as $zoom)
-                    <tr>
-                      <th scope="row"><a href="{{ route('zooms.edit', $zoom->id) }}">Edit {{$zoom->id}}</a></th>
+                    <tr id={{$zoom->id}}>
+                      <th scope="row"><a href="{{ route('zooms.edit', $zoom->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
                       <td data-label="Email">{{$zoom->email}}</td>
                       <td data-label="Password">{{$zoom->password}}</td>
                       <td data-label="PMI">{{$zoom->pmi}}</td>

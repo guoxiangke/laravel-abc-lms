@@ -50,6 +50,7 @@ class SchoolForm extends Form
             ])
             ->add('profile_name', 'text', [
                 'label' => '管理员姓名',
+                'rules' => 'required|min:2',
                 'value' => $profile?$profile->name:null,
             ])
             ->add('profile_sex', 'select', [

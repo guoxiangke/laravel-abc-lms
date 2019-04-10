@@ -30,19 +30,8 @@
             </thead>
             <tbody>
               @foreach($orders as $order)
-                  <tr>
-                    <th scope="row">{{$order->id}}</th>
-                    <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
-                    <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
-                    <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
-                    <td data-label="Book">{{$order->book->name}}</td>
-                    <!-- <td data-label="Price">{{$order->product->name}}</td> -->
-                    <td data-label="Price">{{$order->price}}</td>
-                    <td data-label="Period">{{$order->period}}</td>
-                    <td data-label="已上">{{$order->classDoneRecords()->count()}}</td>
-                    <td data-label="ExpireAt">{{$order->expired_at->format('y/m/d')}}</td>
-                   
-                    <td data-label="Action">
+                  <tr id={{$order->id}}>
+                    <td data-label="#">
                       <a href="{{ route('orders.show', $order->id) }}" class="fas fa-calendar-alt fa-lg" alt="上课日历" title="上课日历"></a>
 
 
@@ -54,6 +43,15 @@
 
                       <a href="{{ route('orders.edit', $order->id) }}"  class="fas fa-edit fa-lg"></a>
                     </td>
+                    <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
+                    <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
+                    <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
+                    <td data-label="Book">{{$order->book->name}}</td>
+                    <!-- <td data-label="Price">{{$order->product->name}}</td> -->
+                    <td data-label="Price">{{$order->price}}</td>
+                    <td data-label="Period">{{$order->period}}</td>
+                    <td data-label="已上">{{$order->classDoneRecords()->count()}}</td>
+                    <td data-label="ExpireAt">{{$order->expired_at->format('y/m/d')}}</td>
                   </tr>
               @endforeach
             </tbody>

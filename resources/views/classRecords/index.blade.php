@@ -25,9 +25,8 @@
             </thead>
             <tbody>
               @foreach($classRecords as $classRecord)
-                  <tr>
+                  <tr id={{$classRecord->id}}>
                     <th scope="row">
-                      {{$classRecord->id}}
                       <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">
                         View
                       </a>

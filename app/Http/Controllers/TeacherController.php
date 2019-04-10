@@ -33,9 +33,9 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::with(
                 'user','school','zoom', 
-                'user.paymethod', 'user.profiles', 'user.profiles.contacts',
+                'user.profiles', 'user.profiles.contacts',
                 'school',
-            )
+            )//'user.paymethod', 
             ->orderBy('id','desc')
             ->paginate(100);
         return view('teachers.index',compact('teachers'));

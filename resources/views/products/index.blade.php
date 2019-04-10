@@ -26,8 +26,8 @@
               </thead>
               <tbody>
                 @foreach($products as $product)
-                    <tr>
-                      <th scope="row"><a href="{{ route('products.edit', $product->id) }}">Edit {{$product->id}}</a></th>
+                    <tr id={{$product->id}}>
+                      <th scope="row"><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
                       <td data-label="Name">{{$product->name}}</td>
                       <td data-label="Description">{{$product->description}}</td>
                       <td data-label="Price">{{$product->price}}</td>

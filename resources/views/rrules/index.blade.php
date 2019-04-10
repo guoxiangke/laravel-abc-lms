@@ -24,9 +24,9 @@
               </thead>
               <tbody>
                 @foreach($rrules as $rrule)
-                    <tr>
+                    <tr id={{$rrule->id}}>
                       <th scope="row">
-                        <a href="{{ route('rrules.edit', $rrule->id) }}">Edit {{$rrule->id}}</a></th>
+                        <a href="{{ route('rrules.edit', $rrule->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
                       <td data-label="order">{{$rrule->order->title}}</td>
                       <td data-label="type">{{ \App\Models\Rrule::TYPES[$rrule->type] }}</td>
                       <td data-label="start_at">{{$rrule->start_at->format('m/d H:i')}}</td>

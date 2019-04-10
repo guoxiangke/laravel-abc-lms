@@ -31,8 +31,8 @@
 				  </thead>
 				  <tbody>
 					@foreach($students as $student)
-					    <tr>
-					      <th scope="row" data-label="Id"><a href="{{ route('students.edit', $student->id) }}">Edit {{$student->id}}</a></th>
+					    <tr id={{$student->id}}>
+					      <th scope="row" data-label="Id"><a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
 					      <td data-label="Name">{{$student->user->profiles->first()->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$student->user->profiles->first()->sex] }}</td>
 					      <td data-label="Birthday">

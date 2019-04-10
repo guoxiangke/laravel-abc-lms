@@ -33,9 +33,9 @@
 							$profile = $agency->user->profiles->first();
 							$paymethod = $agency->user->paymethod;
 						@endphp
-					    <tr>
+					    <tr id={{$agency->id}}>
 					      <th scope="row">
-					      	<a href="{{ route('agencies.edit', $agency->id) }}">Edit {{$agency->id}}</a>
+					      	<a href="{{ route('agencies.edit', $agency->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
 					      </th>
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Email">{{$agency->user->email}}</td>
