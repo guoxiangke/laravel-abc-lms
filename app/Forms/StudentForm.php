@@ -36,6 +36,14 @@ class StudentForm extends Form
                 'rules' => 'required|min:11',
                 'label' => '手机号',
                 'help_block' => [
+                    'text' => '手机号可用于登陆,不带+86，11位',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
+            ])
+            ->add('password', 'text', [
+                'label' => '登陆密码',
+                'help_block' => [
                     'text' => '可用于登陆，密码默认：dxjy1234',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']

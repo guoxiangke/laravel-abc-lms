@@ -29,7 +29,10 @@
                       <td data-label="Email">{{$zoom->email}}</td>
                       <td data-label="Password">{{$zoom->password}}</td>
                       <td data-label="PMI">{{$zoom->pmi}}</td>
-                      <td data-label="Used">{{$zoom->teacher?$zoom->teacher->user->profiles->first()->name:'unused'}}</td>
+                      @php
+                        $profile = $zoom->teacher?$zoom->teacher->user->profiles->first():null;
+                      @endphp
+                      <td data-label="Used">{{!is_null($profile)?$profile->name:'unused'}}</td>
                     </tr>
                 @endforeach
               </tbody>

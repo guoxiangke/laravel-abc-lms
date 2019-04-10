@@ -119,4 +119,14 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->id == 1;
     }
+
+    //姓名转pinyin和english
+    public static function pinyin($name){
+        $name = str_replace(' ', '', $name);//去除空格
+        $name = implode('', pinyin($name, 16));//PINYIN_NAME
+        if(!$name){
+            $name = implode('_', pinyin($name, 64));//PINYIN_KEEP_ENGLISH
+        }
+        return $name;
+    }
 }

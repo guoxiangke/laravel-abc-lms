@@ -37,8 +37,13 @@ class TeacherForm extends Form
                 ],
             ])
             ->add('profile_telephone', 'tel', [
-                'rules' => 'required|min:8',
+                'rules' => 'required|min:13',//+639158798611
                 'label' => '手机号',
+                'help_block' => [
+                    'text' => '13位，带+63',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('contact_type', 'select', [
                 'label' => '联系方式',

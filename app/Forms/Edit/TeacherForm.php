@@ -52,24 +52,29 @@ class TeacherForm extends Form
                 ],
             ])
             ->add('profile_telephone', 'tel', [
-                'rules' => 'required|min:8',
-                'value'=>$profile->telephone,
+                'value' => $profile->telephone,
+                'rules' => 'required|min:13',//+639158798611
                 'label' => '手机号',
+                'help_block' => [
+                    'text' => '13位，带+63',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('contact_type', 'select', [
                 'label' => '联系方式',
                 'choices' => Contact::TYPES,
-                'selected' => $contact->type,
+                'selected' =>  $contact?$contact->type:0,
                 'empty_value' => '=== Select ==='
             ])
             ->add('contact_number', 'text',[
                 'rules' => 'required|min:4',
-                'value'=> $contact->number,
+                'value'=> $contact?$contact->number:null,
                 'label' => '联系方式账户ID'
             ])
             ->add('contact_remark', 'textarea', [
                 'label' => '联系方式备注',
-                'value'=> $contact->remark,
+                'value'=> $contact?$contact->remark:null,
                 'help_block' => [
                     'text' => '登陆邮箱：t_name@teacher.com',
                     'tag' => 'small',
@@ -103,18 +108,18 @@ class TeacherForm extends Form
                 'label' => '付款方式（中教必填）',
                 'choices' => PayMethod::TYPES,
                 'selected' => 1, //'PayPal'
-                'selected' => $paymethod->type,
+                'selected' => $paymethod?$paymethod->type:0,
                 'empty_value' => '=== Select ==='
             ])
             ->add('pay_number', 'text',[
                 'label' => '付款账户ID（中教必填）',
-                'value' => $paymethod->number,
+                'value' => $paymethod?$paymethod->number:null,
             ])
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',
                 'attr' => [
                     'rows' => 2,
-                    'value' => $paymethod->remark,
+                    'value' =>  $paymethod?$paymethod->remark:null,
                 ]
             ])
             ->add('submit', 'submit', [

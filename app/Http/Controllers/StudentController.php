@@ -146,15 +146,20 @@ class StudentController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
-        $userName = 's_'.str_replace(' ', '', $request->input('name'));
-        $email = $userName.'@student.com';
+        $profileName = $request->input('profile_name');
+        $name = $request->input('name'); //英文名！
+        if(!$name) {
+            $name = $profileName;
+        }
+        $name = 's_'.  User::pinyin($name);
+        $email = $name.'@student.com';
         $user = User::where('email', $email)->first();
 
         if(!$user){
             $userData = [
-                'name' => $userName,//英文名！
+                'name' => $name,
                 'email' => $email,
-                'password' => Hash::make('dxjy1234')
+                'password' => Hash::make($request->input('password')?:'dxjy1234')
             ];
             $user = User::create($userData);
         }
@@ -248,18 +253,17 @@ class StudentController extends Controller
 
 
         // create login user
-        $userName = 's_'.str_replace(' ', '', $request->input('name'));
-        $email = $userName.'@student.com';
 
-        if($password=$request->input('user_password')?:'dxjy1234'){
-            $password = Hash::make($password);
+        $profileName = $request->input('profile_name');
+        $name = $request->input('name'); //英文名！
+        if(!$name) {
+            $name = $profileName;
         }
-        $userData = [
-            'name' => $userName,//英文名！
-            'email' => $email,
-            'password' => $password
-        ];
-        $user->fill($userData)->save();
+        $name = 's_' . User::pinyin($name);
+        // $email = $name . '@student.com';
+        $password = $request->input('password')?:'dxjy1234';
+        $password = Hash::make($password);
+        $user->fill(compact('name', 'password'))->save();
         // $user->assignRole(User::ROLES['student']);
 
         $student->fill([

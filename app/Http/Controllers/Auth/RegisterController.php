@@ -72,11 +72,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $name = str_replace(' ', '', $data['name']);//去除空格
-        $name = implode('', pinyin($data['name'], 16));//PINYIN_NAME
-        if(!$name){
-            $name = implode('_', pinyin($data['name'], 64));//PINYIN_KEEP_ENGLISH
-        }
+        $name = User::pinyin($data['name']);
         $user = User::create([
             'name' => $name, //处理后的用户名
             'email' => $data['email'],
@@ -84,7 +80,6 @@ class RegisterController extends Controller
         ]);
 
         if($user){
-            Log::info(__CLASS__,[__FUNCTION__,__LINE__,'Create a User Named: ' . $user->name]);
             try {
                 $userProfile = new Profile;
                 $userProfile->user_id = $user->id;
