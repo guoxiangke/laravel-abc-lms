@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
         
         // $orders = factory(Order::class, 10)->create();
 
-        $orders = factory(Rrule::class, 1)->create();
+        // $orders = factory(Rrule::class, 1)->create();
 
     }
 }
