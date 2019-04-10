@@ -60,6 +60,7 @@ services:
       REDIS_HOST: redis
   scheduler:
     image: laravel-www
+    restart: always
     container_name: laravel-scheduler
     depends_on:
       - app
@@ -86,6 +87,7 @@ services:
       REDIS_HOST: redis
   queue:
     image: laravel-www
+    restart: always
     container_name: laravel-queue
     depends_on:
       - app
