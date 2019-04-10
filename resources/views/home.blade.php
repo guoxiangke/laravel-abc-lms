@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">{{__('Dashboard')}}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -17,22 +17,22 @@
                     @endif
                     @hasanyrole('manager|admin')
                     <div class="links">
-                        <a href="/schools">Schools</a>
-                        <a href="/zooms">Zooms</a>
-                        <a href="/teachers">Teachers</a>
-                        <a href="/agencies">Agency</a>
-                        <a href="/books">Books</a>
-                        <a href="/students">Students</a>
-                        <a href="/products">Products</a>
-                        <a href="/orders">Orders</a>
+                        <a href="/schools">{{__('Schools')}}</a>
+                        <a href="/zooms">{{__('Zooms')}}</a>
+                        <a href="/teachers">{{__('Teachers')}}</a>
+                        <a href="/agencies">{{__('Agency')}}</a>
+                        <a href="/books">{{__('Books')}}</a>
+                        <a href="/students">{{__('Students')}}</a>
+                        <a href="/products">{{__('Products')}}</a>
+                        <a href="/orders">{{__('Orders')}}</a>
                         <br><br>
-                        <a href="/rrules">Rrules</a>
-                        <a href="/classRecords">ClassRecords</a>
+                        <a href="/rrules">{{__('Rrules')}}</a>
+                        <a href="/classRecords">{{__('ClassRecords')}}</a>
                         <br><br>
                         @role('admin')
-                        <a href="/users">Users</a>
-                        <a href="/roles">Roles</a>
-                        <a href="/permissions">Permissions</a>
+                        <a href="/users">{{__('Users')}}</a>
+                        <a href="/roles">{{__('Roles')}}</a>
+                        <a href="/permissions">{{__('Permissions')}}</a>
                         @endrole
                     </div>
                     @endhasanyrole

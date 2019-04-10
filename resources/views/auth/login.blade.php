@@ -15,7 +15,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
-                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus placeholder="{{ __('用户名/邮箱/手机号') }}">
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus placeholder="{{ __('LoginName') }}">
 
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
@@ -67,9 +67,9 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
+                                    <span class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
-                                    </label>
+                                    </span>
                                 </div>
                             </div>
                         </div>
