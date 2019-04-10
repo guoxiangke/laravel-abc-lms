@@ -49,8 +49,8 @@ services:
     environment:
       REDIS_PORT: 6379
       # APP_ENV: production
-      VIRTUAL_HOST: lms.daxiangyingyu.com
-      LETSENCRYPT_HOST: lms.daxiangyingyu.com
+      VIRTUAL_HOST: lms.abc-chinaedu.com
+      LETSENCRYPT_HOST: lms.abc-chinaedu.com
       LETSENCRYPT_EMAIL: dale.tel@139.com
       APP_ENV: production
       CONTAINER_ROLE: app

@@ -93,4 +93,4 @@ Route::get('/signout', 'AuthController@signout');
 Route::get('/dev/su/{id}', function($id){
     Auth::loginUsingId($id);
     return redirect('home');
-})->name('sudo.su');
+})->name('sudo.su')->middleware('admin');
