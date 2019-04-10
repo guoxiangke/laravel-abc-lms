@@ -44,7 +44,7 @@
                       @endif
                           
                     </th>
-                    <td data-label="Teacher">{{$classRecord->user->profiles->first()->name}}</td>
+                    <td data-label="Student">{{$classRecord->user->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m.d H:i')}}</td>
                     <td data-label="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES_EN[$classRecord->exception]}}
                     </td>
