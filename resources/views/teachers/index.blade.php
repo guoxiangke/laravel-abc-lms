@@ -36,8 +36,8 @@
 					      </th>
 					      <td>{{$teacher->user->profiles->first()->name}}</td>
 					      <td>{{$teacher->user->email}}</td>
-					      <td>{{$teacher->zoom->email}}</td>
-					      <td>{{$teacher->zoom->password}}</td>
+					      <td>{{$teacher->zoom?$teacher->zoom->email:'-'}}</td>
+					      <td>{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
 					      <td>{{ App\Models\Profile::SEXS[$teacher->user->profiles->first()->sex] }}</td>
 							<?php
 								$birthday =$teacher->user->profiles->first()->birthday; 
