@@ -19,14 +19,16 @@ class ClassRecordsGenerateQueue implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $order;
+    protected $offset;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, $offset=0)
     {
         $this->order = $order;
+        $this->offset = $offset;
     }
 
     /**
@@ -39,7 +41,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         $order = $this->order;
         
         //找出今天/昨天需要上的2节课 的时间H:i
-        $byDay = Carbon::now()->subDays(0);//sub方便为过去的日期生成记录！！
+        $byDay = Carbon::now()->subDays($this->offset);//sub方便为过去的日期生成记录！！
         $todayClassTimes = $order->hasClass($byDay); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
 
