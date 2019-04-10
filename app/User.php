@@ -37,6 +37,7 @@ class User extends Authenticatable implements HasMedia
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
 
     const ROLES =[
+        'admin' => 'admin',
         'developer' => 'developer',// '开发者',
         'manager' => 'manager',// '管理人员',
         'editor' => 'editor',// '网站编辑',

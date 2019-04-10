@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'admin',
         ]);
 
-        $user->assignRole(User::ROLES['manager']);
+        $user->assignRole(User::ROLES['admin']);
         
         $user = factory(User::class)->create([
             'email' => 'monika@daxiangyingyu.com',
