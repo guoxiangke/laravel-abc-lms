@@ -14,7 +14,7 @@ use App\Models\Book;
 use App\Models\ClassAol;
 use App\Models\ClassRecord;
 use App\Models\Order;
-use App\Traits\HasPriceField;
+// use App\Traits\HasPriceField;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -24,7 +24,7 @@ class Order extends Model  implements AuditableContract
 {
     use SoftDeletes;
     use Auditable;
-    use HasPriceField;
+    // use HasPriceField;
     
     // 0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
     const STATU_ACTIVE = 1;
@@ -42,7 +42,7 @@ class Order extends Model  implements AuditableContract
     	'agency_uid',
     	'book_id', //todo
         'product_id',
-        'price',//'单位分'
+        'price',//'单位yuan'
     	'period',//'课时' 20
     	'expired_at',//有效期
         'status',//default 1

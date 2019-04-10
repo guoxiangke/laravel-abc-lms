@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\HasPriceField;
+// use App\Traits\HasPriceField;
 
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -15,7 +15,7 @@ class Product extends Model implements HasMedia
 {
 	use SoftDeletes;
     use HasPriceField;
-    use HasMediaTrait;
+    // use HasMediaTrait;
     protected $fillable = [
     	'name',
     	'description',
