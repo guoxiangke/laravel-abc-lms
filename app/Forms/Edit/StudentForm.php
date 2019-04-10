@@ -65,6 +65,11 @@ class StudentForm extends Form
             ->add('name', 'text', [
                 'value' => $user->name,
                 'label' => '英文名',
+                'help_block' => [
+                    'text' => '不填，自动为姓名的拼音+s_',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('book_id', 'select', [
                 'label' => '同步教材',

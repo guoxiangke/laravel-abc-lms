@@ -257,9 +257,8 @@ class StudentController extends Controller
         $profileName = $request->input('profile_name');
         $name = $request->input('name'); //英文名！
         if(!$name) {
-            $name = $profileName;
+            $name = 's_'. User::pinyin($profileName);
         }
-        $name = User::pinyin($name);
         // $email = $name . '@student.com';
         $password = $request->input('password')?:'dxjy1234';
         $password = Hash::make($password);
