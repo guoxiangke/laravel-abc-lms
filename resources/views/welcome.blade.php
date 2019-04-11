@@ -74,6 +74,7 @@
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}">{{__("Register")}}</a>
                         @endif
+                        <a  href="{{ route('login.weixin') }}">{{ __('Wechat Login') }}</a>
                     @endauth
                 </div>
             @endif
