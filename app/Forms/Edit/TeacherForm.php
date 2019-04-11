@@ -56,7 +56,7 @@ class TeacherForm extends Form
                 'rules' => 'required|min:13',//+639158798611
                 'label' => '手机号',
                 'help_block' => [
-                    'text' => '13位，带+63',
+                    'text' => '外教带+63,共计13位；中教带+86',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']
                 ],

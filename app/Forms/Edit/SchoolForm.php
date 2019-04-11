@@ -66,8 +66,13 @@ class SchoolForm extends Form
             ])
             ->add('profile_telephone', 'tel', [
                 'value' => $profile?$profile->telephone:NULL,
-                'rules' => 'required|min:8',
+                'rules' => 'required|min:13',
                 'label' => '管理员手机号',
+                'help_block' => [
+                    'text' => '13位，带+63',
+                    'tag' => 'small',
+                    'attr' => ['class' => 'form-text text-muted']
+                ],
             ])
             ->add('contact_skype', 'text',[
                 'value' => $contact?$contact->number:null,
