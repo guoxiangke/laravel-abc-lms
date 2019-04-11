@@ -33,20 +33,20 @@
 					      <th scope="row">
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >Edit</a>
 					      </th>
-					      <td data-label="Name">{{$teacher->user->profiles->first()->name}}</td>
+					      @php
+					      	$profile = $teacher->user->profiles->first();
+							$birthday =$profile->birthday;
+							$school =$teacher->school; 
+					      @endphp
+					      <td data-label="Name">{{$profile?$profile->name:'-'}}</td>
 					      <td data-label="PMI">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</td>
 					      <td data-label="ZoomEmail">{{$teacher->zoom?$teacher->zoom->email:'-'}}</td>
 					      <td data-label="ZoomPassword">{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
-					      <td data-label="SEX">{{ App\Models\Profile::SEXS[$teacher->user->profiles->first()->sex] }}</td>
-							<?php
-								$birthday =$teacher->user->profiles->first()->birthday; 
-								$school =$teacher->school; 
-								//$paymethod = $teacher->user->paymethod; 
-							?>
+					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}
 					      </td>
-					      <td data-label="Tel">{{$teacher->user->profiles->first()->telephone}}</td>
+					      <td data-label="Tel">{{$profile?$profile->telephone:'-'}}</td>
 					      <td data-label="School">{{ $school ? $school->name : 'FreeLancer' }}</td>
 					    </tr>
 					@endforeach
