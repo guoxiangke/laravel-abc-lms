@@ -228,8 +228,6 @@ class TeacherController extends Controller
         $paymethod = $user->paymethod;
         
         $profile = $user->profiles->first();
-        // $profile = $teacher->profiles->first();
-        $contact = $profile->contacts->first();
 
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
@@ -258,6 +256,24 @@ class TeacherController extends Controller
         if($birthday){
             //1966-11-18
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
+        }
+        if($profile){
+            $contact = $profile->contacts->first();
+        }else{
+            //bug!!!
+            $profile = Profile::create([
+                'telephone' => $request->input('telephone'),
+                'user_id' => $user->id,
+                'name' => $request->input('profile_name'),
+                'sex' => $request->input('profile_sex'),
+                'birthday' => $birthday,
+            ]);
+            $contact = Contact::create([
+                'profile_id' => $profile->id,
+                'type' => $contactType,
+                'number' => $request->input('contact_number'),
+                'remark' => $request->input('contact_remark'),
+            ]);
         }
         $profile->fill([
             'telephone' => $request->input('telephone'),
