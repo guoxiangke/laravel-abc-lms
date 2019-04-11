@@ -17,7 +17,7 @@
 			  <table class="table">
 				  <thead>
 				    <tr>
-				    	<th>Action</th>
+				    	<th>#</th>
 						<th>Name</th>
 						<th>Email</th>
 						<th>Sex</th>
