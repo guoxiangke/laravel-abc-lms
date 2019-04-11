@@ -19,7 +19,7 @@ class SchoolForm extends Form
         $paymethod = null;
         if($profile){
             $contact = $profile->contacts->first();
-            // $paymethod = $school->user->paymethod;
+            $paymethod = $school->user->paymethod;
         }
         // $contact = $profile->contacts->first();
         $this->add('school_name', 'text',
@@ -64,7 +64,7 @@ class SchoolForm extends Form
                 'label' => '管理员生日',
                 'value' => $profile?($profile->birthday?$profile->birthday->format('Y-m-d'):NULL):NULL,
             ])
-            ->add('profile_telephone', 'tel', [
+            ->add('telephone', 'tel', [
                 'value' => $profile?$profile->telephone:NULL,
                 'rules' => 'required|min:13',
                 'label' => '管理员手机号',

@@ -16,7 +16,7 @@ class AgencyForm extends Form
                 'rules' => 'required',
                 'label' => '姓名',
             ])
-            ->add('profile_telephone', 'tel', [
+            ->add('telephone', 'tel', [
                 'rules' => 'required|min:11',
                 'label' => '手机号',
             ])

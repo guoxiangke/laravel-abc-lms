@@ -51,9 +51,9 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('profile_telephone', 'tel', [
+            ->add('telephone', 'tel', [
                 'value' => $profile->telephone,
-                'rules' => 'required|min:13',//+639158798611
+                'rules' => 'required|min:11',//+639158798611
                 'label' => '手机号',
                 'help_block' => [
                     'text' => '外教带+63,共计13位；中教带+86',

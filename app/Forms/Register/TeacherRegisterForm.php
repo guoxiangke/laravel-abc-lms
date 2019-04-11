@@ -27,8 +27,8 @@ class TeacherRegisterForm extends Form
                 'label' => '登陆密码',
                 'attr' => ['placeholder' => '默认：Teacher123']
             ])
-            ->add('profile_telephone', 'tel', [
-                'rules' => 'required|min:8',
+            ->add('telephone', 'tel', [
+                'rules' => 'required|min:11',
                 'label' => '手机号*',
             ])
             ->add('contact_type', 'select', [

@@ -83,6 +83,9 @@ class StudentController extends Controller
         //必须是没XX角色才可以注册
         $this->authorize('create', Student::class);
 
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         $form = $formBuilder->create(StudentRegisterForm::class);
 
         if (!$form->isValid()) {
@@ -91,7 +94,7 @@ class StudentController extends Controller
         $user = $request->user();
 
         //region profile 真实姓名/电话 推荐人uid关联 更改机会
-        $profileTelephone = $request->input('profile_telephone');
+        $profileTelephone = $request->input('telephone');
         $profileName = $request->input('profile_name');
         $recommendTelephone = $request->input('recommend_telephone');
         $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
@@ -143,6 +146,9 @@ class StudentController extends Controller
     {
         $form = $formBuilder->create(CreateForm::class);
 
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -177,7 +183,7 @@ class StudentController extends Controller
 
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
-            'telephone' => $request->input('profile_telephone'),
+            'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
         if($birthday){
@@ -194,7 +200,7 @@ class StudentController extends Controller
         Contact::firstOrNew([
             'profile_id' => $profile->id,
             'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
-            'number' => $request->input('contact_number')?: $request->input('profile_telephone'),
+            'number' => $request->input('contact_number')?: $request->input('telephone'),
             'remark' => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
@@ -244,6 +250,9 @@ class StudentController extends Controller
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -283,7 +292,7 @@ class StudentController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'telephone' => $request->input('profile_telephone'),
+            'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),
@@ -294,7 +303,7 @@ class StudentController extends Controller
         $contact->fill([
             // 'profile_id' => $profile->id,
             // 'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
-            'number' => $request->input('contact_number')?: $request->input('profile_telephone'),
+            'number' => $request->input('contact_number')?: $request->input('telephone'),
             'remark' => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);

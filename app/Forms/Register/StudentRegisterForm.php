@@ -42,7 +42,7 @@ class StudentRegisterForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('profile_telephone', 'tel', [
+            ->add('telephone', 'tel', [
                 'label' => '家长手机号',
                 'help_block' => [
                     'text' => '⚠️您仅有这一次更改机会，可用于登陆本站<br/>如果注册时已正确填写，可以留空',

@@ -77,6 +77,9 @@ class TeacherController extends Controller
         $this->authorize('create', Teacher::class,);
         $form = $formBuilder->create(TeacherRegisterForm::class);
 
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -91,6 +94,9 @@ class TeacherController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
@@ -130,7 +136,7 @@ class TeacherController extends Controller
         
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
-            'telephone' => $request->input('profile_telephone'),
+            'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
         if($birthday){
@@ -207,6 +213,9 @@ class TeacherController extends Controller
      */
     public function update(Request $request, teacher $teacher, FormBuilder $formBuilder)
     {
+        $this->validate($request, [
+            'telephone'=>'required|min:11|unique:profiles',
+        ]);
         $form = $this->form(EditForm::class);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -251,7 +260,7 @@ class TeacherController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'telephone' => $request->input('profile_telephone'),
+            'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
             'name' => $request->input('profile_name'),
             'sex' => $request->input('profile_sex'),

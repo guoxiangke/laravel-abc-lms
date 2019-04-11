@@ -70,9 +70,12 @@ class SocialController extends Controller
         }
 
         $telephone = $request->input('telephone');
+        $LoginUser = Profile::where('telephone', $telephone)->first();
+        if($LoginUser){
+            $userId = $LoginUser->user_id;
+        }
         $email = $request->input('email');
-        $userId = 1;
-        dd($request->all());
+
         // Social::firstOrCreate(
         //     [
         //         'social_id' => $request->input('social_id'),
@@ -82,6 +85,7 @@ class SocialController extends Controller
         // );
         flashy()->success(__('Bind Success'));
         Auth::loginUsingId($userId);
+        dd($request->all(),$LoginUser,$email);
         return redirect('home');
     }
 

@@ -44,8 +44,8 @@ class SchoolForm extends Form
                 'empty_value' => '=== Select ==='
             ])
             ->add('profile_birthday', 'date', ['label' => '管理员生日'])
-            ->add('profile_telephone', 'tel', [
-                'rules' => 'required|min:8',
+            ->add('telephone', 'tel', [
+                'rules' => 'required|min:13',
                 'label' => '管理员手机号',
             ])
             ->add('contact_skype', 'text',[
