@@ -118,12 +118,12 @@ class LoginController extends Controller
 
     public function redirectToWechatProvider()
     {
-        return Socialite::driver('wechat')->redirect();
+        return Socialite::driver('weixin')->redirect();
     }
 
     public function handleWechatProviderCallback()
     {
-        $user = Socialite::driver('wechat')->user();
+        $user = Socialite::driver('weixin')->user();
         dd($user);
         // $user->token;
     }
