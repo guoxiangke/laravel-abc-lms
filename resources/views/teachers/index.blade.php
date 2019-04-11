@@ -34,15 +34,18 @@
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >Edit</a>
 					      </th>
 					      @php
+					      	$birthday = false;
 					      	$profile = $teacher->user->profiles->first();
-							$birthday =$profile->birthday;
-							$school =$teacher->school; 
+					      	if($profile){
+						      	$birthday = $profile->birthday;
+						    }
+							$school = $teacher->school; 
 					      @endphp
 					      <td data-label="Name">{{$profile?$profile->name:'-'}}</td>
 					      <td data-label="PMI">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</td>
 					      <td data-label="ZoomEmail">{{$teacher->zoom?$teacher->zoom->email:'-'}}</td>
 					      <td data-label="ZoomPassword">{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
-					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex] }}</td>
+					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}
 					      </td>

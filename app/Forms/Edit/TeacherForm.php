@@ -19,10 +19,12 @@ class TeacherForm extends Form
         $zoomId = $teacher->zoom?$teacher->zoom->id:0;
         // dd($zoomId);
         $paymethod = $user->paymethod;
-        
+        $contact = false;
         $profile = $user->profiles->first();
-        // $profile = $teacher->profiles->first();
-        $contact = $profile->contacts->first();
+        if($profile){
+            $contact = $profile->contact->first();
+        }
+        
 
 
         //select zooms un-used!
@@ -41,7 +43,7 @@ class TeacherForm extends Form
                 'empty_value' => 'Freelancer/自由职业'
             ])
             ->add('profile_name', 'text',
-                ['rules' => 'required','label' => '姓名','value'=>$profile->name]
+                ['rules' => 'required','label' => '姓名','value'=>$profile?$profile->name:null]
             )
             ->add('user_password', 'text', [
                 'label' => '登陆密码',
@@ -52,7 +54,7 @@ class TeacherForm extends Form
                 ],
             ])
             ->add('telephone', 'tel', [
-                'value' => $profile->telephone,
+                'value' => $profile?$profile->telephone:null,
                 'rules' => 'required|min:11',//+639158798611
                 'label' => '手机号',
                 'help_block' => [
@@ -97,12 +99,12 @@ class TeacherForm extends Form
                 'label' => '性别',
                 'rules' => 'required',
                 'choices' => ['女','男'],
-                'selected' => $profile->sex,
+                'selected' => $profile?$profile->sex:null,
                 'empty_value' => '=== Select ==='
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '生日',
-                'value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):NULL
+                'value'=>$profile?($profile->birthday?$profile->birthday->format('Y-m-d'):NULL):null
             ])
             ->add('pay_method', 'select', [
                 'label' => '付款方式（中教必填）',
