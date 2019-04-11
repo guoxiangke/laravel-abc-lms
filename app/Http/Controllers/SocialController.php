@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Social;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\SocialForm as CreateForm;
 use Socialite;
 
 class SocialController extends Controller
 {
+    use FormBuilderTrait;
 
     public function redirectToWechatProvider()
     {
