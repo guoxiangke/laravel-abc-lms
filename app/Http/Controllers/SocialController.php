@@ -8,6 +8,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\SocialForm as CreateForm;
 use Socialite;
+use Illuminate\Support\Facades\Auth;
 
 class SocialController extends Controller
 {
