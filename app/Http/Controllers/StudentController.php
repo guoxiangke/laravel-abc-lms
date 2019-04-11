@@ -250,9 +250,7 @@ class StudentController extends Controller
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
-        ]);
+        
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }

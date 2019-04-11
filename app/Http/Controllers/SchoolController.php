@@ -164,9 +164,6 @@ class SchoolController extends Controller
      */
     public function update(Request $request, school $school)
     {
-        $this->validate($request, [
-            'telephone'=>'required|min:13|unique:profiles',
-        ]);
         $form = $this->form(EditForm::class);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
