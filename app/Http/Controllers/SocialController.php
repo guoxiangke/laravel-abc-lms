@@ -8,6 +8,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\SocialForm as CreateForm;
 use Socialite;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 
 class SocialController extends Controller
@@ -85,7 +86,7 @@ class SocialController extends Controller
             $field = 'name';
         }
         $password = $request->get('password');
-
+        dd($field,$account,$password);
         if (Auth::attempt([$field => $account, 'password' => $password])){
             flashy()->success(__('Bind Success'));
             // Social::firstOrCreate(
@@ -98,7 +99,7 @@ class SocialController extends Controller
             Auth::loginUsingId($userId);
         }else{        
             flashy()->success(__('Wrong Credentials'));
-            return redirect()->back()->withErrors($form->getErrors())->withInput();
+            // return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
         flashy()->success(__('Bind Success2'));
