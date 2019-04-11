@@ -52,8 +52,13 @@ class ZoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, FormBuilder $formBuilder)
     {
+        $form = $formBuilder->create(CreateForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
         $zoom = Zoom::firstOrCreate(
             [
                 'email' => $request->input('email'),
