@@ -22,7 +22,7 @@ class TeacherForm extends Form
         $contact = false;
         $profile = $user->profiles->first();
         if($profile){
-            $contact = $profile->contact->first();
+            $contact = $profile->contacts->first();
         }
         
 
