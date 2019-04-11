@@ -20,6 +20,8 @@ class StudentForm extends Form
         $paymethod = $user->paymethod;
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name','user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name','user_id'))->unique()->toArray();
+        // dd($recommend);
 
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
@@ -92,8 +94,8 @@ class StudentForm extends Form
             ])
             ->add('recommend_uid', 'select', [
                 'label' => '介绍人',
-                'selected' => $student->user_id,
-                'choices' => Student::with('profiles')->get()->pluck('profiles.0.name','id')->merge(Agency::with('profiles')->get()->pluck('profiles.0.name','id'))->unique()->toArray(), //包括代理/学生
+                'selected' => $profile->recommend->id,
+                'choices' => $recommend, //包括代理/学生
                 'empty_value' => '=== Select ==='
             ])
             ->add('remark', 'textarea', [

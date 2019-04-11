@@ -47,6 +47,6 @@ class Profile extends Model implements AuditableContract
     // agency 
     public function recommend()
     {
-        return $this->hasOne(User::class, 'id', 'recommend_uid');
+        return $this->hasOne(Profile::class, 'user_id', 'recommend_uid');
     }
 }

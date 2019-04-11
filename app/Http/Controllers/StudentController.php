@@ -40,7 +40,8 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('user',
-                'user.profiles', 'user.profiles.contacts'
+                'user.profiles', 'user.profiles.contacts',
+                'user.profiles.recommend',
             )//'user.paymethod', 
             ->orderBy('id','desc')
             ->paginate(100);

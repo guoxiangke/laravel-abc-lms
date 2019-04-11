@@ -32,15 +32,18 @@
 					@foreach($students as $student)
 					    <tr id={{$student->id}}>
 					      <th scope="row" data-label="Id"><a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
-					      <td data-label="Name">{{$student->user->profiles->first()->name}}</td>
-					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$student->user->profiles->first()->sex] }}</td>
+					      @php
+					      	$profile = $student->user->profiles->first();
+				      		$birthday = $profile->birthday;
+							
+				      		$recommend = $profile->recommend;
+				      		//dd( $profile->toArray());
+
+				      		$contact = $profile->contacts->first();
+					      @endphp
+					      <td data-label="Name">{{$profile->name}}</td>
+					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">
-					      	@php
-					      		$birthday = $student->user->profiles->first()->birthday;
-					      		$profile = $student->user->profiles->first();
-					      		$recommend = $profile->recommend;
-					      		$contact = $profile->contacts->first();
-					      	@endphp
 					      	{{$birthday?$birthday->format('m/d'):'-'}}
 					      </td>
 					      <td data-label="Grade">{{ App\Models\Student::GRADES[$student->grade] }}</td>
@@ -48,8 +51,8 @@
 					      <td data-label="QQ/Wechat">
 					      	{{ $contact ?  $contact->number : '-' }}
 					      </td>
-					      <td data-label="推荐人">{{  
-					      	$recommend ? $recommend->profiles->first()->name : '-' }}</td>
+					      <td data-label="推荐人">{{
+					      	$recommend ? $profile->recommend->name : '-' }}</td>
 					      
 					    </tr>
 					@endforeach
