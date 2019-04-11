@@ -31,8 +31,8 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::with(
-                'user', 'user.paymethod', 'user.profiles', 'user.profiles.contacts'
-            )
+                'user', 'user.profiles', 'user.profiles.contacts'
+            )// 'user.paymethod', 
             ->orderBy('id','desc')
             ->paginate(100);
         return view('schools.index',compact('schools'));

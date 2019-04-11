@@ -41,7 +41,7 @@
 							<?php
 								$birthday =$teacher->user->profiles->first()->birthday; 
 								$school =$teacher->school; 
-								$paymethod = $teacher->user->paymethod; 
+								//$paymethod = $teacher->user->paymethod; 
 							?>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}

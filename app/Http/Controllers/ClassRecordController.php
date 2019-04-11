@@ -40,8 +40,8 @@ class ClassRecordController extends Controller
         $classRecords = ClassRecord::with(
             'rrule',
             'teacher', 'teacher.profiles',
-            'rrule.order.agency', 'rrule.order.agency.profiles',
-            'rrule.order.user', 'rrule.order.user.profiles',
+            'agency', 'agency.profiles',
+            'user', 'user.profiles',
             )
             ->orderBy('generated_at','desc')
             ->paginate(100);

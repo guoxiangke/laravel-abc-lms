@@ -25,7 +25,6 @@
 						<th>Grade</th>
 						<th>登陆手机</th>
 						<th>QQ/Wechat</th>
-						<th>支付方式</th>
 						<th>推荐人</th>
 				    </tr>
 				  </thead>
@@ -38,7 +37,6 @@
 					      <td data-label="Birthday">
 					      	@php
 					      		$birthday = $student->user->profiles->first()->birthday;
-					      		$paymethod = $student->user->paymethod;
 					      		$profile = $student->user->profiles->first();
 					      		$recommend = $profile->recommend;
 					      		$contact = $profile->contacts->first();
@@ -50,7 +48,6 @@
 					      <td data-label="QQ/Wechat">
 					      	{{ $contact ?  $contact->number : '-' }}
 					      </td>
-					      <td data-label="PayType">{{ $paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ":" . $paymethod->number :'-'}}</td>
 					      <td data-label="推荐人">{{  
 					      	$recommend ? $recommend->profiles->first()->name : '-' }}</td>
 					      
