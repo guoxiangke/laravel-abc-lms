@@ -84,7 +84,7 @@ class SocialController extends Controller
             $field = 'name';
         }
         $password = $request->get('password');
-        if (Auth::attempt([$field => $account, 'password' => $password])){
+        if (Auth::attempt([$field => $account, 'password' => $password],true)){
             flashy()->success(__('Bind Success'));
             // Social::firstOrCreate(
             //     [
@@ -93,7 +93,7 @@ class SocialController extends Controller
             //         'type' =>$request->input('type'),
             //     ]
             // );
-            Auth::loginUsingId($userId);
+            // Auth::loginUsingId($userId);
         }else{        
             flashy()->success(__('Wrong Credentials'));
             // return redirect()->back()->withErrors($form->getErrors())->withInput();

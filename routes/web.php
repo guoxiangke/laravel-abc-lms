@@ -41,6 +41,7 @@ Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
 Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
+Route::resources(['socials' => 'SocialController']);//post need
 //admin
 Route::group( ['middleware' => ['auth']], function() {
     Route::resource('users', 'UserController');
@@ -58,7 +59,6 @@ Route::group( ['middleware' => ['auth']], function() {
         'products' => 'ProductController',
         'orders' => 'OrderController',
         'classRecords' => 'ClassRecordController',
-        'socials' => 'SocialController',
 
         'rrules' => 'RruleController', //except create!!! create from order
     ]);
