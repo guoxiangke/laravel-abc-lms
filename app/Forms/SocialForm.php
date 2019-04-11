@@ -16,10 +16,10 @@ class SocialForm extends Form
                 'label' => 'type',
                 'value' => $socialType,
             ])
-            ->add('type', 'static', [
+            ->add('name', 'static', [
                 'label' => 'name',
                 'value' => $socialUser->name,
-            ])->add('type', 'static', [
+            ])->add('nickname', 'static', [
                 'label' => 'nickname',
                 'value' => $socialUser->nickname,
             ])
