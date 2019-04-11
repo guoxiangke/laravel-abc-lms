@@ -17,11 +17,14 @@ class SocialController extends Controller
 
     public function redirectToWechatProvider()
     {
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('weixin')->redirect();
     }
 
     public function handleWechatProviderCallback()
     {
+        if(Auth::id()) return redirect('home');
+
         $socialUser = Socialite::driver('weixin')->user();
         $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
         //bind
@@ -35,9 +38,10 @@ class SocialController extends Controller
                 ['socialUser' => $socialUser, 'socialType' => 1],
             ); 
             return view('social.create', compact('form'));
+        }else{
+            Auth::loginUsingId($userId,true);
+            return redirect('home');
         }
-        Auth::loginUsingId($userId);
-        return redirect('home');
     }
     
     /**
@@ -68,6 +72,8 @@ class SocialController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        if(Auth::id()) return redirect('home');
+
         $this->validate($request, [
             'username'=>'required',
             'password'=>'required',
@@ -86,20 +92,17 @@ class SocialController extends Controller
         $password = $request->get('password');
         if (Auth::attempt([$field => $account, 'password' => $password],true)){
             flashy()->success(__('Bind Success'));
-            // Social::firstOrCreate(
-            //     [
-            //         'social_id' => $request->input('social_id'),
-            //         'user_id' => $userId,
-            //         'type' =>$request->input('type'),
-            //     ]
-            // );
-            // Auth::loginUsingId($userId);
-        }else{        
+            Social::firstOrCreate(
+                [
+                    'social_id' => $request->input('social_id'),
+                    'user_id' => Auth::id(),
+                    'type' => $request->input('type'),
+                ]
+            );
+        }else{
             flashy()->success(__('Wrong Credentials'));
-            // return redirect()->back()->withErrors($form->getErrors())->withInput();
+            return redirect('login');
         }
-        flashy()->success(__('Bind Success2'));
-        dd($request->all(),$field,$account,$password);
         return redirect('home');
     }
 

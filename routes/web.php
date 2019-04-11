@@ -41,7 +41,8 @@ Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
 Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
-Route::resources(['socials' => 'SocialController']);//post need
+Route::resources(['socials' => 'SocialController']); //post need
+
 //admin
 Route::group( ['middleware' => ['auth']], function() {
     Route::resource('users', 'UserController');

@@ -15,7 +15,8 @@ class CreateSocialsTable extends Migration
     {
         Schema::create('socials', function (Blueprint $table) {
             $table->bigIncrements('id'); 
-            $table->unsignedBigInteger('social_id')->index();
+            $table->string('social_id')->index();
+            // ALTER TABLE `socials` CHANGE COLUMN `social_id` `social_id` VARCHAR(255);
             $table->unsignedBigInteger('user_id');
             $table->unsignedTinyInteger('type')->default(1);//1wechat 2facebook
             $table->timestamps();
