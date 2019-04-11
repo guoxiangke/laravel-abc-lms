@@ -17,7 +17,7 @@ class OrderObserver
     {
         //自动生成过去1个月的记录，特殊记录请编辑修改状态！！！
         for ($i=0; $i < 31; $i++) {
-            ClassRecordsGenerateQueue::dispatch($order,1)->onQueue('high');
+            ClassRecordsGenerateQueue::dispatch($order,$i)->onQueue('high');
         }
     }
 

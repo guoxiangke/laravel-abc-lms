@@ -25,7 +25,6 @@
                 <th scope="col">Period</th>
                 <th scope="col">已上</th>
                 <th scope="col">ExpireAt</th>
-                <th scope="col">#</th>
               </tr>
             </thead>
             <tbody>

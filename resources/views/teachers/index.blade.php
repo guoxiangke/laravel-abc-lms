@@ -42,7 +42,7 @@
 							$school = $teacher->school; 
 					      @endphp
 					      <td data-label="Name">{{$profile?$profile->name:'-'}}</td>
-					      <td data-label="PMI">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</td>
+					      <td data-label="PMI"><a target="_blank" href="https://zoom.us/j/{{$teacher->zoom?$teacher->zoom->pmi:'-'}}">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</a></td>
 					      <td data-label="ZoomEmail">{{$teacher->zoom?$teacher->zoom->email:'-'}}</td>
 					      <td data-label="ZoomPassword">{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
 					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
