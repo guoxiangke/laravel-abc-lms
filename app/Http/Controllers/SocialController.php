@@ -68,12 +68,10 @@ class SocialController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(CreateForm::class);
-
-        if (!$form->isValid()) {
-            return redirect()->back()->withErrors($form->getErrors())->withInput();
-        }
-
+        $this->validate($request, [
+            'username'=>'required',
+            'password'=>'required',
+        ]);
         $account = $request->get('username');
         if(is_numeric($account)){
             $field = 'id';
@@ -86,7 +84,6 @@ class SocialController extends Controller
             $field = 'name';
         }
         $password = $request->get('password');
-        dd($field,$account,$password);
         if (Auth::attempt([$field => $account, 'password' => $password])){
             flashy()->success(__('Bind Success'));
             // Social::firstOrCreate(
@@ -101,9 +98,8 @@ class SocialController extends Controller
             flashy()->success(__('Wrong Credentials'));
             // return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-
         flashy()->success(__('Bind Success2'));
-        dd($request->all(),$LoginUser,$email);
+        dd($request->all(),$field,$account,$password);
         return redirect('home');
     }
 
