@@ -72,15 +72,6 @@ class SocialController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $name = $request->input('name');
-        $password = Input::get('password');
-        if (Auth::attempt(array('user_name' => $name, 'password' => $password))){
-            return "success";
-        }else{        
-            return "Wrong Credentials";
-        }
-
-
         $account = $request->get('username');
         if(is_numeric($account)){
             $field = 'id';

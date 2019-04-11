@@ -30,7 +30,7 @@ class SocialForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('password', 'text', [
+            ->add('password', 'password', [
                 'label' => __('Password'),
                 'rules' => 'required',
                 'help_block' => [
