@@ -51,14 +51,14 @@ Route::group( ['middleware' => ['auth']], function() {
     Route::resources([
         'schools' => 'SchoolController',
         'teachers' => 'TeacherController',
+        'books' => 'BookController',
         'zooms' => 'ZoomController',
         'agencies' => 'AgencyController',
         'students' => 'StudentController',
         'products' => 'ProductController',
         'orders' => 'OrderController',
         'classRecords' => 'ClassRecordController',
-
-        'books' => 'BookController',
+        'socials' => 'SocialController',
 
         'rrules' => 'RruleController', //except create!!! create from order
     ]);
