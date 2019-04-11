@@ -11,17 +11,11 @@ class SocialForm extends Form
         $socialUser = $this->getData('socialUser');
         $socialType = $this->getData('socialType');
         // ['socialUser' => $socialUser, 'socialType' => 1],
-        if(!($socialUser && $socialType)) return;
-        $this->add('type', 'static', [
+        if(!($socialUser && $socialType)) abort(403);
+        flashy()->success('Welcome ' . $socialUser->nickname?:$socialUser->name);
+        $this->add('type', 'hidden', [
                 'label' => 'type',
                 'value' => $socialType,
-            ])
-            ->add('name', 'static', [
-                'label' => 'name',
-                'value' => $socialUser->name,
-            ])->add('nickname', 'static', [
-                'label' => 'nickname',
-                'value' => $socialUser->nickname,
             ])
             ->add('telephone', 'text', [
                 'label' => 'Publisher',
