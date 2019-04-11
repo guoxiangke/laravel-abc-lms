@@ -14,6 +14,7 @@ class StudentForm extends Form
 {
     public function buildForm()
     {
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name','user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name','user_id'))->unique()->toArray();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'label' => '姓名',
@@ -67,7 +68,7 @@ class StudentForm extends Form
             ])
             ->add('recommend_uid', 'select', [
                 'label' => '介绍人',
-                'choices' => Student::with('profiles')->get()->pluck('profiles.0.name','id')->merge(Agency::with('profiles')->get()->pluck('profiles.0.name','id'))->unique()->toArray(), //包括代理/学生
+                'choices' => $recommend, //包括代理/学生
                 'empty_value' => '=== Select ==='
             ])
             ->add('remark', 'textarea', [

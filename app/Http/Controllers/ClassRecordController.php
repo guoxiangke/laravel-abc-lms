@@ -165,13 +165,13 @@ class ClassRecordController extends Controller
             $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at);//2019-04-09T06:00
             $data['generated_at'] = $generated_at;
         }
-        $classRecord = $classRecord->fill($data)->save();
+        $classRecord->fill($data)->save();
         flashy()->success('Update Success');
 
         if(Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             return redirect(route('classRecords.indexByRole'));
         }
-        return redirect(route('classRecords.index'));
+        return redirect(route('classRecords.show', $classRecord->id));
     }
 
     //todo
