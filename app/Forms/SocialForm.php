@@ -17,25 +17,30 @@ class SocialForm extends Form
                 'label' => 'type',
                 'value' => $socialType,
             ])
-            ->add('telephone', 'text', [
-                'label' => 'Publisher',
-                'rules' => 'required|min:11',
+            ->add('social_id', 'hidden', [
+                'label' => 'type',
+                'value' => $socialUser->id,
+            ])
+            ->add('username', 'text', [
+                'rules' => 'required',
+                'label' =>  __('LoginName'),
                 'help_block' => [
-                    'text' => '请输入您给课程顾问的手机号,不带+86，11位',
+                    'text' => '请向课程顾问询问您的邮箱/登陆名',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('email', 'text', [
-                'label' => 'Name',
+            ->add('password', 'text', [
+                'label' => __('Password'),
+                'rules' => 'required',
                 'help_block' => [
-                    'text' => '或者向课程顾问询问您的绑定邮箱地址',
+                    'text' => '请向课程顾问询问您的密码',
                     'tag' => 'small',
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
             ->add('submit', 'submit', [
-                'label' => __('Bind'),
+                'label' => __('Click to bind'),
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);
     }

@@ -72,23 +72,44 @@ class SocialController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $telephone = $request->input('telephone');
-        
-        $LoginUser = Profile::where('telephone', $telephone)->first();
-        if($LoginUser){
-            $userId = $LoginUser->user_id;
+        $name = $request->input('name');
+        $password = Input::get('password');
+        if (Auth::attempt(array('user_name' => $name, 'password' => $password))){
+            return "success";
+        }else{        
+            return "Wrong Credentials";
         }
-        $email = $request->input('email');
 
-        // Social::firstOrCreate(
-        //     [
-        //         'social_id' => $request->input('social_id'),
-        //         'user_id' => $userId,
-        //         'type' =>$request->input('type'),
-        //     ]
-        // );
-        flashy()->success(__('Bind Success'));
-        Auth::loginUsingId($userId);
+
+        $account = $request->get('username');
+        if(is_numeric($account)){
+            $field = 'id';
+            $account = Profile::select('user_id')->where('telephone', $account)->first();
+            $account = ($account==null)?0:$account->user_id;
+        }
+        elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        }else{
+            $field = 'name';
+        }
+        $password = $request->get('password');
+
+        if (Auth::attempt([$field => $account, 'password' => $password])){
+            flashy()->success(__('Bind Success'));
+            // Social::firstOrCreate(
+            //     [
+            //         'social_id' => $request->input('social_id'),
+            //         'user_id' => $userId,
+            //         'type' =>$request->input('type'),
+            //     ]
+            // );
+            Auth::loginUsingId($userId);
+        }else{        
+            flashy()->success(__('Wrong Credentials'));
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        flashy()->success(__('Bind Success2'));
         dd($request->all(),$LoginUser,$email);
         return redirect('home');
     }
