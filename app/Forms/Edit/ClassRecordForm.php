@@ -5,6 +5,7 @@ namespace App\Forms\Edit;
 use Kris\LaravelFormBuilder\Form;
 use App\Models\ClassRecord;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class ClassRecordForm extends Form
 {
@@ -14,11 +15,13 @@ class ClassRecordForm extends Form
         if(!$classRecord) return;
         $generated_at = $classRecord->generated_at->format('Y-m-d\TH:i');
         $rrule_id = $classRecord->rrule->order->title;
-        $teacher_uid =  $classRecord->teacher->profiles->first()->name;
+
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+
         $remark =  $classRecord->remark;
         $exception =  $classRecord->exception;
         $exceptions = ClassRecord::EXCEPTION_TYPES;
-
         $user = Auth::user();
         //根据角色拥有编辑权限 不是老师才能看到状态更改！
         if(!$user->hasRole('teacher')){
@@ -33,9 +36,11 @@ class ClassRecordForm extends Form
                 'rules' => 'required',
                 'value' => $generated_at
             ])
-            ->add('teacher_uid', 'static', [
-                'value' => $teacher_uid,
+            ->add('teacher_uid', 'select', [
                 'label' => 'Teacher',
+                'choices' => $teachers,
+                'selected' => $classRecord->teacher->id,
+                'empty_value' => '=== Select ==='
             ])
             ->add('rrule_id', 'static', [
                 'value' =>  $rrule_id,

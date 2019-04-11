@@ -76,6 +76,7 @@ Route::group( ['middleware' => ['auth']], function() {
 
     //老师、学生(代理不可以)的上课记录列表
     Route::get('class-records','ClassRecordController@indexByRole')->name('classRecords.indexByRole');
+    Route::get('classRecords/order/{order}','ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
     Route::get('/download/class-records/{classRecord}','ClassRecordController@downloadMp4')->name('classRecords.download');
 });
 

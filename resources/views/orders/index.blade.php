@@ -20,7 +20,6 @@
               	<th scope="col">Teacher</th>
               	<th scope="col">Agency</th>
               	<th scope="col">Book</th>
-                <!-- <th scope="col">Product</th> -->
                 <th scope="col">Price</th>
                 <th scope="col">Period</th>
                 <th scope="col">已上</th>
@@ -34,7 +33,7 @@
                       <a href="{{ route('orders.show', $order->id) }}" class="fas fa-calendar-alt fa-lg" alt="上课日历" title="上课日历"></a>
 
 
-                      <a href="{{ route('classRecords.index') }}" class="fas fa-list fa-lg" alt="上课记录" title="上课记录"></a>
+                      <a href="{{route('classRecords.indexbyOrder', $order) }}" class="fas fa-list fa-lg" alt="上课记录" title="上课记录"></a>
                       
                       <a href="{{ route('rrules.create', $order) }}" class="fas fa-calendar-times fa-lg" alt="创建计划" title="创建计划"></a>
 

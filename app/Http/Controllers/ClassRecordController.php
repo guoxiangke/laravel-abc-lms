@@ -47,7 +47,18 @@ class ClassRecordController extends Controller
             ->paginate(100);
         return view('classRecords.index', compact('classRecords'));
     }
-
+    
+    public function indexbyOrder(Order $order){
+        $classRecords = ClassRecord::with(
+                'rrule',
+                'teacher',
+                'user',
+                'media'
+                )
+            ->where('order_id', $order->id) //user_id
+            ->paginate(50);
+        return view('classRecords.index4order', compact('classRecords'));
+    }
     //indexByRole 我的所有课程记录
     public function indexByRole()
     {

@@ -176,4 +176,13 @@ ul.vuecal__menu {
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
 }
+.vuecal__title{
+    justify-content: center;
+}
+.vuecal__arrow--prev{
+    margin-right:15px; 
+}
+.vuecal__arrow--next{
+    margin-left:15px; 
+}
 </style>
