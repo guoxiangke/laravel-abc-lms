@@ -7,8 +7,8 @@
 	<h1>{{ __('Agencies') }}</h1>
 
 	<div class="show-links">
-    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
-		<a href="{{ route('agencies.create') }}" class="btn btn-outline-primary">Create</a>
+    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+		<a href="{{ route('agencies.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
 	</div>
 	
     <div class="row justify-content-center">

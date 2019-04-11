@@ -8,7 +8,7 @@
 	<h1>Edit Product</h1>
 
     <div class="show-links">
-        <a href="{{ route('products.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
+        <a href="{{ route('products.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
     </div>
 
     <div class="row justify-content-center">

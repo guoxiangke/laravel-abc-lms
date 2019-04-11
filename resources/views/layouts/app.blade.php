@@ -86,9 +86,9 @@
                                 </a>
                                 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach( \App\User::with('profiles')->where('id','!=',auth()->user()->id)->get() as $user)
+                                    @foreach( \App\User::where('id','!=',auth()->user()->id)->get() as $user)
                                     <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
-                                        {{$user->profiles->first()?$user->profiles->first()->name:'-'}}
+                                        {{$user->name}}
                                     </a>
                                     @endforeach
                                 </div>

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Zooms')
+@section('title', __('Zooms'))
 
 @section('content')
 <div class="container">
 	<h1>Zooms</h1>
   <div class="show-links">
-    <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> Go Back</a>
-    <a href="{{ route('zooms.create') }}" class="btn btn-outline-primary">Create</a>
+    <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+    <a href="{{ route('zooms.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
   </div>
 
     <div class="col-md-12 col-sm-12"> 
