@@ -90,6 +90,8 @@ class ClassRecordController extends Controller
                 'rrule',
                 'user',
                 'user.profiles',
+                'teacher',
+                'media',
                 )
             ->orderBy('generated_at','desc')
             ->where($allowRolesMap[$role], $user->id) //user_id

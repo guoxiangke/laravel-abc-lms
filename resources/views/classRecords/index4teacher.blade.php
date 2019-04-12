@@ -32,7 +32,7 @@
                       <a class="btn btn-sm btn-info text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">{{$classRecord->id}}</a>
                       @if(!$classRecord->remark)
                         <a class="btn btn-sm btn-warning text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">!Evaluation</a>
-                        <a class="btn btn-sm btn-primary text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacher->zoom->pmi }}">Zoom</a>
+                        <a class="btn btn-sm btn-primary text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacher->teacher->zoom->pmi }}">Zoom</a>
                       @endif
 
                       @if(!$mp3Url = $classRecord->getFirstMediaUrl('mp3'))
