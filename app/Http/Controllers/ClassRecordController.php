@@ -58,6 +58,7 @@ class ClassRecordController extends Controller
                 'media'
                 )
             ->where('order_id', $order->id) //user_id
+            ->orderBy('generated_at','desc')
             ->paginate(50);
         return view('classRecords.index4order', compact('classRecords'));
     }
@@ -107,6 +108,7 @@ class ClassRecordController extends Controller
                 'user.profiles',
                 )
             ->where('user_id', $student->user_id)
+            ->orderBy('generated_at','desc')
             ->paginate(50);
         return view('classRecords.index4agency', compact('classRecords'));
     }
@@ -119,6 +121,7 @@ class ClassRecordController extends Controller
                 'user.profiles',
                 )
             ->where('teacher_uid', $teacher->user_id)
+            ->orderBy('generated_at','desc')
             ->paginate(50);
         return view('classRecords.index4teacher', compact('classRecords'));
     }
