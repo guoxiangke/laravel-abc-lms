@@ -26,6 +26,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     use HasMediaTrait;
 
     const DISK = 'spaces';//ClassRecord::DISK upyun
+    const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
@@ -160,17 +161,23 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     }
 
     public function getMp3Attribute(){
-        // https://dxjy.sfo2.digitaloceanspaces.com//media/
-        // https://dxjy.sfo2.digitaloceanspaces.com/media/
-        return substr($this->getFirstMediaUrl('mp3'), 1);
+        if($firstMedia==$this->getFirstMediaUrl('mp3')){
+            // https://dxjy.sfo2.digitaloceanspaces.com//media/
+            // https://dxjy.sfo2.cdn.digitaloceanspaces.com/media/
+            return self::DOS_CDN . substr($firstMedia, 1);
+        }
+        return NULL;
     }
 
     public function getMp4Attribute(){
-        return substr($this->getFirstMediaUrl('mp4'), 1);
+        if($firstMedia==$this->getFirstMediaUrl('mp4')){
+            return self::DOS_CDN . substr($firstMedia, 1);
+        }
+        return NULL;
     }
     
-    public function getUrl($type='mp3'){
-        return Storage::disk(ClassRecord::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
-    }
+    // public function getUrl($type='mp3'){
+    //     return Storage::disk(self::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
+    // }
 
 }

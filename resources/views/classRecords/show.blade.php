@@ -33,12 +33,12 @@
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12">
-          @if($classRecord->mp3)
+          @if($mp3 = $classRecord->mp3)
           <div class="mp3">
             <audio style="width:100%"
               controls
               controlsList="nodownload"
-              src="{{$classRecord->getUrl('mp3')}}">
+              src="{{$mp3}}">
               preload="none"
               Your browser does not support the <code>audio</code> element.
             </audio>
@@ -66,13 +66,13 @@
           @endif
 
 
-          @if($mp4)
+          @if($mp4 = $classRecord->mp4)
             @if(Auth::user()->hasRole('manager'))
             <video width="100%" height="auto" 
               controls
               preload="none"
               controlsList="nodownload">
-              <source src="{{$classRecord->getUrl('mp4')}}" type="video/mp4">
+              <source src="{{$mp4}}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
             2x 1.5x 
