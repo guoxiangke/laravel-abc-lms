@@ -38,7 +38,7 @@
             <audio style="width:100%"
               controls
               controlsList="nodownload"
-              src="{{$classRecord->mp3Url}}">
+              src="{{$classRecord->getUrl('mp3')}}">
               preload="none"
               Your browser does not support the <code>audio</code> element.
             </audio>

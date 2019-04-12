@@ -15,6 +15,8 @@ use Actuallymab\LaravelComment\HasComments;
 
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Illuminate\Support\Facades\Storage;
+
 
 class ClassRecord extends Model implements AuditableContract, HasMedia, Commentable
 {
@@ -157,19 +159,17 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     }
 
     public function getMp3Attribute(){
-        return $this->getFirstMediaUrl('mp3');
-    }
-
-    public function getMp3UrlAttribute(){
-        return config('filesystems.disks.upyun.protocol') .'://'. config('filesystems.disks.upyun.domain')  .  $this->mp3;
-    }
-    
-    public function getUrl($type='mp3'){
-        return config('filesystems.disks.upyun.protocol') .'://'. config('filesystems.disks.upyun.domain')  .  $this->{$type};
+        // https://dxjy.sfo2.digitaloceanspaces.com//media/
+        // https://dxjy.sfo2.digitaloceanspaces.com/media/
+        return substr($this->getFirstMediaUrl('mp3'), 1);
     }
 
     public function getMp4Attribute(){
-        return $this->getFirstMediaUrl('mp4');
+        return substr($this->getFirstMediaUrl('mp4'), 1);
+    }
+    
+    public function getUrl($type='mp3'){
+        return Storage::disk('dospace')->temporaryUrl($this->{$type}, now()->addMinutes(30));
     }
 
 }
