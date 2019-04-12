@@ -173,8 +173,10 @@ class ClassRecordController extends Controller
         }
         $this->authorize('edit', $classRecord);
         //mp3 mp4
-        // \Storage::disk('upyun')->put('/', $request->file('mp3'));
-        // dd($request->file('mp3'));
+        // Setting 'public' permission for files uploaded on S3
+        // https://github.com/spatie/laravel-medialibrary/issues/241
+        // https://github.com/spatie/laravel-medialibrary/issues/241#issuecomment-226027435
+        // https://github.com/spatie/laravel-medialibrary/issues/1018
         $md5Id = md5($classRecord->id);
         if($request->file('mp3')){
             $fileMp3Adder = $classRecord->addMediaFromRequest('mp3')

@@ -25,12 +25,13 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     use HasComments;
     use HasMediaTrait;
 
-    const DISK = 'dospace';//ClassRecord::DISK upyun 
+    const DISK = 'dospace';//ClassRecord::DISK upyun
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
             ->useDisk(self::DISK)
             ->singleFile();
+            //todo acceptsFile('mp3')
         $this->addMediaCollection('mp4')
             ->useDisk(self::DISK)
             ->singleFile();
