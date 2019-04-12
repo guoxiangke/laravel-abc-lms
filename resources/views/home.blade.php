@@ -68,7 +68,7 @@
                               <p class="lead">长按可保存到手机</p>
                                 
                             </div>
-                            <div class="bg-dark shadow-sm mx-auto" style="overflow: hidden; border-radius: 21px;">
+                            <div class="shadow-sm mx-auto" style="overflow: hidden; border-radius: 21px;">
                                 
                                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
                             </div>
