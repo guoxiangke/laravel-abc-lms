@@ -19,6 +19,7 @@ use App\Forms\Edit\StudentForm as EditForm;
 
 use App\Forms\Register\StudentRegisterForm;
 use Carbon\Carbon;
+use Auth;
 
 class StudentController extends Controller
 {
@@ -46,6 +47,36 @@ class StudentController extends Controller
             ->orderBy('id','desc')
             ->paginate(100);
         return view('students.index', compact('students'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     * 代理： 我的学生页
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByRecommend()
+    {
+        $user = Auth::user();
+        //谁可以拥有此列表
+        //只有老师、学生、和代理可以拥有本列表
+        // const ALLOW_LIST_ROLES =['agency', 'teacher'];
+        if(!$user->hasAnyRole(Student::ALLOW_LIST_ROLES)) {
+            abort(403);
+        }
+        //$this->authorize('indexByRole');
+        // dd($user->toArray());
+        //我推荐的学生
+        $students = Profile::with('student','contacts','recommend')
+            ->where('recommend_uid', $user->id)
+            // ->where('student.id', null)
+            ->orderBy('id','desc')
+            // ->get()
+            // ->filter(function ($recommed) {
+            //     return $recommed->student;
+            // })
+            ->paginate(50);
+            // dd($students->toArray());
+        return view('students.index4recommend', compact('students'));
     }
 
     /**

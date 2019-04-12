@@ -11,6 +11,8 @@ use App\Forms\Edit\ClassRecordForm as EditForm;
 
 use App\Models\Order;
 use App\Models\RRule;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -85,12 +87,40 @@ class ClassRecordController extends Controller
             $userName = $user->profiles->first()->name;
             $classRecords = ClassRecord::with(
                 'rrule',
+                'user',
+                'user.profiles',
                 )
+            ->orderBy('generated_at','desc')
             ->where($allowRolesMap[$role], $user->id) //user_id
             ->paginate(50);
             break;//按上下↕️顺序找到第一个角色的即可返回
         }
         return view('classRecords.index4'.$roleName, compact('classRecords', 'roleName', 'userName'));
+    }
+
+
+    public function indexByStudent(Student $student)
+    {
+        $classRecords = ClassRecord::with(
+                'rrule',
+                'user',
+                'user.profiles',
+                )
+            ->where('user_id', $student->user_id)
+            ->paginate(50);
+        return view('classRecords.index4agency', compact('classRecords'));
+    }
+
+    public function indexByTeacher(Teacher $teacher)
+    {
+        $classRecords = ClassRecord::with(
+                'rrule',
+                'user',
+                'user.profiles',
+                )
+            ->where('teacher_uid', $teacher->user_id)
+            ->paginate(50);
+        return view('classRecords.index4teacher', compact('classRecords'));
     }
 
     /**

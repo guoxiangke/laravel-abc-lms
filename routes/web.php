@@ -76,7 +76,13 @@ Route::group( ['middleware' => ['auth']], function() {
 
     //老师、学生(代理不可以)的上课记录列表
     Route::get('class-records','ClassRecordController@indexByRole')->name('classRecords.indexByRole');
+    // 代理： 我的学生
+    Route::get('student-recommend','StudentController@indexByRecommend')->name('students.recommend');
     Route::get('classRecords/order/{order}','ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
+    //某个学生的上课记录 for agncy！
+    Route::get('classRecords/student/{student}','ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
+    //某个学生的上课记录 for tacher
+    Route::get('classRecords/teacher/{teacher}','ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
     Route::get('/download/class-records/{classRecord}','ClassRecordController@downloadMp4')->name('classRecords.download');
 });
 

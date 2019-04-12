@@ -16,25 +16,25 @@
                         </div>
                     @endif
                     @hasanyrole('manager|admin')
-                    <div class="links">
-                        <a href="/schools">{{__('Schools')}}</a>
-                        <a href="/zooms">{{__('Zooms')}}</a>
-                        <a href="/teachers">{{__('Teachers')}}</a>
-                        <a href="/agencies">{{__('Agency')}}</a>
-                        <a href="/books">{{__('Books')}}</a>
-                        <a href="/students">{{__('Students')}}</a>
-                        <a href="/products">{{__('Products')}}</a>
-                        <a href="/orders">{{__('Orders')}}</a>
-                        <br><br>
-                        <a href="/rrules">{{__('Rrules')}}</a>
-                        <a href="/classRecords">{{__('ClassRecords')}}</a>
-                        <br><br>
-                        @role('admin')
-                        <a href="/users">{{__('Users')}}</a>
-                        <a href="/roles">{{__('Roles')}}</a>
-                        <a href="/permissions">{{__('Permissions')}}</a>
-                        @endrole
-                    </div>
+                    <div class="nav-scroller py-1 mb-2">
+                        <nav class="nav d-flex justify-content-between">
+                            <a class="p-2 text-muted" href="/schools">{{__('Schools')}}</a>
+                            <a class="p-2 text-muted" href="/zooms">{{__('Zooms')}}</a>
+                            <a class="p-2 text-muted" href="/teachers">{{__('Teachers')}}</a>
+                            <a class="p-2 text-muted" href="/agencies">{{__('Agency')}}</a>
+                            <a class="p-2 text-muted" href="/books">{{__('Books')}}</a>
+                            <a class="p-2 text-muted" href="/students">{{__('Students')}}</a>
+                            <a class="p-2 text-muted" href="/products">{{__('Products')}}</a>
+                            <a class="p-2 text-muted" href="/orders">{{__('Orders')}}</a>
+                            <a class="p-2 text-muted" href="/rrules">{{__('Rrules')}}</a>
+                            <a class="p-2 text-muted" href="/classRecords">{{__('ClassRecords')}}</a>
+                            @role('admin')
+                            <a class="p-2 text-muted" href="/users">{{__('Users')}}</a>
+                            <a class="p-2 text-muted" href="/roles">{{__('Roles')}}</a>
+                            <a class="p-2 text-muted" href="/permissions">{{__('Permissions')}}</a>
+                            @endrole
+                        </nav>
+                      </div>
                     @endhasanyrole
                     <div class="links-2">
                         <br>
@@ -55,17 +55,26 @@
 
 
                         @role('agency')
-                            <p>欢迎您，xxx 代理</p>
-                        
-                            <div class="qr" >
-                                <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
-                                <br/>
-                                我的推荐码<br/>
-                                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
-                                <br/>长按可保存到手机
-                                <br/>
-                                推荐链接： {{ $link }}
+                            <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
+                            <p>欢迎您</p>
+                            <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">我的学生</a>
+                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-outline-dark">所有学员上课记录</a>
+
+
+                        <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+                          <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                            <div class="my-3 p-3">
+                              <h2 class="display-5">我的推荐码</h2>
+                              <p class="lead">长按可保存到手机</p>
+                                
                             </div>
+                            <div class="bg-dark shadow-sm mx-auto" style="overflow: hidden; border-radius: 21px;">
+                                
+                                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
+                            </div>
+                              <p class="pt-3">推荐链接： {{ $link }}</p>
+                          </div>
+                        </div>
                         @endrole
 
                         @hasanyrole('student|agency|teacher')

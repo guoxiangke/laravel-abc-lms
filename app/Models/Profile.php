@@ -49,4 +49,20 @@ class Profile extends Model implements AuditableContract
     {
         return $this->hasOne(Profile::class, 'user_id', 'recommend_uid');
     }
+
+    
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class, 'user_id', 'user_id');
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'user_id', 'user_id');
+    }
+
+    public function agency()
+    {
+        return $this->hasOne(Agency::class, 'user_id', 'user_id');
+    }
 }

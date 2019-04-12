@@ -42,4 +42,10 @@ class Agency extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+
+    public function students(){
+        return $this
+                ->hasMany(Profile::class, 'recommend_uid', 'user_id');
+    }
 }
