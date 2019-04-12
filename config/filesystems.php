@@ -42,13 +42,14 @@ return [
     */
 
     'disks' => [
-        'dospace' => [
+        //https://joelennon.com/using-digitalocean-spaces-in-laravel
+        'spaces' => [
             'driver' => 's3',
             'key' => env('DO_SPACES_KEY'),
             'secret' => env('DO_SPACES_SECRET'),
-            'region' => env('DO_SPACES_REGION','sfo2'),
-            'bucket' => env('DO_SPACES_BUCKET'),
             'endpoint' => env('DO_SPACES_ENDPOINT'),
+            'region' => env('DO_SPACES_REGION'),
+            'bucket' => env('DO_SPACES_BUCKET'),
         ],
         'upyun' => [
             'driver'        => 'upyun', 

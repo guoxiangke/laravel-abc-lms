@@ -25,7 +25,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     use HasComments;
     use HasMediaTrait;
 
-    const DISK = 'dospace';//ClassRecord::DISK upyun
+    const DISK = 'spaces';//ClassRecord::DISK upyun
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
@@ -170,7 +170,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     }
     
     public function getUrl($type='mp3'){
-        return Storage::disk('dospace')->temporaryUrl($this->{$type}, now()->addMinutes(30));
+        return Storage::disk(ClassRecord::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
     }
 
 }

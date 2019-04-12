@@ -20,11 +20,11 @@ Route::get('/', function () {
 
 Route::get('/dos', function () {
     $fileName = time().'.txt'; // generate unique name.
-    $res = Storage::disk('dospace')->put($fileName, 'Hi,'.$fileName);
+    $res = Storage::disk('spaces')->put($fileName, 'Hi,');
     // Setting 'public' permission for files uploaded on S3
     // https://github.com/spatie/laravel-medialibrary/issues/241
-    Storage::disk('dospace')->setVisibility($fileName, 'public'); // Set the visibility to public.
-    $url = Storage::disk('dospace')->url($fileName);
+    Storage::disk('spaces')->setVisibility($fileName, 'public'); // Set the visibility to public.
+    $url = Storage::disk('spaces')->url($fileName);
     return Response::json(['success' => true, 'response' => $url]);
 });
 
