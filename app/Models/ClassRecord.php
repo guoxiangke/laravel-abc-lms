@@ -23,22 +23,23 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     use HasComments;
     use HasMediaTrait;
 
+    const DISK = 'dospace';//ClassRecord::DISK upyun 
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
-            ->useDisk('upyun')
+            ->useDisk(self::DISK)
             ->singleFile();
         $this->addMediaCollection('mp4')
-            ->useDisk('upyun')
+            ->useDisk(self::DISK)
             ->singleFile();
     }
 
     const EXCEPTION_TYPES =[
         '正常',//0
-        '❎学生请假了',//1
-        '❎老师请假了',//2
+        '学生请假了',//1
+        '老师请假了',//2
         '学生旷课了',//学生异常 3
-        '❎老师异常标记',//老师异常,不给老师算课时，需要给学生补课 4
+        '老师异常标记',//老师异常,不给老师算课时，需要给学生补课 4
     ];
 
     const EXCEPTION_TYPES_EN =[

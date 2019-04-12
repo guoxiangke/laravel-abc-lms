@@ -208,7 +208,7 @@ class ClassRecordController extends Controller
     public function downloadMp4(Request $request, ClassRecord $classRecord){
         $this->authorize('view', $classRecord);
         $file = $classRecord->mp4;
-        return \Storage::disk('upyun')->download($file);
+        return \Storage::disk(ClassRecord::DISK)->download($file);
         // return Storage::download('file.jpg', $name, $headers);
     }
     

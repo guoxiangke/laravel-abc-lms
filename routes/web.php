@@ -18,6 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dos', function () {
+    $fileName = time().'.txt'; // generate unique name.
+    $res = Storage::disk('dospace')->put($fileName, 'Hi…');
+    Storage::disk('dospace')->setVisibility($fileName, 'public'); // Set the visibility to public.
+    $url = Storage::disk('dospace')->url($fileName);
+    return Response::json(['success' => true, 'response' => $url]);
+});
+
+
 //登录后第一页
 Route::get('/home', 'HomeController@index')->name('home');
 
