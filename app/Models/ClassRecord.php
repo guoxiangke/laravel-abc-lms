@@ -162,8 +162,6 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
 
     public function getMp3Attribute(){
         if($firstMedia=$this->getFirstMediaUrl('mp3')){
-            // https://dxjy.sfo2.digitaloceanspaces.com//media/
-            // https://dxjy.sfo2.cdn.digitaloceanspaces.com/media/
             return self::DOS_CDN . $firstMedia;
         }
         return NULL;
