@@ -16431,8 +16431,7 @@ readers do not read off random characters that represent icons */
 
 input[name=captcha] {
   float: right;
-  width: 60%;
-  margin-left: 10px;
+  width: 50%;
 }
 
 /* Adds : after labels */

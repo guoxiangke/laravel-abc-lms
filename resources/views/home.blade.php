@@ -17,24 +17,32 @@
                     @endif
                     @hasanyrole('manager|admin')
                     <div class="nav-scroller py-1 mb-2">
-                        <nav class="nav d-flex justify-content-between">
+                        <nav class="nav d-flex">
                             <a class="p-2 text-muted" href="/schools">{{__('Schools')}}</a>
-                            <a class="p-2 text-muted" href="/zooms">{{__('Zooms')}}</a>
                             <a class="p-2 text-muted" href="/teachers">{{__('Teachers')}}</a>
                             <a class="p-2 text-muted" href="/agencies">{{__('Agency')}}</a>
-                            <a class="p-2 text-muted" href="/books">{{__('Books')}}</a>
                             <a class="p-2 text-muted" href="/students">{{__('Students')}}</a>
-                            <a class="p-2 text-muted" href="/products">{{__('Products')}}</a>
                             <a class="p-2 text-muted" href="/orders">{{__('Orders')}}</a>
-                            @role('admin')
+                        </nav>
+                      </div>
+                    <div class="nav-scroller py-1 mb-2">
+                        <nav class="nav d-flex">
+                            <a class="p-2 text-muted" href="/books">{{__('Books')}}</a>
+                            <a class="p-2 text-muted" href="/zooms">{{__('Zooms')}}</a>
+                            <a class="p-2 text-muted" href="/products">{{__('Products')}}</a>
                             <a class="p-2 text-muted" href="/rrules">{{__('Rrules')}}</a>
                             <a class="p-2 text-muted" href="/classRecords">{{__('ClassRecords')}}</a>
+                        </nav>
+                      </div>
+                    @role('admin')
+                    <div class="nav-scroller py-1 mb-2">
+                        <nav class="nav d-flex justify-content">
                             <a class="p-2 text-muted" href="/users">{{__('Users')}}</a>
                             <a class="p-2 text-muted" href="/roles">{{__('Roles')}}</a>
                             <a class="p-2 text-muted" href="/permissions">{{__('Permissions')}}</a>
-                            @endrole
                         </nav>
-                      </div>
+                    </div>
+                    @endrole
                     @endhasanyrole
                     <div class="links-2">
                         <br>
@@ -97,13 +105,5 @@
 
 @section('styles')
 <style>
-    .links > a {
-        color: #636b6f;
-        padding: 0 25px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: .1rem;
-        text-decoration: none;
-    }
 </style>
 @endsection

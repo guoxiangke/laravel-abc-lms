@@ -31,7 +31,10 @@
 				  <tbody>
 					@foreach($students as $student)
 					    <tr id={{$student->id}}>
-					      <th scope="row" data-label="Id"><a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
+					      <th scope="row" data-label="Id">
+					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">所有上课记录</a>
+					  </th>
 					      @php
 					      	$profile = $student->user->profiles->first();
 				      		$birthday = $profile->birthday;
