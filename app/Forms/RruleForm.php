@@ -10,6 +10,14 @@ class RruleForm extends Form
 {
     public function buildForm()
     {
+        $order = $this->getData('entity');
+        if($order){
+            $this->add('order', 'static', [
+                    'label' => '订单Id',
+                    'rules' => 'required',
+                    'value' => $order->title,
+            ]);
+        }
         $this
             ->add('type', 'checkbox', [
                 'value' => 1,
