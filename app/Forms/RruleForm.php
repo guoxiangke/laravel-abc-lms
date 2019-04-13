@@ -13,9 +13,9 @@ class RruleForm extends Form
         $order = $this->getData('entity');
         if($order){
             $this->add('order', 'static', [
-                    'label' => '订单Id',
+                    'label' => $order->title,
                     'rules' => 'required',
-                    'value' => $order->title,
+                    'value' => $order->id,
             ]);
         }
         $this
