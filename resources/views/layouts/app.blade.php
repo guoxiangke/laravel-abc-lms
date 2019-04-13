@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @if(config('app.env') === 'production')
+    @if(config('app.env') === 'productions')
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129889764-2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
