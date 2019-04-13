@@ -73,7 +73,7 @@ class RruleController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $form = $formBuilder->create(RruleForm::class);
+        $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
