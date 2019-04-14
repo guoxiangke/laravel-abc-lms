@@ -182,13 +182,15 @@ class ClassRecordController extends Controller
         // https://github.com/spatie/laravel-medialibrary/issues/241
         // https://github.com/spatie/laravel-medialibrary/issues/241#issuecomment-226027435
         // https://github.com/spatie/laravel-medialibrary/issues/1018
-        $md5Id = md5($classRecord->id);
+        $md5Id = $classRecord->id .'_'. time();//md5($classRecord->id . );
         if($request->file('mp3')){
+            $classRecord->clearMediaCollection('mp3');
             $fileMp3Adder = $classRecord->addMediaFromRequest('mp3')
                 ->usingFileName($md5Id . '.m4a')
                 ->toMediaCollection('mp3'); 
         }
         if($request->file('mp4')){
+            $classRecord->clearMediaCollection('mp4');
             $fileMp4Adder = $classRecord->addMediaFromRequest('mp4')
                 ->usingFileName($md5Id . '.mp4')
                 ->toMediaCollection('mp4');
