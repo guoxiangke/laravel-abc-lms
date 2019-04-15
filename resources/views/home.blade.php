@@ -3,7 +3,13 @@
 @section('title', __('Home'))
 
 @php 
-    $link = route('register.recommend',['user'=>Auth::user()]);
+    $user = Auth::user();
+    $link = route('register.recommend',['user'=>$user]);
+    $avatar = $user->getFirstMediaUrl('avatar');
+    if(!$avatar){
+        $avatar = file_get_contents('https://daxiangyingyu.com/wp-content/uploads/2019/02/IMG_2439-2.jpg');
+    }
+    
 @endphp
 
 @section('content')
@@ -52,14 +58,6 @@
                         @role('student')
                             <a href="/class-records" class="btn btn-outline-dark">我的上课记录</a>
                             <br>
-                            <br>
-                            <p>宣传大使</p>
-                                <a href=""  class="btn btn-outline-dark">推荐规则</a>
-                                <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">推荐记录</a>
-
-                            @unlessrole('agency')
-                            <a href="{{ route('agencies.register') }}" class="btn btn-outline-dark"><i class="fas fa-handshake fa-large"></i> 成为代理</a>
-                            @endunlessrole
 
                             <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
                               <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
@@ -69,7 +67,11 @@
                                 </div>
                                 <div class=" mx-auto">
                                     
-                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
+                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                                    ->mergeString($avatar,.2)
+                                    ->size(300)
+                                    ->margin(2)
+                                    ->generate($link)) !!} ">
                                 </div>
                                   <p class="lead">长按可保存到手机</p>
                                   <p class="pt-3">推荐链接： {{ $link }}</p>
