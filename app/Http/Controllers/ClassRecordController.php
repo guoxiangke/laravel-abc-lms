@@ -90,7 +90,8 @@ class ClassRecordController extends Controller
                 'rrule',
                 'user',
                 'user.profiles',
-                'teacher',
+                'teacher',//teacher user!
+                'teacherModel','teacherModel.zoom',
                 'media',
                 )
             ->orderBy('generated_at','desc')
@@ -160,7 +161,7 @@ class ClassRecordController extends Controller
             ],
             ['entity' => $classRecord],
         ); 
-        return view('classRecords.edit', compact('form'));
+        return view('classRecords.edit', compact('form','classRecord'));
     }
 
     /**

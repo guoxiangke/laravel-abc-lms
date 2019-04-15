@@ -8,7 +8,7 @@
     <h1>{{__('View ClassRecord')}}</h1>
 
     <?php
-        $goBackLink = route('classRecords.index');
+        $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
         if(Auth::user()->hasAnyRole(\App\Models\ClassRecord::ALLOW_LIST_ROLES)){
             $goBackLink = route('classRecords.indexByRole');
         }

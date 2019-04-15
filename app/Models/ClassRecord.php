@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Models\Teacher;
+use App\Models\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -140,6 +141,13 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     {
         return $this->belongsTo(User::class, 'teacher_uid');
     }
+
+    // $classRecord->order
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
     //Teacher Model
     public function teacherModel()
     {

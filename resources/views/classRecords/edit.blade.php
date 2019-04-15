@@ -6,7 +6,7 @@
 <div class="container">
     <h1>Edit ClassRecord</h1>
     <?php
-        $goBackLink = route('classRecords.index');
+        $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
         if(Auth::user()->hasRole('teacher'))
         {
             $goBackLink = route('classRecords.indexByRole');
