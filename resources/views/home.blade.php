@@ -5,9 +5,11 @@
 @php 
     $user = Auth::user();
     $link = route('register.recommend',['user'=>$user]);
-    $avatar = public_path($user->getFirstMediaUrl('avatar'));
+    $avatar = $user->getFirstMedia('avatar');
     if(!$avatar){
         $avatar = public_path('favicon.gif');
+    }else{
+        $avatar = $avatar->getPath();
     }
     $avatarString = file_get_contents($avatar);
 
