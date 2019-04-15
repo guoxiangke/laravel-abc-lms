@@ -30,6 +30,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
+    <link rel="icon" href="{{ asset('favicon.png') }}" sizes="32x32">
+    <link rel="icon" href="{{ asset('favicon.png') }}" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('favicon.png') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}">
 </head>
 <body>
     <div id="app">

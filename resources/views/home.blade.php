@@ -7,7 +7,7 @@
     $link = route('register.recommend',['user'=>$user]);
     $avatar = $user->getFirstMediaUrl('avatar');
     if(!$avatar){
-        $avatar = file_get_contents('https://daxiangyingyu.com/wp-content/uploads/2019/02/IMG_2439-2.jpg');
+        $avatar = file_get_contents(public_path('favicon.gif'));
     }
     
 @endphp
