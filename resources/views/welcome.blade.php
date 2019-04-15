@@ -7,7 +7,7 @@
 <section class="section section-top section-full">
 
   
-  <div class="bg-cover" style="background-image: url(https://simpleqode.bitbucket.io/incline/assets/img/42.jpg);"></div>
+  <div class="bg-cover" style="background-image: url(./images/42.jpg);"></div>
 
   
   <div class="bg-overlay"></div>
