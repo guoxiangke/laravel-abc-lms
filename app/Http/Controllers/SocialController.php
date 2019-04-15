@@ -39,7 +39,11 @@ class SocialController extends Controller
             ); 
             return view('social.create', compact('form'));
         }else{
-            Auth::loginUsingId($userId,true);
+            $user = Auth::loginUsingId($userId, true);
+            //todo 每次登陆都更新头像？
+            $user
+               ->addMediaFromUrl($socialUser->avatar)
+               ->toMediaCollection('avatar');
             return redirect('home');
         }
     }
