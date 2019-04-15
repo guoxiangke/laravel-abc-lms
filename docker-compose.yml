@@ -70,6 +70,7 @@ services:
     network_mode: "bridge"
     volumes:
       - .env.production:/var/www/html/.env
+      - ./storage/app:/var/www/html/storage/app:rw
       # for dev fast
       - ./app:/var/www/html/app
       - ./routes:/var/www/html/routes
@@ -97,6 +98,7 @@ services:
     network_mode: "bridge"
     volumes:
       - .env.production:/var/www/html/.env
+      - ./storage/app:/var/www/html/storage/app:rw
       # for dev fast
       - ./app:/var/www/html/app
       - ./routes:/var/www/html/routes
