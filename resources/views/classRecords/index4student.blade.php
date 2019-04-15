@@ -28,11 +28,9 @@
               @foreach($classRecords as $classRecord)
                   <tr id={{$classRecord->id}}>
                     <th scope="row">
-                      <a class="btn btn-sm btn-primary text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">查看详情</a>
                       @if($classRecord->remark)
                         <a class="btn btn-sm btn-warning text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">课程回顾</a>
                       @else
-                      <a class="btn btn-sm btn-primary text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacherModel->zoom->pmi }}">加入课堂</a>
                       @endif
                     </th>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
