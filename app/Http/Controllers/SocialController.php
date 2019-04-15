@@ -40,9 +40,12 @@ class SocialController extends Controller
             return view('social.create', compact('form'));
         }else{
             $user = Auth::loginUsingId($userId, true);
+            $avatarPath = '/tmp/avatar.png';
+            file_put_contents($avatarPath, file_get_contents($socialUser->avatar));
             //todo 每次登陆都更新头像？
             $user
-               ->addMediaFromUrl($socialUser->avatar)
+                ->addMedia($avatarPath)
+               // ->addMediaFromUrl($socialUser->avatar)
                ->usingFileName($user->id . '.avatar.png')
                ->toMediaCollection('avatar');
             return redirect('home');

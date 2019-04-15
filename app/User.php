@@ -28,7 +28,7 @@ class User extends Authenticatable implements HasMedia
     {
         $this
             ->addMediaCollection('avatar')
-            ->useDisk('media')
+            // ->useDisk('public')
             ->singleFile();
 
     }
