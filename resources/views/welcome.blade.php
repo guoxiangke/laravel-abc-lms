@@ -36,12 +36,13 @@
           立即成为会员，加入在线学习行列
         </p>
 
-        
+        @guest
         <p class="text-center mb-0 animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="3" data-animation-trigger="load">
           <a href="{{ route('login.weixin') }}" target="_blank" class="btn btn-success text-white">
             微信登陆
           </a>
         </p>
+        @endguest
 
       </div>
     </div> 
