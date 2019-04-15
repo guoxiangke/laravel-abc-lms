@@ -25,7 +25,7 @@ class Student extends Model implements AuditableContract
         'remark',
         'name',//英文名字
     ];
-    const ALLOW_LIST_ROLES =['agency', 'teacher']; //indexByRole permission
+    const ALLOW_LIST_ROLES =['agency', 'teacher', 'student']; //indexByRole permission
     //0代表幼儿园 1-9年级 高中1-3(10-12) 大学1-4(13-16) 17成人
     const GRADES =[
         '幼儿园',

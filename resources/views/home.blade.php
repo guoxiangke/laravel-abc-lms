@@ -2,6 +2,10 @@
 
 @section('title', __('Home'))
 
+@php 
+    $link = route('register.recommend',['user'=>Auth::user()]);
+@endphp
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -50,9 +54,23 @@
                         @role('student')
                             <p>欢迎您，xxx 学员</p>
                             <a href="/class-records" class="btn btn-outline-dark">我的上课记录</a>
-                            @unlessrole('agency')
-                            <a href="{{ route('agencies.register') }}" class="btn btn-outline-dark"><i class="fas fa-handshake fa-large"></i> 成为代理</a>
-                            @endunlessrole
+                            <br>
+                            <br>
+
+                            <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+                              <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                                <div class="my-3 p-3">
+                                  <h2 class="display-5">我的推荐码</h2>
+                                    
+                                </div>
+                                <div class=" mx-auto">
+                                    
+                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(2)->generate($link)) !!} ">
+                                </div>
+                                  <p class="lead">长按可保存到手机</p>
+                                  <p class="pt-3">推荐链接： {{ $link }}</p>
+                              </div>
+                            </div>
                         @endrole
 
 
@@ -63,7 +81,6 @@
 
 
                         @role('agency')
-                            <?php $link = route('register.recommend',['user'=>Auth::user()]); ?>
                             <p>欢迎您</p>
                             <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">我推荐的学生</a>
                             <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-outline-dark">所有学员上课记录</a>

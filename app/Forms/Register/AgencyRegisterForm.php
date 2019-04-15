@@ -21,11 +21,6 @@ class AgencyRegisterForm extends Form
                 'label' => '手机号',
                 'attr' => ['placeholder' => '可用于登陆']
             ])
-            ->add('user_password', 'text', [
-                'rules' => 'required|min:8',
-                'label' => '登陆密码*',
-                'attr' => ['placeholder' => '默认：Teacher123']
-            ])
             ->add('contact_type', 'select', [
                 'label' => '其他联系方式',
                 'rules' => 'required',
@@ -35,10 +30,6 @@ class AgencyRegisterForm extends Form
             ->add('contact_number', 'text',[
                 'rules' => 'required|min:4',
                 'label' => '联系方式账户ID'
-            ])
-            ->add('contact_remark', 'textarea', [
-                'label' => '联系方式备注',
-                'attr' => ['rows' => 2, 'placeholder'=>'登陆邮箱：agency_name@teleNo.com'],
             ])
             ->add('profile_sex', 'select', [
                 'label' => '性别',
@@ -59,20 +50,6 @@ class AgencyRegisterForm extends Form
                 'rules' => 'required',
                 'label' => '付款账户ID*'
             ])
-            ->add('pay_remark', 'textarea', [
-                'label' => '付款方式备注',
-                'attr' => ['rows' => 2],
-            ])
-
-            ->add('agency_type', 'select', [
-                'label' => '代理类型',
-                'choices' => Agency::TYPES,
-                'selected' => 0,
-                'empty_value' => '=== Select ==='
-            ])
-            ->add('agency_discount', 'text',[
-                'label' => '优惠折扣0-100'
-            ])//todo 0-100 check!
             ->add('agency_id', 'select', [
                 'label' => '上级代理/推荐人',
                 'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name','id')->toArray(),

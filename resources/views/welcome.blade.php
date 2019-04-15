@@ -23,12 +23,12 @@
 
         
         <p class="font-weight-medium text-center text-lg  text-muted  text-uppercase text-white animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="0" data-animation-trigger="load">
-          大象教育 LMS
+          课程记录随意回放
         </p>
         
         
         <h1 class="text-white text-center mb-4 animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="1" data-animation-trigger="load">
-          ¥199/年，课程记录随意回放
+          大象教育云课堂 LMS
         </h1>
 
         
@@ -38,11 +38,8 @@
 
         
         <p class="text-center mb-0 animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="3" data-animation-trigger="load">
-          <a href="#" target="_blank" class="btn btn-primary  text-white">
-            支付宝支付
-          </a>
-          <a href="#" target="_blank" class="btn btn-success text-white">
-            微信支付
+          <a href="{{ route('login.weixin') }}" target="_blank" class="btn btn-success text-white">
+            微信登陆
           </a>
         </p>
 

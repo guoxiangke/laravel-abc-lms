@@ -94,7 +94,7 @@ class StudentForm extends Form
             ])
             ->add('recommend_uid', 'select', [
                 'label' => '介绍人',
-                'selected' => $profile->recommend->id,
+                'selected' => $profile->recommend_uid,
                 'choices' => $recommend, //包括代理/学生
                 'empty_value' => '=== Select ==='
             ])
