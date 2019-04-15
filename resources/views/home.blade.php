@@ -57,8 +57,6 @@
                     <div class="links-2">
                         @role('student')
                             <a href="/class-records" class="btn btn-outline-dark">我的上课记录</a>
-                            <br>
-                            <br>
                         @endrole
 
 
@@ -82,7 +80,8 @@
                         
                         @endhasanyrole
                         
-                        @hasanyrole('student|agency|manager')
+
+                        @unlessrole('teacher')
                         <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
                           <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
                             <div class="my-3 p-3">
@@ -100,7 +99,7 @@
                               <p class="pt-3">推荐链接： {{ $link }}</p>
                           </div>
                         </div>
-                        @endhasanyrole
+                        @endunlessrole
                     </div>
                     
                 </div>
