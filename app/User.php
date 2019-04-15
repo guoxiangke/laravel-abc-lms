@@ -28,7 +28,7 @@ class User extends Authenticatable implements HasMedia
     {
         $this
             ->addMediaCollection('avatar')
-            // ->useDisk('s3') //only url!!!
+            ->useDisk('local')
             ->singleFile();
 
     }

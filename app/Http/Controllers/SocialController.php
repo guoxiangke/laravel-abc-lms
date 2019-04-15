@@ -43,6 +43,7 @@ class SocialController extends Controller
             //todo 每次登陆都更新头像？
             $user
                ->addMediaFromUrl($socialUser->avatar)
+               ->usingFileName($user->id . '.avatar.png')
                ->toMediaCollection('avatar');
             return redirect('home');
         }
