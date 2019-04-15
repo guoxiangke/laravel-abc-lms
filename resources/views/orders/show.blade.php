@@ -23,7 +23,7 @@
         <li class="list-group-item">开始日期: {{$rrule->start_at->format('Y.m.d')}}</li>
         <li class="list-group-item">过期日期: {{$order->expired_at->format('Y.m.d')}}</li>
         <li class="list-group-item">上课时间: {{$rrule->start_at->format('H:i')}}</li>
-        <li class="list-group-item">上课计划：{{$rrule->toText()}}
+        <li class="list-group-item border-primary">上课计划：{{$rrule->toText()}}
           <a href="{{route('classRecords.indexbyOrder', $order) }}" class="btn btn-sm btn-outline-dark">Class Records</a>   
         </li>
       @endforeach
