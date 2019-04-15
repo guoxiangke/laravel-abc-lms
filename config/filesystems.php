@@ -82,11 +82,11 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        
+        //for media library! 
         'media' => [
             'driver' => 'local',
             'root'   => public_path().'/media',
-            'url' => env('APP_URL') . '/media',
+            'url' => env('APP_URL'),
             'visibility' => 'public',
         ],
 
