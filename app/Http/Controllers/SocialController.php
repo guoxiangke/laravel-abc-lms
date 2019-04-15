@@ -10,6 +10,7 @@ use App\Forms\SocialForm as CreateForm;
 use Socialite;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\WechatUserAvatarQueue;
 
 class SocialController extends Controller
 {
@@ -40,14 +41,8 @@ class SocialController extends Controller
             return view('social.create', compact('form'));
         }else{
             $user = Auth::loginUsingId($userId, true);
-            $avatarPath = '/tmp/avatar.png';
-            file_put_contents($avatarPath, file_get_contents($socialUser->avatar));
             //todo 每次登陆都更新头像？
-            $user
-                ->addMedia($avatarPath)
-               // ->addMediaFromUrl($socialUser->avatar)
-               ->usingFileName($user->id . '.avatar.png')
-               ->toMediaCollection('avatar');
+            WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
             return redirect('home');
         }
     }

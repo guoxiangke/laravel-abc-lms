@@ -7,9 +7,10 @@
     $link = route('register.recommend',['user'=>$user]);
     $avatar = public_path($user->getFirstMediaUrl('avatar'));
     if(!$avatar){
-        $avatar = file_get_contents(public_path('favicon.gif'));
+        $avatar = public_path('favicon.gif');
     }
-    
+    $avatarString = file_get_contents($avatar);
+
 @endphp
 
 @section('content')
@@ -90,7 +91,7 @@
                             </div>
                             <div class=" mx-auto">
                                 <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                    ->mergeString($avatar,.2)
+                                    ->mergeString($avatarString,.2)
                                     ->size(300)
                                     ->margin(2)
                                     ->generate($link)) !!} ">
