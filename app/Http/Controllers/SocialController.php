@@ -42,7 +42,7 @@ class SocialController extends Controller
         }else{
             $user = Auth::loginUsingId($userId, true);
             //todo 每次登陆都更新头像？
-            WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
+            // WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
             return redirect('home');
         }
     }
