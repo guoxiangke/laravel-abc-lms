@@ -62,8 +62,8 @@ class ClassRecordForm extends Form
                 ],
             ]);
 
-        $mp3 = $classRecord->getFirstMedia('mp3')->getPath();
-        $helpText = $mp3?'<br/>There alread has one mp3.<br/>Store Path: ' . $mp3 : '';
+        $mp3 = $classRecord->getFirstMedia('mp3');
+        $helpText = $mp3?'<br/>There alread has one mp3.<br/>Store Path: ' . $mp3->getPath() : '';
         $this->add('mp3', 'file', [
             'label' => $mp3?'Re-Upload Mp3':'Mp3',
             'attr' => ['accept' => '.mp3,.m4a'],
@@ -73,8 +73,8 @@ class ClassRecordForm extends Form
                 'attr' => ['class' => 'form-text text-muted']
             ],
         ]);
-        $mp4 = $classRecord->getFirstMedia('mp4')->getPath();
-        $helpText = $mp4?'<br/>There alread has one mp4.<br/>Store Path: ' . $mp4 : '';
+        $mp4 = $classRecord->getFirstMedia('mp4');
+        $helpText = $mp4?'<br/>There alread has one mp4.<br/>Store Path: ' . $mp4->getPath() : '';
         $this->add('mp4', 'file', [
             'label' => $mp4?'Re-Upload Mp4':'Mp4',
             'attr' => ['accept' => '.mp4'],

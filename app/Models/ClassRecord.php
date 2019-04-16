@@ -170,15 +170,15 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     }
 
     public function getMp3Attribute(){
-        if($firstMedia=$this->getFirstMedia('mp3')->getPath()){
-            return self::DOS_CDN .'/'. $firstMedia;
+        if($firstMedia=$this->getFirstMedia('mp3')){
+            return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
         return NULL;
     }
 
     public function getMp4Attribute(){
-        if($firstMedia=$this->getFirstMedia('mp4')->getPath()){
-            return self::DOS_CDN .'/'. $firstMedia;
+        if($firstMedia=$this->getFirstMedia('mp4')){
+            return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
         return NULL;
     }
