@@ -31,10 +31,11 @@
                       @if($classRecord->remark)
                         <a class="btn btn-sm btn-warning text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">课程回顾</a>
                       @else
+                        <a class="btn btn-sm btn-light text-uppercase" href="#">暂无评估</a>
                       @endif
                     </th>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
-                    <td data-label="上课时间">{{$classRecord->generated_at->format('m.d H:i')}}</td>
+                    <td data-label="上课时间">{{$classRecord->generated_at->format('m.d H:i  周N')}}</td>
                     <td data-label="课程状态">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
                     </td>
                     @if(!isset($roleName))
