@@ -24,9 +24,9 @@
             </thead>
             <tbody>
               @foreach($classRecords as $classRecord)
-                  <tr>
+                  <tr id="{{$classRecord->id}}">
                     <th scope="row">
-                      <a class="btn btn-sm btn-info text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">{{$classRecord->id}}</a>
+                      <a class="btn btn-sm btn-info text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">查看详情</a>
                       @if(!$classRecord->remark)
                         <a class="btn btn-sm btn-warning text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">!Evaluation</a>
                         <a class="btn btn-sm btn-primary text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacher->teacher->zoom->pmi }}">Zoom</a>
