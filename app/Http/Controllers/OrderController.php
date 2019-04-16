@@ -83,7 +83,7 @@ class OrderController extends Controller
             'agency_uid' =>  $request->input('agency_uid')?:1,
             'book_id' =>  $request->input('book_id')?:1 ,
             'product_id' => $request->input('product_id'),
-            'price' => $request->input('price')*100, //价格需要*100才能new
+            'price' => $request->input('price'),
             'period' => $request->input('period'),
             'expired_at' => $request->input('expired_at'),
             'remark' => $request->input('remark'),

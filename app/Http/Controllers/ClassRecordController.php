@@ -214,12 +214,6 @@ class ClassRecordController extends Controller
         return redirect(route('classRecords.show', $classRecord->id));
     }
 
-    //todo
-    public function downloadMp4(Request $request, ClassRecord $classRecord){
-        $this->authorize('view', $classRecord);
-        $file = $classRecord->mp4;
-        return \Storage::disk(ClassRecord::DISK)->download($file);
-        // return Storage::download('file.jpg', $name, $headers);
-    }
+    //todo return \Storage::disk(ClassRecord::DISK)->download($firstMedia);
     
 }

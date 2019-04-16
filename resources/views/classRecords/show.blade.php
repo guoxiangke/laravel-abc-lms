@@ -12,6 +12,8 @@
         if(Auth::user()->hasAnyRole(\App\Models\ClassRecord::ALLOW_LIST_ROLES)){
             $goBackLink = route('classRecords.indexByRole');
         }
+        $mp4 = $classRecord->mp4;
+        $mp3 = $classRecord->mp3;
     ?>
     <div class="show-links">
       <a href="{{ $goBackLink }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
@@ -20,11 +22,7 @@
       <a href="{{ route('classRecords.edit', $classRecord->id) }}" class="btn btn-warning">Edit</a>
       @endcan
 
-      @if($mp4 = $classRecord->mp4)
-        @if(!Auth::user()->hasRole('agency'))
-          <a href="{{ route('classRecords.download', $classRecord) }}"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
-        @endif
-      @else
+      @if(!$mp4)
         @if(Auth::user()->hasRole('teacher'))
           <a class="btn btn-warning" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">!mp4 <i class="far fa-file-video fa-large"></i></a>
         @endif
@@ -33,7 +31,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12">
-          @if($mp3 = $classRecord->mp3)
+          @if($mp3)
           <div class="mp3">
             <audio style="width:100%"
               controls
@@ -65,9 +63,8 @@
           </small>
           @endif
 
-
-          @if($mp4 = $classRecord->mp4)
-            @if(Auth::user()->hasRole('manager'))
+          @if($mp4)
+            @hasanyrole('manager|admin|student')
             <video width="100%" height="auto" 
               controls
               preload="none"
@@ -75,10 +72,13 @@
               <source src="{{$mp4}}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            2x 1.5x 
-            var vid = document.getElementById("myVideo");
-            vid.playbackRate = 0.5;
-            @endif
+            @else
+            <hr>
+            Video Uploaded
+              <a href="{{ route('classRecords.edit', $classRecord) }}" download target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
+              </a>
+              <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
+            @endhasanyrole
           @endif
         </div>
     </div>
