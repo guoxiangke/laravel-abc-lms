@@ -19,6 +19,8 @@ use App\Forms\Edit\StudentForm as EditForm;
 
 use App\Forms\Register\StudentRegisterForm;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 use Auth;
 
 class StudentController extends Controller
@@ -186,22 +188,18 @@ class StudentController extends Controller
         }
         // create login user
         $profileName = $request->input('profile_name');
-        $name = $request->input('name'); //英文名！
+        $name = User::pinyin($profileName);
         if(!$name) {
-            $name = $profileName;
+            $name = str_replace(' ', '_', $profileName);
         }
-        $name = 's_'.  User::pinyin($name);
-        $email = $name.'@student.com';
-        $user = User::where('email', $email)->first();
-
-        if(!$user){
-            $userData = [
-                'name' => $name,
-                'email' => $email,
-                'password' => Hash::make($request->input('password')?:'dxjy1234')
-            ];
-            $user = User::create($userData);
-        }
+        $name = 's_' .  $name;
+        $email = $name . Str::random(6) . '@student.com';
+        $userData = [
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($request->input('password')?:'dxjy1234')
+        ];
+        $user = User::create($userData);
 
         $user->assignRole(User::ROLES['student']);
 
