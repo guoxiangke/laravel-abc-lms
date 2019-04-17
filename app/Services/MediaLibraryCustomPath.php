@@ -13,7 +13,7 @@ class MediaLibraryCustomPath implements PathGenerator
     protected function getBasePath(Media $media): string
     {
         // return $media->getKey();
-        return 'media/'. $media->updated_at->format('Y/m/d/') . $media->getKey();
+        return 'media/'. $media->updated_at->subHours(8)->format('Y/m/d/') . $media->getKey();
     }
 
     /*
