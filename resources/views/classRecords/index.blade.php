@@ -15,30 +15,40 @@
         <table class="table">
             <thead>
               <tr>
-              	<th scope="col">#</th>
+              	<th scope="col">Action</th>
                 <th scope="col">Student</th>
               	<th scope="col">Teacher</th>
                 <th scope="col">Agency</th>
                 <th scope="col">ClassAt</th>
               	<th scope="col">exception</th>
+                <th scope="col">Flag</th>
               </tr>
             </thead>
             <tbody>
               @foreach($classRecords as $classRecord)
                   <tr id={{$classRecord->id}}>
-                    <th scope="row">
-                      <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">
-                        View
-                      </a>
+                    <th  data-label="Actions"  scope="row">
                       <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">
                         Edit
                       </a>
+                      
+                      <a class="btn btn-sm btn-{{$classRecord->remark?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Evaluation</a>
+                      <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp3')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp3</a>
+                      <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp4')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp4</a>
+
                     </th>
                     <td data-label="Teacher">{{$classRecord->user->profiles->first()->name}}</td>
                     <td data-label="student">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="agency">{{$classRecord->agency->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m/d H:i 周N')}}</td>
-                    <td data-label="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
+                    <td data-label="exception" class="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
+                    </td>
+                    <td data-label="Flag">
+                      <a class="post-action btn btn-{{$classRecord->exception==1?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAOL',$classRecord->id) }}">AOL</a>
+                      
+
+                      <a class="post-action btn btn-{{$classRecord->exception==3?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAbsent',$classRecord->id) }}">Absent</a>
+
                     </td>
                   </tr>
               @endforeach
@@ -48,4 +58,34 @@
       {{ $classRecords->onEachSide(1)->links() }}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    window.onload = function () {
+        $('.post-action').click(function(e){
+          e.preventDefault();
+          if (confirm("This action cannot be undone, Are you sure to flag?")) {
+            var that = $(this);
+            var actions = that.parent('td')
+            var statusText = that.text();
+            var target = actions.parent('tr').find('.exception');
+             $.ajax({
+              type:"GET",
+              url:that.attr('href'),
+              success: function(data) {
+                if(data.success){
+                  target.text(statusText);
+                  that.removeClass('btn-outline-danger').addClass('btn-warning');
+                  //that.fadeOut(5000);
+                  //actions.text('')
+                }
+              },
+            });
+          }
+
+
+        });
+    }
+</script>
 @endsection

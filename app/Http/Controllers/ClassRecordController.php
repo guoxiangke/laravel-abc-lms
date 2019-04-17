@@ -44,6 +44,7 @@ class ClassRecordController extends Controller
             'teacher', 'teacher.profiles',
             'agency', 'agency.profiles',
             'user', 'user.profiles',
+            'media'
             )
             ->orderBy('generated_at','desc')
             ->paginate(100);
@@ -214,6 +215,22 @@ class ClassRecordController extends Controller
         return redirect(route('classRecords.show', $classRecord->id));
     }
 
-    //todo return \Storage::disk(ClassRecord::DISK)->download($firstMedia);
-    
+    //todo vue
+    public function flagAOL(Request $request, ClassRecord $classRecord)
+    {
+        //todo acl only teacher
+        $this->authorize('edit', $classRecord);
+        $classRecord->exception = ClassRecord::NORMAL_EXCEPTION_STUDENT;
+        $classRecord->weight = 0;//学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算
+        return ['success'=>$classRecord->save()];
+    } 
+    //学生旷课 // 学生异常请假 3  计算课时 标红 🙅不需要补课
+    public function flagAbsent(Request $request, ClassRecord $classRecord)
+    {
+        //todo acl only teacher
+        $this->authorize('edit', $classRecord);
+        $classRecord->exception = ClassRecord::EXCEPTION_STUDENT;
+        $classRecord->save();
+        return ['success'=>$classRecord->save()];
+    } 
 }

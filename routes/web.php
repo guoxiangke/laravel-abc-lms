@@ -94,7 +94,12 @@ Route::group( ['middleware' => ['auth']], function() {
     Route::get('classRecords/student/{student}','ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
     //某个学生的上课记录 for tacher
     Route::get('classRecords/teacher/{teacher}','ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
-    Route::get('/download/class-records/{classRecord}','ClassRecordController@downloadMp4')->name('classRecords.download');
+    //老师/管理人员快速请假标记 ajax
+    Route::get('/classRecords/{classRecord}/aol','ClassRecordController@flagAOL')->name('classRecords.flagAOL');
+    Route::get('/classRecords/{classRecord}/absent','ClassRecordController@flagAbsent')->name('classRecords.flagAbsent');
+
+
+    
 });
 
 // GET	/photos	index	photos.index

@@ -113,7 +113,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('vendor/telephone-input/js/intlTelInput.min.js') }}"></script>
 <script>
     window.onload = function () {
         $('#download').click(function(e){

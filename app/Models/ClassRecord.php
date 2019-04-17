@@ -50,10 +50,10 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
 
     const EXCEPTION_TYPES_EN =[
         'Normal',//0
-        '❎AOL-by-Student',//1
-        '❎AOL-by-Teacher',//2
-        'Absent-by-Student',//学生异常 3
-        '❎❎❎',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
+        'AOL',//1-by-Student
+        'AOL-by-Teacher',//2
+        'Absent',//学生异常 3-by-Student
+        'XXX',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
     ];
 
     //@see ClassRecordPolicy 谁可以列表查看
