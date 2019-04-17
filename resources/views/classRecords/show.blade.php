@@ -33,14 +33,21 @@
         <div class="col-md-12 col-sm-12">
           @if($mp3)
           <div class="mp3">
-            <audio style="width:100%"
-              controls
-              controlsList="nodownload"
-              src="{{$mp3}}">
-              preload="none"
-              Your browser does not support the <code>audio</code> element.
-            </audio>
-          </div>
+              @hasanyrole('manager|admin')
+              <audio style="width:100%"
+                controls
+                controlsList="nodownload"
+                src="{{$mp3}}">
+                preload="none"
+                Your browser does not support the <code>audio</code> element.
+              </audio>
+            </div>
+            @endhasanyrole
+
+            @hasanyrole('student|teacher')
+            <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.bj.bcebos.com/nocors.html?url={{$mp3}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
+            @endhasanyrole
+
           @else
             @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#mp3">!mp3 <i class="far fa-file-audio fa-large"></i></a>
@@ -76,15 +83,18 @@
             @endhasanyrole
             @hasanyrole('manager|admin')
             <br>
-              <video width="50%" height="auto" 
-                id="video"
-                controls
-                preload="none"
-                controlsList="nodownload">
-                <source src="{{$mp4}}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-              <br>
+            <div class="row">
+              <div class="col-12 col-md-6 col-sm-12">
+                <video width="100%" height="auto" 
+                  id="video"
+                  controls
+                  preload="none"
+                  controlsList="nodownload">
+                  <source src="{{$mp4}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+            </div>
+            </div>
               <a href="#" data-speed="1" class="play-speed btn btn-outline-dark"><i class="fas fa-play fa-large"></i> 1X</a>
               <a href="#" data-speed="1.5" class="play-speed btn btn-outline-dark"><i class="fas fa-step-forward fa-large"></i> 1.5X</a>
               
@@ -101,7 +111,6 @@
     </div>
 </div>
 @endsection
-
 
 @section('scripts')
 <script src="{{ asset('vendor/telephone-input/js/intlTelInput.min.js') }}"></script>
