@@ -83,33 +83,36 @@
                         <a href="{{ route('teachers.register') }}" class="btn btn-outline-dark"><i class="fas fa-chalkboard-teacher fa-large"></i> I'm a teacher</a>
                         
                         @endhasanyrole
-                        
-
-                        @unlessrole('teacher')
-                        <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-                          <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                            <div class="my-3 p-3">
-                              <h2 class="display-5">我的推荐码</h2>
-                                
-                            </div>
-                            <div class=" mx-auto">
-                                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                    ->mergeString($avatarString,.2)
-                                    ->size(300)
-                                    ->margin(2)
-                                    ->generate($link)) !!} ">
-                            </div>
-                              <p class="lead">长按可保存到手机</p>
-                              <p class="pt-3">推荐链接： {{ $link }}</p>
-                          </div>
-                        </div>
-                        @endunlessrole
                     </div>
-                    
-                </div>
+                    <br>
+                    <div class="row">
+                    @unlessrole('teacher')
+                        <div class="col-md-4 pt-5  text-center bg-light">
+                            <h5 class="display-5">我的推荐码</h5>
+                            <p class="lead">长按可保存到手机</p>
+                            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                                ->mergeString($avatarString,.2)
+                                ->size(300)
+                                ->margin(2)
+                                ->generate($link)) !!} "  width="260px" loading="lazy">
+                        </div>
+                        <div class="col-md-4 pt-5  text-center bg-light">
+                            <h5 class="display-5">咨询服务</h5>
+                            <p class="lead">您的专属课程顾问</p>
+                            <img src="{{ asset('images/monika.jpeg')}}" alt="" width="250px" loading="lazy">
+                        </div>
+                        <div class="col-md-4 pt-5  text-center bg-light">
+                            <h5 class="display-5">统一收款码</h5>
+                            <p class="lead">支付请备注学生姓名</p>
+                            <img src="{{ asset('images/alipay.png')}}" alt="" width="300px" loading="lazy">
+                        </div>
+                    @endhasanyrole
+                    </div>
             </div>
         </div>
     </div>
+
+
 </div>
 @endsection
 
