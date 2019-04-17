@@ -101,6 +101,9 @@
                             <p class="lead">您的专属课程顾问</p>
                             <img src="{{ asset('images/monika.jpeg')}}" alt="" width="250px" loading="lazy">
                         </div>
+                    @endhasanyrole
+
+                    @hasanyrole('manager|admin|agency')
                         <div class="col-md-4 pt-5  text-center bg-light">
                             <h5 class="display-5">统一收款码</h5>
                             <p class="lead">支付请备注学生姓名</p>

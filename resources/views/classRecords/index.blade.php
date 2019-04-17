@@ -44,11 +44,8 @@
                     <td data-label="exception" class="exception">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
                     </td>
                     <td data-label="Flag">
-                      <a class="post-action btn btn-{{$classRecord->exception==1?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAOL',$classRecord->id) }}">AOL</a>
-                      
-
-                      <a class="post-action btn btn-{{$classRecord->exception==3?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAbsent',$classRecord->id) }}">Absent</a>
-
+                      <a  data-type="aol" label="AOL" title="Click to AOL" class="post-action btn btn-{{$classRecord->exception==1?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAOL',$classRecord->id) }}">AOL</a>
+                      <a data-type="absent" label="Absent" title="Click to Absent" class="post-action btn btn-{{$classRecord->exception==3?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagAbsent',$classRecord->id) }}">Absent</a>
                     </td>
                   </tr>
               @endforeach
@@ -60,32 +57,7 @@
 </div>
 @endsection
 
+
 @section('scripts')
-<script>
-    window.onload = function () {
-        $('.post-action').click(function(e){
-          e.preventDefault();
-          if (confirm("This action cannot be undone, Are you sure to flag?")) {
-            var that = $(this);
-            var actions = that.parent('td')
-            var statusText = that.text();
-            var target = actions.parent('tr').find('.exception');
-             $.ajax({
-              type:"GET",
-              url:that.attr('href'),
-              success: function(data) {
-                if(data.success){
-                  target.text(statusText);
-                  that.removeClass('btn-outline-danger').addClass('btn-warning');
-                  //that.fadeOut(5000);
-                  //actions.text('')
-                }
-              },
-            });
-          }
-
-
-        });
-    }
-</script>
+  @include('classRecords.aol-script')
 @endsection

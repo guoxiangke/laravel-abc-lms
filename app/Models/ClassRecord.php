@@ -53,9 +53,16 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
         'AOL',//1-by-Student
         'AOL-by-Teacher',//2
         'Absent',//学生异常 3-by-Student
-        'XXX',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
+        'EXCEPTION',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
     ];
-
+    //给学生看的状态
+    const EXCEPTION_TYPES_STU =[
+        '正常',//0
+        '请假',//1
+        '补课',//2
+        '旷课',//学生异常 3
+        '补课',//老师异常,不给老师算课时，需要给学生补课 4
+    ];
     //@see ClassRecordPolicy 谁可以列表查看
     const ALLOW_LIST_ROLES =['agency', 'teacher', 'student'];
 

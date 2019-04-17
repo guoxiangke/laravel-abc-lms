@@ -47,4 +47,13 @@ class ClassRecordPolicy
             || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
             ;
     }
+
+    public function aol(User $user, ClassRecord $classRecord)
+    {
+        return $classRecord->teacher_uid == $user->id
+            || $classRecord->user_id == $user->id
+            || $user->isSuperuser()
+            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
+            ;
+    }
 }

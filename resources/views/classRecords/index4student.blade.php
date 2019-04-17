@@ -19,9 +19,7 @@
               	<th scope="col">老师</th>
                 <th scope="col">上课时间</th>
               	<th scope="col">课程状态</th>
-                @if(!isset($roleName))
-                <th scope="col">order_id</th>
-                @endif
+                <th scope="col">请假</th>
               </tr>
             </thead>
             <tbody>
@@ -36,15 +34,17 @@
                     </th>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="上课时间">{{$classRecord->generated_at->format('m.d H:i  周N')}}</td>
-                    <td data-label="课程状态">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
+                    <td class="exception" data-label="课程状态">{{\App\Models\ClassRecord::EXCEPTION_TYPES_STU[$classRecord->exception]}}
                     </td>
-                    @if(!isset($roleName))
-                    <td data-label="Order">
-                      <a href="{{ route('classRecords.show',$classRecord->id) }}">
-                        {{$classRecord->rrule->order->title}}
-                      </a>
+
+
+                    <td data-label="Flag">
+                      @if($classRecord->status==0 && $classRecord->generated_at->isToday())
+                        <a data-type="aol" label="请假" title="点击请假" class="post-action btn btn-outline-danger btn-sm" href="{{ route('classRecords.flagAOL',$classRecord->id) }}">请假</a>
+                      @else
+                      --
+                      @endif
                     </td>
-                    @endif
                   </tr>
               @endforeach
             </tbody>
@@ -53,4 +53,8 @@
       {{ $classRecords->onEachSide(1)->links() }}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+  @include('classRecords.aol-script')
 @endsection

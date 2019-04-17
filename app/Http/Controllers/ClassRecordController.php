@@ -219,7 +219,7 @@ class ClassRecordController extends Controller
     public function flagAOL(Request $request, ClassRecord $classRecord)
     {
         //todo acl only teacher
-        $this->authorize('edit', $classRecord);
+        $this->authorize('aol', $classRecord);
         $classRecord->exception = ClassRecord::NORMAL_EXCEPTION_STUDENT;
         $classRecord->weight = 0;//学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算
         return ['success'=>$classRecord->save()];
