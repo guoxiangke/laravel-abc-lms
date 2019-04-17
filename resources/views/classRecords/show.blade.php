@@ -65,21 +65,6 @@
 
           @if($mp4)
             @hasanyrole('manager|admin')
-              <video width="100%" height="auto" 
-                controls
-                preload="none"
-                controlsList="nodownload">
-                <source src="{{$mp4}}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            @endhasanyrole
-            @role('teacher')
-              <hr>
-              Video Info:
-                <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
-                <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
-            @endrole
-            @role('student')
               <hr>
               课堂视频:
               <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
@@ -88,6 +73,28 @@
               文件大小: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}
               <br>
               下载方法: 右键点击视频图标，选择链接另存为...
+            @endhasanyrole
+            @hasanyrole('manager|admin')
+            <br>
+              <video width="50%" height="auto" 
+                id="video"
+                controls
+                preload="none"
+                controlsList="nodownload">
+                <source src="{{$mp4}}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <br>
+              <a href="#" data-speed="1" class="play-speed btn btn-outline-dark"><i class="fas fa-play fa-large"></i> 1X</a>
+              <a href="#" data-speed="1.5" class="play-speed btn btn-outline-dark"><i class="fas fa-step-forward fa-large"></i> 1.5X</a>
+              
+              <a href="#" data-speed="2" class="play-speed btn btn-outline-dark"><i class="fas fa-forward fa-large"></i> 2X</a>
+            @endhasanyrole
+            @role('teacher')
+              <hr>
+              Video Info:
+                <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
+                <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
             @endrole
           @endif
         </div>
@@ -103,6 +110,13 @@
         $('#download').click(function(e){
           e.preventDefault();
         });
+        $('.play-speed').click(function(e){
+          e.preventDefault();
+          var vid = document.getElementById("video");
+          vid.playbackRate = $(this).data('speed');
+          vid.play();
+        });
+
     }
 </script>
 @endsection
