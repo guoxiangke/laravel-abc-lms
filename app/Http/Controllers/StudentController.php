@@ -193,7 +193,7 @@ class StudentController extends Controller
             $name = str_replace(' ', '_', $profileName);
         }
         $name = 's_' .  $name;
-        $email = $name . Str::random(6) . '@student.com';
+        $email = $name .'_'. Str::random(6) . '@student.com';
         $userData = [
             'name' => $name,
             'email' => $email,
