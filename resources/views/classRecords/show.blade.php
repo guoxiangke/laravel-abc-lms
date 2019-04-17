@@ -23,9 +23,9 @@
       @endcan
 
       @if(!$mp4)
-        @if(Auth::user()->hasRole('teacher'))
+        @role('teacher')
           <a class="btn btn-warning" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">!mp4 <i class="far fa-file-video fa-large"></i></a>
-        @endif
+        @endrole
       @endif
     </div>
 
@@ -42,9 +42,9 @@
             </audio>
           </div>
           @else
-            @if(Auth::user()->hasRole('teacher'))
+            @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#mp3">!mp3 <i class="far fa-file-audio fa-large"></i></a>
-            @endif
+            @endrole
           @endif
 
           @if($classRecord->remark)
@@ -52,35 +52,57 @@
                 {!! $markdown->line($classRecord->remark) !!}
             </div>
           @else
-            @if(Auth::user()->hasRole('teacher'))
+            @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#remark">Add Evaluation</a>
-            @endif
+            @endrole
           @endif
 
-          @if(Auth::user()->hasRole('teacher'))
+          @role('teacher')
           <small class="form-text text-muted">
             **This is bold text**<br>~~This was mistaken text~~<br>More <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists" target="_blank">Markdown</a> cheatsheet.
           </small>
-          @endif
+          @endrole
 
           @if($mp4)
-            @hasanyrole('manager|admin|student')
-            <video width="100%" height="auto" 
-              controls
-              preload="none"
-              controlsList="nodownload">
-              <source src="{{$mp4}}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            @else
-            <hr>
-            Video Uploaded
-              <a href="{{ route('classRecords.edit', $classRecord) }}" download target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
-              </a>
-              <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
+            @hasanyrole('manager|admin')
+              <video width="100%" height="auto" 
+                controls
+                preload="none"
+                controlsList="nodownload">
+                <source src="{{$mp4}}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             @endhasanyrole
+            @role('teacher')
+              <hr>
+              Video Info:
+                <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
+                <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
+            @endrole
+            @role('student')
+              <hr>
+              课堂视频:
+              <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
+              </a>（请使用电脑）
+              <br>
+              文件大小: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}
+              <br>
+              下载方法: 右键点击视频图标，选择链接另存为...
+            @endrole
           @endif
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('scripts')
+<script src="{{ asset('vendor/telephone-input/js/intlTelInput.min.js') }}"></script>
+<script>
+    window.onload = function () {
+        $('#download').click(function(e){
+          e.preventDefault();
+        });
+    }
+</script>
 @endsection
