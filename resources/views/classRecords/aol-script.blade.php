@@ -17,6 +17,9 @@
                   target.text(statusText);
                   that.removeClass('btn-outline-danger').addClass('btn-warning');
                   next.removeClass('btn-warning').addClass('btn-outline-danger');
+                  @role('student')
+                  actions.text('--');
+                  @endrole
                 }
               },
             });

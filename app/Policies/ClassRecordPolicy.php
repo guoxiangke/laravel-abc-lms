@@ -20,7 +20,7 @@ class ClassRecordPolicy
         //
     }
 
-    //谁可以查看
+    //谁可以查看？代理可以
     public function view(User $user, ClassRecord $classRecord)
     {
         //可以评论的人一定能查看
@@ -29,30 +29,27 @@ class ClassRecordPolicy
             ;
     }
 
-    //谁可以评论
+    //谁可以评论？学生可以
     public function comment(User $user, ClassRecord $classRecord){
-        return $classRecord->user_id == $user->id 
-            || $classRecord->teacher_uid == $user->id
-            || $user->isSuperuser()
-            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
-            ;
+        return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
     }
+
 
     //上传mp3 mp4 //谁可以编辑 == upload
     //学生可以查看，但不能编辑
     public function edit(User $user, ClassRecord $classRecord)
     {
-        return $classRecord->teacher_uid == $user->id
-            || $user->isSuperuser()
-            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
-            ;
+        return $classRecord->teacher_uid == $user->id || $this->isAdmin($user, $classRecord);
     }
 
+    //学生可以请假
     public function aol(User $user, ClassRecord $classRecord)
     {
-        return $classRecord->teacher_uid == $user->id
-            || $classRecord->user_id == $user->id
-            || $user->isSuperuser()
+        return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
+    }
+
+    public function isAdmin(User $user, ClassRecord $classRecord){
+        return $user->isSuperuser()
             || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
             ;
     }

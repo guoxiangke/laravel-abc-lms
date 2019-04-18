@@ -39,7 +39,7 @@
 
 
                     <td data-label="Flag">
-                      @if($classRecord->status==0 && $classRecord->generated_at->isToday())
+                      @if($classRecord->exception==0 && $classRecord->generated_at->isToday())
                         <a data-type="aol" label="请假" title="点击请假" class="post-action btn btn-outline-danger btn-sm" href="{{ route('classRecords.flagAOL',$classRecord->id) }}">请假</a>
                       @else
                       --

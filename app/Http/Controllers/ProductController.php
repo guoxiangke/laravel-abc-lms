@@ -52,6 +52,11 @@ class ProductController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+
+        $this->validate($request, [
+            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+        ]);
+
         $form = $formBuilder->create(CreateForm::class);
 
         if (!$form->isValid()) {
@@ -109,6 +114,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product, FormBuilder $formBuilder)
     {
+        $this->validate($request, [
+            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+        ]);
         $form = $this->form(EditForm::class);
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();

@@ -44,7 +44,7 @@
             </div>
             @endhasanyrole
 
-            @hasanyrole('student|teacher')
+            @hasanyrole('student|teacher|agency')
             <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.bj.bcebos.com/nocors.html?url={{$mp3}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
             @endhasanyrole
 

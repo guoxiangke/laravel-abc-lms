@@ -15,9 +15,10 @@ class ProductForm extends Form
                 'rules' => 'required',
                 'label' => 'Name',
             ])
-            ->add('price', 'number', [
+            ->add('price', 'text', [
                 'rules' => 'required',
                 'label' => 'Price',
+                'attr' => ['placeholder' => '单位元,可带2为小数'],
             ])
             ->add('description', 'text', [
                 'rules' => 'required',

@@ -52,10 +52,10 @@ class OrderForm extends Form
                 'selected' => 0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('price', 'number', [
+            ->add('price', 'text', [
                 'rules' => 'required',
                 'label' => 'Price',
-                'attr' => ['placeholder' => '成交价,单位元']
+                'attr' => ['placeholder' => '成交价,单位元,可带2为小数'],
             ])
             ->add('period', 'number', [
                 'rules' => 'required',
