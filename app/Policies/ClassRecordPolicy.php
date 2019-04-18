@@ -39,7 +39,7 @@ class ClassRecordPolicy
     //学生可以查看，但不能编辑
     public function edit(User $user, ClassRecord $classRecord)
     {
-        return $classRecord->teacher_uid == $user->id || $this->isAdmin($user, $classRecord);
+        return $classRecord->teacher_uid == $user->id || $this->admin($user, $classRecord);
     }
 
     //学生可以请假
@@ -48,7 +48,7 @@ class ClassRecordPolicy
         return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
     }
 
-    public function isAdmin(User $user, ClassRecord $classRecord){
+    public function admin(User $user, ClassRecord $classRecord){
         return $user->isSuperuser()
             || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
             ;

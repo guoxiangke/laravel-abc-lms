@@ -51,14 +51,14 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     const EXCEPTION_TYPES_EN =[
         'Normal',//0
         'AOL',//1-by-Student
-        'AOL-by-Teacher',//2
+        'Holiday',//2 AOL-by-Teacher
         'Absent',//学生异常 3-by-Student
         'EXCEPTION',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
     ];
     //给学生看的状态[0,1,3]
     const EXCEPTION_TYPES_STU =[
         '正常',//0
-        '顺延',//1
+        '请假',//1
         '顺延AOL-by-Teacher',
         '正 常',//旷课 给学生看，好让学生数课时
         '老师异常',
@@ -83,7 +83,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
         'teacher_uid',
         'agency_uid',
         'remark', //book, page, mistake, ...
-        //默认=1/ture，todo: 如果有任何异常，标记为false，不作为已上课时总数计算 $order->AllDoneClassRecordes('weight')->sum()
+        //默认=1/ture 如果有任何异常，标记为false，不作为已上课时总数计算 $order->AllDoneClassRecordes('weight')->sum()
         'weight',
         // 默认为0，正常
         // 学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算 

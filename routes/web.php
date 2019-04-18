@@ -97,6 +97,7 @@ Route::group( ['middleware' => ['auth']], function() {
     //老师/管理人员快速请假标记 ajax
     Route::get('/classRecords/{classRecord}/aol','ClassRecordController@flagAOL')->name('classRecords.flagAOL');
     Route::get('/classRecords/{classRecord}/absent','ClassRecordController@flagAbsent')->name('classRecords.flagAbsent');
+    Route::get('/classRecords/{classRecord}/exception/{id}','ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 
 
     

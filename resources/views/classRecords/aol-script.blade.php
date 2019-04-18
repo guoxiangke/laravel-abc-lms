@@ -4,6 +4,9 @@
           e.preventDefault();
           if (confirm("This action cannot be undone, Are you sure to flag?")) {
             var that = $(this);
+            thisException = that.data('exception');
+            thisParent = that.parent('td')
+
             var actions = that.parent('td');
             var nextType = that.data('type')=='aol'?'absent':'aol';
             var next = actions.find('a[data-type='+nextType+']');
@@ -16,7 +19,12 @@
                 if(data.success){
                   target.text(statusText);
                   that.removeClass('btn-outline-danger').addClass('btn-warning');
-                  next.removeClass('btn-warning').addClass('btn-outline-danger');
+                  thisParent.find('.post-action').each(function(){
+                    thatException = $(this).data('exception');
+                    if(thisException != thatException){
+                      $(this).removeClass('btn-warning').addClass('btn-outline-danger');
+                    }
+                  })
                   @role('student')
                   actions.text('--');
                   @endrole
