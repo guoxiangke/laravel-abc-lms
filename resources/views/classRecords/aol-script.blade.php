@@ -12,8 +12,8 @@
             thisParent = that.parent('td')
 
             var actions = that.parent('td');
-            var nextType = that.data('type')=='aol'?'absent':'aol';
-            var next = actions.find('a[data-type='+nextType+']');
+            // var nextType = that.data('type')=='aol'?'absent':'aol';
+            // var next = actions.find('a[data-type='+nextType+']');
             var statusText = that.attr('label');
             var target = actions.parent('tr').find('.exception');
              $.ajax({
@@ -23,11 +23,19 @@
                 if(data.success){
                   target.text(statusText);
                   that.removeClass('btn-outline-danger').addClass('btn-warning');
+                  if(thisException==0){
+                    that.removeClass('btn-warning').addClass('btn-success');
+                  }
                   thisParent.find('.post-action').each(function(){
                     thatException = $(this).data('exception');
                     if(thisException != thatException){
                       $(this).removeClass('btn-warning').addClass('btn-outline-danger');
+                      if(thatException==0){
+                        $(this).removeClass('btn-success');
+                      }
                     }
+
+
                   })
                   @role('student')
                   actions.text('--');

@@ -69,7 +69,7 @@ class LoginController extends Controller
         elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
         }else{
-            // $field = 'name'; //禁用用户名登陆，因重名缘故
+            $field = 'name'; //禁用用户名登陆，因重名缘故
         }
         $password = $request->get('password');
         return $this->guard()->attempt([$field => $account, 'password' => $password], $request->filled('remember'));
