@@ -207,7 +207,7 @@ class ClassRecordController extends Controller
             $data['generated_at'] = $generated_at;
         }
         $classRecord->fill($data)->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
 
         if(Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             return redirect(route('classRecords.indexByRole'));

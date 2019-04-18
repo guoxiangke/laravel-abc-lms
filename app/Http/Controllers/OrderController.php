@@ -113,8 +113,7 @@ class OrderController extends Controller
             ]);
         }
 
-  
-        flashy()->success('创建成功');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('orders.index');
     }
 
@@ -260,7 +259,7 @@ class OrderController extends Controller
         $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
         $string = $request->input('rrule');
         $order->rrules->first()->fill(compact('start_at','string'))->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('orders.index');
     }
 

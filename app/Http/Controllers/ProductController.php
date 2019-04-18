@@ -71,7 +71,7 @@ class ProductController extends Controller
             // 'image', //todo
             'remark' => $request->input('remark'),
         ]);
-        flashy()->success('成功创建：'.$request->input('name'));
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('products.index');
     }
 
@@ -123,7 +123,7 @@ class ProductController extends Controller
         }
         $data = $request->all();
         $product->fill($data)->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('products.index');
     }
 

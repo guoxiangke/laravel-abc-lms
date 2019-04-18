@@ -165,7 +165,7 @@ class StudentController extends Controller
         // $student = $user->student()->save($student);
         if($student){
             $user->assignRole(User::ROLES['student']);
-            flashy()->success('成功');
+            alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
             return redirect()->route('home');
         }
     }
@@ -235,8 +235,7 @@ class StudentController extends Controller
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
-       
-        flashy()->success('成功创建：'.$request->input('profile_name'));
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('students.index');
     }
 
@@ -336,7 +335,7 @@ class StudentController extends Controller
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('students.index');
     }
 

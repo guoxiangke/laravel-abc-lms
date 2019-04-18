@@ -94,7 +94,7 @@ class SocialController extends Controller
         }
         $password = $request->get('password');
         if (Auth::attempt([$field => $account, 'password' => $password],true)){
-            flashy()->success(__('Bind Success'));
+            alert()->toast(__('Bind Success', 'success', 'top-center')->autoClose(3000);
             Social::firstOrCreate(
                 [
                     'social_id' => $request->input('social_id'),
@@ -103,7 +103,7 @@ class SocialController extends Controller
                 ]
             );
         }else{
-            flashy()->success(__('Wrong Credentials'));
+            alert()->toast(__('Wrong Credentials'), 'error', 'top-center')->autoClose(3000);
             return redirect('login');
         }
         return redirect('home');

@@ -54,7 +54,7 @@ class BookController extends Controller
     {
         $book = new Book;
         $book->fill($request->all())->save();
-        flashy()->success('创建成功');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('books.index');
     }
 
@@ -102,7 +102,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $book->fill($request->all())->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('books.index');
     }
 

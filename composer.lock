@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a453c5127be733b922b13651097823f",
+    "content-hash": "401aa42ce5ae79194f7bf1c5d313ecae",
     "packages": [
         {
             "name": "actuallymab/laravel-comment",
@@ -2178,59 +2178,6 @@
             "time": "2018-02-09T09:26:57+00:00"
         },
         {
-            "name": "mercuryseries/flashy",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mercuryseries/flashy.git",
-                "reference": "58cfe7989d9a06dc0ebc5d83918833464caabfb6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mercuryseries/flashy/zipball/58cfe7989d9a06dc0ebc5d83918833464caabfb6",
-                "reference": "58cfe7989d9a06dc0ebc5d83918833464caabfb6",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "dev-master"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "MercurySeries\\Flashy\\FlashyServiceProvider"
-                    ],
-                    "aliases": {
-                        "Flashy": "MercurySeries\\Flashy\\Flashy"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "MercurySeries\\Flashy": "src/"
-                },
-                "files": [
-                    "src/MercurySeries/Flashy/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Honore Hounwanou",
-                    "email": "mercuryseries@gmail.com"
-                }
-            ],
-            "description": "Easy flash notifications",
-            "time": "2017-10-10T17:58:57+00:00"
-        },
-        {
             "name": "mews/captcha",
             "version": "2.2.6",
             "source": {
@@ -4090,6 +4037,72 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "realrashid/sweet-alert",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/realrashid/sweet-alert.git",
+                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/7bd78445947ef8ce483412afbddb2dec7fc40eb0",
+                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": "~5.1",
+                "illuminate/support": "~5.1",
+                "php": "~5.6|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=5.4.3",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RealRashid\\SweetAlert\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rashid Ali",
+                    "email": "realrashid05@gmail.com",
+                    "homepage": "https://realrashid.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "SweetAlert2 for Laravel 5.5.* by Rashid Ali",
+            "homepage": "https://github.com/realrashid/sweet-alert",
+            "keywords": [
+                "alert",
+                "laravel",
+                "notifier",
+                "noty",
+                "sweet",
+                "sweet-alert2"
+            ],
+            "time": "2019-03-29T18:34:57+00:00"
         },
         {
             "name": "simplesoftwareio/simple-qrcode",
@@ -7567,6 +7580,59 @@
                 "debugbar"
             ],
             "time": "2017-12-15T11:13:46+00:00"
+        },
+        {
+            "name": "mercuryseries/flashy",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mercuryseries/flashy.git",
+                "reference": "58cfe7989d9a06dc0ebc5d83918833464caabfb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mercuryseries/flashy/zipball/58cfe7989d9a06dc0ebc5d83918833464caabfb6",
+                "reference": "58cfe7989d9a06dc0ebc5d83918833464caabfb6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MercurySeries\\Flashy\\FlashyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Flashy": "MercurySeries\\Flashy\\Flashy"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "MercurySeries\\Flashy": "src/"
+                },
+                "files": [
+                    "src/MercurySeries/Flashy/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Honore Hounwanou",
+                    "email": "mercuryseries@gmail.com"
+                }
+            ],
+            "description": "Easy flash notifications",
+            "time": "2017-10-10T17:58:57+00:00"
         },
         {
             "name": "mockery/mockery",

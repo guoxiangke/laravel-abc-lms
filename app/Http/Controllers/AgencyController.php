@@ -169,7 +169,8 @@ class AgencyController extends Controller
         ]);
         $paymethod = $user->paymethod()->save($paymethod);
 
-        flashy()->success('成功创建：'.$request->input('profile_name'));
+        alert()->toast('成功创建：'.$request->input('profile_name'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('agencies.index');
     }
 
@@ -276,7 +277,7 @@ class AgencyController extends Controller
             'remark' => $request->input('pay_remark'),
         ])->save();
 
-        flashy()->success('Update Success');
+        alert()->toast('Update Success', 'success', 'top-center')->autoClose(3000);
         return redirect()->route('agencies.index');
     }
 

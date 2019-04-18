@@ -12,7 +12,7 @@ class SocialForm extends Form
         $socialType = $this->getData('socialType');
         // ['socialUser' => $socialUser, 'socialType' => 1],
         if(!($socialUser && $socialType)) abort(403);
-        flashy()->success('Welcome ' . $socialUser->nickname?:$socialUser->name);
+        alert()->toast('Welcome ' . $socialUser->nickname?:$socialUser->name, 'success', 'top-center')->autoClose(3000);
         $this->add('type', 'hidden', [
                 'label' => 'type',
                 'value' => $socialType,

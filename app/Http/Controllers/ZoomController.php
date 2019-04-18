@@ -66,7 +66,7 @@ class ZoomController extends Controller
                 'pmi' => str_replace(' ', '', $request->input('pmi')),
             ]
         );
-        flashy()->success('创建成功');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('zooms.index'); //todo last page! or order
     }
 
@@ -119,7 +119,7 @@ class ZoomController extends Controller
         $zoom = $zoom->fill($data);
         // dd($rrule->toArray());
         $zoom->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('zooms.index');
     }
 

@@ -170,7 +170,7 @@ class TeacherController extends Controller
             // $paymethod = $user->paymethod()->save($paymethod);
         }
 
-        flashy()->success('成功创建：'.$request->input('profile_name'));
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('teachers.index');
     }
 
@@ -300,7 +300,7 @@ class TeacherController extends Controller
             // $paymethod = $user->paymethod()->save($paymethod);
         }
 
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('teachers.index');
     }
 

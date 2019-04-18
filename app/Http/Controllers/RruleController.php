@@ -89,9 +89,9 @@ class RruleController extends Controller
             ])
         );
         if($rrule->wasRecentlyCreated){
-            flashy()->success('创建成功');
+            alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         }else{
-            flashy()->error('已存在相同的计划');
+            alert()->toast('已存在相同的计划', 'error', 'top-center')->autoClose(3000);
         }
   
         return redirect()->route('rrules.index');
@@ -147,7 +147,7 @@ class RruleController extends Controller
         $string = $request->input('string');
         $rrule = $rrule->fill(compact('start_at','string'));
         $rrule->save();
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('rrules.index');
     }
 

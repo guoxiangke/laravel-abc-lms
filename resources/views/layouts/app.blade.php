@@ -26,7 +26,6 @@
     </title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    @include('flashy::message')
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
@@ -125,6 +124,7 @@
             @yield('content')
         </main>
     </div>
+    @include('sweetalert::alert')
     @yield('scripts')
 </body>
 </html>

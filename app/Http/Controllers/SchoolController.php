@@ -121,7 +121,7 @@ class SchoolController extends Controller
         ]);
         $user->paymethod()->save($paymethod);
 
-        flashy()->success('成功创建：'.$request->input('school_name'));
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('schools.index');
     }
 
@@ -224,7 +224,7 @@ class SchoolController extends Controller
         ])->save();
         // $user->paymethod()->save($paymethod);
 
-        flashy()->success('Update Success');
+        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('schools.index');
     }
 
