@@ -96,8 +96,13 @@ class ClassRecordController extends Controller
                 'media',
                 )
             ->orderBy('generated_at','desc')
-            ->where($allowRolesMap[$role], $user->id) //user_id
-            ->paginate(50);
+            ->where($allowRolesMap[$role], $user->id);
+            //只让学生看好看的！！！
+            if($user->hasAnyRole(['student', 'agency'])){
+                //给学生看的状态[0,1,3]
+                $classRecords = $classRecords->whereIn('exception', [0,1,3]);
+            }
+            $classRecords = $classRecords->paginate(50);
             break;//按上下↕️顺序找到第一个角色的即可返回
         }
         return view('classRecords.index4'.$roleName, compact('classRecords', 'roleName', 'userName'));
