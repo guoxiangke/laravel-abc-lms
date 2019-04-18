@@ -105,7 +105,19 @@ class ClassRecordController extends Controller
             $classRecords = $classRecords->paginate(50);
             break;//按上下↕️顺序找到第一个角色的即可返回
         }
-        return view('classRecords.index4'.$roleName, compact('classRecords', 'roleName', 'userName'));
+
+        $aolCount = 0;
+        //为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？
+            
+        if($user->hasRole('student')){
+            $start = new Carbon('first day of this month');
+            $aolCount = ClassRecord::whereIn('exception',[ClassRecord::NORMAL_EXCEPTION_STUDENT, ClassRecord::EXCEPTION_STUDENT]) // 请假和旷课都算进去
+                ->where('user_id', $user->id)
+                ->where('updated_at','>=', $start)
+                ->pluck('exception')
+                ->count();
+        }
+        return view('classRecords.index4'.$roleName, compact('classRecords', 'aolCount'));
     }
 
 

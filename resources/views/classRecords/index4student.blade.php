@@ -39,7 +39,9 @@
 
 
                     <td data-label="Flag">
-                      @if($classRecord->exception==0 && $classRecord->generated_at->isToday())
+                      @if($classRecord->exception==0
+                        && $aolCount < 2
+                        && $classRecord->generated_at->isToday())
                         <a  data-type="aol" data-exception="1" label="请假" title="点击请假" class="post-action btn btn-{{$classRecord->exception==1?'warning':'outline-danger'}} btn-sm" href="{{ route('classRecords.flagException',[$classRecord->id, 1]) }}">请假</a>
                       @else
                       --

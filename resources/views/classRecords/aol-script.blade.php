@@ -2,7 +2,11 @@
     window.onload = function () {
         $('.post-action').click(function(e){
           e.preventDefault();
-          if (confirm("This action cannot be undone, Are you sure to flag?")) {
+          var msg = "This action cannot be undone, Are you sure to flag?";
+          @role('student')
+          msg = "为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？";
+          @endrole
+          if (confirm(msg)) {
             var that = $(this);
             thisException = that.data('exception');
             thisParent = that.parent('td')
