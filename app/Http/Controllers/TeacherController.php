@@ -20,7 +20,9 @@ use Carbon\Carbon;
 class TeacherController extends Controller
 {
     public function __construct() {
-        $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        $this->middleware(['admin']);
+        //todo https://abc.dev/teacher/register
+        // $this->middleware(['admin'], ['only' => ['index','edit']]);
     }
     
     use FormBuilderTrait;
@@ -58,7 +60,7 @@ class TeacherController extends Controller
     public function register()
     {
         //必须是没XX角色才可以注册
-        $this->authorize('create', Teacher::class,);
+        $this->authorize('create', Teacher::class);
         $form = $this->form(TeacherRegisterForm::class, [
             'method' => 'POST',
             'url' => action('TeacherController@registerStore')

@@ -116,10 +116,12 @@ class StudentController extends Controller
     {
         //必须是没XX角色才可以注册
         $this->authorize('create', Student::class);
-
-        $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
-        ]);
+        $profileTelephone = $request->input('telephone');
+        if($profileTelephone){
+            $this->validate($request, [
+                'telephone'=>'min:11|unique:profiles',
+            ]);
+        }
         $form = $formBuilder->create(StudentRegisterForm::class);
 
         if (!$form->isValid()) {
@@ -128,7 +130,6 @@ class StudentController extends Controller
         $user = $request->user();
 
         //region profile 真实姓名/电话 推荐人uid关联 更改机会
-        $profileTelephone = $request->input('telephone');
         $profileName = $request->input('profile_name');
         $recommendTelephone = $request->input('recommend_telephone');
         $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
@@ -165,7 +166,7 @@ class StudentController extends Controller
         // $student = $user->student()->save($student);
         if($student){
             $user->assignRole(User::ROLES['student']);
-            alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+            alert()->toast('学员登记成功，欢迎您！', 'success', 'top-center')->autoClose(3000);
             return redirect()->route('home');
         }
     }

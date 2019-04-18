@@ -94,7 +94,7 @@ class SocialController extends Controller
         }
         $password = $request->get('password');
         if (Auth::attempt([$field => $account, 'password' => $password],true)){
-            alert()->toast(__('Bind Success', 'success', 'top-center')->autoClose(3000);
+            alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
             Social::firstOrCreate(
                 [
                     'social_id' => $request->input('social_id'),
