@@ -88,18 +88,13 @@
                     <div class="row">
                     @unlessrole('teacher')
                         <div class="col-md-4 pt-5  text-center bg-light">
-                            <h5 class="display-5">我的推荐码</h5>
-                            <p class="lead">长按可保存到手机</p>
+                            <h5 class="display-5">优惠推荐码</h5>
+                            <p class="lead">截屏保存，转发好友</p>
                             <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                ->mergeString($avatarString,.2)
+                                //->mergeString($avatarString,.2)
                                 ->size(300)
                                 ->margin(2)
                                 ->generate($link)) !!} "  width="260px" loading="lazy">
-                        </div>
-                        <div class="col-md-4 pt-5  text-center bg-light">
-                            <h5 class="display-5">咨询服务</h5>
-                            <p class="lead">您的专属课程顾问</p>
-                            <img src="{{ asset('images/monika.jpeg')}}" alt="" width="250px" loading="lazy">
                         </div>
                     @endhasanyrole
 
