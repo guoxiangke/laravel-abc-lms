@@ -98,7 +98,7 @@
                         </div>
                     @endhasanyrole
 
-                    @hasanyrole('manager|admin|agency')
+                    @hasanyrole('manager|admin')
                         <div class="col-md-4 pt-5  text-center bg-light">
                             <h5 class="display-5">支付宝统一收款码</h5>
                             <p class="lead">支付请备注学生姓名</p>
