@@ -8,7 +8,7 @@
           @endrole
           var that = $(this);
           if(!that.hasClass('btn-outline-danger')){
-            alert('不可再次点击');
+            alert('{{__('NO Action on this status')}}');
             return 0;
           }
 
