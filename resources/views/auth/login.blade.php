@@ -85,8 +85,11 @@
                                     </a>
                                 @endif
                                 <div class="mt-3">
-                                    <a class="btn btn-success" style="width: 100%" href="{{route('login.weixin')}}"><i class="fab fa-weixin fa-large"></i>
+                                    <a class="btn-block btn btn-success" href="{{route('login.weixin')}}"><i class="fab fa-weixin fa-large"></i>
                                         {{ __('Login with Wechat') }}
+                                    </a>
+                                    <a class="btn-block btn btn-primary" href="{{route('login.facebook')}}"><i class="fab fa-facebook fa-large"></i>
+                                        {{ __('Login with Facebook') }}
                                     </a>
                                 </div>
                             </div>

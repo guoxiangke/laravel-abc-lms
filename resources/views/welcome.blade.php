@@ -38,7 +38,10 @@
 
         @guest
         <p class="text-center mb-0 animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="3" data-animation-trigger="load">
-          <a href="{{ route('login.weixin') }}" style="width: 50%;    margin: auto;" target="_blank" class="text-center btn-block btn btn-success text-white"><i class="fab fa-weixin fa-large"></i>
+          <a href="{{ route('login.facebook') }}" class="text-center btn btn-primary text-white"><i class="fab fa-facebook fa-large"></i>
+             {{ __('Login with Facebook') }}
+          </a>
+          <a href="{{ route('login.weixin') }}"  class="text-center btn btn-success text-white"><i class="fab fa-weixin fa-large"></i>
              {{ __('Login with Wechat') }}
           </a>
         </p>

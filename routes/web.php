@@ -49,7 +49,7 @@ Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
     return 'TneROHDiBDphZRvS';
 });
 
-Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider');
+Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider')->name('login.facebook');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
 
 Route::resources(['socials' => 'SocialController']); //post need
