@@ -14,8 +14,9 @@
                         @csrf
 
                         <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus placeholder="{{ __('LoginName') }}">
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('LoginName') }}</label>
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus >
 
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
@@ -26,9 +27,10 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="col-md-6 offset-md-4">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required  placeholder="{{ __('Password') }}">
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
@@ -39,12 +41,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Captcha') }}</label>
+                            <div class="col-md-6">
                                 <img 
                                     id="captcha"
                                     src="{{ captcha_src() }}" 
-                                    alt="验证码" 
-                                    title="刷新"
+                                    alt="{{ __('Captcha') }}" 
+                                    title="{{__('Captcha Refrsh')}}"
                                     border="0" 
                                     data-captcha-config="default"
                                 >
@@ -53,7 +56,7 @@
                                     class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" 
                                     required autofocus autocomplete="off"
                                     name="captcha" 
-                                    placeholder="{{ __('Captcha') }}">
+                                    placeholder="{{__('Addition Result')}}">
                                 @if ($errors->has('captcha'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('captcha') }}</strong>
