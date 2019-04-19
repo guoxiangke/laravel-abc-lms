@@ -11,8 +11,9 @@
     //}else{
     //    $avatar = $avatar->getPath();
     //}
-    $avatar = public_path('favicon.gif');
+    $avatar = public_path('34-512.jpg');
     $avatarString = file_get_contents($avatar);
+    $logoString = file_get_contents(public_path('1041_lock_security_locked_login-512.jpg'));
 
 @endphp
 
@@ -88,10 +89,19 @@
                     <div class="row">
                     @unlessrole('teacher')
                         <div class="col-md-4 pt-5  text-center bg-light">
-                            <h5 class="display-5">优惠推荐码</h5>
-                            <p class="lead">截屏保存，转发好友</p>
+                            <h5 class="display-5">微信好友推荐码</h5>
+                            <p class="lead">优惠政策请询问课程顾问</p>
                             <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                //->mergeString($avatarString,.2)
+                                ->mergeString($avatarString,.2)
+                                ->size(300)
+                                ->margin(2)
+                                ->generate($link)) !!} "  width="260px" loading="lazy">
+                        </div>
+                        <div class="col-md-4 pt-5  text-center bg-light">
+                            <h5 class="display-5">微信登陆码</h5>
+                            <p class="lead">微信收藏，方便登陆</p>
+                            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                                ->mergeString($logoString,.2)
                                 ->size(300)
                                 ->margin(2)
                                 ->generate($link)) !!} "  width="260px" loading="lazy">
