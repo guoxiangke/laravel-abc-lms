@@ -48,7 +48,7 @@ class SocialController extends Controller
         if(Auth::id()) return redirect('home');
 
         $socialUser = Socialite::driver('weixin')->user();
-        self::bind($socialUser, Social::TYPE_WECHAT);
+        return self::bind($socialUser, Social::TYPE_WECHAT);
     }
     
     /**

@@ -10,6 +10,7 @@ use App\Models\Profile;
 use Socialite;
 use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Social;
 
 class LoginController extends Controller
 {
@@ -114,8 +115,7 @@ class LoginController extends Controller
     {
         if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('github')->user();
-        dd($socialUser);
-        SocialController::bind($socialUser, Social::TYPE_GITHUB);
+        return SocialController::bind($socialUser, Social::TYPE_GITHUB);
     }
 
 
@@ -129,7 +129,6 @@ class LoginController extends Controller
     {
         if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('facebook')->user();
-        SocialController::bind($socialUser, Social::TYPE_FACEBOOK);
-        // $user->token;
+        return SocialController::bind($socialUser, Social::TYPE_FACEBOOK);
     }
 }
