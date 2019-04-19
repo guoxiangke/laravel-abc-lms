@@ -25,7 +25,7 @@
 				  </thead>
 				  <tbody>
 					@foreach($students as $profile)
-					    <tr id={{$profile->id}}>
+					    <tr id="{{$profile->student->id}}">
 					      <th scope="row" data-label="Id"><a href="{{ route('classRecords.indexbyStudent', $profile->student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课情况</a></th>
 					      @php
 				      		$birthday = $profile->birthday;
