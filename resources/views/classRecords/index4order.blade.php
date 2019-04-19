@@ -15,6 +15,7 @@
         <table class="table">
             <thead>
               <tr>
+                <th scope="col">id</th>
                 <th scope="col">#</th>
                 <th scope="col">Student</th>
                 <th scope="col">Teacher</th>
@@ -24,12 +25,14 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($classRecords as $classRecord)
+              @foreach($classRecords as $key => $classRecord)
                   <tr id="{{$classRecord->id}}">
-                    <th scope="row">
+                    <th scope="row">{{$key +1}}
+                      
                       <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">
                         Edit
-                      </a>
+                      </a></th>
+                    <td scope="row" data-label="Status">
                       @if(!$classRecord->remark && $classRecord->generated_at->isToday())
                         <a class="btn btn-sm btn-success text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacher->teacher->zoom->pmi }}">Zoom</a>
                       @endif
@@ -38,7 +41,7 @@
                       <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp3')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp3</a>
                       <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp4')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp4</a>
                           
-                    </th>
+                    </td>
                     <td data-label="Student">{{$classRecord->user->profiles->first()->name}}</td>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m/d H:i 周N')}}</td>
