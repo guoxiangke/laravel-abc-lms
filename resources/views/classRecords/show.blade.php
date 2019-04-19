@@ -71,7 +71,7 @@
           @endrole
 
           @if($mp4)
-            @hasanyrole('manager|admin')
+            @hasanyrole('manager|admin|student')
               <hr>
               课堂视频:
               <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
