@@ -75,8 +75,8 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary" style="width: 50%">
                                     {{ __('Login') }}
                                 </button>
                                 @if (Route::has('password.request'))
@@ -84,10 +84,11 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-
-                                <a class="btn btn-success" href="{{route('login.weixin')}}">
-                                    {{ __('Wechat Login') }}
-                                </a>
+                                <div class="mt-3">
+                                    <a class="btn btn-success" style="width: 100%" href="{{route('login.weixin')}}"><i class="fab fa-weixin fa-large"></i>
+                                        {{ __('Login with Wechat') }}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </form>

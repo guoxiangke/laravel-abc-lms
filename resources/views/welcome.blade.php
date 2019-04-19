@@ -38,8 +38,8 @@
 
         @guest
         <p class="text-center mb-0 animate" data-toggle="animation" data-animation="fadeUp" data-animation-order="3" data-animation-trigger="load">
-          <a href="{{ route('login.weixin') }}" target="_blank" class="btn btn-lg btn-success text-white">
-            微信登陆
+          <a href="{{ route('login.weixin') }}" style="width: 50%;    margin: auto;" target="_blank" class="text-center btn-block btn btn-success text-white"><i class="fab fa-weixin fa-large"></i>
+             {{ __('Login with Wechat') }}
           </a>
         </p>
         @endguest

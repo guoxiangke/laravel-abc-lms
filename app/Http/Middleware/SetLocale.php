@@ -29,7 +29,6 @@ class SetLocale
                 $locale = 'zh-CN';
             };
         }
-            $locale = 'en';
         App::setLocale($locale);
 
         return $next($request);
