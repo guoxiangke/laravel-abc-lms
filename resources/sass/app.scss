@@ -35,6 +35,11 @@ form label:after {
 }
 
 /* Simple Responsive Table in CSS https://codepen.io/AllThingsSmitty/pen/MyqmdM*/
+tr:nth-child(even) {
+  background: #f0f0f0;
+  opacity: 0.9;
+}
+
 table caption {
   font-size: 1.5em;
   margin: .5em 0 .75em;
