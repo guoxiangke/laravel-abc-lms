@@ -10,7 +10,7 @@ use App\Forms\SocialForm as CreateForm;
 use Socialite;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
-use App\Jobs\WechatUserAvatarQueue;
+// use App\Jobs\WechatUserAvatarQueue;
 
 class SocialController extends Controller
 {
@@ -22,11 +22,7 @@ class SocialController extends Controller
         return Socialite::driver('weixin')->redirect();
     }
 
-    public function handleWechatProviderCallback()
-    {
-        if(Auth::id()) return redirect('home');
-
-        $socialUser = Socialite::driver('weixin')->user();
+    public static function bind($socialUser, $type){
         $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
         //bind
         if(!$userId){
@@ -36,7 +32,7 @@ class SocialController extends Controller
                     'method' => 'POST',
                     'url' => action('SocialController@store')
                 ],
-                ['socialUser' => $socialUser, 'socialType' => 1],
+                ['socialUser' => $socialUser, 'socialType' => $type],
             ); 
             return view('social.create', compact('form'));
         }else{
@@ -45,6 +41,14 @@ class SocialController extends Controller
             // WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
             return redirect('home');
         }
+    }
+
+    public function handleWechatProviderCallback()
+    {
+        if(Auth::id()) return redirect('home');
+
+        $socialUser = Socialite::driver('weixin')->user();
+        self::bind($socialUser, Social::TYPE_WECHAT);
     }
     
     /**

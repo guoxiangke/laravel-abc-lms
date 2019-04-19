@@ -8,12 +8,13 @@ class Social extends Model
 {
     protected $fillable = [
         'social_id',
-        'type',//wechat 2facebook
+        'type',//1wechat 2facebook 3github
         'user_id',
     ];
 
     const TYPE_WECHAT = 1;
     const TYPE_FACEBOOK = 2;
+    const TYPE_GITHUB = 3;
     
     public function user()
     {

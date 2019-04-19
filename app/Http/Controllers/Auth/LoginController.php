@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use App\Models\Profile;
 use Socialite;
+use App\Http\Controllers\SocialController;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -99,6 +101,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('github')->redirect();
     }
 
@@ -109,22 +112,24 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('github')->user();
-        //give premission of a developr todo!!!
-        dd($user);
-        // $user->token;
+        if(Auth::id()) return redirect('home');
+        $socialUser = Socialite::driver('github')->user();
+        dd($socialUser);
+        SocialController::bind($socialUser, Social::TYPE_GITHUB);
     }
 
 
     public function redirectToFacebookProvider()
     {
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('facebook')->redirect();
     }
     
     public function handleFacebookProviderCallback()
     {
-        $user = Socialite::driver('facebook')->user();
-        dd($user);
+        if(Auth::id()) return redirect('home');
+        $socialUser = Socialite::driver('facebook')->user();
+        SocialController::bind($socialUser, Social::TYPE_FACEBOOK);
         // $user->token;
     }
 }
