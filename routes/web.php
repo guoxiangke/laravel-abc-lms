@@ -42,8 +42,8 @@ Route::get('/captcha/{config?}', function(\Mews\Captcha\Captcha $captcha, $confi
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('login/wechat', 'Auth@redirectToWechatProvider')->name('login.weixin');
-Route::get('login/wechat/callback', 'Auth@handleWechatProviderCallback');
+Route::get('login/wechat', 'Auth\LoginController@redirectToWechatProvider')->name('login.weixin');
+Route::get('login/wechat/callback', 'Auth\LoginController@handleWechatProviderCallback');
 
 Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
     return 'TneROHDiBDphZRvS';
