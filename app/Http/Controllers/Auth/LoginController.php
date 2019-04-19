@@ -11,9 +11,12 @@ use Socialite;
 use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Social;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class LoginController extends Controller
 {
+    use FormBuilderTrait;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
