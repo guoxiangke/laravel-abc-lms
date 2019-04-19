@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Social;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\SocialForm as CreateForm;
 
 class LoginController extends Controller
 {
@@ -118,7 +119,7 @@ class LoginController extends Controller
     {
         if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('github')->user();
-        return SocialController::bind($socialUser, Social::TYPE_GITHUB);
+        return $this->bind($socialUser, Social::TYPE_GITHUB);
     }
 
 
@@ -132,6 +133,43 @@ class LoginController extends Controller
     {
         if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('facebook')->user();
-        return SocialController::bind($socialUser, Social::TYPE_FACEBOOK);
+        return $this->bind($socialUser, Social::TYPE_FACEBOOK);
+    }
+    
+    public function redirectToWechatProvider()
+    {
+        if(Auth::id()) return redirect('home');
+        return Socialite::driver('weixin')->redirect();
+    }
+
+
+    public function handleWechatProviderCallback()
+    {
+        if(Auth::id()) return redirect('home');
+
+        $socialUser = Socialite::driver('weixin')->user();
+        return $this->bind($socialUser, Social::TYPE_WECHAT);
+    }
+
+    //@see SocialController->bind()
+    public function bind($socialUser, $type){
+        $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
+        //bind
+        if(!$userId){
+            $form = $this->form(
+                CreateForm::class, 
+                [
+                    'method' => 'POST',
+                    'url' => action('SocialController@store')
+                ],
+                ['socialUser' => $socialUser, 'socialType' => $type],
+            ); 
+            return view('social.create', compact('form'));
+        }else{
+            $user = Auth::loginUsingId($userId, true);
+            //todo 每次登陆都更新头像？
+            // WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
+            return redirect('home');
+        }
     }
 }
