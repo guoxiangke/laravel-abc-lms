@@ -70,8 +70,8 @@
 
 
                         @role('agency')
-                            <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">我推荐的学生</a>
-                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-outline-dark">所有学员上课记录</a>
+                            <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">我的推荐</a>
+                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-outline-dark">{{__('ClassRecords')}}</a>
                         @endrole
 
                         @hasanyrole('student|agency|teacher')

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', __('Students'))
+@section('title', __('Recommends'))
 
 @section('content')
 
 <div class="container">
-	<h1>我的{{__('Students')}}</h1>
+	<h1>我的{{__('Recommends')}}</h1>
 	
 	<div class="show-links">
     	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
@@ -25,15 +25,15 @@
 				  </thead>
 				  <tbody>
 					@foreach($students as $profile)
-					    <tr id="{{$profile->student->id}}">
+					    <tr id="{{$profile->id}}">
+						@if($profile->student)
 					      <th scope="row" data-label="Id"><a href="{{ route('classRecords.indexbyStudent', $profile->student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课情况</a></th>
+						@else
+							<th> -- </th>
+						@endif
+
 					      @php
 				      		$birthday = $profile->birthday;
-							
-				      		$recommend = $profile->recommend;
-				      		//dd( $profile->toArray());
-
-				      		$contact = $profile->contacts->first();
 					      @endphp
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
