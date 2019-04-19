@@ -27,8 +27,8 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
     use HasMediaTrait;
 
     const DISK = 'spaces';//ClassRecord::DISK upyun
-    const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
-    // const DOS_CDN='https://upcdn.do.abc-chinaedu.com';
+    // const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
+    const DOS_CDN='https://upcdn.do.abc-chinaedu.com';
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
