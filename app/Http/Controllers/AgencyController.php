@@ -36,7 +36,7 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::with('user','user.profiles','user.paymethod')
+        $agencies = Agency::with('user','user.profiles','user.paymethod','user.profiles.recommend')
             ->orderBy('id','desc')
             ->paginate(100);
         return view('agencies.index',compact('agencies'));

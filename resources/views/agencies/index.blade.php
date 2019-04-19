@@ -24,7 +24,7 @@
 						<th>Birthday</th>
 						<th>Telephone</th>
 						<th>PayMethod</th>
-						<th>推荐人</th>
+						<th>Recommend</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -43,7 +43,7 @@
 					      <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('m/d'):'-'}}</td>
 					      <td data-label="Telephone">{{$profile->telephone}}</td>
 					      <td data-label="PayMethod">{{$paymethod?App\Models\PayMethod::TYPES[$paymethod->type] . ': '.$paymethod->number  :'-'}}</td>
-					      <td data-label="推荐人">{{ $agency->reference?$agency->reference->profiles->first()->name:'-' }}</td>
+					      <td data-label="Recommend">{{ $profile->recommend_uid?$profile->recommend->name:'-' }}</td>
 					    </tr>
 					@endforeach
 				  </tbody>

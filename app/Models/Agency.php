@@ -18,7 +18,7 @@ class Agency extends Model
 
     protected $fillable = [
     	'user_id',
-    	'agency_uid',
+        'type',
         'discount', //0-99+%折扣
     ];
 
@@ -27,11 +27,6 @@ class Agency extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-
-    public function reference()
-    {
-        return $this->hasOne(User::class, 'id', 'agency_uid');
-    }
 
     public function profiles()
     {

@@ -21,7 +21,7 @@ class AgencyForm extends Form
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();
-
+        $recommend = Agency::with('profiles')->where('user_id','<>',$profile->user_id)->get()->pluck('profiles.0.name','user_id')->toArray();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'value' => $profile->name,
@@ -99,8 +99,8 @@ class AgencyForm extends Form
             ])//todo 0-100 check!
             ->add('agency_id', 'select', [
                 'label' => '介绍人/推荐人',
-                'selected' => $agency->id,
-                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name','id')->toArray(),
+                'selected' => $profile->recommend_uid,
+                'choices' => $recommend, //不包括自己
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [
