@@ -44,14 +44,12 @@
                         $(this).removeClass('btn-success');
                       }
                     }
-
-
                   })
                   @role('student')
                   actions.text('--');
                   @endrole
                 }
-              },
+              }
             });
           }
         });

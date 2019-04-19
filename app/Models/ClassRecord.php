@@ -102,7 +102,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia, Commenta
         //只有学生旷课时，标记为weight=1，即需要计算在内, 其他为0
         if(in_array($value,[1,2,4])){
             $this->attributes['weight'] = false;
-            \Log::error(__FUNCTION__,['ClassRecord weight updated by exception changed']);
+            \Log::debug(__FUNCTION__,['ClassRecord weight updated by exception changed']);
         }
         $this->attributes['exception'] = $value;
     }

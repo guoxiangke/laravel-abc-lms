@@ -244,35 +244,20 @@ class ClassRecordController extends Controller
             case ClassRecord::NORMAL_EXCEPTION_STUDENT://1学生请假
                 $this->authorize('aol', $classRecord);//aol权限
                 break;
-            case ClassRecord::NORMAL_EXCEPTION_STUDENT://0归位正常
-            case ClassRecord::NORMAL_EXCEPTION_STUDENT://4老师异常
+            case ClassRecord::NO_EXCEPTION://0归位正常
+            case ClassRecord::EXCEPTION_TEACHER://4老师异常
                 $this->authorize('admin', $classRecord);//管理员可操作
                 break;
-            
             default:
-                # code...
+                // return abort('403');
+                return response('Unauthorized.', 401);
                 break;
         }
-        // dd($classRecord->toArray(), $exception);
-        
-        
 
         $classRecord->exception = $exception;
         //默认=1/ture，如果有任何异常，标记为false，不作为已上课时总数计算 
-        $classRecord->weight = 1;
-
-        // 默认为 0，正常
-        // 学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算 
-        // 老师请假 2 需要补课，标记 weight = 0，不作为已上课时总数计算 
-        // 学生异常请假 3  计算课时 标红 🙅不需要补课
-        // 老师异常 4  计算课时 标黄 | 需要补课， 标记 weight = 0，不作为已上课时总数计算 
-        //1,2 4需要补课，标记 weight = 0
-        if($exception==ClassRecord::NORMAL_EXCEPTION_TEACHER //2老师请假
-            || $exception==ClassRecord::NORMAL_EXCEPTION_STUDENT
-            || $exception==ClassRecord::EXCEPTION_TEACHER){
-            $classRecord->weight = 0;
-        }
-        
+        //@see setExceptionAttribute 不用操心 weight
+        // $classRecord->weight = 1;
         return ['success'=>$classRecord->save()];
     } 
 }
