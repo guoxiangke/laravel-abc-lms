@@ -11,9 +11,9 @@
     //}else{
     //    $avatar = $avatar->getPath();
     //}
-    //$avatar = public_path('icons/51-512.jpg');
+    //$avatar = public_path('images/icons/51-512.jpg');
     //$avatarString = file_get_contents($avatar);
-    $logoString = file_get_contents(public_path('icons/34-512.jpg'));
+    $logoString = file_get_contents(public_path('images/icons/34-512.jpg'));
 
     $path = storage_path('app/public/loginqr');
     if(!file_exists($path)){
@@ -35,7 +35,7 @@
 
 @section('content')
 <div class="container">
-    <h1><img width="30px" src="{{asset('icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</h1>
+    <h1><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</h1>
     <div class="show-links">
         <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
     </div>

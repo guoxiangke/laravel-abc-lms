@@ -11,7 +11,7 @@
     //}else{
     //    $avatar = $avatar->getPath();
     //}
-    $avatar = public_path('icons/51-512.jpg');
+    $avatar = public_path('images/icons/51-512.jpg');
     $avatarString = file_get_contents($avatar);
 
     $path = storage_path('app/public/referrals/');
@@ -34,10 +34,10 @@
 
 @section('content')
 <div class="container">
-    <h1><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
+    <h1><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
     <div class="show-links">
         <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-        <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark"><img width="20px" src="{{asset('icons/63-512.png')}}" alt=""> 我的{{__('Recommends')}}</a>
+        <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark"><img width="20px" src="{{asset('images/icons/63-512.png')}}" alt=""> 我的{{__('Recommends')}}</a>
     </div>
 
     <div class="row justify-content-center">

@@ -2,21 +2,6 @@
 
 @section('title', __('Home'))
 
-@php 
-    $user = Auth::user();
-    $link = route('register.recommend',['user'=>$user]);
-    //$avatar = $user->getFirstMedia('avatar');
-    //if(!$avatar){
-    //    $avatar = public_path('favicon.gif');
-    //}else{
-    //    $avatar = $avatar->getPath();
-    //}
-    $avatar = public_path('icons/51-512.jpg');
-    $avatarString = file_get_contents($avatar);
-    $logoString = file_get_contents(public_path('icons/34-512.jpg'));
-
-@endphp
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -59,31 +44,51 @@
                     </div>
                     @endrole
                     @endhasanyrole
-                    <div class="links-2">
-                        @role('student')
-                        <div>
-                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/37-512.png')}}" alt=""> 上课记录</a>
-                  
-                            <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> 推荐好友</a>
 
-
-                            <a href="{{ route('autologin') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
-
-
-                            <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="30px" src="{{asset('icons/34-01-256.png')}}" alt=""> 使用帮助</a>
+                    @role('student')
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2 mt-1">
+                                <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/37-512.png')}}" alt=""> 上课记录</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a href="{{ route('autologin') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
+                            </div>
+                          </div>
                         </div>
-                        @endrole
+                    @endrole
 
+
+                    @role('agency')
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2 mt-1">
+                                <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a href="{{ route('autologin') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
+                            </div>
+                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                                <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
+                            </div>
+                          </div>
+                        </div>
+                        
+                    @endrole
+
+                    <div class="container links-2">
 
                         @role('teacher')
                             <a href="/class-records" class="btn btn-outline-dark">ClassRecords</a>
-                        @endrole
-
-
-                        @role('agency')
-                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</a>
-                            <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> 推荐好友</a>
-                            <a href="{{ route('autologin') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
                         @endrole
 
                         @hasanyrole('student|agency|teacher')
