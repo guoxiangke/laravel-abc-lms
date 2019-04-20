@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-  <h1><img width="25px" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</h1>
+  <h1><img class="icon-img" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</h1>
   
   <div class="show-links">
       <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>

@@ -35,7 +35,7 @@
 
 @section('content')
 <div class="container">
-    <h1><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</h1>
+    <h1><img class="icon-img" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</h1>
     <div class="show-links">
         <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
     </div>

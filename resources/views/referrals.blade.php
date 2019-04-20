@@ -34,7 +34,7 @@
 
 @section('content')
 <div class="container">
-    <h1><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
+    <h1><img class="icon-img" src="{{asset('images/icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
     <div class="show-links">
         <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
         <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark"><img width="20px" src="{{asset('images/icons/63-512.png')}}" alt=""> 我的{{__('Recommends')}}</a>
