@@ -24,8 +24,8 @@
 
     if(!file_exists($loginQrPath)){
         QrCode::format('png')
-                    ->mergeString($avatarString,.18)
-                    ->size(300)
+                    ->mergeString($avatarString,.15)
+                    ->size(500)
                     ->margin(2)
                     ->generate($link, $loginQrPath);
     }
