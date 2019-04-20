@@ -303,9 +303,9 @@ class TeacherController extends Controller
                 ])->save();
             }else{
                 Session::flash('alert-danger', 'Payment has not been saved!');
+                // Session::flash('alert-danger-detail', 'Payment has not been saved!');
             }
         }
-        
         Session::flash('alert-success', __('Success'));
         return redirect()->route('teachers.index');
     }

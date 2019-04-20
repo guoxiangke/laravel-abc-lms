@@ -115,8 +115,8 @@
                 <div class="row alert alert-{{ $msg }} close-it">
                         <div class="col-sm-11  col-md-11 col-lg-11 col-xl-11 col-11">
                             {{ Session::get('alert-' . $msg) }}
-                            @if(session('alertDetail'))
-                                <pre class="alert-pre border bg-light p-2"><code>{{ session('alertDetail') }}</code></pre>
+                            @if(session('alert-' . $msg . '-detail'))
+                                <pre class="alert-pre border bg-light p-2"><code>{{ session('alert-' . $msg . '-detail') }}</code></pre>
                             @endif
                         </div>
                         <div class="col-sm-1  col-md-1 col-lg-1 col-xl-1 col-1">
