@@ -98,6 +98,13 @@ Route::group( ['middleware' => ['auth']], function() {
     Route::post('/classRecords/{classRecord}/exception/{id}','ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 
 
+    Route::get('/referrals', function () {
+        return view('referrals');
+    })->name('referrals');
+
+    Route::get('/autologin', function () {
+        return view('autologin');
+    })->name('autologin');
     
 });
 

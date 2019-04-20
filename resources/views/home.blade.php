@@ -11,9 +11,9 @@
     //}else{
     //    $avatar = $avatar->getPath();
     //}
-    $avatar = public_path('34-512.jpg');
+    $avatar = public_path('icons/51-512.jpg');
     $avatarString = file_get_contents($avatar);
-    $logoString = file_get_contents(public_path('1041_lock_security_locked_login-512.jpg'));
+    $logoString = file_get_contents(public_path('icons/34-512.jpg'));
 
 @endphp
 
@@ -61,7 +61,17 @@
                     @endhasanyrole
                     <div class="links-2">
                         @role('student')
-                            <a href="/class-records" class="btn btn-outline-dark">我的上课记录</a>
+                        <div>
+                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/37-512.png')}}" alt=""> 上课记录</a>
+                  
+                            <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> 推荐好友</a>
+
+
+                            <a href="{{ route('autologin') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
+
+
+                            <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="30px" src="{{asset('icons/34-01-256.png')}}" alt=""> 使用帮助</a>
+                        </div>
                         @endrole
 
 
@@ -87,26 +97,6 @@
                     </div>
                     <br>
                     <div class="row">
-                    @unlessrole('teacher')
-                        <div class="col-md-4 pt-5  text-center bg-light">
-                            <h5 class="display-5">微信好友推荐码</h5>
-                            <p class="lead">优惠政策请询问课程顾问</p>
-                            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                ->mergeString($avatarString,.2)
-                                ->size(300)
-                                ->margin(2)
-                                ->generate($link)) !!} "  width="260px" loading="lazy">
-                        </div>
-                        <div class="col-md-4 pt-5  text-center bg-light">
-                            <h5 class="display-5">微信登陆码</h5>
-                            <p class="lead">微信收藏，方便登陆</p>
-                            <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
-                                ->mergeString($logoString,.2)
-                                ->size(300)
-                                ->margin(2)
-                                ->generate($link)) !!} "  width="260px" loading="lazy">
-                        </div>
-                    @endhasanyrole
 
                     @hasanyrole('manager|admin')
                         <div class="col-md-4 pt-5  text-center bg-light">
