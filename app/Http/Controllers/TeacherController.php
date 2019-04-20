@@ -13,6 +13,7 @@ use App\Forms\Edit\TeacherForm as EditForm;
 use App\Forms\Register\TeacherRegisterForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Carbon\Carbon;
@@ -293,16 +294,19 @@ class TeacherController extends Controller
 
         //3. 中教必有 save payment
         if($request->input('pay_number') || $request->input('pay_remark')){
-            $paymethod->fill([
-                // 'user_id' => $user->id,
-                'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
-                'number' => $request->input('pay_number'),
-                'remark' => $request->input('pay_remark'),
-            ])->save();
-            // $paymethod = $user->paymethod()->save($paymethod);
+            if($paymethod){
+                $paymethod->fill([
+                    // 'user_id' => $user->id,
+                    'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                    'number' => $request->input('pay_number'),
+                    'remark' => $request->input('pay_remark'),
+                ])->save();
+            }else{
+                Session::flash('alert-danger', 'Payment has not been saved!');
+            }
         }
-
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        
+        Session::flash('alert-success', __('Success'));
         return redirect()->route('teachers.index');
     }
 
