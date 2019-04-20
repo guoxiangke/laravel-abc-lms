@@ -48,16 +48,16 @@
                     @role('student')
                         <div class="container">
                           <div class="row">
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2 mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6 mt-2">
                                 <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/37-512.png')}}" alt=""> 上课记录</a>
                             </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
-                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
-                            </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
                                 <a href="{{ route('autologin') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
                             </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
+                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
+                            </div>
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
                                 <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
                             </div>
                           </div>
@@ -68,16 +68,16 @@
                     @role('agency')
                         <div class="container">
                           <div class="row">
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2 mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6 mt-2">
                                 <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</a>
                             </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
-                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
-                            </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
                                 <a href="{{ route('autologin') }}" class="btn btn-success"><img width="25px" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
                             </div>
-                            <div class="col-sm-12  col-md-3 col-lg-3 col-xl-2  mt-1">
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
+                                <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
+                            </div>
+                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-2">
                                 <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-primary"><img width="25px" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
                             </div>
                           </div>
