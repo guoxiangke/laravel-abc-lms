@@ -15,7 +15,7 @@
     //$avatarString = file_get_contents($avatar);
     $logoString = file_get_contents(public_path('images/icons/34-512.jpg'));
 
-    $path = storage_path('app/public/loginqr');
+    $path = storage_path('app/public/loginqr/');
     if(!file_exists($path)){
         mkdir($path);
     }
