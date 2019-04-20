@@ -81,8 +81,9 @@
 
 
                         @role('agency')
-                            <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark">我的推荐</a>
-                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-outline-dark">{{__('ClassRecords')}}</a>
+                            <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</a>
+                            <a href="{{ route('referrals') }}" class="btn btn-primary"><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> 推荐好友</a>
+                            <a href="{{ route('autologin') }}" class="btn btn-success"><img width="30px" src="{{asset('icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
                         @endrole
 
                         @hasanyrole('student|agency|teacher')

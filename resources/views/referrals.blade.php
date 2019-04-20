@@ -37,6 +37,7 @@
     <h1><img width="30px" src="{{asset('icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
     <div class="show-links">
         <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+        <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark"><img width="20px" src="{{asset('icons/63-512.png')}}" alt=""> 我的{{__('Recommends')}}</a>
     </div>
 
     <div class="row justify-content-center">
