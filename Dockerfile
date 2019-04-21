@@ -46,6 +46,8 @@ RUN set -ex; \
     \
     apt-get update; \
     apt-get install -y --no-install-recommends \
+    # https://www.php.net/manual/en/zip.installation.php php7.0-zip
+        zlib1g-dev\
         libjpeg-dev \
         libpng-dev \
         libpq-dev \
@@ -70,6 +72,7 @@ RUN set -ex; \
         bcmath \
         opcache \
         pdo_mysql \
+        zip \
     ; \
     \
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
