@@ -7,7 +7,7 @@
 
     echo "scp root@134.209.0.164:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
 
-    docker-compose exec -T db mysqldump -ularavel -plaravel laravel > /tmp/$FILENAME
+    docker-compose exec -T db mysqldump -ularavel -plaravel laravel --extended-insert=FALSE --complete-insert=TRUE > /tmp/$FILENAME
 @endtask
 
 @task('deploy', ['on' => 'sfo2'])
