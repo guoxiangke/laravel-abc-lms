@@ -30,6 +30,7 @@
         "owen-it/laravel-auditing": "^9.0",
         "predis/predis": "^1.1",
         "realrashid/sweet-alert": "^1.1",
+        "sentry/sentry-laravel": "1.0.1",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "simplesoftwareio/simple-sms": "3.1.*",
         "simshaun/recurr": "^4.0",
