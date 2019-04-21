@@ -47,7 +47,6 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     # https://www.php.net/manual/en/zip.installation.php php7.0-zip
-        zlib1g-dev\
         libjpeg-dev \
         libpng-dev \
         libpq-dev \
@@ -57,6 +56,7 @@ RUN set -ex; \
             libmcrypt-dev \
             libfreetype6-dev \
             libmcrypt-dev \
+        libzip-dev\
     ; \
     \
     docker-php-ext-configure gd \
