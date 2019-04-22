@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
     window.onload = function () {
         $('.post-action').click(function(e){
           e.preventDefault();

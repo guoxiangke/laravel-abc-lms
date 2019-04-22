@@ -133,7 +133,6 @@
         </main>
     </div>
     @include('sweetalert::alert')
-    @yield('scripts')
     <script type="text/javascript">
         window.onload = function () {
             $('.close').on('click',function(){
@@ -142,5 +141,6 @@
             setTimeout(function(){ $('.close-it').slideUp('slowly')}, 5000);
         }
     </script>
+    @yield('scripts')
 </body>
 </html>
