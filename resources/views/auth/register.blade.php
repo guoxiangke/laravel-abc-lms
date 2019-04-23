@@ -62,7 +62,7 @@
                         <div class="form-group row">
                             <label for="telephone" class="required col-md-4 col-form-label text-md-right">{{ __('Telephone') }}</label>
                             <div class="col-md-6">
-                                <input id="telephone" type="tel" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone-ui" required autofocus placeholder="Your phone number" value="{{ old('telephone-ui') }}">
+                                <input id="telephone" type="tel" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone-ui" required autofocus value="{{ old('telephone-ui') }}">
 
                                 <input type="hidden" id="telephone-with-dial-code" name="telephone" required value="{{ old('telephone') }}"/>
                             </div>
@@ -116,7 +116,8 @@
 
 
                         <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Captcha') }}</label>
+                            <div class="col-md-6">
                                 <img 
                                     id="captcha"
                                     src="{{ captcha_src() }}" 
@@ -125,7 +126,7 @@
                                     border="0" 
                                     data-captcha-config="default"
                                 >
-                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus autocomplete="off" name="captcha" placeholder="{{ __('Captcha') }}" placeholder="Captcha">
+                                <input type="text" class="form-control{{ $errors->has('captcha') ? ' is-invalid' : '' }}" required autofocus autocomplete="off" name="captcha" placeholder="{{__('Addition Result')}}" placeholder="Captcha">
                             </div>
                             @if ($errors->has('captcha'))
                                 <span class="invalid-feedback" role="alert">
