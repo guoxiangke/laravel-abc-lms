@@ -1,4 +1,3 @@
-@guest
 <script type="text/javascript">
     window.onload = function () {
         $('#captcha').on('click',function(){
@@ -8,4 +7,3 @@
         });
     }
 </script>
-@endguest

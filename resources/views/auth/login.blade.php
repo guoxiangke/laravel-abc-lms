@@ -13,6 +13,17 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
+                        <div class="form-group row border-bottom">
+                            <div class="col-md-12  col-lg-8 pb-3 mx-auto">
+                                <a class="btn-block btn btn-lg btn-success" href="{{route('login.weixin')}}"><i class="fab fa-weixin fa-large"></i>
+                                    {{ __('Login with Wechat') }}
+                                </a>
+                                <a class="btn-block btn btn-lg btn-primary" href="{{route('login.facebook')}}"><i class="fab fa-facebook fa-large"></i>
+                                    {{ __('Login with Facebook') }}
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('LoginName') }}</label>
                             <div class="col-md-6">
@@ -70,32 +81,24 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <span class="form-check-label" for="remember">
+                                    <span class="form-check-label pr-4" for="remember">
                                         {{ __('Remember Me') }}
                                     </span>
+                                    <span>
+                                        @if (Route::has('password.request'))
+                                            <a class="inline" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
+                                </span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary" style="width: 50%">
+                        <div class="form-group row mb-0 mx-auto  pb-3">
+                            <button type="submit" class="btn btn-lg btn-primary col-md-12  col-lg-8 mx-auto" >
                                     {{ __('Login') }}
                                 </button>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                                <div class="mt-3">
-                                    <a class="btn-block btn btn-success" href="{{route('login.weixin')}}"><i class="fab fa-weixin fa-large"></i>
-                                        {{ __('Login with Wechat') }}
-                                    </a>
-                                    <a class="btn-block btn btn-primary" href="{{route('login.facebook')}}"><i class="fab fa-facebook fa-large"></i>
-                                        {{ __('Login with Facebook') }}
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -105,5 +108,9 @@
 </div>
 @endsection
 
-@include('captcha')
+@guest
+    @section('scripts')
+        @include('captcha')
+    @endsection
+@endguest
 

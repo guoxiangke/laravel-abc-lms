@@ -136,12 +136,10 @@
 
                         <input type="hidden" name="recommend_uid" required value="{{isset($uid)?$uid:1}}"/>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="form-group row mb-0  p-3">
+                            <button type="submit" class="btn btn-lg btn-primary col-md-9 col-lg-8 mx-auto">
                                     {{ __('Register') }}
-                                </button>
-                            </div>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -150,8 +148,6 @@
     </div>
 </div>
 @endsection
-
-@include('captcha')
 
 @section('styles')
 <link href="{{ asset('vendor/telephone-input/css/intlTelInput.min.css') }}" rel="stylesheet">
@@ -196,6 +192,13 @@
             $('#telephone-with-dial-code').val(
                 parseInt($('.selected-dial-code').html()) + $('#telephone').val()
             );
+        });
+
+
+        $('#captcha').on('click',function(){
+            var captcha = $(this);
+            var url = "/captcha/" + captcha.data('captcha-config') + '/?' + Math.random();
+            captcha.attr('src',url);
         });
 
     }
