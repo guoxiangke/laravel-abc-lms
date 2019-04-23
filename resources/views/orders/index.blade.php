@@ -20,11 +20,12 @@
                 <th scope="col">Student</th>
               	<th scope="col">Teacher</th>
               	<th scope="col">Agency</th>
-              	<th scope="col">Book</th>
                 <th scope="col">Price</th>
                 <th scope="col">Period</th>
                 <th scope="col">已上</th>
+                <th scope="col">Status</th>
                 <th scope="col">ExpireAt</th>
+                <th scope="col">标记动作</th>
               </tr>
             </thead>
             <tbody>
@@ -38,18 +39,23 @@
                       
                       <a href="{{ route('rrules.create', $order) }}" class="fas fa-calendar-times fa-lg" alt="创建计划" title="创建计划"></a>
 
-                      <a href="{{ route('rrules.show', $order) }}" class="fas fa-calendar-check fa-lg" alt="Plans" title="Plans"></a>
-
                       <a href="{{ route('orders.edit', $order->id) }}"  class="fas fa-edit fa-lg"></a>
                     </td>
                     <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
                     <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
                     <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
-                    <td data-label="Book">{{$order->book->name}}</td>
                     <td data-label="Price">{{$order->price}}</td>
                     <td data-label="Period">{{$order->period}}</td>
                     <td data-label="已上">{{$order->classDoneRecords()->count()}}</td>
-                    <td data-label="ExpireAt">{{$order->expired_at->format('y/m/d')}}</td>
+                    <td data-label="Book">{{App\Models\Order::STATUS[$order->status]}}</td>
+                    <td data-label="ExpireAt">{{$order->expired_at->format('Y.m.d')}}</td>
+                    <td data-label="操作">
+                      <a data-exception="0" title="标记作废" class="post-action btn btn-{{$order->status==0?'warning':'outline-danger'}} btn-sm" href="{{ route('orders.flagStatus',[$order->id, 0]) }}">作废</a>
+                      <a data-exception="1" title="标记正常" class="post-action btn btn-{{$order->status==1?'success':'outline-danger'}} btn-sm" href="{{ route('orders.flagStatus',[$order->id, 1]) }}">正常</a>
+                      <a data-exception="2" title="标记完成" class="post-action btn btn-{{$order->status==2?'warning':'outline-danger'}} btn-sm" href="{{ route('orders.flagStatus',[$order->id, 2]) }}">完成</a>
+                      <a data-exception="3" title="标记暂停" class="post-action btn btn-{{$order->status==3?'warning':'outline-danger'}} btn-sm" href="{{ route('orders.flagStatus',[$order->id, 3]) }}">暂停</a>
+                      <a data-exception="4" title="标记过期" class="post-action btn btn-{{$order->status==4?'warning':'outline-danger'}} btn-sm" href="{{ route('orders.flagStatus',[$order->id, 4]) }}">过期</a>
+                    </td>
                   </tr>
               @endforeach
             </tbody>
@@ -58,4 +64,62 @@
       {{ $orders->onEachSide(1)->links() }}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+    window.onload = function () {
+        $('.post-action').click(function(e){
+          e.preventDefault();
+          var msg = "This action cannot be undone, Are you sure to flag?";
+          var that = $(this);
+          if(!that.hasClass('btn-outline-danger')){
+            alert('{{__('NO Action on this status')}}');
+            return 0;
+          }
+
+          if (confirm(msg)) {
+            thisException = that.data('exception');
+            thisParent = that.parent('td');
+
+            var actions = that.parent('td');
+            // var nextType = that.data('type')=='aol'?'absent':'aol';
+            // var next = actions.find('a[data-type='+nextType+']');
+            var statusText = that.attr('label');
+            var target = actions.parent('tr').find('.exception');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+              url:that.attr('href'),
+              type:"POST",
+              success: function(data) {
+                if(data.success){
+                  target.text(statusText);
+                  that.removeClass('btn-outline-danger').addClass('btn-warning');
+                  if(thisException==1){
+                    that.removeClass('btn-warning').addClass('btn-success');
+                  }
+                  thisParent.find('.post-action').each(function(){
+                    thatException = $(this).data('exception');
+                    if(thisException != thatException){
+                      $(this).removeClass('btn-warning').addClass('btn-outline-danger');
+                      if(thatException==1){
+                        $(this).removeClass('btn-success');
+                      }
+                    }
+                  })
+                  @role('student')
+                  actions.text('--');
+                  @endrole
+                }
+              }
+            });
+          }
+        });
+    }
+</script>
+
 @endsection

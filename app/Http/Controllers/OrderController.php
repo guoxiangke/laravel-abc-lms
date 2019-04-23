@@ -273,4 +273,10 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function flagStatus(Request $request, Order $order, $status)
+    {
+        $order->status = $status;
+        return ['success'=>$order->save()];
+    } 
 }

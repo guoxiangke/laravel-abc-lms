@@ -97,6 +97,8 @@ Route::group( ['middleware' => ['auth']], function() {
     //老师/管理人员快速请假标记 ajax
     Route::post('/classRecords/{classRecord}/exception/{id}','ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 
+    Route::post('/order/{order}/status/{id}','OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
+
 
     Route::get('/referrals', function () {
         return view('referrals');
