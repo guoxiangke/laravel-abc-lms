@@ -42,6 +42,11 @@ class ClassRecordPolicy
         return $classRecord->teacher_uid == $user->id || $this->admin($user, $classRecord);
     }
 
+    public function delete(User $user, ClassRecord $classRecord)
+    {
+        return $this->admin($user, $classRecord);
+    }
+
     //学生可以请假
     public function aol(User $user, ClassRecord $classRecord)
     {

@@ -15,6 +15,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 
 class ClassRecordController extends Controller
@@ -159,6 +160,21 @@ class ClassRecordController extends Controller
         $this->authorize('view', $classRecord);
         return view('classRecords.show', compact('classRecord'));
     }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\ClassRecord  $classRecord
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(ClassRecord  $classRecord)
+    {
+        $classRecord->delete();
+        Session::flash('alert-success', '删除成功！');
+        return redirect()->route('classRecords.indexbyOrder', $classRecord->order_id);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

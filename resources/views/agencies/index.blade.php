@@ -9,6 +9,7 @@
 	<div class="show-links">
     	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
 		<a href="{{ route('agencies.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
+		<button class="btn btn-light">本页记录数量：{{count($agencies)}}</button>
 	</div>
 	
     <div class="row justify-content-center">

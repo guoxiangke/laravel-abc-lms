@@ -8,6 +8,7 @@
   
   <div class="show-links">
       <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+      <button class="btn btn-light">本页记录数量：{{count($classRecords)}}</button>
   </div>
   
   <div class="col-md-12 col-sm-12">
@@ -27,7 +28,7 @@
             <tbody>
               @foreach($classRecords as $key => $classRecord)
                   <tr id="{{$classRecord->id}}">
-                    <th scope="row">{{$key +1}}
+                    <th scope="row">
                       
                       <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">
                         Edit

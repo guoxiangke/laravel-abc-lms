@@ -22,6 +22,14 @@
       <a href="{{ route('classRecords.edit', $classRecord->id) }}" class="btn btn-warning">Edit</a>
       @endcan
 
+      @can('delete', $classRecord)
+      <div class="mt-3 mb-1">
+      {{ Form::open(['method' => 'DELETE', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
+          {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+      {{ Form::close() }}
+      </div>
+      @endcan
+
       @if(!$mp4)
         @role('teacher')
           <a class="btn btn-warning" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">!mp4 <i class="far fa-file-video fa-large"></i></a>
