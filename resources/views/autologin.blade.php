@@ -43,7 +43,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 
 
-            <div class="col-md-4 pt-5  text-center bg-light">
+            <div class="col-md-4 pt-5 text-center bg-light">
                 <h5 class="display-5">微信专属登陆码</h5>
                 <p class="lead">长按收藏，一键登陆</p>
                 <img src="{{$publicQrPath}}"  width="260px" loading="lazy">
