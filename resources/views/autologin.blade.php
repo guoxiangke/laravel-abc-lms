@@ -4,7 +4,7 @@
 
 @php 
     $user = Auth::user();
-    $link = route('register.recommend',['user'=>$user]);
+    $link = route('login.weixin');
     //$avatar = $user->getFirstMedia('avatar');
     //if(!$avatar){
     //    $avatar = public_path('favicon.gif');
@@ -20,7 +20,7 @@
         mkdir($path);
     }
     //$qrFileName = $user->id . '.png';
-    $qrFileName = 'default.png';
+    $qrFileName = 'default0424.png';
     $loginQrPath = $path . $qrFileName;
     $publicQrPath = asset('storage/loginqr/'.$qrFileName);
 
