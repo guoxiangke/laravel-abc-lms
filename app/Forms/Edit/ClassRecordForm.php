@@ -39,7 +39,13 @@ class ClassRecordForm extends Form
             ->add('teacher_uid', 'select', [
                 'label' => 'Teacher',
                 'choices' => $teachers,
-                'selected' => $classRecord->teacher->id,
+                'selected' => $classRecord->teacher_uid,
+                'empty_value' => '=== Select ==='
+            ])
+            ->add('agency_uid', 'select', [
+                'label' => 'Agency',
+                'choices' => $agencies,
+                'selected' => $classRecord->agency_uid,
                 'empty_value' => '=== Select ==='
             ])
             ->add('rrule_id', 'static', [
