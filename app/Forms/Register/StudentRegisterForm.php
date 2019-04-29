@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Agency;
 use App\Models\Book;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class StudentRegisterForm extends Form
 {
@@ -59,15 +60,22 @@ class StudentRegisterForm extends Form
                 ],
             ]);
             //如果是默认推荐人，给更改机会
-            if(auth()->user()->profiles->first()->recommend_uid === 1){
-                $this->add('recommend_telephone', 'tel', [
-                    'label' => '推荐人手机号',
-                    'help_block' => [
-                        'text' => '若无，可以留空',
-                        'tag' => 'small',
-                        'attr' => ['class' => 'form-text text-muted']
-                    ],
-                ]);
+            $user = Auth::user();
+            if($user){
+                $profile = $user->profiles->first();
+                if($profile){
+                    $recommendUid= $profile->recommend_uid;
+                    if($recommendUid === 1){
+                        $this->add('recommend_telephone', 'tel', [
+                            'label' => '推荐人手机号',
+                            'help_block' => [
+                                'text' => '若无，可以留空',
+                                'tag' => 'small',
+                                'attr' => ['class' => 'form-text text-muted']
+                            ],
+                        ]);
+                    }
+                }
             }
             $this->add('submit', 'submit', [
                 'label' => 'Save',
