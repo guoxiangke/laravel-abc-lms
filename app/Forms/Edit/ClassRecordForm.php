@@ -38,6 +38,7 @@ class ClassRecordForm extends Form
             ])
             ->add('teacher_uid', 'select', [
                 'label' => 'Teacher',
+                'rules' => 'required',
                 'choices' => $teachers,
                 'selected' => $classRecord->teacher_uid,
                 'empty_value' => '=== Select ==='

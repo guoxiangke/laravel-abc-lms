@@ -239,6 +239,10 @@ class ClassRecordController extends Controller
             $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at);//2019-04-09T06:00
             $data['generated_at'] = $generated_at;
         }
+        if(!$request->input('agency_uid')) {
+            unset($data['agency_uid']);
+        }
+
         $classRecord->fill($data)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
 
