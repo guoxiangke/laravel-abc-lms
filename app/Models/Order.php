@@ -134,11 +134,11 @@ class Order extends Model  implements AuditableContract
     */
     public function scopeActive($query)
     {
-        return $query->where('status', 1);
+        return $query->where('status', static::STATU_ACTIVE);
     }
     
     public function isActive(){
-        return $this->status == $this::STATU_ACTIVE;
+        return $this->status == static::STATU_ACTIVE;
     }
 
     /**
