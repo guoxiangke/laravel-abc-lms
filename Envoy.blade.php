@@ -30,3 +30,9 @@
           && chown www-data:www-data storage/app/"
 @endtask
 
+@task('cg', ['on' => 'sfo2'])
+    cd /root/html/lms-abc
+    docker-compose exec -T app bash -c "
+        php artisan classrecords:generate
+        "
+@endtask
