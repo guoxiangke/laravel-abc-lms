@@ -44,8 +44,17 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         $byDay = Carbon::now()->subDays($this->offset);//sub方便为过去的日期生成记录！！
         $todayClassTimes = $order->hasClass($byDay); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
-
-        Log::info('todayClassTimes', [$todayClassTimes]);
+        //标记完成如果 已经上课=订单PERIOD
+        if($order->period == $order->classDoneRecords()->count()){
+            Log::info(__CLASS__, [$order->title, $order->id, 'DoneOrder']);
+            $order->status = Order::STATU_COMPLETED;
+            $order->save();
+            return;
+        }
+        if(!$todayClassTimes){
+            Log::info(__CLASS__, [$order->title, $order->id, 'NoClassTodayOr']);
+            return;
+        }
         //2节课的情况 + 请假情况！！
         foreach ($order->schedules as $rrule) {
             if(in_array($rrule->start_at->format('H:i'), $todayClassTimes)){
@@ -61,12 +70,10 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                         'order_id' => $order->id,
                     ]);
 
-                    if($classRecord->wasRecentlyCreated){
-                        //todo more notication : XXX has class today!!!
-                        Log::info('ClassRecordsGenerateQueue', [$order->title]);
-                    }
+                    //todo more notication : XXX has class today!!!
+                    Log::info(__CLASS__, [$order->title, $order->id, $classRecord->wasRecentlyCreated?'wasRecentlyCreated':'NoRecentlyCreated', $classRecord->id]);
                 } catch (\Exception $e) {
-                    Log::info('ClassRecordsGenerateQueue', [$e->getMessage(), 'UniqueKeyException']);
+                    Log::error(__CLASS__, [$order->title, $e->getMessage()]);
                 }
             }
         }

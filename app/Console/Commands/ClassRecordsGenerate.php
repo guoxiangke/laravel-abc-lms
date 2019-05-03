@@ -13,7 +13,7 @@ class ClassRecordsGenerate extends Command
      *
      * @var string
      */
-    protected $signature = 'classrecords:generate';
+    protected $signature = 'classrecords:generate {offset?} {--order=}';
 
     /**
      * The console command description.
@@ -39,9 +39,17 @@ class ClassRecordsGenerate extends Command
      */
     public function handle()
     {
-        Order::active()
-            ->each(function (Order $order) {
-                ClassRecordsGenerateQueue::dispatch($order)->onQueue('high');
-            });
+        $offset = $this->argument('offset')??0;
+        $orderId = $this->option('order')??null;
+        $this->info('Generate ClassRecords for $order begin!');
+        if($orderId){
+            $order = Order::find($orderId);
+            ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
+        }else{
+            Order::active()
+                ->each(function (Order $order) use ($offset) {
+                    ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
+                });
+        }
     }
 }
