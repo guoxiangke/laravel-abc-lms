@@ -39,7 +39,7 @@ class ClassRecordPolicy
     //学生可以查看，但不能编辑
     public function edit(User $user, ClassRecord $classRecord)
     {
-        return $classRecord->teacher_uid == $user->id || $this->admin($user, $classRecord);
+        return $classRecord->teacher_uid == $user->id || $user->isAdmin();
     }
 
     public function delete(User $user, ClassRecord $classRecord)
