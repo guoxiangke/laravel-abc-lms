@@ -165,16 +165,17 @@ class LoginController extends Controller
             return view('socials.create', compact('form'));
         }else{
             $user = Auth::loginUsingId($userId, true);
-            $this->socialUpdate($userId, $type, $socialUser->avatar);
+            $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname?:$socialUser->name);
             return redirect('home');
         }
     }
 
-    public function socialUpdate($userId, $type, $avatar){
+    public function socialUpdate($userId, $type, $avatar, $nickname){
         $social = Social::where('user_id', $userId)
             ->where('type',  $type)
             ->firstOrFail();
         $social->avatar = $avatar;
+        $social->name = $nickname;
         return $social->save();
     }
 }

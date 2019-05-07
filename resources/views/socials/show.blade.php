@@ -8,7 +8,7 @@
             Type: {{ App\Models\Social::TYPES[$social->type] }} <br>
             Name: {{ $social->name }} <br>
             @if($social->avatar)
-                <img src="{{ $social->avatar }}" alt=""> <br>
+                <img src="{{ $social->avatar }}" alt="" width="35px;" > <br>
             @endif
 
             @can('delete', $social)
