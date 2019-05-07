@@ -21,6 +21,8 @@
             @endcan
             <hr>
           @endforeach
+          
+          {{ $socials->onEachSide(1)->links() }}
         </div>
     </div>
 </div>

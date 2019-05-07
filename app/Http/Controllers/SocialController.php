@@ -23,9 +23,9 @@ class SocialController extends Controller
     public function index()
     {
         if(Auth::user()->isAdmin()){
-            $socials = Social::all();
+            $socials = Social::paginate(50);
         }else{
-            $socials =  Social::where('user_id', Auth::id())->get();
+            $socials =  Social::where('user_id', Auth::id())->paginate(10);
         }
         
         return view('socials.index', compact('socials'));
