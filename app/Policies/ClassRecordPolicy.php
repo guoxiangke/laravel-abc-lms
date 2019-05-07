@@ -44,18 +44,12 @@ class ClassRecordPolicy
 
     public function delete(User $user, ClassRecord $classRecord)
     {
-        return $this->admin($user, $classRecord);
+        return $user->isAdmin();
     }
 
     //学生可以请假
     public function aol(User $user, ClassRecord $classRecord)
     {
         return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
-    }
-
-    public function admin(User $user, ClassRecord $classRecord){
-        return $user->isSuperuser()
-            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
-            ;
     }
 }

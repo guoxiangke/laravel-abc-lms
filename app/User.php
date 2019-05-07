@@ -15,6 +15,7 @@ use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Profile;
 use App\Models\PayMethod;
+use App\Models\Social;
 use Actuallymab\LaravelComment\CanComment;
 
 class User extends Authenticatable implements HasMedia
@@ -77,6 +78,10 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Profile::class);
     }
 
+    public function socials()
+    {
+        return $this->hasMany(Social::class);
+    }
 
     public function paymethod()
     {
@@ -118,6 +123,12 @@ class User extends Authenticatable implements HasMedia
     public function isSuperuser()
     {
         return $this->id == 1;
+    }
+
+    public function isAdmin()
+    {
+        return $this->isSuperuser()
+            || $this->hasAnyRole(self::MANAGER_ROLES);
     }
 
     //姓名转pinyin和english

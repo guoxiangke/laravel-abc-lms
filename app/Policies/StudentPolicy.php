@@ -34,9 +34,7 @@ class StudentPolicy
         //如果登陆用户没有 角色，则可以创建
         //如果登陆用户是代理，也可以创建一个吧？
         return !$user->hasRole('student')
-            || $user->isSuperuser()
-            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
-            ;
+            || $user->isAdmin();
     }
 
     /**

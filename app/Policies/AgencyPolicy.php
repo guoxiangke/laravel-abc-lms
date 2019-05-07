@@ -31,9 +31,7 @@ class AgencyPolicy
     public function create(User $user)
     {
         return !$user->hasRole('agency') 
-            || $user->isSuperuser()
-            || $user->hasAnyRole(User::MANAGER_ROLES) //开发人员和管理人员可以
-            ;
+            || $user->isAdmin();
     }
 
     /**

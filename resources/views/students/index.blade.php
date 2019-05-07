@@ -27,6 +27,7 @@
 						<th>登陆手机</th>
 						<th>QQ/Wechat</th>
 						<th>推荐人</th>
+						<th>微信绑定</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -44,6 +45,7 @@
 				      		//dd( $profile->toArray());
 
 				      		$contact = $profile->contacts->first();
+				      		$social = $student->user->socials->first();
 					      @endphp
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
@@ -57,6 +59,18 @@
 					      </td>
 					      <td data-label="推荐人">{{
 					      	$recommend ? $profile->recommend->name : '-' }}</td>
+					      <td>
+					      	@if($social)
+					      	{{$social->name}} 
+						      	@can('delete', $social)
+					              {{ Form::open(['method' => 'DELETE', 'route' => ['socials.destroy', $social->id]]) }}
+					                  {{ Form::submit(__('Unbind'), ['class' => 'btn btn-sm btn-delete btn-danger']) }}
+					              {{ Form::close() }}
+					            @endcan
+					      	@else
+					      	--
+					      	@endif
+					      </td>
 					      
 					    </tr>
 					@endforeach
@@ -67,4 +81,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    window.onload = function () {
+        $('.btn-delete').click(function(e){
+          e.preventDefault();
+          if (confirm('Are you sure?')) {
+              $(this).parent('form').submit();
+          }
+        });
+
+    }
+</script>
 @endsection

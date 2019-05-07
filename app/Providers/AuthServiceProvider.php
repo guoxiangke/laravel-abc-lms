@@ -13,6 +13,8 @@ use App\Policies\ClassRecordPolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\AgencyPolicy;
 use App\Policies\TeacherPolicy;
+use App\Models\Social;
+use App\Policies\SocialPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Student::class => StudentPolicy::class,
         Agency::class => AgencyPolicy::class,
         Teacher::class => TeacherPolicy::class,
+        Social::class => SocialPolicy::class,
     ];
 
     /**

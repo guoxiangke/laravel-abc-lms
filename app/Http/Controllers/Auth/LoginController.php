@@ -12,6 +12,7 @@ use App\Models\Social;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\SocialForm as CreateForm;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -104,7 +105,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('github')->redirect();
     }
 
@@ -115,7 +116,7 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('github')->user();
         return $this->bind($socialUser, Social::TYPE_GITHUB);
     }
@@ -123,33 +124,32 @@ class LoginController extends Controller
 
     public function redirectToFacebookProvider()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('facebook')->redirect();
     }
     
     public function handleFacebookProviderCallback()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
         $socialUser = Socialite::driver('facebook')->user();
         return $this->bind($socialUser, Social::TYPE_FACEBOOK);
     }
 
     public function redirectToWechatProvider()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
         return Socialite::driver('weixin')->redirect();
     }
 
 
     public function handleWechatProviderCallback()
     {
-        if(\Illuminate\Support\Facades\Auth::id()) return redirect('home');
+        if(Auth::id()) return redirect('home');
 
         $socialUser = Socialite::driver('weixin')->user();
         return $this->bind($socialUser, Social::TYPE_WECHAT);
     }
 
-    //@see SocialController->bind()
     public function bind($socialUser, $type){
         $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
         //bind
@@ -162,12 +162,19 @@ class LoginController extends Controller
                 ],
                 ['socialUser' => $socialUser, 'socialType' => $type],
             ); 
-            return view('social.create', compact('form'));
+            return view('socials.create', compact('form'));
         }else{
-            $user = \Illuminate\Support\Facades\Auth::loginUsingId($userId, true);
-            //todo 每次登陆都更新头像？
-            // WechatUserAvatarQueue::dispatch($user, $socialUser->avatar)->delay(now()->addSeconds(3));
+            $user = Auth::loginUsingId($userId, true);
+            $this->socialUpdate($userId, $type, $socialUser->avatar);
             return redirect('home');
         }
+    }
+
+    public function socialUpdate($userId, $type, $avatar){
+        $social = Social::where('user_id', $userId)
+            ->where('type',  $type)
+            ->firstOrFail();
+        $social->avatar = $avatar;
+        return $social->save();
     }
 }

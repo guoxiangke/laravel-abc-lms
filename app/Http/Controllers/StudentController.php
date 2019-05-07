@@ -45,6 +45,7 @@ class StudentController extends Controller
         $students = Student::with('user',
                 'user.profiles', 'user.profiles.contacts',
                 'user.profiles.recommend',
+                'user.socials',
             )//'user.paymethod', 
             ->orderBy('id','desc')
             ->paginate(100);

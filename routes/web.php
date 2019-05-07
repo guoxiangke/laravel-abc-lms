@@ -73,6 +73,8 @@ Route::group( ['middleware' => ['auth']], function() {
         'classRecords' => 'ClassRecordController',
 
         'rrules' => 'RruleController', //except create!!! create from order
+
+        'socials' => 'SocialController',
     ]);
     //覆盖create！！！
     Route::get('rrules/create/{order}','RruleController@create')->name('rrules.create');
@@ -107,6 +109,7 @@ Route::group( ['middleware' => ['auth']], function() {
     Route::get('/autologin', function () {
         return view('autologin');
     })->name('autologin');
+
     
 });
 

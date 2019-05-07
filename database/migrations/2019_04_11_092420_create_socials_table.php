@@ -18,6 +18,10 @@ class CreateSocialsTable extends Migration
             $table->string('social_id')->index();
             // ALTER TABLE `socials` CHANGE COLUMN `social_id` `social_id` VARCHAR(255);
             $table->unsignedBigInteger('user_id');
+            $table->string('name')->nullable();
+            // ALTER TABLE `socials` Add COLUMN `name` VARCHAR(255) DEFAULT NULL AFTER user_id;
+            // ALTER TABLE `socials` Add COLUMN `avatar` VARCHAR(255) DEFAULT NULL AFTER user_id;
+            $table->string('avatar')->nullable();
             $table->unsignedTinyInteger('type')->default(1);//1wechat 2facebook
             $table->timestamps();
 

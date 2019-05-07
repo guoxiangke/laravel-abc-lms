@@ -22,7 +22,13 @@ class SocialController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->isAdmin()){
+            $socials = Social::all();
+        }else{
+            $socials =  Social::where('user_id', Auth::id())->get();
+        }
+        
+        return view('socials.index', compact('socials'));
     }
 
     /**
@@ -85,7 +91,8 @@ class SocialController extends Controller
      */
     public function show(Social $social)
     {
-        //
+        $this->authorize('view', $social);
+        return view('socials.show', compact('social'));
     }
 
     /**
@@ -119,6 +126,12 @@ class SocialController extends Controller
      */
     public function destroy(Social $social)
     {
-        //
+        $this->authorize('delete', $social);
+        $social->delete();
+        alert()->toast(__('Unbind Success'), 'success', 'top-center')->autoClose(3000);
+        if(Auth::user()->isAdmin()){
+            return redirect('students');
+        }
+        return redirect('socials');
     }
 }
