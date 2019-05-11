@@ -23,7 +23,9 @@ class CreateAuditsTable extends Migration
             $table->text('new_values')->nullable();
             $table->text('url')->nullable();
             $table->ipAddress('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
+            $table->text('user_agent')->nullable();
+            // http://www.laravel-auditing.com/docs/5.0/audit-migration
+            // ALTER TABLE `audits` MODIFY `user_agent` TEXT ;
             $table->string('tags')->nullable();
             $table->timestamps();
 			
