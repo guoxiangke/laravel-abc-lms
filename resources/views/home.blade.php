@@ -32,6 +32,7 @@
                             <a class="p-2 text-muted" href="/products">{{__('Products')}}</a>
                             <a class="p-2 text-muted" href="/rrules">{{__('Rrules')}}</a>
                             <a class="p-2 text-muted" href="/classRecords">{{__('ClassRecords')}}</a>
+                            <a class="p-2 text-muted" href="/profiles">{{__('Profiles')}}</a>
                         </nav>
                       </div>
                     @role('admin')

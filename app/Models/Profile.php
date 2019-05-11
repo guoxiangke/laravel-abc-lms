@@ -65,4 +65,10 @@ class Profile extends Model implements AuditableContract
     {
         return $this->hasOne(Agency::class, 'user_id', 'user_id');
     }
+
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

@@ -75,6 +75,7 @@ Route::group( ['middleware' => ['auth']], function() {
         'rrules' => 'RruleController', //except create!!! create from order
 
         'socials' => 'SocialController',
+        'profiles' => 'ProfileController',
     ]);
     //覆盖create！！！
     Route::get('rrules/create/{order}','RruleController@create')->name('rrules.create');
