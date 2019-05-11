@@ -46,27 +46,7 @@
                     @endrole
                     @endhasanyrole
 
-                    @role('student')
-                        <div class="container">
-                          <div class="row">
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6 mt-4">
-                                <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-lg btn-success"><img class="icon-img" src="{{asset('images/icons/37-512.png')}}" alt=""> 上课记录</a>
-                            </div>
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
-                                <a href="{{ route('autologin') }}" class="btn btn-lg btn-success"><img class="icon-img" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
-                            </div>
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
-                                <a href="{{ route('referrals') }}" class="btn btn-lg btn-primary"><img class="icon-img" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
-                            </div>
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
-                                <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-lg btn-primary"><img class="icon-img" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
-                            </div>
-                          </div>
-                        </div>
-                    @endrole
-
-
-                    @role('agency')
+                    @hasanyrole('agency|student')
                         <div class="container">
                           <div class="row">
                             <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6 mt-4">

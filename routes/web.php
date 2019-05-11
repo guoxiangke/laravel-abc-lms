@@ -77,6 +77,9 @@ Route::group( ['middleware' => ['auth']], function() {
         'socials' => 'SocialController',
         'profiles' => 'ProfileController',
     ]);
+    //升级学生用户为代理用户
+    Route::get('agencies/upgrade/{user}','AgencyController@upgrade')->name('agencies.upgrade');
+    Route::post('agencies/upgrade/{user}','AgencyController@upgradeStore')->name('agencies.upgradeStore');
     //覆盖create！！！
     Route::get('rrules/create/{order}','RruleController@create')->name('rrules.create');
 

@@ -139,6 +139,15 @@
                 $(this).parents('.close-it').slideUp('slowly');
             });
             setTimeout(function(){ $('.close-it').slideUp('slowly')}, 5000);
+
+            
+            $('.btn-confirm').click(function(e){
+              e.preventDefault();
+              if (confirm('Are you sure?')) {
+                  $(this).parent('form').submit();
+              }
+            });
+
         }
     </script>
     @yield('scripts')

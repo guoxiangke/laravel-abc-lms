@@ -35,7 +35,7 @@
 					    <tr id={{$student->id}}>
 					      <th scope="row" data-label="Id">
 					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
-					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">所有上课记录</a>
+					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
 					  </th>
 					      @php
 					      	$profile = $student->user->profiles->first();
@@ -59,12 +59,12 @@
 					      </td>
 					      <td data-label="推荐人">{{
 					      	$recommend ? $profile->recommend->name : '-' }}</td>
-					      <td>
+					      <td data-label="action">
 					      	@if($social)
 					      	{{$social->name}} 
 						      	@can('delete', $social)
 					              {{ Form::open(['method' => 'DELETE', 'route' => ['socials.destroy', $social->id]]) }}
-					                  {{ Form::submit(__('Unbind'), ['class' => 'btn btn-sm btn-delete btn-danger']) }}
+					                  {{ Form::submit(__('Unbind'), ['class' => 'btn btn-sm btn-delete btn-outline-danger']) }}
 					              {{ Form::close() }}
 					            @endcan
 					      	@else

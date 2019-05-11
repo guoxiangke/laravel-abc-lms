@@ -16,6 +16,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 use App\Forms\AgencyForm as CreateForm;
 use App\Forms\Edit\AgencyForm as EditForm;
+use App\Forms\AgencyUpgradeForm as UpgradeForm;
 
 use App\Forms\Register\AgencyRegisterForm;
 use Carbon\Carbon;
@@ -174,24 +175,14 @@ class AgencyController extends Controller
         return redirect()->route('agencies.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\agency  $agency
-     * @return \Illuminate\Http\Response
-     */
-    public function show(agency $agency)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Agency  $agency
      * @return \Illuminate\Http\Response
      */
-    public function edit(agency $agency)
+    public function edit(Agency $agency)
     {
         $form = $this->form(
             EditForm::class, 
@@ -208,7 +199,7 @@ class AgencyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\agency  $agency
+     * @param  \App\Models\Agency  $agency
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, agency $agency, FormBuilder $formBuilder)
@@ -281,14 +272,45 @@ class AgencyController extends Controller
         return redirect()->route('agencies.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\agency  $agency
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(agency $agency)
+    public function upgrade(User $user)
     {
-        //
+        $form = $this->form(
+            UpgradeForm::class, 
+            [
+                'method' => 'POST',
+                'url' => action('AgencyController@upgradeStore', $user)
+            ],
+            ['entity' => $user],
+        ); 
+        return view('agencies.upgrade', compact('form'));
     }
+
+    public function upgradeStore(Request $request, User $user, FormBuilder $formBuilder)
+    {
+        $form = $this->form(UpgradeForm::class);
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $user->assignRole(User::ROLES['agency']);
+
+        $agency = Agency::firstOrNew([
+            'user_id' => $user->id
+        ]);
+
+        $agency->fill($request->except('user_id'))->save();
+
+        //3. 必有 save payment
+        $paymethod = PayMethod::create([
+            'user_id' => $user->id,
+            'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'number' => $request->input('pay_number'),
+            'remark' => $request->input('pay_remark'),
+        ]);
+        // $paymethod = $user->paymethod()->save($paymethod);
+        alert()->toast(__('Upgrade Success'), 'success', 'top-center')->autoClose(3000);
+
+        return redirect()->route('agencies.index');
+    }
+    
 }

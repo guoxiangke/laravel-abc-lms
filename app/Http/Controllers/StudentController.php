@@ -268,7 +268,7 @@ class StudentController extends Controller
             ],
             ['entity' => $student],
         ); 
-        return view('students.edit', compact('form'));
+        return view('students.edit', compact('form','student'));
     }
 
     /**

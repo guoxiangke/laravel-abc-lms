@@ -18,7 +18,7 @@
     @can('delete', $classRecord)
       <div class="mt-3  mb-1">
       {{ Form::open(['method' => 'DELETE', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
-          {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
+          {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-confirm btn-danger']) }}
       {{ Form::close() }}
       </div>
     @endcan
@@ -30,18 +30,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    window.onload = function () {
-        $('.btn-delete').click(function(e){
-          e.preventDefault();
-          if (confirm('Are you sure?')) {
-              $(this).parent('form').submit();
-          }
-        });
-
-    }
-</script>
 @endsection
