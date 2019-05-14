@@ -76,6 +76,7 @@ Route::group( ['middleware' => ['auth']], function() {
 
         'socials' => 'SocialController',
         'profiles' => 'ProfileController',
+        'bills' => 'BillController',
     ]);
     //升级学生用户为代理用户
     Route::get('agencies/upgrade/{user}','AgencyController@upgrade')->name('agencies.upgrade');
