@@ -50,7 +50,7 @@ class BillForm extends Form
                 'selected' => $bill->paymethod_type,
             ])
             ->add('status', 'checkbox', [
-                'value' => 0,
+                'value' => 1,
                 'label' => '已入/出账',
                 'checked' => $bill->status,
                 'help_block' => [

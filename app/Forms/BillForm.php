@@ -45,7 +45,7 @@ class BillForm extends Form
                 'selected' => 1,
             ])
             ->add('status', 'checkbox', [
-                'value' => 0,
+                'value' => 1,
                 'label' => '已入/出账',
                 'checked' => false,
                 'help_block' => [

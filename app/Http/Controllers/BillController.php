@@ -60,8 +60,10 @@ class BillController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $book = new Bill;
-        $book->fill($request->all())->save();
+        $bill = new Bill;
+        $postData = $request->all();
+        $postData['status'] = $request->input('status')?:0;
+        $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('bills.index');
     }
@@ -112,7 +114,9 @@ class BillController extends Controller
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        $bill->fill($request->all())->save();
+        $postData = $request->all();
+        $postData['status'] = $request->input('status')?:0;
+        $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('bills.index');
     }
