@@ -170,7 +170,6 @@ return [
         \SocialiteProviders\Manager\ServiceProvider::class,
         JellyBool\Flysystem\Upyun\UpyunServiceProvider::class,
         // Overtrue\LaravelPinyin\ServiceProvider::class,
-        SimpleSoftwareIO\SMS\SMSServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -236,7 +235,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
         'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
-        'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class,
     ],
 
 ];

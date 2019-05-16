@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fb6affcf29c38e729d6620f7a8a7f1f",
+    "content-hash": "b0d28f0faeb1126cb3c4e299e631a505",
     "packages": [
         {
             "name": "actuallymab/laravel-comment",
@@ -66,16 +66,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.93.7",
+            "version": "3.93.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "41fe205dae433d5cd7a48a4117d37a43a44ed0d2"
+                "reference": "6ecd66087eb928b75ab1f645e57c85f597fd6548"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/41fe205dae433d5cd7a48a4117d37a43a44ed0d2",
-                "reference": "41fe205dae433d5cd7a48a4117d37a43a44ed0d2",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6ecd66087eb928b75ab1f645e57c85f597fd6548",
+                "reference": "6ecd66087eb928b75ab1f645e57c85f597fd6548",
                 "shasum": ""
             },
             "require": {
@@ -145,7 +145,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-05-10T18:13:26+00:00"
+            "time": "2019-05-15T18:08:48+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1392,16 +1392,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.16",
+            "version": "v5.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "83d57f9f9162ab476c43b9ec00d463ff12c578fd"
+                "reference": "33c04dd2a431adeeb49926a4f2b20590cc033ca2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/83d57f9f9162ab476c43b9ec00d463ff12c578fd",
-                "reference": "83d57f9f9162ab476c43b9ec00d463ff12c578fd",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/33c04dd2a431adeeb49926a4f2b20590cc033ca2",
+                "reference": "33c04dd2a431adeeb49926a4f2b20590cc033ca2",
                 "shasum": ""
             },
             "require": {
@@ -1535,7 +1535,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-05-07T14:37:11+00:00"
+            "time": "2019-05-14T16:02:41+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -3737,54 +3737,6 @@
             "time": "2015-07-25T16:39:46+00:00"
         },
         {
-            "name": "plivo/plivo-php",
-            "version": "v1.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/plivo/plivo-php.git",
-                "reference": "5d3417f654d8b59b64707661f2c202f32a554783"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/plivo/plivo-php/zipball/5d3417f654d8b59b64707661f2c202f32a554783",
-                "reference": "5d3417f654d8b59b64707661f2c202f32a554783",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "plivo.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Radu Topala",
-                    "email": "radu.topala@trisoft.ro"
-                },
-                {
-                    "name": "Adam Homsi",
-                    "email": "adam.homsi@gmail.com"
-                },
-                {
-                    "name": "Plivo Team",
-                    "email": "hello@plivo.com"
-                },
-                {
-                    "name": "Ben McInturff",
-                    "email": "benmcinturff@gmail.com"
-                }
-            ],
-            "description": "Plivo PHP helper library to access PlivoCloud API and generate Plivo XML",
-            "time": "2017-04-25T07:35:31+00:00"
-        },
-        {
             "name": "predis/predis",
             "version": "v1.1.1",
             "source": {
@@ -4633,72 +4585,6 @@
             "time": "2017-11-26T15:27:12+00:00"
         },
         {
-            "name": "simplesoftwareio/simple-sms",
-            "version": "3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SimpleSoftwareIO/simple-sms.git",
-                "reference": "93e7feb7a1f76634b49247bb5849f06a879a3fb4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SimpleSoftwareIO/simple-sms/zipball/93e7feb7a1f76634b49247bb5849f06a879a3fb4",
-                "reference": "93e7feb7a1f76634b49247bb5849f06a879a3fb4",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6",
-                "illuminate/log": ">=5.0.0",
-                "illuminate/mail": ">=5.0.0",
-                "illuminate/queue": ">=5.0.0",
-                "illuminate/support": ">=5.0.0",
-                "illuminate/view": ">=5.0.0",
-                "php": ">=7.0.0",
-                "plivo/plivo-php": "^1.0",
-                "twilio/sdk": "~4"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SimpleSoftwareIO\\SMS\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Simple Software LLC",
-                    "email": "support@simplesoftware.io"
-                }
-            ],
-            "description": "Simple-SMS is a package made for Laravel to send/receive (polling/pushing) text messages.  Currently supports CalLFire, EZTexting, Email Gateways, FlowRoute, LabsMobile, Mozeo, Nexmo, Plivo, Twilio, and Zenvia",
-            "homepage": "http://www.simplesoftware.io",
-            "keywords": [
-                "FlowRoute",
-                "SMS Email Gateways",
-                "callfire",
-                "eztexting",
-                "labsmobile",
-                "laravel",
-                "mozeo",
-                "nexmo",
-                "plivo",
-                "receive",
-                "send",
-                "sms",
-                "text messages",
-                "twilio",
-                "zenvia"
-            ],
-            "time": "2017-03-19T22:12:45+00:00"
-        },
-        {
             "name": "simshaun/recurr",
             "version": "v4.0",
             "source": {
@@ -4936,16 +4822,16 @@
         },
         {
             "name": "spatie/image",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "04fc75fc203d5aa944f3c667d5b55f2203c9d64f"
+                "reference": "61fa48fa4cb85eda4ef4f8f20b1c27edd9d38e85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/04fc75fc203d5aa944f3c667d5b55f2203c9d64f",
-                "reference": "04fc75fc203d5aa944f3c667d5b55f2203c9d64f",
+                "url": "https://api.github.com/repos/spatie/image/zipball/61fa48fa4cb85eda4ef4f8f20b1c27edd9d38e85",
+                "reference": "61fa48fa4cb85eda4ef4f8f20b1c27edd9d38e85",
                 "shasum": ""
             },
             "require": {
@@ -4985,7 +4871,7 @@
                 "image",
                 "spatie"
             ],
-            "time": "2019-04-17T06:45:22+00:00"
+            "time": "2019-05-13T11:38:22+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -6648,56 +6534,6 @@
                 "repository pattern"
             ],
             "time": "2018-12-17T16:40:48+00:00"
-        },
-        {
-            "name": "twilio/sdk",
-            "version": "4.12.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "0a88c48262fbee1c3841f721f46439d3de450b95"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/0a88c48262fbee1c3841f721f46439d3de450b95",
-                "reference": "0a88c48262fbee1c3841f721f46439d3de450b95",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.1"
-            },
-            "require-dev": {
-                "mockery/mockery": ">=0.7.2",
-                "phpunit/phpunit": "4.5.*"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "Services/Twilio.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Burke",
-                    "email": "kevin@twilio.com"
-                },
-                {
-                    "name": "Kyle Conroy",
-                    "email": "kyle+pear@twilio.com"
-                }
-            ],
-            "description": "A PHP wrapper for Twilio's API",
-            "homepage": "http://github.com/twilio/twilio-php",
-            "keywords": [
-                "api",
-                "sms",
-                "twilio"
-            ],
-            "time": "2017-11-17T22:59:03+00:00"
         },
         {
             "name": "upyun/sdk",
@@ -8963,16 +8799,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.10",
+            "version": "7.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d7d9cee051d03ed98df6023aad93f7902731a780"
+                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d7d9cee051d03ed98df6023aad93f7902731a780",
-                "reference": "d7d9cee051d03ed98df6023aad93f7902731a780",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/64cb33f5b520da490a7b13149d39b43cf3c890c6",
+                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6",
                 "shasum": ""
             },
             "require": {
@@ -9043,7 +8879,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-05-09T05:06:47+00:00"
+            "time": "2019-05-14T04:53:02+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
