@@ -34,7 +34,7 @@ class BirthdayNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return [WechatChannel::class];//, 'mail', 'database'
+        return [WechatChannel::class, 'mail', 'database'];
     }
 
     /**
