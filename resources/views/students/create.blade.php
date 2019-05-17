@@ -17,3 +17,6 @@
     </div>
 </div>
 @endsection
+
+@include('layouts.chosen')
+

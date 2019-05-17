@@ -140,4 +140,14 @@ class User extends Authenticatable implements HasMedia
         }
         return $name;
     }
+
+    public function routeNotificationForWechat($notification)
+    {
+        $openId = 'oTjEws-8eAAUqgR4q_ns7pbd0zN8';
+        $social = $this->socials->first();
+        if($social && $social->type == Social::TYPE_WECHAT){
+            $openId = $social->social_id;
+        }
+        return $openId;
+    }
 }
