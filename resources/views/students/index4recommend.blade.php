@@ -29,7 +29,7 @@
 						@if($profile->student)
 					      <th scope="row" data-label="Id"><a href="{{ route('classRecords.indexbyStudent', $profile->student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课情况</a></th>
 						@else
-							<th>暂无报名，请保持跟进<br>
+							<th>暂无试听，请保持跟进<br>
 								手机：{{$profile->telephone}} <br>
 								扫码日期：{{$profile->created_at->format('Y.m.d')}} 
 							</th>
