@@ -18,9 +18,9 @@
 				  <thead>
 				    <tr>
 				    	<th>#</th>
-						<th>Name</th>
-						<th>Sex</th>
-						<th>Birthday</th>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>生日</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -29,7 +29,10 @@
 						@if($profile->student)
 					      <th scope="row" data-label="Id"><a href="{{ route('classRecords.indexbyStudent', $profile->student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课情况</a></th>
 						@else
-							<th> -- </th>
+							<th>暂无报名，请保持跟进<br>
+								手机：{{$profile->telephone}} <br>
+								扫码日期：{{$profile->created_at->format('Y.m.d')}} 
+							</th>
 						@endif
 
 					      @php
@@ -38,7 +41,7 @@
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">
-					      	{{$birthday?$birthday->format('m/d'):'-'}}
+					      	{{$birthday?$birthday->format('m-d'):'-'}}
 					      </td>
 					      
 					    </tr>

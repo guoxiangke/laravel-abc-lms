@@ -22,9 +22,9 @@ class ProfileController extends Controller
     public function index()
     {
         if(Auth::user()->isAdmin()){
-            $profiles = Profile::with('recommend')->paginate(50);
+            $profiles = Profile::with('recommend')->orderBy('id','desc')->paginate(50);
         }else{
-            $profiles =  Profile::with('recommend')->where('user_id', Auth::id())->paginate(10);
+            $profiles =  Profile::with('recommend')->orderBy('id','desc')->where('user_id', Auth::id())->paginate(10);
         }
         
         return view('profiles.index', compact('profiles'));

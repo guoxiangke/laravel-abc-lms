@@ -20,6 +20,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Student</th>
                 <th scope="col">Teacher</th>
+                <th scope="col">Agency</th>
                 <th scope="col">Class Time</th>
                 <th scope="col" class="d-none">exception</th>
                 <th scope="col">Flag</th>
@@ -45,6 +46,7 @@
                     </td>
                     <td data-label="Student">{{$classRecord->user->profiles->first()->name}}</td>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
+                    <td data-label="agency">{{$classRecord->agency->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m/d H:i 周N')}}</td>
                     <td data-label="exception"  class="exception d-none">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}
                     </td>
