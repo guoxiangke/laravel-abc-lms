@@ -85,7 +85,7 @@ class BirthdayNotification extends Notification implements ShouldQueue
         ];
 
         return WechatMessage::create()
-            ->to('oTjEws-8eAAUqgR4q_ns7pbd0zN8')
+            // ->to('oTjEws-8eAAUqgR4q_ns7pbd0zN8')
             ->template("BXQvCd7W_jE83WXR6nMNMXxoEM0Mgz0EUwqBGQ_ebKI")
             ->url('http://github.com/yansongda')
             ->data($data);

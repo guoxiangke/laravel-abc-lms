@@ -24,6 +24,7 @@ class User extends Authenticatable implements HasMedia
     use HasRoles;
     use HasMediaTrait;
     use CanComment;
+    use \HighIdeas\UsersOnline\Traits\UsersOnlineTrait;
 
     public function registerMediaCollections()
     {

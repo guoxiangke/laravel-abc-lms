@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0d28f0faeb1126cb3c4e299e631a505",
+    "content-hash": "ee7ee2b18acc0261626b38e9b2536886",
     "packages": [
         {
             "name": "actuallymab/laravel-comment",
@@ -66,16 +66,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.93.10",
+            "version": "3.93.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "6ecd66087eb928b75ab1f645e57c85f597fd6548"
+                "reference": "c9f4cfeb46ce9842d6e7d3692425b7cb1449d573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6ecd66087eb928b75ab1f645e57c85f597fd6548",
-                "reference": "6ecd66087eb928b75ab1f645e57c85f597fd6548",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c9f4cfeb46ce9842d6e7d3692425b7cb1449d573",
+                "reference": "c9f4cfeb46ce9842d6e7d3692425b7cb1449d573",
                 "shasum": ""
             },
             "require": {
@@ -145,7 +145,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-05-15T18:08:48+00:00"
+            "time": "2019-05-16T18:45:30+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1058,6 +1058,69 @@
                 "url"
             ],
             "time": "2018-12-04T20:46:45+00:00"
+        },
+        {
+            "name": "highideas/laravel-users-online",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/highideas/laravel-users-online.git",
+                "reference": "92f9e28abbc5c234e0aa229d1759142e0df67576"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/highideas/laravel-users-online/zipball/92f9e28abbc5c234e0aa229d1759142e0df67576",
+                "reference": "92f9e28abbc5c234e0aa229d1759142e0df67576",
+                "shasum": ""
+            },
+            "require-dev": {
+                "codacy/coverage": "dev-master",
+                "illuminate/auth": "^5.8",
+                "illuminate/cache": "^5.8",
+                "illuminate/database": "^5.8",
+                "illuminate/session": "^5.8",
+                "illuminate/support": "^5.8",
+                "orchestra/testbench": "~3.8",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "HighIdeas\\UsersOnline\\Providers\\UsersOnlineEventServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HighIdeas\\UsersOnline\\": "src/",
+                    "HighIdeas\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Goncalves",
+                    "email": "gabrielll_07@hotmail.com",
+                    "homepage": "http://gabrieldeveloper.com.br",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Marco Araujo",
+                    "email": "marco.araujo.junior@gmail.com",
+                    "homepage": "http://marcojunior.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package will provide an online users management.",
+            "keywords": [
+                "Users",
+                "laravel"
+            ],
+            "time": "2019-05-13T20:58:54+00:00"
         },
         {
             "name": "intervention/image",
@@ -2558,16 +2621,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.17.1",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066"
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/96acbc0c03782e8115156dd4dd8b736267155066",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8322b7bd1805be31867c13bf3cdaab948a0dd406",
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406",
                 "shasum": ""
             },
             "require": {
@@ -2614,7 +2677,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-04-27T18:04:27+00:00"
+            "time": "2019-05-16T18:44:35+00:00"
         },
         {
             "name": "nicolasbeauvais/flysystem-onedrive",

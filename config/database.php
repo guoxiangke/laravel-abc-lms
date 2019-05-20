@@ -140,6 +140,13 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
         ],
+        // https://learnku.com/laravel/t/2466/laravel-configuration-under-the-redis-so-that-the-cache-session-each-use-a-different-redis-database
+        'session' => [
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => env('REDIS_CACHE_DB', 1),
+        ],
 
     ],
 

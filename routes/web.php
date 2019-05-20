@@ -115,9 +115,12 @@ Route::group( ['middleware' => ['auth']], function() {
         return view('autologin');
     })->name('autologin');
 
+
+    Route::get('charts','ChartController@index');
     
 });
 
+Route::any('botman', 'BotmanController@handle')->name('botman');
 // GET	/photos	index	photos.index
 // GET	/photos/create	create	photos.create
 // POST	/photos	store	photos.store

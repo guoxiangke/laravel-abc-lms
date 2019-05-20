@@ -44,6 +44,21 @@
                             <a class="p-2 text-muted" href="/permissions">{{__('Permissions')}}</a>
                         </nav>
                     </div>
+
+                    <div class="nav-scroller py-1 mb-2">
+                        <h5>Online Users</h5>
+                        <nav class="nav d-flex justify-content">
+                            @php
+                                $users = new App\User;
+                                $users = $users->leastRecentOnline();
+                            @endphp
+                            <ul>
+                            @foreach($users as $tmpUser)
+                               <li><a class="p-2 text-muted" href="/dev/su/{{$tmpUser->id}}">{{ $tmpUser->name }}</a></li>
+                            @endforeach
+                            </ul>
+                        </nav>
+                    </div>
                     @endrole
                     @endhasanyrole
 
