@@ -101,7 +101,7 @@
                   <source src="{{$mp4}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-            </div>
+              </div>
             </div>
               <a href="#" data-speed="1" class="play-speed btn btn-outline-dark"><i class="fas fa-play fa-large"></i> 1X</a>
               <a href="#" data-speed="1.5" class="play-speed btn btn-outline-dark"><i class="fas fa-step-forward fa-large"></i> 1.5X</a>
@@ -115,6 +115,14 @@
                 <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
             @endrole
           @endif
+
+        <hr>
+        <div class="comment">
+          @comments(['model' => $classRecord])
+          @endcomments
+        </div>
+
+
         </div>
     </div>
 </div>

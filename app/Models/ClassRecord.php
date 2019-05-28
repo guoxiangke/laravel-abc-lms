@@ -11,19 +11,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-use Actuallymab\LaravelComment\Contracts\Commentable;
-use Actuallymab\LaravelComment\HasComments;
-
+use Laravelista\Comments\Commentable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Support\Facades\Storage;
 
 
-class ClassRecord extends Model implements AuditableContract, HasMedia, Commentable
+class ClassRecord extends Model implements AuditableContract, HasMedia
 {
 	use SoftDeletes;
 	use Auditable;
-    use HasComments;
+    use Commentable;
     use HasMediaTrait;
 
     const DISK = 'spaces';//ClassRecord::DISK upyun
