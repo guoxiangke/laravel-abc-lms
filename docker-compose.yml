@@ -28,14 +28,14 @@ services:
   # Nginx Service
   nginx:
     image: nginx:alpine
-    container_name: webserver
+    container_name: abc-webserver
     restart: unless-stopped
     volumes:
       - app_code:/var/www/html/
       - ./docker/nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
-      VIRTUAL_HOST: lms2.abc-chinaedu.com,lms.daxiangyingyu.com
-      LETSENCRYPT_HOST: lms2.abc-chinaedu.com,lms.daxiangyingyu.com
+      VIRTUAL_HOST: lms.abc-chinaedu.com,lms.daxiangyingyu.com
+      LETSENCRYPT_HOST: lms.abc-chinaedu.com,lms.daxiangyingyu.com
       LETSENCRYPT_EMAIL: dale.tel@139.com
     networks:
       - overlay
