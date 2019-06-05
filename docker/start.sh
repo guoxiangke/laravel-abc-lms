@@ -23,8 +23,8 @@ if [ "$role" = "app" ]; then
 fi
 
 if [ "$role" = "app" ]; then
-
-    exec apache2-foreground
+    exec php-fpm
+    # exec apache2-foreground
 
 elif [ "$role" = "queue" ]; then
 
