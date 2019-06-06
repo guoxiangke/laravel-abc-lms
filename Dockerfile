@@ -83,8 +83,8 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 
 RUN touch /var/www/html/storage/logs/laravel.log \
   && chmod -R 777 /var/www/html/storage/logs/ -R \
-  && mkdir -p /var/www/html/storage/app/public/loginqr -R \
-  && mkdir -p /var/www/html/storage/app/public/referrals -R \
+  && mkdir -p /var/www/html/storage/app/public/loginqr \
+  && mkdir -p /var/www/html/storage/app/public/referrals \
   && chmod www-data:www-data /var/www/html/storage/app/public/ -R
   
 CMD ["/usr/local/bin/start"]
