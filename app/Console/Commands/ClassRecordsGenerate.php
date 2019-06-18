@@ -41,7 +41,7 @@ class ClassRecordsGenerate extends Command
     {
         $offset = $this->argument('offset')??0;
         $orderId = $this->option('order')??null;
-        $this->info('Generate ClassRecords for $order begin!');
+        $this->info("Generate ClassRecords for $orderId begin!");
         if($orderId){
             $order = Order::find($orderId);
             ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');

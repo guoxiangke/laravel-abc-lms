@@ -42,14 +42,22 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         
         //找出今天/昨天需要上的2节课 的时间H:i
         $byDay = Carbon::now()->subDays($this->offset);//sub方便为过去的日期生成记录！！
+        Log::info(__CLASS__, [$order->title, $order->id, $byDay,'info']);
         $todayClassTimes = $order->hasClass($byDay); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
         //标记完成如果 已经上课=订单PERIOD
-        if($order->period == $order->classDoneRecords()->count()){
+        $count = $order->classDoneRecords()->count();
+        if($order->period == $count){
             Log::info(__CLASS__, [$order->title, $order->id, 'DoneOrder']);
             $order->status = Order::STATU_COMPLETED;
             $order->save();
             return;
+        }
+        //7天内通知管理员
+        $left = $order->period - $count;
+        if($left<=7){
+            bark_notify('到期提醒', "{$left}天{$order->title}");
+            ftqq_notify("{$left}天到期提醒", "###{$order->title}### {$left}天到期", 'manager');
         }
         if(!$todayClassTimes){
             Log::info(__CLASS__, [$order->title, $order->id, 'NoClassTodayOr']);

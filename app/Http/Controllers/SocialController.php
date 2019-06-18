@@ -9,7 +9,6 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
-// use App\Jobs\WechatUserAvatarQueue;
 
 class SocialController extends Controller
 {

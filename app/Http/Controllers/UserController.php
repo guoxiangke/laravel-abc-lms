@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission;
 // 用于输出一次性信息
 use Session;
 use Auth;
-Use App\User;
+use App\User;
 
 class UserController extends Controller
 {
@@ -25,7 +25,9 @@ class UserController extends Controller
      */
     public function index() {
     //Get all users and pass it to the view
-        $users = User::all(); 
+        $users = User::with('roles')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         return view('users.index')->with('users', $users);
     }
 
@@ -103,13 +105,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id) {
         $user = User::findOrFail($id); // 通过id获取给定角色
-
         // 验证 name, email 和 password 字段
         $this->validate($request, [
             'name'=>'required|max:120',
-            'email'=>'required|email|unique:users,email,'.$id,
-            'password'=>'required|min:6|confirmed'
+            'email'=>'required|email',
+            'password'=>'min:6|confirmed'
         ]);
+        dd($user->toArray());
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
         $roles = $request['roles']; // 获取所有角色
         $user->fill($input)->save();
