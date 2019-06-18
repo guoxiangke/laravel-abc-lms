@@ -53,9 +53,9 @@ class ClassRecordsGenerateQueue implements ShouldQueue
             $order->save();
             return;
         }
-        //7天内通知管理员
+        //7天内每周一通知管理员
         $left = $order->period - $count;
-        if($left<=7){
+        if($left <= 7 && date('N') == 1){
             bark_notify('到期提醒', "还剩{$left}天！{$order->title}");
             ftqq_notify("{$left}天到期提醒", "###{$order->title}### {$left}天到期", 'manager');
         }
