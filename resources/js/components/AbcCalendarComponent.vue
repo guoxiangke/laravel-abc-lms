@@ -185,4 +185,7 @@ ul.vuecal__menu {
 .vuecal__arrow--next{
     margin-left:15px; 
 }
+.month-view .vuecal__cell.out-of-scope{
+    display: none;
+}
 </style>
