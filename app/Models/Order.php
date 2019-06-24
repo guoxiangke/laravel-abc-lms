@@ -29,6 +29,7 @@ class Order extends Model  implements AuditableContract
     // 0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
     const STATU_ACTIVE = 1;
     const STATU_COMPLETED = 2;
+    const STATU_OVERDUE = 4;
     const STATUS =[
         '作废',
         '正常',

@@ -47,12 +47,21 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
         //标记完成如果 已经上课=订单PERIOD
         $count = $order->classDoneRecords()->count();
-        if($order->period == $count){
-            Log::info(__CLASS__, [$order->title, $order->id, 'DoneOrder']);
+        if($order->period == $count){ // || $order->expired_at<=Carbon::now()
+            Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_COMPLETED']);
             $order->status = Order::STATU_COMPLETED;
             $order->save();
             return;
         }
+        
+        //标记过期的订单！
+        if($order->expired_at<=Carbon::now()){
+            Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_OVERDUE']);
+            $order->status = Order::STATU_OVERDUE;
+            $order->save();
+            return;
+        }
+
         //7天内每周一通知管理员
         $left = $order->period - $count;
         if($left <= 7 && date('N') == 1){

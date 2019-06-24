@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Jobs\ClassRecordsGenerateQueue;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class ClassRecordsGenerate extends Command
 {
@@ -13,7 +14,7 @@ class ClassRecordsGenerate extends Command
      *
      * @var string
      */
-    protected $signature = 'classrecords:generate {offset?} {--order=}';
+    protected $signature = 'classrecords:generate {offset?} {--order=} {--date=}';
 
     /**
      * The console command description.
@@ -41,10 +42,20 @@ class ClassRecordsGenerate extends Command
     {
         $offset = $this->argument('offset')??0;
         $orderId = $this->option('order')??null;
+
+        $date = $this->option('date')??0; //2019-06-24 00:00:00
+        if($date){
+            $offset = Carbon::parse($date)->diffInDays(Carbon::now());
+        }
+
         $this->info("Generate ClassRecords for $orderId begin!");
         if($orderId){
             $order = Order::find($orderId);
-            ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
+            if($order->isActive()){
+                ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
+            }else{
+                \Log::error(__CLASS__,['order is not active']);
+            }
         }else{
             Order::active()
                 ->each(function (Order $order) use ($offset) {
