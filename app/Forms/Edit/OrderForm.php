@@ -49,6 +49,7 @@ class OrderForm extends Form
             ->add('teacher_uid', 'select', [
                 'label' => 'Teacher',
                 'choices' => $teachers,
+                'rules' => 'required',
                 'selected' => $order->teacher_uid,
                 'empty_value' => '=== Select ==='
             ])
