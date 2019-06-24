@@ -112,6 +112,9 @@
     git checkout . 
     git pull origin master 
     cat docker-compose.yml | grep lms
+    docker-compose down
+    # 更新代码
+    docker volume rm lms-abc_code
     docker-compose up -d --build
 
     docker network connect bridge abc-webserver

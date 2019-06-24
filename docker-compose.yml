@@ -3,7 +3,7 @@ services:
   # https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose
   #PHP Service
   app:
-    image: laravel-fpm-190624
+    image: laravel-fpm
     links:
       - db:mysql
       - redis
@@ -65,7 +65,7 @@ services:
       - backend
 
   scheduler:
-    image: laravel-fpm-190624
+    image: laravel-fpm
     restart: always
     depends_on:
       - app
@@ -84,7 +84,7 @@ services:
       QUEUE_DRIVER: redis
       REDIS_HOST: redis
   queue:
-    image: laravel-fpm-190624
+    image: laravel-fpm
     restart: always
     depends_on:
       - app
