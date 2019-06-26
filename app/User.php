@@ -16,8 +16,7 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements HasMedia
-{
+class User extends Authenticatable implements HasMedia{//php-cs-fixer pre commit hook start
     use Notifiable;
     use HasRoles;
     use HasMediaTrait;
