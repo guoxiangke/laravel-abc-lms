@@ -1,5 +1,6 @@
 <?php
-# https://day.app/2018/06/bark-server-document/
+
+// https://day.app/2018/06/bark-server-document/
 
 return [
     'bark' => [

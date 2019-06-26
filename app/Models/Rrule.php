@@ -199,7 +199,7 @@ class Rrule extends Model implements AuditableContract
      * 🙅不需要补课/即顺延的课程
      * $rrule->classRecords()->absent()->count();
      * 需要补课/即顺延的课程
-     * $rrule->classRecords()->exceptions()->count();
+     * $rrule->classRecords()->exceptions()->count();.
      */
     public function classRecords()
     {

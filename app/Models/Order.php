@@ -312,7 +312,7 @@ class Order extends Model implements AuditableContract
          * $aolByRules =
          * array:1 [▼
          * "18:00" => DateTime @1553940000 {#830 ▶}
-         * ]
+         * ].
          */
         // $aolsLastByRule = new Collection; 每一个请假计划的最后一个有效期
         $aolsLastByRule = [];

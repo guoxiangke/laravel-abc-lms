@@ -52,7 +52,7 @@ return [
             'bucket' => env('DO_SPACES_BUCKET'),
         ],
         'upyun' => [
-            'driver'        => 'upyun', 
+            'driver'        => 'upyun',
             'bucket'        => env('UPYUN_BUCKET_NAME'),
             'operator'      => env('UPYUN_OPERATOR_NAME'),
             'password'      => env('UPYUN_OPERATOR_PASSWORD'),
