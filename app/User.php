@@ -32,8 +32,7 @@ class User extends Authenticatable implements HasMedia
             ->singleFile();
     }
 
-    // php-cs-fixer pre commit hook start
-    //$yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
+    // $yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
     // $yourModel->getMedia('avatar')->count(); // returns 1
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
 
