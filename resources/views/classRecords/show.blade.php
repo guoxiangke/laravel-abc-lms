@@ -9,7 +9,7 @@
 
     <?php
         $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
-        if(Auth::user()->hasAnyRole(\App\Models\ClassRecord::ALLOW_LIST_ROLES)){
+        if (Auth::user()->hasAnyRole(\App\Models\ClassRecord::ALLOW_LIST_ROLES)) {
             $goBackLink = route('classRecords.indexByRole');
         }
         $mp4 = $classRecord->mp4;
