@@ -4,15 +4,15 @@ namespace App\Models;
 
 use App\User;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-
 use Laravelista\Comments\Commentable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class ClassRecord extends Model implements AuditableContract, HasMedia
 {
@@ -23,7 +23,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
 
     const DISK = 'spaces';//ClassRecord::DISK upyun
     // const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
-    const DOS_CDN='https://upcdn.do.abc-chinaedu.com';
+    const DOS_CDN = 'https://upcdn.do.abc-chinaedu.com';
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
@@ -35,7 +35,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
             ->singleFile();
     }
 
-    const EXCEPTION_TYPES =[
+    const EXCEPTION_TYPES = [
         '正常',//0
         '学生请假',//1
         '老师请假',//2
@@ -43,7 +43,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         '老师异常标记',//老师异常,不给老师算课时，需要给学生补课 4
     ];
 
-    const EXCEPTION_TYPES_EN =[
+    const EXCEPTION_TYPES_EN = [
         'Normal',//0
         'AOL',//1-by-Student
         'Holiday',//2 AOL-by-Teacher
@@ -51,7 +51,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         'EXCEPTION',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
     ];
     //给学生看的状态[0,1,3]
-    const EXCEPTION_TYPES_STU =[
+    const EXCEPTION_TYPES_STU = [
         '正常',//0
         '请假',//1
         '顺延AOL-by-Teacher',
@@ -59,7 +59,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         '老师异常',
     ];
     //@see ClassRecordPolicy 谁可以列表查看
-    const ALLOW_LIST_ROLES =['agency', 'teacher', 'student'];
+    const ALLOW_LIST_ROLES = ['agency', 'teacher', 'student'];
 
     const NO_EXCEPTION = 0;
     const NORMAL_EXCEPTION_STUDENT = 1;
@@ -173,7 +173,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
 
     public function getMp3Attribute()
     {
-        if ($firstMedia=$this->getFirstMedia('mp3')) {
+        if ($firstMedia = $this->getFirstMedia('mp3')) {
             return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
         return null;
@@ -181,7 +181,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
 
     public function getMp4Attribute()
     {
-        if ($firstMedia=$this->getFirstMedia('mp4')) {
+        if ($firstMedia = $this->getFirstMedia('mp4')) {
             return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
         return null;

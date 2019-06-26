@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
+use App\Models\Order;
 use Illuminate\Console\Command;
 use App\Jobs\ClassRecordsGenerateQueue;
-use App\Models\Order;
-use Carbon\Carbon;
 
 class ClassRecordsGenerate extends Command
 {
@@ -41,10 +41,10 @@ class ClassRecordsGenerate extends Command
      */
     public function handle()
     {
-        $offset = $this->argument('offset')??0;
-        $orderId = $this->option('order')??null;
+        $offset = $this->argument('offset') ?? 0;
+        $orderId = $this->option('order') ?? null;
 
-        $date = $this->option('date')??0; //2019-06-24 00:00:00
+        $date = $this->option('date') ?? 0; //2019-06-24 00:00:00
         if ($date) {
             $offset = Carbon::parse($date)->diffInDays(Carbon::now());
         }

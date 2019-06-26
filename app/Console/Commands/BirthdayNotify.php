@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\BirthdayNotification;
-use App\Models\Profile;
 use Carbon\Carbon;
+use App\Models\Profile;
+use Illuminate\Console\Command;
+use App\Notifications\BirthdayNotification;
+use Illuminate\Support\Facades\Notification;
 
 class BirthdayNotify extends Command
 {
@@ -43,7 +43,7 @@ class BirthdayNotify extends Command
     {
         $now = Carbon::now();
         Profile::each(function ($profile) use ($now) {
-            if ($profile->birthday && $now->diffInDays($profile->birthday->setYear($now->year))<=7) {
+            if ($profile->birthday && $now->diffInDays($profile->birthday->setYear($now->year)) <= 7) {
                 Notification::route('mail', 'monika@abc-chinaedu.com')
                 ->notify(new BirthdayNotification($profile));
             }

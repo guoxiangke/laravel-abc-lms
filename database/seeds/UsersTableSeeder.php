@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\User;
 use App\Models\Rrule;
 use Faker\Generator as Faker;
+use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,17 +15,17 @@ class UsersTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         $user = factory(User::class)->create([
-            'email' => 'admin@daxiangyingyu.com',
-            'password' =>  Hash::make('Profero@1'),
-            'name' => 'admin',
+            'email'    => 'admin@daxiangyingyu.com',
+            'password' => Hash::make('Profero@1'),
+            'name'     => 'admin',
         ]);
 
         $user->assignRole(User::ROLES['admin']);
         
         $user = factory(User::class)->create([
-            'email' => 'monika@daxiangyingyu.com',
-            'password' =>  Hash::make('love0325'),
-            'name' => 'monika',
+            'email'    => 'monika@daxiangyingyu.com',
+            'password' => Hash::make('love0325'),
+            'name'     => 'monika',
         ]);
         $user->assignRole(User::ROLES['manager']);
 

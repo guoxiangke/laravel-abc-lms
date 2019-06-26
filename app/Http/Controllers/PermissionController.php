@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-
 class PermissionController extends Controller
 {
     public function __construct()
@@ -50,7 +49,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name'=> 'required|max:40',
         ]);
 
         $name = $request['name'];
@@ -112,7 +111,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name'=> 'required|max:40',
         ]);
         $input = $request->all();
         $permission->fill($input)->save();
@@ -135,7 +134,7 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
 
         // 让特定权限无法删除
-        if ($permission->name == "Administer roles & permissions") {
+        if ($permission->name == 'Administer roles & permissions') {
             return redirect()->route('permissions.index')
             ->with(
                 'flash_message',

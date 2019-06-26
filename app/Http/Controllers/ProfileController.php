@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Forms\ProfileForm as CreateForm;
+use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ProfileForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class ProfileController extends Controller
 {
@@ -24,7 +24,7 @@ class ProfileController extends Controller
         if (Auth::user()->isAdmin()) {
             $profiles = Profile::with('recommend')->orderBy('id', 'desc')->paginate(50);
         } else {
-            $profiles =  Profile::with('recommend')->orderBy('id', 'desc')->where('user_id', Auth::id())->paginate(10);
+            $profiles = Profile::with('recommend')->orderBy('id', 'desc')->where('user_id', Auth::id())->paginate(10);
         }
         
         return view('profiles.index', compact('profiles'));
@@ -47,7 +47,7 @@ class ProfileController extends Controller
         }
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('ProfileController@store')
+            'url'    => action('ProfileController@store'),
         ]);
         return view('profiles.create', compact('form'));
     }
@@ -99,7 +99,7 @@ class ProfileController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('ProfileController@update', ['id'=>$profile->id])
+                'url'    => action('ProfileController@update', ['id'=>$profile->id]),
             ],
             ['entity' => $profile],
         );

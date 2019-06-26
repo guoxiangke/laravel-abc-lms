@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Teacher;
+use Carbon\Carbon;
 use App\Models\Contact;
 use App\Models\Profile;
+use App\Models\Teacher;
 use App\Models\PayMethod;
-use App\Forms\TeacherForm as CreateForm;
-use App\Forms\Edit\TeacherForm as EditForm;
-use App\Forms\Register\TeacherRegisterForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\TeacherForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Carbon\Carbon;
+use App\Forms\Edit\TeacherForm as EditForm;
+use App\Forms\Register\TeacherRegisterForm;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class TeacherController extends Controller
 {
@@ -56,7 +56,7 @@ class TeacherController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('TeacherController@store')
+            'url'    => action('TeacherController@store'),
         ]);
         return view('teachers.create', compact('form'));
     }
@@ -67,7 +67,7 @@ class TeacherController extends Controller
         $this->authorize('create', Teacher::class);
         $form = $this->form(TeacherRegisterForm::class, [
             'method' => 'POST',
-            'url' => action('TeacherController@registerStore')
+            'url'    => action('TeacherController@registerStore'),
         ]);
         return view('teachers.register', compact('form'));
     }
@@ -84,7 +84,7 @@ class TeacherController extends Controller
         $form = $formBuilder->create(TeacherRegisterForm::class);
 
         $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:11|unique:profiles',
         ]);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -100,7 +100,7 @@ class TeacherController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:11|unique:profiles',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -109,17 +109,17 @@ class TeacherController extends Controller
         }
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type')?:0;//0-4
+        $contactType = $request->input('contact_type') ?: 0;//0-4
         $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
         $user = User::where('email', $teacherEmail)->first();
 
         if (! $user) {
-            if ($password=$request->input('user_password')?:'Teacher123') {
+            if ($password = $request->input('user_password') ?: 'Teacher123') {
                 $password = Hash::make($password);
             }
             $userData = [
-                'name' => $teacherUserName,
-                'email' => $teacherEmail,
+                'name'     => $teacherUserName,
+                'email'    => $teacherEmail,
                 'password' => $password,
             ];
             $user = User::create($userData);
@@ -128,7 +128,7 @@ class TeacherController extends Controller
         $user->assignRole(User::ROLES['teacher']);
 
         $teacher = Teacher::firstOrNew([
-            'user_id' => $user->id,
+            'user_id'   => $user->id,
             'school_id' => $request->input('school_id'),
         ]);
         $user->teacher()->save($teacher);
@@ -149,18 +149,18 @@ class TeacherController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' =>  $birthday,
+            'user_id'  => $user->id,
+            'name'     => $request->input('profile_name'),
+            'sex'      => $request->input('profile_sex'),
+            'birthday' => $birthday,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => $contactType,
-            'number' => $request->input('contact_number'),
-            'remark' => $request->input('contact_remark'),
+            'type'       => $contactType,
+            'number'     => $request->input('contact_number'),
+            'remark'     => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
@@ -168,9 +168,9 @@ class TeacherController extends Controller
         if ($request->input('pay_number')) {
             $paymethod = PayMethod::firstOrNew([
                 'user_id' => $user->id,
-                'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
-                'number' => $request->input('pay_number'),
-                'remark' => $request->input('pay_remark'),
+                'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                'number'  => $request->input('pay_number'),
+                'remark'  => $request->input('pay_remark'),
             ])->save();
             // $paymethod = $user->paymethod()->save($paymethod);
         }
@@ -202,7 +202,7 @@ class TeacherController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('TeacherController@update', ['id'=>$teacher->id])
+                'url'    => action('TeacherController@update', ['id'=>$teacher->id]),
             ],
             ['entity' => $teacher],
         );
@@ -224,8 +224,8 @@ class TeacherController extends Controller
         }
 
         $user = $teacher->user;
-        $schoolId = $teacher->school?$teacher->school->id:0;
-        $zoomId = $teacher->zoom?$teacher->zoom->id:0;
+        $schoolId = $teacher->school ? $teacher->school->id : 0;
+        $zoomId = $teacher->zoom ? $teacher->zoom->id : 0;
         // dd($zoomId);
         $paymethod = $user->paymethod;
         
@@ -233,15 +233,15 @@ class TeacherController extends Controller
 
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type')?:0;//0-4
+        $contactType = $request->input('contact_type') ?: 0;//0-4
         $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
 
-        if ($password=$request->input('user_password')?:'Teacher123') {
+        if ($password = $request->input('user_password') ?: 'Teacher123') {
             $password = Hash::make($password);
         }
         $userData = [
-            'name' => $teacherUserName,
-            'email' => $teacherEmail,
+            'name'     => $teacherUserName,
+            'email'    => $teacherEmail,
             'password' => $password,
         ];
         $user->fill($userData)->save();
@@ -249,8 +249,8 @@ class TeacherController extends Controller
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([
             // 'user_id' => $user->id,
-            'zoom_id' => $request->input('zoom_id')?:null,
-            'school_id' => $request->input('school_id')?:null,
+            'zoom_id'   => $request->input('zoom_id') ?: null,
+            'school_id' => $request->input('school_id') ?: null,
         ])->save();
         
         //确保只有一个手机号
@@ -265,30 +265,30 @@ class TeacherController extends Controller
             //bug!!!
             $profile = Profile::create([
                 'telephone' => $request->input('telephone'),
-                'user_id' => $user->id,
-                'name' => $request->input('profile_name'),
-                'sex' => $request->input('profile_sex'),
-                'birthday' => $birthday,
+                'user_id'   => $user->id,
+                'name'      => $request->input('profile_name'),
+                'sex'       => $request->input('profile_sex'),
+                'birthday'  => $birthday,
             ]);
             $contact = Contact::create([
                 'profile_id' => $profile->id,
-                'type' => $contactType,
-                'number' => $request->input('contact_number'),
-                'remark' => $request->input('contact_remark'),
+                'type'       => $contactType,
+                'number'     => $request->input('contact_number'),
+                'remark'     => $request->input('contact_remark'),
             ]);
         }
         $profile->fill([
             'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
+            'name'     => $request->input('profile_name'),
+            'sex'      => $request->input('profile_sex'),
             'birthday' => $birthday,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 
         $contact->fill([
             // 'profile_id' => $profile->id,
-            'type' => $contactType,
+            'type'   => $contactType,
             'number' => $request->input('contact_number'),
             'remark' => $request->input('contact_remark'),
         ])->save();
@@ -299,7 +299,7 @@ class TeacherController extends Controller
             if ($paymethod) {
                 $paymethod->fill([
                     // 'user_id' => $user->id,
-                    'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                    'type'   => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
                     'number' => $request->input('pay_number'),
                     'remark' => $request->input('pay_remark'),
                 ])->save();

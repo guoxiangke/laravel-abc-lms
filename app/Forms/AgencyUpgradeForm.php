@@ -2,9 +2,9 @@
 
 namespace App\Forms;
 
-use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
 use App\Models\Agency;
+use App\Models\PayMethod;
+use Kris\LaravelFormBuilder\Form;
 
 class AgencyUpgradeForm extends Form
 {
@@ -31,39 +31,39 @@ class AgencyUpgradeForm extends Form
                 'label' => '手机号',
             ])
             ->add('pay_method', 'select', [
-                'label' => '付款方式',
-                'rules' => 'required',
-                'choices' => PayMethod::TYPES,
-                'selected' => 1, //'PayPal'
-                'empty_value' => '=== Select ==='
+                'label'       => '付款方式',
+                'rules'       => 'required',
+                'choices'     => PayMethod::TYPES,
+                'selected'    => 1, //'PayPal'
+                'empty_value' => '=== Select ===',
             ])
             ->add('pay_number', 'text', [
                 'rules' => 'required',
-                'label' => '付款账户ID'
+                'label' => '付款账户ID',
             ])
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',
-                'attr' => ['rows' => 2],
+                'attr'  => ['rows' => 2],
             ])
             ->add('type', 'select', [
-                'label' => '代理类型',
-                'choices' => Agency::TYPES,
-                'selected' => 0,
-                'empty_value' => '=== Select ==='
+                'label'       => '代理类型',
+                'choices'     => Agency::TYPES,
+                'selected'    => 0,
+                'empty_value' => '=== Select ===',
             ])
             ->add('discount', 'number', [
                 'rules' => 'required|min:0|max:100',
                 'value' => 90,
-                'label' => '优惠折扣0-100'
+                'label' => '优惠折扣0-100',
             ])//todo 0-100 check!
             ->add('agency_uid', 'select', [
-                'label' => '介绍人/推荐人',
-                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->toArray(),
-                'empty_value' => '=== Select ==='
+                'label'       => '介绍人/推荐人',
+                'choices'     => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->toArray(),
+                'empty_value' => '=== Select ===',
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

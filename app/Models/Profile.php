@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Profile extends Model implements AuditableContract
 {
     use SoftDeletes;
     use Auditable;
-    const SEXS =[
+    const SEXS = [
         '女',
-        '男'
+        '男',
     ];
     protected $fillable = [
         //$contact = $school->user->profiles->first()->contacts->first();

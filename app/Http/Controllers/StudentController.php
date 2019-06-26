@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
+use Carbon\Carbon;
 use App\Models\Agency;
-use App\Models\Student;
 use App\Models\Contact;
 use App\Models\Profile;
+
+use App\Models\Student;
 use App\Models\PayMethod;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
-
-use App\Forms\StudentForm as CreateForm;
-use App\Forms\Edit\StudentForm as EditForm;
-
-use App\Forms\Register\StudentRegisterForm;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
-use Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Forms\StudentForm as CreateForm;
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\StudentForm as EditForm;
+use App\Forms\Register\StudentRegisterForm;
+
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class StudentController extends Controller
 {
@@ -93,7 +93,7 @@ class StudentController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('StudentController@store')
+            'url'    => action('StudentController@store'),
         ]);
         return view('students.create', compact('form'));
     }
@@ -105,7 +105,7 @@ class StudentController extends Controller
 
         $form = $this->form(StudentRegisterForm::class, [
             'method' => 'POST',
-            'url' => action('StudentController@registerStore')
+            'url'    => action('StudentController@registerStore'),
         ]);
         return view('students.register', compact('form'));
     }
@@ -122,7 +122,7 @@ class StudentController extends Controller
         $profileTelephone = $request->input('telephone');
         if ($profileTelephone) {
             $this->validate($request, [
-                'telephone'=>'min:11|unique:profiles',
+                'telephone'=> 'min:11|unique:profiles',
             ]);
         }
         $form = $formBuilder->create(StudentRegisterForm::class);
@@ -136,21 +136,21 @@ class StudentController extends Controller
         $profileName = $request->input('profile_name');
         $recommendTelephone = $request->input('recommend_telephone');
         $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
-        $userProfileNeedSave  = false;
+        $userProfileNeedSave = false;
         if ($recommendTelephone) {
             $recommendUser = Profile::where('telephone', $recommendTelephone)->first();
             if ($recommendUser) {
                 $userProfile->recommend_uid = $recommendUser->user_id;
-                $userProfileNeedSave  = true;
+                $userProfileNeedSave = true;
             }
         }
         if ($profileTelephone) {
             $userProfile->telephone = $profileTelephone;
-            $userProfileNeedSave  = true;
+            $userProfileNeedSave = true;
         }
         if ($profileName) {
             $userProfile->name = $profileName;
-            $userProfileNeedSave  = true;
+            $userProfileNeedSave = true;
         }
         if ($userProfileNeedSave) {
             $userProfile->save();
@@ -162,8 +162,8 @@ class StudentController extends Controller
         
         $student = Student::firstOrCreate([
             'user_id' => $user->id,
-            'grade' =>  $request->input('grade'),
-            'name' => $request->input('english_name')?:$user->name, //英文名！
+            'grade'   => $request->input('grade'),
+            'name'    => $request->input('english_name') ?: $user->name, //英文名！
         ]);
         //创建关联关系？
         // $student = $user->student()->save($student);
@@ -185,7 +185,7 @@ class StudentController extends Controller
         $form = $formBuilder->create(CreateForm::class);
 
         $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:11|unique:profiles',
         ]);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -199,9 +199,9 @@ class StudentController extends Controller
         $name = 's_' .  $name;
         $email = $name .'_'. Str::random(6) . '@student.com';
         $userData = [
-            'name' => $name,
-            'email' => $email,
-            'password' => Hash::make($request->input('password')?:'dxjy1234')
+            'name'     => $name,
+            'email'    => $email,
+            'password' => Hash::make($request->input('password') ?: 'dxjy1234'),
         ];
         $user = User::create($userData);
 
@@ -209,9 +209,9 @@ class StudentController extends Controller
 
         $student = Student::firstOrNew([
             'user_id' => $user->id,
-            'grade' =>  $request->input('grade'),
-            'remark' =>  $request->input('remark'),
-            'book_id' =>  $request->input('book_id'),
+            'grade'   => $request->input('grade'),
+            'remark'  => $request->input('remark'),
+            'book_id' => $request->input('book_id'),
         ]);
         $student = $user->student()->save($student);
 
@@ -224,18 +224,18 @@ class StudentController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' => $birthday,
-            'recommend_uid' => $request->input('recommend_uid')?:null,
+            'user_id'       => $user->id,
+            'name'          => $request->input('profile_name'),
+            'sex'           => $request->input('profile_sex'),
+            'birthday'      => $birthday,
+            'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
-            'number' => $request->input('contact_number')?: $request->input('telephone'),
-            'remark' => $request->input('contact_remark'),
+            'type'       => 1,// Contact::TYPES[1] = 'wechat/qq',
+            'number'     => $request->input('contact_number') ?: $request->input('telephone'),
+            'remark'     => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
@@ -266,7 +266,7 @@ class StudentController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('StudentController@update', ['id'=>$student->id])
+                'url'    => action('StudentController@update', ['id'=>$student->id]),
             ],
             ['entity' => $student],
         );
@@ -305,16 +305,16 @@ class StudentController extends Controller
             $name = 's_'. User::pinyin($profileName);
         }
         // $email = $name . '@student.com';
-        $password = $request->input('password')?:'dxjy1234';
+        $password = $request->input('password') ?: 'dxjy1234';
         $password = Hash::make($password);
         $user->fill(compact('name', 'password'))->save();
         // $user->assignRole(User::ROLES['student']);
 
         $student->fill([
             // 'user_id' => $user->id,
-            'grade' =>  $request->input('grade'),
-            'remark' =>  $request->input('remark'),
-            'book_id' =>  $request->input('book_id'),
+            'grade'   => $request->input('grade'),
+            'remark'  => $request->input('remark'),
+            'book_id' => $request->input('book_id'),
         ])->save();
 
         //确保只有一个手机号
@@ -325,16 +325,16 @@ class StudentController extends Controller
         $profile->fill([
             'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' =>  $birthday,
-            'recommend_uid' => $request->input('recommend_uid')?:null,
+            'name'          => $request->input('profile_name'),
+            'sex'           => $request->input('profile_sex'),
+            'birthday'      => $birthday,
+            'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
 
         $contact->fill([
             // 'profile_id' => $profile->id,
             // 'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
-            'number' => $request->input('contact_number')?: $request->input('telephone'),
+            'number' => $request->input('contact_number') ?: $request->input('telephone'),
             'remark' => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);

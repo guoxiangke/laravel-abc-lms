@@ -1,8 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use App\User;
 
 class PermissionsTableSeeder extends Seeder
 {

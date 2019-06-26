@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Forms\ProductForm as CreateForm;
+use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ProductForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
 
 class ProductController extends Controller
 {
@@ -40,7 +40,7 @@ class ProductController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('ProductController@store')
+            'url'    => action('ProductController@store'),
         ]);
         return view('products.create', compact('form'));
     }
@@ -54,7 +54,7 @@ class ProductController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
 
         $form = $formBuilder->create(CreateForm::class);
@@ -64,10 +64,10 @@ class ProductController extends Controller
         }
 
         $product = Product::firstOrCreate([
-            'name' =>  $request->input('name'),
-            'description' =>  $request->input('description'),
-            'price' =>  $request->input('price'),
-            'remark' =>  $request->input('remark'),
+            'name'        => $request->input('name'),
+            'description' => $request->input('description'),
+            'price'       => $request->input('price'),
+            'remark'      => $request->input('remark'),
             // 'image', //todo
             'remark' => $request->input('remark'),
         ]);
@@ -98,7 +98,7 @@ class ProductController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('ProductController@update', ['id'=>$product->id])
+                'url'    => action('ProductController@update', ['id'=>$product->id]),
             ],
             ['entity' => $product],
         );
@@ -115,7 +115,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {

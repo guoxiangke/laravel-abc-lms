@@ -2,17 +2,17 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\ClassRecord;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 use Illuminate\Foundation\Bus\Dispatchable;
-
-use App\Models\Order;
-use App\Models\ClassRecord;
-use Carbon\Carbon;
-
-use Illuminate\Support\Facades\Log;
 
 class ClassRecordsGenerateQueue implements ShouldQueue
 {
@@ -25,7 +25,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Order $order, $offset=0)
+    public function __construct(Order $order, $offset = 0)
     {
         $this->order = $order;
         $this->offset = $offset;
@@ -55,7 +55,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
         
         //标记过期的订单！
-        if ($order->expired_at<=Carbon::now()) {
+        if ($order->expired_at <= Carbon::now()) {
             Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_OVERDUE']);
             $order->status = Order::STATU_OVERDUE;
             $order->save();
@@ -77,18 +77,18 @@ class ClassRecordsGenerateQueue implements ShouldQueue
             if (in_array($rrule->start_at->format('H:i'), $todayClassTimes)) {
                 try {
                     $classRecord = ClassRecord::firstOrCreate([
-                        'rrule_id' => $rrule->id,
-                        'teacher_uid' => $order->teacher_uid,
+                        'rrule_id'     => $rrule->id,
+                        'teacher_uid'  => $order->teacher_uid,
                         'generated_at' => $byDay->format('Y-m-d ' . $rrule->start_at->format('H:i') .':00'),
                         //必须，固定为生成当天的XX开始时间，避免重复生产
                         //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
-                        'user_id' => $order->user_id,//'student_uid',
+                        'user_id'    => $order->user_id,//'student_uid',
                         'agency_uid' => $order->agency_uid,
-                        'order_id' => $order->id,
+                        'order_id'   => $order->id,
                     ]);
 
                     //todo more notication : XXX has class today!!!
-                    Log::info(__CLASS__, [$order->title, $order->id, $classRecord->wasRecentlyCreated?'wasRecentlyCreated':'NoRecentlyCreated', $classRecord->id]);
+                    Log::info(__CLASS__, [$order->title, $order->id, $classRecord->wasRecentlyCreated ? 'wasRecentlyCreated' : 'NoRecentlyCreated', $classRecord->id]);
                 } catch (\Exception $e) {
                     Log::error(__CLASS__, [$order->title, $e->getMessage()]);
                 }

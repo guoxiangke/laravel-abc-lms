@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,7 +11,7 @@ class Agency extends Model
 {
     use SoftDeletes;
 
-    const TYPES =[
+    const TYPES = [
         '银牌代理',
         '金牌代理',
         //add  more

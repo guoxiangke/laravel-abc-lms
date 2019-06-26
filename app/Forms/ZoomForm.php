@@ -22,7 +22,7 @@ class ZoomForm extends Form
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

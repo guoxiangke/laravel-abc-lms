@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
+use Illuminate\Http\Request;
 use App\TokenStore\TokenCache;
 
 class AuthController extends Controller
@@ -18,7 +18,7 @@ class AuthController extends Controller
       'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
       'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
       'urlResourceOwnerDetails' => '',
-      'scopes'                  => env('OAUTH_SCOPES')
+      'scopes'                  => env('OAUTH_SCOPES'),
     ]);
         $authUrl = $oauthClient->getAuthorizationUrl();
         // Save client state so we can validate in callback
@@ -50,12 +50,12 @@ class AuthController extends Controller
         'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
         'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
         'urlResourceOwnerDetails' => '',
-        'scopes'                  => env('OAUTH_SCOPES')
+        'scopes'                  => env('OAUTH_SCOPES'),
       ]);
             try {
                 // Make the token request
                 $accessToken = $oauthClient->getAccessToken('authorization_code', [
-          'code' => $authCode
+          'code' => $authCode,
         ]);
                 $graph = new Graph();
                 $graph->setAccessToken($accessToken->getToken());

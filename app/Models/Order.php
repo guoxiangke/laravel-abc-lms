@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-
 use App\User;
-use App\Traits\HasPriceField;
-
 use Carbon\Carbon;
+use App\Traits\HasPriceField;
+use OwenIt\Auditing\Auditable;
+
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Order extends Model implements AuditableContract
 {
@@ -24,7 +24,7 @@ class Order extends Model implements AuditableContract
     const STATU_ACTIVE = 1;
     const STATU_COMPLETED = 2;
     const STATU_OVERDUE = 4;
-    const STATUS =[
+    const STATUS = [
         '作废',
         '正常',
         '完成',
@@ -178,16 +178,16 @@ class Order extends Model implements AuditableContract
      */
     public function classRecordsAolBy($exception = 'absent')
     {
-        if ($exception=='teacher') {
+        if ($exception == 'teacher') {
             $exceptionInt = ClassRecord::NORMAL_EXCEPTION_TEACHER;
         }
-        if ($exception=='student') {
+        if ($exception == 'student') {
             $exceptionInt = ClassRecord::NORMAL_EXCEPTION_STUDENT;
         }
-        if ($exception=='absent') {
+        if ($exception == 'absent') {
             $exceptionInt = ClassRecord::EXCEPTION_STUDENT;
         }
-        if ($exception=='exception') {
+        if ($exception == 'exception') {
             $exceptionInt = ClassRecord::EXCEPTION_TEACHER;
         } //老师异常：龙卷风
 
@@ -241,7 +241,7 @@ class Order extends Model implements AuditableContract
             foreach ($aols as $dateString) {
                 // 该请假日期必须在XX里面 && substr($dateString, 11, 5);//H:i
                 //in_array($dateString, $allDateStringCollection->toArray()) &&
-                if (substr($dateString, 11, 5)  == $rrule->start_at->format('H:i')) {
+                if (substr($dateString, 11, 5) == $rrule->start_at->format('H:i')) {
                     $count++;
                     $aolsForThisRule[] = $dateString;
                 }
@@ -284,7 +284,7 @@ class Order extends Model implements AuditableContract
         }
         //endregion
 
-        $aolsDateStringCollection =  $aolsDateStringCollection->merge($classRecordNormalExecptionAddToAol);
+        $aolsDateStringCollection = $aolsDateStringCollection->merge($classRecordNormalExecptionAddToAol);
         return $aolsDateStringCollection;
     }
 
@@ -349,7 +349,7 @@ class Order extends Model implements AuditableContract
             }
         }
 
-        $AllValidAols= $AllValidAols->map(function ($recurrence) {
+        $AllValidAols = $AllValidAols->map(function ($recurrence) {
             return $recurrence->getStart()->format('Y-m-d H:i:s');
         });
 
@@ -357,8 +357,8 @@ class Order extends Model implements AuditableContract
             return $classRecord->generated_at->format('Y-m-d H:i:s');
         });
 
-        $AllValidAols =  $AllValidAols->intersect($farSchedules);
-        $AllValidAols =  $AllValidAols->diff($historyRecords);
+        $AllValidAols = $AllValidAols->intersect($farSchedules);
+        $AllValidAols = $AllValidAols->diff($historyRecords);
         return $AllValidAols;
     }
 
@@ -378,7 +378,7 @@ class Order extends Model implements AuditableContract
         return $this->getAllStartTime('schedules');
     }
 
-    public function getAllStartTime($byType='schedules')
+    public function getAllStartTime($byType = 'schedules')
     {
         $recurrenceCollections = new Collection;
         $rrules = $this->$byType;

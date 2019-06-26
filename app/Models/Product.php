@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\HasPriceField;
 
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 //$table->string('image')->nullable();
@@ -21,7 +21,7 @@ class Product extends Model implements HasMedia
         'name',
         'description',
         'price',
-        'remark'
+        'remark',
     ];
 
     public function registerMediaCollections()

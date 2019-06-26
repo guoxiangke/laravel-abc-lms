@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
-// use Spatie\Flash\Flash;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Config;
-
-use App\Models\ClassRecord;
-use App\Observers\ClassRecordObserver;
 use App\Models\Rrule;
+// use Spatie\Flash\Flash;
+use App\Models\ClassRecord;
 use App\Observers\RruleObserver;
+
+use Illuminate\Support\Facades\URL;
+use App\Observers\ClassRecordObserver;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

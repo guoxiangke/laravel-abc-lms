@@ -7,11 +7,11 @@ class TokenCache
     public function storeTokens($accessToken, $user)
     {
         session([
-      'accessToken' => $accessToken->getToken(),
+      'accessToken'  => $accessToken->getToken(),
       'refreshToken' => $accessToken->getRefreshToken(),
       'tokenExpires' => $accessToken->getExpires(),
-      'userName' => $user->getDisplayName(),
-      'userEmail' => null !== $user->getMail() ? $user->getMail() : $user->getUserPrincipalName()
+      'userName'     => $user->getDisplayName(),
+      'userEmail'    => null !== $user->getMail() ? $user->getMail() : $user->getUserPrincipalName(),
     ]);
     }
 
@@ -48,12 +48,12 @@ class TokenCache
         'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
         'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
         'urlResourceOwnerDetails' => '',
-        'scopes'                  => env('OAUTH_SCOPES')
+        'scopes'                  => env('OAUTH_SCOPES'),
       ]);
 
             try {
                 $newToken = $oauthClient->getAccessToken('refresh_token', [
-          'refresh_token' => session('refreshToken')
+          'refresh_token' => session('refreshToken'),
         ]);
 
                 // Store the new values
@@ -72,9 +72,9 @@ class TokenCache
     public function updateTokens($accessToken)
     {
         session([
-      'accessToken' => $accessToken->getToken(),
+      'accessToken'  => $accessToken->getToken(),
       'refreshToken' => $accessToken->getRefreshToken(),
-      'tokenExpires' => $accessToken->getExpires()
+      'tokenExpires' => $accessToken->getExpires(),
     ]);
     }
 }

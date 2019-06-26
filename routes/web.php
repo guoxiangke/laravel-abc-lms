@@ -33,7 +33,7 @@ Route::get('/dos', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 //验证码
-Route::get('/captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config='default') {
+Route::get('/captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config = 'default') {
     //GD Library extension not available with this PHP installation.
     return $captcha->create($config);
 });
@@ -62,21 +62,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', 'PermissionController');
 
     Route::resources([
-        'schools' => 'SchoolController',
-        'teachers' => 'TeacherController',
-        'books' => 'BookController',
-        'zooms' => 'ZoomController',
-        'agencies' => 'AgencyController',
-        'students' => 'StudentController',
-        'products' => 'ProductController',
-        'orders' => 'OrderController',
+        'schools'      => 'SchoolController',
+        'teachers'     => 'TeacherController',
+        'books'        => 'BookController',
+        'zooms'        => 'ZoomController',
+        'agencies'     => 'AgencyController',
+        'students'     => 'StudentController',
+        'products'     => 'ProductController',
+        'orders'       => 'OrderController',
         'classRecords' => 'ClassRecordController',
 
         'rrules' => 'RruleController', //except create!!! create from order
 
-        'socials' => 'SocialController',
+        'socials'  => 'SocialController',
         'profiles' => 'ProfileController',
-        'bills' => 'BillController',
+        'bills'    => 'BillController',
     ]);
     //升级学生用户为代理用户
     Route::get('agencies/upgrade/{user}', 'AgencyController@upgrade')->name('agencies.upgrade');

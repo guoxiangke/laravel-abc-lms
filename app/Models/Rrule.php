@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-
 
 class Rrule extends Model implements AuditableContract
 {
@@ -30,16 +29,16 @@ class Rrule extends Model implements AuditableContract
 
     const TYPE_AOL = 0;
     const TYPE_SCHEDULE = 1;
-    const TYPES =['AOL','Schedule',];
+    const TYPES = ['AOL','Schedule',];
 
-    const BYDAYS =[
-        'SU'=>0,
-        'MO'=>1,
-        'TU'=>2,
-        'WE'=>3,
-        'TH'=>4,
-        'FR'=>5,
-        'SA'=>6,
+    const BYDAYS = [
+        'SU'=> 0,
+        'MO'=> 1,
+        'TU'=> 2,
+        'WE'=> 3,
+        'TH'=> 4,
+        'FR'=> 5,
+        'SA'=> 6,
     ];
 
     /**
@@ -70,7 +69,7 @@ class Rrule extends Model implements AuditableContract
         $timezone = config('app.timezone');
         $rruleString = $this->string;
         $startDate = $this->start_at;
-        $rule  = new \Recurr\Rule($rruleString, $startDate, null, $timezone);
+        $rule = new \Recurr\Rule($rruleString, $startDate, null, $timezone);
         return $rule;
     }
 
@@ -82,7 +81,7 @@ class Rrule extends Model implements AuditableContract
     }
     
     // get BYDAY as dayOfWeek
-    public function getRrule($key=false)
+    public function getRrule($key = false)
     {//'BYDAY'
         // RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=MO
         $rruleStrings = explode(';', $this->string);
@@ -130,7 +129,7 @@ class Rrule extends Model implements AuditableContract
     }
 
     //0:arrayToSave 1:collection
-    public static function buildRrule($value, $returnRruleCollection=0)
+    public static function buildRrule($value, $returnRruleCollection = 0)
     {
         $timezone = config('app.timezone');
         // DTSTART;TZID=Asia/Hong_Kong:20190330T180000
@@ -153,7 +152,7 @@ class Rrule extends Model implements AuditableContract
         $startDate = Carbon::createFromFormat('Ymd\THis\Z', $startDateString, $timezone);
         $rruleString = substr($rrules[1], 6) ;//remove  RRULE:
         // $timezone    = 'Asia/Hong_Kong';
-        $rule        = new \Recurr\Rule($rruleString, $startDate, null, $timezone);
+        $rule = new \Recurr\Rule($rruleString, $startDate, null, $timezone);
 
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $transformerConfig = new \Recurr\Transformer\ArrayTransformerConfig();

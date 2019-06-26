@@ -3,23 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use App\Models\Agency;
 use App\Models\Contact;
 use App\Models\Profile;
-use App\Models\PayMethod;
 
+use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
-
-
 use App\Forms\AgencyForm as CreateForm;
-use App\Forms\Edit\AgencyForm as EditForm;
-use App\Forms\AgencyUpgradeForm as UpgradeForm;
 
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\AgencyForm as EditForm;
 use App\Forms\Register\AgencyRegisterForm;
-use Carbon\Carbon;
+
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\AgencyUpgradeForm as UpgradeForm;
 
 class AgencyController extends Controller
 {
@@ -52,7 +52,7 @@ class AgencyController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('AgencyController@store')
+            'url'    => action('AgencyController@store'),
         ]);
         return view('agencies.create', compact('form'));
     }
@@ -63,7 +63,7 @@ class AgencyController extends Controller
         $this->authorize('create', Agency::class);
         $form = $this->form(AgencyRegisterForm::class, [
             'method' => 'POST',
-            'url' => action('AgencyController@registerStore')
+            'url'    => action('AgencyController@registerStore'),
         ]);
         return view('agencies.register', compact('form'));
     }
@@ -79,7 +79,7 @@ class AgencyController extends Controller
         //必须是没XX角色才可以注册
         $this->authorize('create', Agency::class);
         $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:11|unique:profiles',
         ]);
         $form = $formBuilder->create(AgencyRegisterForm::class);
 
@@ -98,7 +98,7 @@ class AgencyController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=>'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:11|unique:profiles',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -112,12 +112,12 @@ class AgencyController extends Controller
         $user = User::where('email', $email)->first();
 
         if (! $user) {
-            if ($password=$request->input('user_password')?:'Agency1234') {
+            if ($password = $request->input('user_password') ?: 'Agency1234') {
                 $password = Hash::make($password);
             }
             $userData = [
-                'name' => $userName,
-                'email' => $email,
+                'name'     => $userName,
+                'email'    => $email,
                 'password' => $password,
             ];
             $user = User::create($userData);
@@ -127,7 +127,7 @@ class AgencyController extends Controller
 
         Agency::firstOrNew([
             'user_id' => $user->id,
-            'type' => $request->input('agency_type'),
+            'type'    => $request->input('agency_type'),
             // 'discount' => $request->input('agency_discount'),
             // 'agency_uid' => $request->input('agency_id'),
         ])->save();
@@ -143,28 +143,28 @@ class AgencyController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' =>  $birthday,
+            'user_id'       => $user->id,
+            'name'          => $request->input('profile_name'),
+            'sex'           => $request->input('profile_sex'),
+            'birthday'      => $birthday,
             'recommend_uid' => $request->input('agency_id'),
         ])->save();
         // $profile = $user->profile()->save($profile);
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => $request->input('contact_type'),
-            'number' => $request->input('contact_number'),
-            'remark' => $request->input('contact_remark'),
+            'type'       => $request->input('contact_type'),
+            'number'     => $request->input('contact_number'),
+            'remark'     => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
         //3. 必有 save payment
         $paymethod = PayMethod::create([
             'user_id' => $user->id,
-            'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
-            'number' => $request->input('pay_number'),
-            'remark' => $request->input('pay_remark'),
+            'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'number'  => $request->input('pay_number'),
+            'remark'  => $request->input('pay_remark'),
         ]);
         $paymethod = $user->paymethod()->save($paymethod);
 
@@ -186,7 +186,7 @@ class AgencyController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('AgencyController@update', ['id'=>$agency->id])
+                'url'    => action('AgencyController@update', ['id'=>$agency->id]),
             ],
             ['entity' => $agency],
         );
@@ -219,12 +219,12 @@ class AgencyController extends Controller
         $contactType = $request->input('contact_type');//0-3
         $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
 
-        if ($password=$request->input('user_password')?:'Agency1234') {
+        if ($password = $request->input('user_password') ?: 'Agency1234') {
             $password = Hash::make($password);
         }
         $userData = [
-            'name' => $userName,
-            'email' => $email,
+            'name'     => $userName,
+            'email'    => $email,
             'password' => $password,
         ];
         $user->fill($userData)->save();
@@ -232,7 +232,7 @@ class AgencyController extends Controller
 
         $agency->fill([
             // 'user_id' => $user->id,
-            'type' => $request->input('agency_type'),
+            'type'     => $request->input('agency_type'),
             'discount' => $request->input('agency_discount'),
         ])->save();
         // $agency = $user->agency()->save($agency);
@@ -245,15 +245,15 @@ class AgencyController extends Controller
         $profile->fill([
             'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' =>  $birthday,
+            'name'          => $request->input('profile_name'),
+            'sex'           => $request->input('profile_sex'),
+            'birthday'      => $birthday,
             'recommend_uid' => $request->input('agency_id'),
         ])->save();
 
         $contact->fill([
             // 'profile_id' => $profile->id,
-            'type' => $request->input('contact_type'),
+            'type'   => $request->input('contact_type'),
             'number' => $request->input('contact_number'),
             'remark' => $request->input('contact_remark'),
         ])->save();
@@ -261,7 +261,7 @@ class AgencyController extends Controller
         //3. 必有 save payment
         $paymethod->fill([
             // 'user_id' => $user->id,
-            'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'type'   => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
             'number' => $request->input('pay_number'),
             'remark' => $request->input('pay_remark'),
         ])->save();
@@ -276,7 +276,7 @@ class AgencyController extends Controller
             UpgradeForm::class,
             [
                 'method' => 'POST',
-                'url' => action('AgencyController@upgradeStore', $user)
+                'url'    => action('AgencyController@upgradeStore', $user),
             ],
             ['entity' => $user],
         );
@@ -293,7 +293,7 @@ class AgencyController extends Controller
         $user->assignRole(User::ROLES['agency']);
 
         $agency = Agency::firstOrNew([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         $agency->fill($request->except('user_id'))->save();
@@ -301,9 +301,9 @@ class AgencyController extends Controller
         //3. 必有 save payment
         $paymethod = PayMethod::create([
             'user_id' => $user->id,
-            'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
-            'number' => $request->input('pay_number'),
-            'remark' => $request->input('pay_remark'),
+            'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'number'  => $request->input('pay_number'),
+            'remark'  => $request->input('pay_remark'),
         ]);
         // $paymethod = $user->paymethod()->save($paymethod);
         alert()->toast(__('Upgrade Success'), 'success', 'top-center')->autoClose(3000);

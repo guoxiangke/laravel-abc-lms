@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\User;
 // 引入 laravel-permission 模型
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 // 用于输出一次性信息
-use App\User;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -53,9 +53,9 @@ class UserController extends Controller
     {
         // 验证 name、email 和 password 字段
         $this->validate($request, [
-            'name'=>'required|max:120',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:6|confirmed'
+            'name'    => 'required|max:120',
+            'email'   => 'required|email|unique:users',
+            'password'=> 'required|min:6|confirmed',
         ]);
 
         $user = User::create($request->only('email', 'name', 'password')); //只获取 email、name、password 字段
@@ -113,9 +113,9 @@ class UserController extends Controller
         $user = User::findOrFail($id); // 通过id获取给定角色
         // 验证 name, email 和 password 字段
         $this->validate($request, [
-            'name'=>'required|max:120',
-            'email'=>'required|email',
-            'password'=>'min:6|confirmed'
+            'name'    => 'required|max:120',
+            'email'   => 'required|email',
+            'password'=> 'min:6|confirmed',
         ]);
         dd($user->toArray());
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段

@@ -2,8 +2,8 @@
 
 namespace App\Forms;
 
-use Kris\LaravelFormBuilder\Form;
 use App\Models\Book;
+use Kris\LaravelFormBuilder\Form;
 
 class BookForm extends Form
 {
@@ -14,10 +14,10 @@ class BookForm extends Form
                 'label' => 'Name',
             ])
             ->add('type', 'select', [
-                'label' => '类型',
-                'rules' => 'required',
-                'choices' => Book::TYPES,
-                'empty_value' => '=== Select ==='
+                'label'       => '类型',
+                'rules'       => 'required',
+                'choices'     => Book::TYPES,
+                'empty_value' => '=== Select ===',
             ])
             ->add('publisher', 'text', [
                 'label' => 'Publisher',
@@ -31,7 +31,7 @@ class BookForm extends Form
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

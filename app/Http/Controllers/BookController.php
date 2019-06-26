@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Illuminate\Http\Request;
 use App\Forms\BookForm as CreateForm;
 use App\Forms\Edit\BookForm as EditForm;
-use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class BookController extends Controller
 {
@@ -39,7 +39,7 @@ class BookController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('BookController@store')
+            'url'    => action('BookController@store'),
         ]);
         return view('books.create', compact('form'));
     }
@@ -81,7 +81,7 @@ class BookController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('BookController@update', ['id'=>$book->id])
+                'url'    => action('BookController@update', ['id'=>$book->id]),
             ],
             ['entity' => $book],
         );

@@ -2,21 +2,21 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Agency;
+use App\Models\School;
+use App\Models\Social;
+use App\Models\Profile;
+use App\Models\Student;
+
+use App\Models\Teacher;
+use App\Models\PayMethod;
+use Laravelista\Comments\Commenter;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-use App\Models\School;
-use App\Models\Teacher;
-use App\Models\Agency;
-use App\Models\Student;
-use App\Models\Profile;
-use App\Models\PayMethod;
-use App\Models\Social;
-
-use Laravelista\Comments\Commenter;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -37,20 +37,20 @@ class User extends Authenticatable implements HasMedia
     // $yourModel->getMedia('avatar')->count(); // returns 1
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
 
-    const ROLES =[
-        'admin' => 'admin',
+    const ROLES = [
+        'admin'     => 'admin',
         'developer' => 'developer',// '开发者',
-        'manager' => 'manager',// '管理人员',
-        'editor' => 'editor',// '网站编辑',
+        'manager'   => 'manager',// '管理人员',
+        'editor'    => 'editor',// '网站编辑',
 
-        'school' => 'school',// 'schoolMaster',
+        'school'  => 'school',// 'schoolMaster',
         'teacher' => 'teacher',// 'Teacher',
         'student' => 'student',// '学生',
-        'agency' => 'agency',// '代理',
+        'agency'  => 'agency',// '代理',
     ];
 
     //@see ClassRecordPolicy 谁可以评论 //谁可以查看
-    const MANAGER_ROLES =['developer', 'manager'];//todo , 'editor'
+    const MANAGER_ROLES = ['developer', 'manager'];//todo , 'editor'
 
     public function school()
     {
@@ -94,7 +94,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -103,7 +103,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token',
     ];
 
     /**

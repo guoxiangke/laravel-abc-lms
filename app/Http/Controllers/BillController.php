@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Forms\BillForm as CreateForm;
 use App\Forms\Edit\BillForm as EditForm;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class BillController extends Controller
 {
@@ -39,7 +39,7 @@ class BillController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('BillController@store')
+            'url'    => action('BillController@store'),
         ]);
         return view('bills.create', compact('form'));
     }
@@ -53,7 +53,7 @@ class BillController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -63,7 +63,7 @@ class BillController extends Controller
 
         $bill = new Bill;
         $postData = $request->all();
-        $postData['status'] = $request->input('status')?:0;
+        $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('bills.index');
@@ -92,7 +92,7 @@ class BillController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('BillController@update', ['id'=>$bill->id])
+                'url'    => action('BillController@update', ['id'=>$bill->id]),
             ],
             ['entity' => $bill],
         );
@@ -109,14 +109,14 @@ class BillController extends Controller
     public function update(Request $request, Bill $bill, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $postData = $request->all();
-        $postData['status'] = $request->input('status')?:0;
+        $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('bills.index');

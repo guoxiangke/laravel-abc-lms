@@ -2,10 +2,10 @@
 
 namespace App\Forms\Register;
 
-use Kris\LaravelFormBuilder\Form;
-use App\Models\Student;
-use App\Models\Book;
 use App\User;
+use App\Models\Book;
+use App\Models\Student;
+use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
 
 class StudentRegisterForm extends Form
@@ -14,46 +14,46 @@ class StudentRegisterForm extends Form
     {
         $this
             ->add('grade', 'select', [
-                'label' => '年级',
-                'rules' => 'required',
-                'choices' => Student::GRADES,
-                'empty_value' => '=== 请选择 ==='
+                'label'       => '年级',
+                'rules'       => 'required',
+                'choices'     => Student::GRADES,
+                'empty_value' => '=== 请选择 ===',
             ])
             ->add('book_id', 'select', [
-                'label' => '同步教材',
-                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
-                'empty_value' => '=== Select ==='
+                'label'       => '同步教材',
+                'choices'     => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
+                'empty_value' => '=== Select ===',
             ])
             ->add('english_name', 'text', [
-                'label' => '英文名',
+                'label'      => '英文名',
                 'help_block' => [
                     'text' => '没有可以留空',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
             ->add('profile_name', 'text', [
-                'label' => '学生姓名',
+                'label'      => '学生姓名',
                 'help_block' => [
                     'text' => '⚠️您仅有这一次更改机会<br/>如果注册时已正确填写真实姓名，可以留空',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
             ->add('telephone', 'tel', [
-                'label' => '家长手机号',
+                'label'      => '家长手机号',
                 'help_block' => [
                     'text' => '⚠️您仅有这一次更改机会，可用于登陆本站<br/>如果注册时已正确填写，可以留空',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
             ->add('contact_qq', 'text', [
-                'label' => 'QQ/微信',
+                'label'      => 'QQ/微信',
                 'help_block' => [
                     'text' => '可以留空，家长QQ号或微信号',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ]);
         //如果是默认推荐人，给更改机会
@@ -61,14 +61,14 @@ class StudentRegisterForm extends Form
         if ($user) {
             $profile = $user->profiles->first();
             if ($profile) {
-                $recommendUid= $profile->recommend_uid;
+                $recommendUid = $profile->recommend_uid;
                 if ($recommendUid === 1) {
                     $this->add('recommend_telephone', 'tel', [
-                            'label' => '推荐人手机号',
+                            'label'      => '推荐人手机号',
                             'help_block' => [
                                 'text' => '若无，可以留空',
-                                'tag' => 'small',
-                                'attr' => ['class' => 'form-text text-muted']
+                                'tag'  => 'small',
+                                'attr' => ['class' => 'form-text text-muted'],
                             ],
                         ]);
                 }
@@ -76,7 +76,7 @@ class StudentRegisterForm extends Form
         }
         $this->add('submit', 'submit', [
                 'label' => 'Save',
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

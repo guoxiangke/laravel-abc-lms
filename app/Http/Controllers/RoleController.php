@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-
 class RoleController extends Controller
 {
     public function __construct()
@@ -53,8 +52,8 @@ class RoleController extends Controller
         $this->validate(
             $request,
             [
-                'name'=>'required|unique:roles|max:10',
-                'permissions' =>'required',
+                'name'        => 'required|unique:roles|max:10',
+                'permissions' => 'required',
             ]
         );
 
@@ -117,8 +116,8 @@ class RoleController extends Controller
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         $this->validate($request, [
-            'name'=>'required|max:10|unique:roles,name,'.$id,
-            'permissions' =>'required',
+            'name'        => 'required|max:10|unique:roles,name,'.$id,
+            'permissions' => 'required',
         ]);
 
         $input = $request->except(['permissions']);

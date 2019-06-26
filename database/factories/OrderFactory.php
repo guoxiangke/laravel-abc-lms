@@ -1,9 +1,9 @@
 <?php
+use App\Models\Book;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\Agency;
-use App\Models\Book;
 use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
@@ -32,11 +32,11 @@ $factory->define(Order::class, function (Faker $faker) {
                 ->create()
                 ->id;
         },
-        'product_id'=>1,
-        'price'=> 159,
-        'period'=> 5,
-        'status'=> 1,//rand(0,4),
+        'product_id'=> 1,
+        'price'     => 159,
+        'period'    => 5,
+        'status'    => 1,//rand(0,4),
         'expired_at'=> $faker->dateTimeBetween('+30 days', '+90 days'),
-        'remark'=> $faker->paragraph,
+        'remark'    => $faker->paragraph,
     ];
 });

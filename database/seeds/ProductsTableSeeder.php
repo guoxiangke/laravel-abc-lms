@@ -12,10 +12,10 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         Product::create([
-            'name' => '课程体验包',
+            'name'        => '课程体验包',
             'description' => '新用户专享（7天有效）',
-            'remark' => '第一次，新用户专享（7天有效）',
-            'price' => 199,
+            'remark'      => '第一次，新用户专享（7天有效）',
+            'price'       => 199,
         ]);
 
         $remark = <<<EOF
@@ -27,40 +27,40 @@ class ProductsTableSeeder extends Seeder
         
         $products = [
             [
-                'name' => '次卡基础班80课时（12个月有效）',
+                'name'        => '次卡基础班80课时（12个月有效）',
                 'description' => '（12个月有效）',
-                'remark' => $remark,
-                'price' => 4200,
+                'remark'      => $remark,
+                'price'       => 4200,
             ],
             [
-                'name' => '次卡强化班240课时（24个月有效）',
+                'name'        => '次卡强化班240课时（24个月有效）',
                 'description' => '（24个月有效）',
-                'remark' => $remark,
-                'price' => 12100,
+                'remark'      => $remark,
+                'price'       => 12100,
             ],
             [
-                'name' => '次卡梦想班400课时（36个月有效）',
+                'name'        => '次卡梦想班400课时（36个月有效）',
                 'description' => '（36个月有效）',
-                'remark' => $remark,
-                'price' => 18800,
+                'remark'      => $remark,
+                'price'       => 18800,
             ],
             [
-                'name' => '周卡提升班60课时（4个月有效）',
+                'name'        => '周卡提升班60课时（4个月有效）',
                 'description' => '（4个月有效）',
-                'remark' => $remark,
-                'price' => 2600,
+                'remark'      => $remark,
+                'price'       => 2600,
             ],
             [
-                'name' => '周卡希望班200课时（12个月有效）',
+                'name'        => '周卡希望班200课时（12个月有效）',
                 'description' => '（12个月有效）',
-                'remark' => $remark,
-                'price' => 8300,
+                'remark'      => $remark,
+                'price'       => 8300,
             ],
             [
-                'name' => '周卡飞跃班300课时（18个月有效）',
+                'name'        => '周卡飞跃班300课时（18个月有效）',
                 'description' => '（18个月有效）',
-                'remark' => $remark,
-                'price' => 11800,
+                'remark'      => $remark,
+                'price'       => 11800,
             ],
         ];
 

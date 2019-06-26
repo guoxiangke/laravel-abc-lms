@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zoom;
-use App\Forms\ZoomForm as CreateForm;
-use App\Forms\Edit\ZoomForm as EditForm;
-
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Http\Request;
+use App\Forms\ZoomForm as CreateForm;
+
+use App\Forms\Edit\ZoomForm as EditForm;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class ZoomController extends Controller
 {
@@ -41,7 +41,7 @@ class ZoomController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('ZoomController@store')
+            'url'    => action('ZoomController@store'),
         ]);
         return view('zooms.create', compact('form'));
     }
@@ -61,9 +61,9 @@ class ZoomController extends Controller
         }
         $zoom = Zoom::firstOrCreate(
             [
-                'email' => $request->input('email'),
+                'email'    => $request->input('email'),
                 'password' => $request->input('password'),
-                'pmi' => str_replace(' ', '', $request->input('pmi')),
+                'pmi'      => str_replace(' ', '', $request->input('pmi')),
             ]
         );
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
@@ -93,7 +93,7 @@ class ZoomController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('ZoomController@update', ['id'=>$zoom->id])
+                'url'    => action('ZoomController@update', ['id'=>$zoom->id]),
             ],
             ['entity' => $zoom],
         );

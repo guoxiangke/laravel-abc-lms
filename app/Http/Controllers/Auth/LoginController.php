@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
-use App\Models\Profile;
 use Socialite;
 use App\Models\Social;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\SocialForm as CreateForm;
+use App\Models\Profile;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Forms\SocialForm as CreateForm;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -69,7 +69,7 @@ class LoginController extends Controller
         if (is_numeric($account)) {
             $field = 'id';
             $account = Profile::select('user_id')->where('telephone', $account)->first();
-            $account = ($account==null)?0:$account->user_id;
+            $account = ($account == null) ? 0 : $account->user_id;
         } elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
         } else {
@@ -91,8 +91,8 @@ class LoginController extends Controller
     {
         $request->validate([
             $this->username() => 'required|string',
-            'password' => 'required|string',
-            'captcha' => 'required|captcha',
+            'password'        => 'required|string',
+            'captcha'         => 'required|captcha',
         ]);
     }
 
@@ -169,16 +169,15 @@ class LoginController extends Controller
                 CreateForm::class,
                 [
                     'method' => 'POST',
-                    'url' => action('SocialController@store')
+                    'url'    => action('SocialController@store'),
                 ],
                 ['socialUser' => $socialUser, 'socialType' => $type],
             );
             return view('socials.create', compact('form'));
-        } else {
-            $user = Auth::loginUsingId($userId, true);
-            $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname?:$socialUser->name);
-            return redirect('home');
         }
+        $user = Auth::loginUsingId($userId, true);
+        $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
+        return redirect('home');
     }
 
     public function socialUpdate($userId, $type, $avatar, $nickname)

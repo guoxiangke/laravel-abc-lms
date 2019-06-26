@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use App\Models\School;
 use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\PayMethod;
-use App\Forms\SchoolForm as CreateForm;
-use App\Forms\Edit\SchoolForm as EditForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\SchoolForm as CreateForm;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\SchoolForm as EditForm;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class SchoolController extends Controller
 {
@@ -51,7 +51,7 @@ class SchoolController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('SchoolController@store')
+            'url'    => action('SchoolController@store'),
             // 'url' => route('schools.store', [],false),
         ]);
         return view('schools.create', compact('form'));
@@ -66,7 +66,7 @@ class SchoolController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=>'required|min:13|unique:profiles',
+            'telephone'=> 'required|min:13|unique:profiles',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -75,10 +75,10 @@ class SchoolController extends Controller
         }
         // create login user
         $user = User::firstOrNew([
-            'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-            'email' => $request->input('user_email')
+            'name'  => 'school_'.str_replace(' ', '', $request->input('profile_name')),
+            'email' => $request->input('user_email'),
         ]);
-        $user->password = Hash::make($request->input('password')?:'Dxjy1234');
+        $user->password = Hash::make($request->input('password') ?: 'Dxjy1234');
         $user->save();
         //give role
         $user->assignRole(User::ROLES['school']);
@@ -89,7 +89,7 @@ class SchoolController extends Controller
 
         //0.save school
         School::firstOrNew([
-            'name' => $request->input('school_name'),
+            'name'    => $request->input('school_name'),
             'user_id' => $user->id,
         ])->save();
         // $school = $user->school()->save($school);
@@ -103,17 +103,17 @@ class SchoolController extends Controller
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
-            'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
+            'user_id'  => $user->id,
+            'name'     => $request->input('profile_name'),
+            'sex'      => $request->input('profile_sex'),
             'birthday' => $birthday,
         ])->save();
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type' => 0, //Contact::TYPES[0] = skype
-            'number' => $request->input('contact_skype'),
-            'remark' => $request->input('contact_remark'),
+            'type'       => 0, //Contact::TYPES[0] = skype
+            'number'     => $request->input('contact_skype'),
+            'remark'     => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
 
@@ -152,7 +152,7 @@ class SchoolController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('SchoolController@update', ['id'=>$school->id])
+                'url'    => action('SchoolController@update', ['id'=>$school->id]),
             ],
             ['entity' => $school],
         );
@@ -181,9 +181,9 @@ class SchoolController extends Controller
         $contact = $profile->contacts->first();
 
         $user->fill([
-            'name' => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-            'email' => $request->input('user_email'),
-            'password' => Hash::make($request->input('password')?:'Dxjy1234')
+            'name'     => 'school_'.str_replace(' ', '', $request->input('profile_name')),
+            'email'    => $request->input('user_email'),
+            'password' => Hash::make($request->input('password') ?: 'Dxjy1234'),
         ])->save();
         //give role
         // $user->assignRole(User::ROLES['school']);
@@ -207,14 +207,14 @@ class SchoolController extends Controller
         $profile->fill([
             'telephone' => $request->input('telephone'),
             // 'user_id' => $user->id,
-            'name' => $request->input('profile_name'),
-            'sex' => $request->input('profile_sex'),
-            'birthday' =>  $birthday,
+            'name'     => $request->input('profile_name'),
+            'sex'      => $request->input('profile_sex'),
+            'birthday' => $birthday,
         ])->save();
 
         $contact->fill([
             // 'profile_id' => $profile->id,
-            'type' => 0, //Contact::TYPES[0] = skype
+            'type'   => 0, //Contact::TYPES[0] = skype
             'number' => $request->input('contact_skype'),
             'remark' => $request->input('contact_remark'),
         ])->save();

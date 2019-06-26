@@ -1,7 +1,7 @@
 <?php
 use App\User;
-use App\Models\Profile;
 use App\Models\Contact;
+use App\Models\Profile;
 use App\Models\PayMethod;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
@@ -19,11 +19,11 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name'              => $faker->name,
+        'email'             => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => Hash::make(Str::random(8)),
-        'remember_token' => Str::random(10),
+        'password'          => Hash::make(Str::random(8)),
+        'remember_token'    => Str::random(10),
     ];
 });
 
@@ -51,7 +51,7 @@ $factory->afterCreating(User::class, function ($user, $faker) {
     //user profile
     $profile = factory(Profile::class)->create([
         'user_id' => $user->id,
-        'name'  => $user->name,
+        'name'    => $user->name,
     ]);
     //user profile contact
     $contact = factory(Contact::class)->create([

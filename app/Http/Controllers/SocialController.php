@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Social;
-use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
-
 use App\Models\Profile;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class SocialController extends Controller
 {
@@ -24,7 +24,7 @@ class SocialController extends Controller
         if (Auth::user()->isAdmin()) {
             $socials = Social::paginate(50);
         } else {
-            $socials =  Social::where('user_id', Auth::id())->paginate(10);
+            $socials = Social::where('user_id', Auth::id())->paginate(10);
         }
         
         return view('socials.index', compact('socials'));
@@ -53,14 +53,14 @@ class SocialController extends Controller
         }
 
         $this->validate($request, [
-            'username'=>'required',
-            'password'=>'required',
+            'username'=> 'required',
+            'password'=> 'required',
         ]);
         $account = $request->get('username');
         if (is_numeric($account)) {
             $field = 'id';
             $account = Profile::select('user_id')->where('telephone', $account)->first();
-            $account = ($account==null)?0:$account->user_id;
+            $account = ($account == null) ? 0 : $account->user_id;
         } elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
         } else {
@@ -72,8 +72,8 @@ class SocialController extends Controller
             Social::firstOrCreate(
                 [
                     'social_id' => $request->input('social_id'),
-                    'user_id' => Auth::id(),
-                    'type' => $request->input('type'),
+                    'user_id'   => Auth::id(),
+                    'type'      => $request->input('type'),
                 ]
             );
         } else {

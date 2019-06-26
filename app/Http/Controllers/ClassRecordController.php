@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassRecord;
-use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
-// use App\Forms\ClassRecordForm as CreateForm;
-use App\Forms\Edit\ClassRecordForm as EditForm;
-
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Student;
 use App\Models\Teacher;
+// use App\Forms\ClassRecordForm as CreateForm;
+use App\Models\ClassRecord;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\Edit\ClassRecordForm as EditForm;
 
 class ClassRecordController extends Controller
 {
@@ -80,7 +80,7 @@ class ClassRecordController extends Controller
         //$this->authorize('indexByRole');
 
         $allowRolesMap = [
-            'agency' => 'agency_uid',
+            'agency'  => 'agency_uid',
             'teacher' => 'teacher_uid',
             'student' => 'user_id',
         ];
@@ -194,7 +194,7 @@ class ClassRecordController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('ClassRecordController@update', ['id' => $classRecord->id])
+                'url'    => action('ClassRecordController@update', ['id' => $classRecord->id]),
             ],
             ['entity' => $classRecord],
         );

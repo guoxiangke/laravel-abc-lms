@@ -20,7 +20,7 @@ class ProductForm extends Form
             ->add('price', 'text', [
                 'rules' => 'required',
                 'value' => $product->price,
-                'attr' => ['placeholder' => '单位元,可带2为小数'],
+                'attr'  => ['placeholder' => '单位元,可带2为小数'],
                 'label' => 'Price',
             ])
             ->add('description', 'text', [
@@ -34,11 +34,11 @@ class ProductForm extends Form
             ->add('remark', 'textarea', [
                 'label' => '备注',
                 'value' => $product->remark,
-                'attr' => ['rows' => 2],
+                'attr'  => ['rows' => 2],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

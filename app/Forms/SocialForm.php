@@ -14,7 +14,7 @@ class SocialForm extends Form
         if (! ($socialUser && $socialType)) {
             abort(403);
         }
-        alert()->toast('Welcome ' . $socialUser->nickname?:$socialUser->name, 'success', 'top-center')->autoClose(3000);
+        alert()->toast('Welcome ' . $socialUser->nickname ?: $socialUser->name, 'success', 'top-center')->autoClose(3000);
         $this->add('type', 'hidden', [
                 'label' => 'type',
                 'value' => $socialType,
@@ -24,26 +24,26 @@ class SocialForm extends Form
                 'value' => $socialUser->id,
             ])
             ->add('username', 'text', [
-                'rules' => 'required',
-                'label' =>  __('LoginName'),
+                'rules'      => 'required',
+                'label'      => __('LoginName'),
                 'help_block' => [
                     'text' => '请向课程顾问询问您的邮箱/登陆名',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
             ->add('password', 'password', [
-                'label' => __('Password'),
-                'rules' => 'required',
+                'label'      => __('Password'),
+                'rules'      => 'required',
                 'help_block' => [
                     'text' => '请向课程顾问询问您的密码',
-                    'tag' => 'small',
-                    'attr' => ['class' => 'form-text text-muted']
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
             ->add('submit', 'submit', [
                 'label' => __('Click to bind'),
-                'attr' => ['class' => 'btn btn-outline-primary'],
+                'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
     }
 }

@@ -11,62 +11,62 @@ class BooksTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i < 9; $i++) {
+        for ($i = 1; $i < 9; $i++) {
             Book::create([
-                'name' => "{$i}年级上（一年级起点）",
-                'type' => 0,
-                'publisher' => '人教版'
+                'name'      => "{$i}年级上（一年级起点）",
+                'type'      => 0,
+                'publisher' => '人教版',
             ]);
             Book::create([
-                'name' => "{$i}年级下（一年级起点）",
-                'type' => 0,
-                'publisher' => '人教版'
-            ]);
-
-            Book::create([
-                'name' => "{$i}年级上（一年级起点）",
-                'type' => 0,
-                'publisher' => '外研社'
-            ]);
-            Book::create([
-                'name' => "{$i}年级下（一年级起点）",
-                'type' => 0,
-                'publisher' => '外研社'
+                'name'      => "{$i}年级下（一年级起点）",
+                'type'      => 0,
+                'publisher' => '人教版',
             ]);
 
             Book::create([
-                'name' => "{$i}年级上",
-                'type' => 0,
-                'publisher' => '沪教版'
+                'name'      => "{$i}年级上（一年级起点）",
+                'type'      => 0,
+                'publisher' => '外研社',
             ]);
             Book::create([
-                'name' => "{$i}年级下",
-                'type' => 0,
-                'publisher' => '沪教版'
+                'name'      => "{$i}年级下（一年级起点）",
+                'type'      => 0,
+                'publisher' => '外研社',
             ]);
 
-            if ($i>=3) {
+            Book::create([
+                'name'      => "{$i}年级上",
+                'type'      => 0,
+                'publisher' => '沪教版',
+            ]);
+            Book::create([
+                'name'      => "{$i}年级下",
+                'type'      => 0,
+                'publisher' => '沪教版',
+            ]);
+
+            if ($i >= 3) {
                 Book::create([
-                    'name' => "{$i}年级上（三年级起点）",
-                    'type' => 0,
-                    'publisher' => '人教版'
+                    'name'      => "{$i}年级上（三年级起点）",
+                    'type'      => 0,
+                    'publisher' => '人教版',
                 ]);
                 Book::create([
-                    'name' => "{$i}年级下（三年级起点）",
-                    'type' => 0,
-                    'publisher' => '人教版'
+                    'name'      => "{$i}年级下（三年级起点）",
+                    'type'      => 0,
+                    'publisher' => '人教版',
                 ]);
 
 
                 Book::create([
-                    'name' => "{$i}年级上（三年级起点）",
-                    'type' => 0,
-                    'publisher' => '外研社'
+                    'name'      => "{$i}年级上（三年级起点）",
+                    'type'      => 0,
+                    'publisher' => '外研社',
                 ]);
                 Book::create([
-                    'name' => "{$i}年级下（三年级起点）",
-                    'type' => 0,
-                    'publisher' => '外研社'
+                    'name'      => "{$i}年级下（三年级起点）",
+                    'type'      => 0,
+                    'publisher' => '外研社',
                 ]);
             }
         }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\RruleForm as CreateForm;
-use App\Forms\Edit\RruleForm as EditForm;
-
-use App\Repositories\RruleRepository;
-use App\Models\Rrule;
-use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Rrule;
+use Illuminate\Http\Request;
+use App\Repositories\RruleRepository;
+
+use App\Forms\RruleForm as CreateForm;
+use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\RruleForm as EditForm;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class RruleController extends Controller
 {
@@ -61,7 +61,7 @@ class RruleController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('RruleController@store')
+            'url'    => action('RruleController@store'),
         ], ['entity' => $order]);
         return view('rrules.create', compact('form'));
     }
@@ -86,7 +86,7 @@ class RruleController extends Controller
         $rrule = Rrule::firstOrCreate(
             array_merge($rruleReslovedArray, [
                 'order_id' => $request->input('order_id'),
-                'type' => $request->input('type')?:0,//'AOL','SCHEDULE', Rrule::TYPE_SCHEDULE
+                'type'     => $request->input('type') ?: 0,//'AOL','SCHEDULE', Rrule::TYPE_SCHEDULE
             ])
         );
         if ($rrule->wasRecentlyCreated) {
@@ -121,7 +121,7 @@ class RruleController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('RruleController@update', ['id'=>$rrule->id])
+                'url'    => action('RruleController@update', ['id'=>$rrule->id]),
             ],
             ['entity' => $rrule],
         );

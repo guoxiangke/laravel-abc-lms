@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\User;
-use App\Models\Student;
-use App\Models\Rrule;
 use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Rrule;
+use App\Models\Student;
 use App\Models\ClassRecord;
 
 use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\OrderForm as CreateForm;
+use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\OrderForm as EditForm;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class OrderController extends Controller
 {
@@ -57,7 +57,7 @@ class OrderController extends Controller
     {
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
-            'url' => action('OrderController@store')
+            'url'    => action('OrderController@store'),
         ]);
         return view('orders.create', compact('form'));
     }
@@ -71,7 +71,7 @@ class OrderController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -79,16 +79,16 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $order = Order::firstOrNew([
-            'user_id' => $request->input('user_id'),//student_uid
-            'teacher_uid' => $request->input('teacher_uid')?:1,
-            'agency_uid' =>  $request->input('agency_uid')?:1,
-            'book_id' =>  $request->input('book_id')?:1 ,
-            'product_id' => $request->input('product_id'),
-            'price' => $request->input('price'),
-            'period' => $request->input('period'),
-            'expired_at' => $request->input('expired_at'),
-            'remark' => $request->input('remark'),
-            'status' => $request->input('status'),
+            'user_id'     => $request->input('user_id'),//student_uid
+            'teacher_uid' => $request->input('teacher_uid') ?: 1,
+            'agency_uid'  => $request->input('agency_uid') ?: 1,
+            'book_id'     => $request->input('book_id') ?: 1 ,
+            'product_id'  => $request->input('product_id'),
+            'price'       => $request->input('price'),
+            'period'      => $request->input('period'),
+            'expired_at'  => $request->input('expired_at'),
+            'remark'      => $request->input('remark'),
+            'status'      => $request->input('status'),
         ]);
         if (isset($order->id)) {
             $order->price = $request->input('price'); //还原价格
@@ -104,10 +104,10 @@ class OrderController extends Controller
             }
             $rruleReslovedArray = Rrule::buildRrule($rrule);
             Rrule::firstOrCreate([
-                'string' => $rruleReslovedArray['string'],
+                'string'   => $rruleReslovedArray['string'],
                 'start_at' => $rruleReslovedArray['start_at'],
                 'order_id' => $order->id,
-                'type' => Rrule::TYPE_SCHEDULE,//2个都是上课计划
+                'type'     => Rrule::TYPE_SCHEDULE,//2个都是上课计划
             ]);
         }
 
@@ -147,18 +147,18 @@ class OrderController extends Controller
             ->map(function ($startDateString) use (&$events) {
                 $start = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
                 //去除今日的 计划。 今日的0点生生了记录
-                if ($start->format('Y-m-d') ==  Carbon::now()->format('Y-m-d')) {
+                if ($start->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
                     return;
                 }
                 $events[] = [
-                    'start' =>  $startDateString,
-                    'end' =>  $start->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title' =>  $start->subMinutes(25)->format('m/d H:i'). '有课',
-                    'icon' =>  'lunch',
-                    'class' =>  'schedule',
-                    'content' =>  '<i class="v-icon material-icons">directions_run</i>',
+                    'start'   => $startDateString,
+                    'end'     => $start->addMinutes(25)->format('Y-m-d H:i:s'),
+                    'title'   => $start->subMinutes(25)->format('m/d H:i'). '有课',
+                    'icon'    => 'lunch',
+                    'class'   => 'schedule',
+                    'content' => '<i class="v-icon material-icons">directions_run</i>',
                     // 'background' =>  true,
-                    'contentFull' =>  'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
+                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
 
@@ -166,14 +166,14 @@ class OrderController extends Controller
             ->map(function ($startDateString) use (&$events) {
                 $start = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
                 $events[] = [
-                    'start' =>  $startDateString,
-                    'end' =>  Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title' =>  $start->format('m/d H:i') . ' 计划请假',
-                    'icon' =>  'lunch',
-                    'class' =>  'aol',
-                    'content' =>  '<i class="v-icon material-icons">directions_run</i>',
+                    'start'   => $startDateString,
+                    'end'     => Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->addMinutes(25)->format('Y-m-d H:i:s'),
+                    'title'   => $start->format('m/d H:i') . ' 计划请假',
+                    'icon'    => 'lunch',
+                    'class'   => 'aol',
+                    'content' => '<i class="v-icon material-icons">directions_run</i>',
                     // 'background' =>  true,
-                    'contentFull' =>  'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
+                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
 
@@ -182,20 +182,20 @@ class OrderController extends Controller
                 $link = route('classRecords.index', $order->id);
                 $now = Carbon::now()->format('Y-m-d ');
                 $isToday = $classRecord->generated_at->format('Y-m-d ') == $now;
-                $title = $isToday?'⚠️今日有课':'上课记录';
+                $title = $isToday ? '⚠️今日有课' : '上课记录';
                 if ($classRecord->exception) {
                     //学生老师/正常/异常请假
                     $title = ClassRecord::EXCEPTION_TYPES[$classRecord->exception];
                 }
                 $events[] = [
-                    'start' =>  $classRecord->generated_at->format('Y-m-d H:i:s'),
-                    'end' =>  $classRecord->generated_at->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title' => $classRecord->generated_at->format('m/d H:i') . $title,
-                    'icon' =>  'lunch',
-                    'class' => $isToday?'today':'history',
-                    'content' =>  '<i class="v-icon material-icons">directions_run</i>',
+                    'start'   => $classRecord->generated_at->format('Y-m-d H:i:s'),
+                    'end'     => $classRecord->generated_at->addMinutes(25)->format('Y-m-d H:i:s'),
+                    'title'   => $classRecord->generated_at->format('m/d H:i') . $title,
+                    'icon'    => 'lunch',
+                    'class'   => $isToday ? 'today' : 'history',
+                    'content' => '<i class="v-icon material-icons">directions_run</i>',
                     // 'background' =>  true,
-                    'contentFull' =>  'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
+                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
         
@@ -216,7 +216,7 @@ class OrderController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url' => action('OrderController@update', ['id' => $order->id])
+                'url'    => action('OrderController@update', ['id' => $order->id]),
             ],
             ['entity' => $order],
         );
@@ -233,7 +233,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
+            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
@@ -241,16 +241,16 @@ class OrderController extends Controller
         }
 
         $order->fill([
-            'user_id' => $request->input('user_id'),//student_uid
-            'teacher_uid' => $request->input('teacher_uid')?:1,
-            'agency_uid' =>  $request->input('agency_uid')?:1,
-            'book_id' =>  $request->input('book_id')?:1 ,
-            'product_id' => $request->input('product_id'),
-            'price' => $request->input('price'),
-            'period' => $request->input('period'),
-            'expired_at' => $request->input('expired_at'),
-            'remark' => $request->input('remark'),
-            'status' => $request->input('status'),
+            'user_id'     => $request->input('user_id'),//student_uid
+            'teacher_uid' => $request->input('teacher_uid') ?: 1,
+            'agency_uid'  => $request->input('agency_uid') ?: 1,
+            'book_id'     => $request->input('book_id') ?: 1 ,
+            'product_id'  => $request->input('product_id'),
+            'price'       => $request->input('price'),
+            'period'      => $request->input('period'),
+            'expired_at'  => $request->input('expired_at'),
+            'remark'      => $request->input('remark'),
+            'status'      => $request->input('status'),
         ])->save();
         
         $start_at = $request->input('start_at');

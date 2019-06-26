@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\User;
+
+use OwenIt\Auditing\Auditable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Student extends Model implements AuditableContract
 {
@@ -22,9 +22,9 @@ class Student extends Model implements AuditableContract
         'remark',
         'name',//英文名字
     ];
-    const ALLOW_LIST_ROLES =['agency', 'teacher', 'student']; //indexByRole permission
+    const ALLOW_LIST_ROLES = ['agency', 'teacher', 'student']; //indexByRole permission
     //0代表幼儿园 1-9年级 高中1-3(10-12) 大学1-4(13-16) 17成人
-    const GRADES =[
+    const GRADES = [
         '幼儿园',
         '1年级',
         '2年级',

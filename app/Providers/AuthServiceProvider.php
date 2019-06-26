@@ -2,21 +2,21 @@
 
 namespace App\Providers;
 
+use App\Models\Agency;
+use App\Models\Social;
+
+use App\Models\Profile;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\ClassRecord;
+use App\Policies\AgencyPolicy;
+use App\Policies\SocialPolicy;
+use App\Policies\ProfilePolicy;
+use App\Policies\StudentPolicy;
+use App\Policies\TeacherPolicy;
+use App\Policies\ClassRecordPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
-use App\Models\ClassRecord;
-use App\Models\Student;
-use App\Models\Agency;
-use App\Models\Teacher;
-use App\Policies\ClassRecordPolicy;
-use App\Policies\StudentPolicy;
-use App\Policies\AgencyPolicy;
-use App\Policies\TeacherPolicy;
-use App\Models\Social;
-use App\Policies\SocialPolicy;
-use App\Models\Profile;
-use App\Policies\ProfilePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,11 +27,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ClassRecord::class => ClassRecordPolicy::class,
-        Student::class => StudentPolicy::class,
-        Agency::class => AgencyPolicy::class,
-        Teacher::class => TeacherPolicy::class,
-        Social::class => SocialPolicy::class,
-        Profile::class => ProfilePolicy::class,
+        Student::class     => StudentPolicy::class,
+        Agency::class      => AgencyPolicy::class,
+        Teacher::class     => TeacherPolicy::class,
+        Social::class      => SocialPolicy::class,
+        Profile::class     => ProfilePolicy::class,
     ];
 
     /**
