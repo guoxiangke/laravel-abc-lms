@@ -105,18 +105,31 @@ $fixers = [
     "unix_line_endings",
     "whitespace_after_comma_in_array",
 ];
-$finder = Symfony\Component\Finder\Finder::create()
+
+$rules = [
+    '@PSR2' => true,
+    // addtional rules
+    'array_syntax' => ['syntax' => 'short'],
+    'no_multiline_whitespace_before_semicolons' => true,
+    'no_short_echo_tag' => true,
+    'no_unused_imports' => true,
+    'not_operator_with_successor_space' => true,
+];
+
+$finder = PhpCsFixer\Finder::create()
     ->notPath('bootstrap/cache')
-    ->notPath('storage')
-    ->notPath('vendor')
+    ->exclude('storage')
+    ->exclude('vendor')
     ->in(__DIR__)
     ->name('*.php')
     ->notName('*.blade.php')
     ->ignoreDotFiles(true)
-    ->ignoreVCS(true);
-
-return Symfony\CS\Config\Config::create()
-    ->level(Symfony\CS\FixerInterface::PSR2_LEVEL)
-    ->fixers($fixers)
-    ->finder($finder)
+    ->ignoreVCS(true)
+;
+# https://gist.github.com/petericebear/72e2b462f59b305c551c
+return PhpCsFixer\Config::create()
+    ->setRules($rules)
+    // ->fixers($fixers)
+    ->setFinder($finder)
     ->setUsingCache(false);
+;
