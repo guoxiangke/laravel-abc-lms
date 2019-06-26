@@ -8,19 +8,15 @@ use Carbon\Carbon;
 use App\Models\Agency;
 use App\Models\Contact;
 use App\Models\Profile;
-
 use App\Models\Student;
 use App\Models\PayMethod;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Hash;
 use App\Forms\StudentForm as CreateForm;
-
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\StudentForm as EditForm;
 use App\Forms\Register\StudentRegisterForm;
-
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class StudentController extends Controller

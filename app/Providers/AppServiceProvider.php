@@ -7,7 +7,6 @@ use App\Models\Rrule;
 // use Spatie\Flash\Flash;
 use App\Models\ClassRecord;
 use App\Observers\RruleObserver;
-
 use Illuminate\Support\Facades\URL;
 use App\Observers\ClassRecordObserver;
 use Illuminate\Support\Facades\Config;

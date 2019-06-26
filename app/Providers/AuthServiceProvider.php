@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Agency;
 use App\Models\Social;
-
 use App\Models\Profile;
 use App\Models\Student;
 use App\Models\Teacher;

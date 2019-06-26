@@ -6,7 +6,6 @@ use App\User;
 // 引入 laravel-permission 模型
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-
 // 用于输出一次性信息
 use Spatie\Permission\Models\Permission;
 

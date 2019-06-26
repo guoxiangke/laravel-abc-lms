@@ -7,16 +7,13 @@ use Carbon\Carbon;
 use App\Models\Agency;
 use App\Models\Contact;
 use App\Models\Profile;
-
 use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Forms\AgencyForm as CreateForm;
-
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\AgencyForm as EditForm;
 use App\Forms\Register\AgencyRegisterForm;
-
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\AgencyUpgradeForm as UpgradeForm;
 

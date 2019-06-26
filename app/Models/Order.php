@@ -6,10 +6,8 @@ use App\User;
 use Carbon\Carbon;
 use App\Traits\HasPriceField;
 use OwenIt\Auditing\Auditable;
-
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;

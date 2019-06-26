@@ -5,12 +5,10 @@
 namespace App\Models;
 
 use App\User;
-
 use OwenIt\Auditing\Auditable;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;

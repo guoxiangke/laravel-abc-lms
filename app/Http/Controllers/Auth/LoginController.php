@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use Socialite;
 use App\Models\Social;
 use App\Models\Profile;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

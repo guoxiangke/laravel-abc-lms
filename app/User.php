@@ -7,7 +7,6 @@ use App\Models\School;
 use App\Models\Social;
 use App\Models\Profile;
 use App\Models\Student;
-
 use App\Models\Teacher;
 use App\Models\PayMethod;
 use Laravelista\Comments\Commenter;
@@ -15,7 +14,6 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia

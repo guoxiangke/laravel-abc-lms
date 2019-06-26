@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasPriceField;
-
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 

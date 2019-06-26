@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use App\Forms\ProfileForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ProfileForm as EditForm;

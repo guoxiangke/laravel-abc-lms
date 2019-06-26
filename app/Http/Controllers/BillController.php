@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Bill;
 use Illuminate\Http\Request;
-
 use App\Forms\BillForm as CreateForm;
 use App\Forms\Edit\BillForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;

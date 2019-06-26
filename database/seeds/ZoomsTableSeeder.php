@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Zoom;
-
 use Illuminate\Database\Seeder;
 
 class ZoomsTableSeeder extends Seeder
