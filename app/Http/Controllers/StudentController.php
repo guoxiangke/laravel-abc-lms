@@ -25,10 +25,10 @@ use Auth;
 
 class StudentController extends Controller
 {
-    
     use FormBuilderTrait;
 
-    public function __construct(Student $Student) {
+    public function __construct(Student $Student)
+    {
         // $this->classRecord = $classRecord;
         //中间件让具备指定权限的用户才能访问该资源
         //只有管理员可以访问所有 /classRecords
@@ -42,12 +42,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('user',
-                'user.profiles', 'user.profiles.contacts',
-                'user.profiles.recommend',
-                'user.socials',
-            )//'user.paymethod', 
-            ->orderBy('id','desc')
+        $students = Student::with(
+            'user',
+            'user.profiles',
+            'user.profiles.contacts',
+            'user.profiles.recommend',
+            'user.socials',
+            )//'user.paymethod',
+            ->orderBy('id', 'desc')
             ->paginate(100);
         return view('students.index', compact('students'));
     }
@@ -63,22 +65,22 @@ class StudentController extends Controller
         //谁可以拥有此列表
         //只有老师、学生、和代理可以拥有本列表
         // const ALLOW_LIST_ROLES =['agency', 'teacher'];
-        if(!$user->hasAnyRole(Student::ALLOW_LIST_ROLES)) {
+        if (! $user->hasAnyRole(Student::ALLOW_LIST_ROLES)) {
             abort(403);
         }
         //$this->authorize('indexByRole');
         // dd($user->toArray());
         //我推荐的学生
-        $students = Profile::with('student','contacts','recommend')
+        $students = Profile::with('student', 'contacts', 'recommend')
             ->where('recommend_uid', $user->id)
             // ->where('student.id', null)
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             // ->get()
             // ->filter(function ($recommed) {
             //     return $recommed->student;
             // })
             ->paginate(50);
-            // dd($students->toArray());
+        // dd($students->toArray());
         return view('students.index4recommend', compact('students'));
     }
 
@@ -92,7 +94,7 @@ class StudentController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('StudentController@store')
-        ]); 
+        ]);
         return view('students.create', compact('form'));
     }
 
@@ -104,7 +106,7 @@ class StudentController extends Controller
         $form = $this->form(StudentRegisterForm::class, [
             'method' => 'POST',
             'url' => action('StudentController@registerStore')
-        ]); 
+        ]);
         return view('students.register', compact('form'));
     }
     /**
@@ -118,14 +120,14 @@ class StudentController extends Controller
         //必须是没XX角色才可以注册
         $this->authorize('create', Student::class);
         $profileTelephone = $request->input('telephone');
-        if($profileTelephone){
+        if ($profileTelephone) {
             $this->validate($request, [
                 'telephone'=>'min:11|unique:profiles',
             ]);
         }
         $form = $formBuilder->create(StudentRegisterForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $user = $request->user();
@@ -135,22 +137,22 @@ class StudentController extends Controller
         $recommendTelephone = $request->input('recommend_telephone');
         $userProfile = Profile::where('user_id', $user->id)->firstOrFail();
         $userProfileNeedSave  = false;
-        if($recommendTelephone) {
+        if ($recommendTelephone) {
             $recommendUser = Profile::where('telephone', $recommendTelephone)->first();
-            if($recommendUser){
+            if ($recommendUser) {
                 $userProfile->recommend_uid = $recommendUser->user_id;
                 $userProfileNeedSave  = true;
             }
         }
-        if($profileTelephone){
+        if ($profileTelephone) {
             $userProfile->telephone = $profileTelephone;
             $userProfileNeedSave  = true;
         }
-        if($profileName){
+        if ($profileName) {
             $userProfile->name = $profileName;
             $userProfileNeedSave  = true;
         }
-        if($userProfileNeedSave){
+        if ($userProfileNeedSave) {
             $userProfile->save();
         }
         //endregion
@@ -165,7 +167,7 @@ class StudentController extends Controller
         ]);
         //创建关联关系？
         // $student = $user->student()->save($student);
-        if($student){
+        if ($student) {
             $user->assignRole(User::ROLES['student']);
             alert()->toast('学员登记成功，欢迎您！', 'success', 'top-center')->autoClose(3000);
             return redirect()->route('home');
@@ -185,13 +187,13 @@ class StudentController extends Controller
         $this->validate($request, [
             'telephone'=>'required|min:11|unique:profiles',
         ]);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
         $profileName = $request->input('profile_name');
         $name = User::pinyin($profileName);
-        if(!$name) {
+        if (! $name) {
             $name = str_replace(' ', '_', $profileName);
         }
         $name = 's_' .  $name;
@@ -218,7 +220,7 @@ class StudentController extends Controller
             'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
@@ -261,14 +263,14 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('StudentController@update', ['id'=>$student->id])
             ],
             ['entity' => $student],
-        ); 
-        return view('students.edit', compact('form','student'));
+        );
+        return view('students.edit', compact('form', 'student'));
     }
 
     /**
@@ -282,7 +284,7 @@ class StudentController extends Controller
     {
         $form = $this->form(EditForm::class);
         
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -299,7 +301,7 @@ class StudentController extends Controller
 
         $profileName = $request->input('profile_name');
         $name = $request->input('name'); //英文名！
-        if(!$name) {
+        if (! $name) {
             $name = 's_'. User::pinyin($profileName);
         }
         // $email = $name . '@student.com';
@@ -317,7 +319,7 @@ class StudentController extends Controller
 
         //确保只有一个手机号
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([

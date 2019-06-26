@@ -16,7 +16,7 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->comment('关联登陆用户id');
-                // contact_id -> skype
+            // contact_id -> skype
             $table->unsignedBigInteger('school_id')->nullable()->comment('学校id，NULL 为freelancer');
             $table->unsignedBigInteger('zoom_id')->nullable();
             // $table->unsignedBigInteger('teacher_uid')->nullable()->comment('推荐关系');

@@ -13,7 +13,9 @@ class TeacherForm extends Form
     public function buildForm()
     {
         $teacher = $this->getData('entity');
-        if(!$teacher) return;
+        if (! $teacher) {
+            return;
+        }
         $user = $teacher->user;
         $schoolId = $teacher->school?$teacher->school->id:0;
         $zoomId = $teacher->zoom?$teacher->zoom->id:0;
@@ -21,7 +23,7 @@ class TeacherForm extends Form
         $paymethod = $user->paymethod;
         $contact = false;
         $profile = $user->profiles->first();
-        if($profile){
+        if ($profile) {
             $contact = $profile->contacts->first();
         }
         
@@ -29,11 +31,11 @@ class TeacherForm extends Form
 
         //select zooms un-used!
         $zooms = Zoom::with('teacher')
-            ->orderBy('id','desc')->get()->filter(function($zoom) use($zoomId){
+            ->orderBy('id', 'desc')->get()->filter(function ($zoom) use ($zoomId) {
                 //它自己和没有分配的id
-                return !$zoom->teacher || $zoom->id==$zoomId;
+                return ! $zoom->teacher || $zoom->id==$zoomId;
             })
-            ->pluck('email','id')
+            ->pluck('email', 'id')
             ->toArray();
 
         $this->add('school_id', 'select', [
@@ -42,7 +44,9 @@ class TeacherForm extends Form
                 'selected' => $schoolId,
                 'empty_value' => 'Freelancer/自由职业'
             ])
-            ->add('profile_name', 'text',
+            ->add(
+                'profile_name',
+                'text',
                 ['rules' => 'required','label' => '姓名','value'=>$profile?$profile->name:null]
             )
             ->add('user_password', 'text', [
@@ -69,7 +73,7 @@ class TeacherForm extends Form
                 'selected' =>  $contact?$contact->type:0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'value'=> $contact?$contact->number:null,
                 'label' => '联系方式账户ID'
@@ -104,7 +108,7 @@ class TeacherForm extends Form
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '生日',
-                'value'=>$profile?($profile->birthday?$profile->birthday->format('Y-m-d'):NULL):null
+                'value'=>$profile?($profile->birthday?$profile->birthday->format('Y-m-d'):null):null
             ])
             ->add('pay_method', 'select', [
                 'label' => '付款方式（中教必填）',
@@ -113,7 +117,7 @@ class TeacherForm extends Form
                 'selected' => $paymethod?$paymethod->type:0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'label' => '付款账户ID（中教必填）',
                 'value' => $paymethod?$paymethod->number:null,
             ])

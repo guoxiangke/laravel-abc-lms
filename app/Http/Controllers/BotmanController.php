@@ -36,19 +36,18 @@ class BotmanController extends Controller
             $bot->reply('Hello yourself.');
         });
 
-    // bark_notify('验证码是0000');
-    // bark_notify('验证码是0001','这是body解释');
-    // 
-    // bark_notify('验证码是1234，已复制1234到剪切板，粘贴即可。','12345', true);
-    // bark_notify('验证码是4567，已复制所有文本到剪切板。', false, true);
+        // bark_notify('验证码是0000');
+        // bark_notify('验证码是0001','这是body解释');
+        //
+        // bark_notify('验证码是1234，已复制1234到剪切板，粘贴即可。','12345', true);
+        // bark_notify('验证码是4567，已复制所有文本到剪切板。', false, true);
 
-        $botman->fallback(function(BotMan $bot) use($request) {
+        $botman->fallback(function (BotMan $bot) use ($request) {
             $bot->reply('Sorry, I did not understand these commands. Here is a list of commands I understand: ...');
             bark_notify('访客'. substr($request->input('userId'), 0, 4) .'发来消息: '. $request->input('message') .'，点击回复', 'https://cn.bing.com');
-            \Log::error(__CLASS__,[$request->all(),$bot->getMessage()->getPayload()]);
+            \Log::error(__CLASS__, [$request->all(),$bot->getMessage()->getPayload()]);
         });
         // Start listening
         $botman->listen();
-
     }
 }

@@ -23,10 +23,10 @@ use Carbon\Carbon;
 
 class AgencyController extends Controller
 {
-    
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
@@ -37,10 +37,10 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agencies = Agency::with('user','user.profiles','user.paymethod','user.profiles.recommend')
-            ->orderBy('id','desc')
+        $agencies = Agency::with('user', 'user.profiles', 'user.paymethod', 'user.profiles.recommend')
+            ->orderBy('id', 'desc')
             ->paginate(100);
-        return view('agencies.index',compact('agencies'));
+        return view('agencies.index', compact('agencies'));
     }
 
     /**
@@ -50,11 +50,10 @@ class AgencyController extends Controller
      */
     public function create(Request $request)
     {
-
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('AgencyController@store')
-        ]); 
+        ]);
         return view('agencies.create', compact('form'));
     }
 
@@ -65,7 +64,7 @@ class AgencyController extends Controller
         $form = $this->form(AgencyRegisterForm::class, [
             'method' => 'POST',
             'url' => action('AgencyController@registerStore')
-        ]); 
+        ]);
         return view('agencies.register', compact('form'));
     }
 
@@ -84,11 +83,10 @@ class AgencyController extends Controller
         ]);
         $form = $formBuilder->create(AgencyRegisterForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $user = $request->user();
-
     }
     
     /**
@@ -104,17 +102,17 @@ class AgencyController extends Controller
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
         $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type');//0-3
         $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
-        $user = User::where('email',$email)->first();
+        $user = User::where('email', $email)->first();
 
-        if(!$user){
-            if($password=$request->input('user_password')?:'Agency1234'){
+        if (! $user) {
+            if ($password=$request->input('user_password')?:'Agency1234') {
                 $password = Hash::make($password);
             }
             $userData = [
@@ -140,7 +138,7 @@ class AgencyController extends Controller
             'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             //1966-11-18
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
@@ -185,13 +183,13 @@ class AgencyController extends Controller
     public function edit(Agency $agency)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('AgencyController@update', ['id'=>$agency->id])
             ],
             ['entity' => $agency],
-        ); 
+        );
         return view('agencies.edit', compact('form'));
     }
 
@@ -205,7 +203,7 @@ class AgencyController extends Controller
     public function update(Request $request, agency $agency, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -221,7 +219,7 @@ class AgencyController extends Controller
         $contactType = $request->input('contact_type');//0-3
         $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
 
-        if($password=$request->input('user_password')?:'Agency1234'){
+        if ($password=$request->input('user_password')?:'Agency1234') {
             $password = Hash::make($password);
         }
         $userData = [
@@ -240,7 +238,7 @@ class AgencyController extends Controller
         // $agency = $user->agency()->save($agency);
 
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             //1966-11-18
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
@@ -275,20 +273,20 @@ class AgencyController extends Controller
     public function upgrade(User $user)
     {
         $form = $this->form(
-            UpgradeForm::class, 
+            UpgradeForm::class,
             [
                 'method' => 'POST',
                 'url' => action('AgencyController@upgradeStore', $user)
             ],
             ['entity' => $user],
-        ); 
+        );
         return view('agencies.upgrade', compact('form'));
     }
 
     public function upgradeStore(Request $request, User $user, FormBuilder $formBuilder)
     {
         $form = $this->form(UpgradeForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -312,5 +310,4 @@ class AgencyController extends Controller
 
         return redirect()->route('agencies.index');
     }
-    
 }

@@ -12,19 +12,21 @@ class ClassRecordForm extends Form
     public function buildForm()
     {
         $classRecord = $this->getData('entity');
-        if(!$classRecord) return;
+        if (! $classRecord) {
+            return;
+        }
         $generated_at = $classRecord->generated_at->format('Y-m-d\TH:i');
         $rrule_id = $classRecord->rrule->order->title;
 
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
 
         $remark =  $classRecord->remark;
         $exception =  $classRecord->exception;
         $exceptions = ClassRecord::EXCEPTION_TYPES;
         $user = Auth::user();
         //根据角色拥有编辑权限 不是老师才能看到状态更改！
-        if(!$user->hasRole('teacher')){
+        if (! $user->hasRole('teacher')) {
             $this->add('exception', 'select', [
                 'label' => 'Status',
                 'rules' => 'required',
@@ -96,6 +98,5 @@ class ClassRecordForm extends Form
             'label' => 'Save',
             'attr' => ['class' => 'btn btn-outline-primary'],
         ]);
-
     }
 }

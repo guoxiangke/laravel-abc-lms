@@ -3,16 +3,13 @@
 namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\Rrule;
-use App\Models\Order;
 
 class RruleForm extends Form
 {
     public function buildForm()
     {
         $order = $this->getData('entity');
-        if($order){
-
+        if ($order) {
             $this->add('order_id', 'hidden', [
                     'label' => $order->title,
                     'rules' => 'required',

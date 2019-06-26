@@ -26,11 +26,12 @@ class ClassRecordPolicy
         //可以评论的人一定能查看
         return $this->comment($user, $classRecord)
             || $classRecord->agency_uid == $user->id //代理可以查看但不可以评论
-            ;
+;
     }
 
     //谁可以评论？学生可以
-    public function comment(User $user, ClassRecord $classRecord){
+    public function comment(User $user, ClassRecord $classRecord)
+    {
         return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
     }
 

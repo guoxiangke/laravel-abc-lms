@@ -64,9 +64,8 @@ class ProductsTableSeeder extends Seeder
             ],
         ];
 
-        collect($products)->map(function($product){
+        collect($products)->map(function ($product) {
             Product::create($product);
         });
-
     }
 }

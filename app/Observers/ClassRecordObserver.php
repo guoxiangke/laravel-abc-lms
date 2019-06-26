@@ -25,7 +25,6 @@ class ClassRecordObserver
      */
     public function updated(ClassRecord $classRecord)
     {
-        
     }
 
     /**

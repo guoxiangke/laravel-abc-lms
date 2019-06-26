@@ -1,6 +1,8 @@
 <?php
 use App\User;
-use App\Models\{Profile, Contact, PayMethod, School, Teacher};
+use App\Models\Profile;
+use App\Models\Contact;
+use App\Models\PayMethod;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 

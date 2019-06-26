@@ -44,8 +44,6 @@ class ProfilePolicy
     public function update(User $user, Profile $profile)
     {
         return $user->id === $profile->user_id
-            || $user->isAdmin()
-            ;
+            || $user->isAdmin();
     }
-
 }

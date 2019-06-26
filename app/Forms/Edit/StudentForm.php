@@ -3,24 +3,23 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
 use App\Models\Student;
 use App\Models\Agency;
 use App\Models\Book;
-use App\User;
 
 class StudentForm extends Form
 {
     public function buildForm()
     {
         $student = $this->getData('entity');
-        if(!$student) return;
+        if (! $student) {
+            return;
+        }
         $user = $student->user;
         $paymethod = $user->paymethod;
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
-        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name','user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name','user_id'))->unique()->toArray();
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->unique()->toArray();
         // dd($recommend);
 
         $this->add('profile_name', 'text', [
@@ -37,7 +36,7 @@ class StudentForm extends Form
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '生日',
-                'value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):NULL
+                'value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):null
             ])
             ->add('grade', 'select', [
                 'label' => '年级',
@@ -76,10 +75,10 @@ class StudentForm extends Form
             ->add('book_id', 'select', [
                 'label' => '同步教材',
                 'selected' => $student->book_id,
-                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
+                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'value' => $contact->number,
                 'label' => 'Wechat/QQ/手机号',
             ])
@@ -90,7 +89,7 @@ class StudentForm extends Form
                     'rows' => 2,
                     'placeholder' => 'Wechat/QQ/手机号 可不填,备注写这里',
 
-                ], 
+                ],
             ])
             ->add('recommend_uid', 'select', [
                 'label' => '介绍人',

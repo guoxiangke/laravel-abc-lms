@@ -3,10 +3,7 @@
 namespace App\Forms\Register;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
 use App\Models\Student;
-use App\Models\Agency;
 use App\Models\Book;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +21,7 @@ class StudentRegisterForm extends Form
             ])
             ->add('book_id', 'select', [
                 'label' => '同步教材',
-                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
+                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('english_name', 'text', [
@@ -51,7 +48,7 @@ class StudentRegisterForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('contact_qq', 'text',[
+            ->add('contact_qq', 'text', [
                 'label' => 'QQ/微信',
                 'help_block' => [
                     'text' => '可以留空，家长QQ号或微信号',
@@ -59,14 +56,14 @@ class StudentRegisterForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ]);
-            //如果是默认推荐人，给更改机会
-            $user = Auth::user();
-            if($user){
-                $profile = $user->profiles->first();
-                if($profile){
-                    $recommendUid= $profile->recommend_uid;
-                    if($recommendUid === 1){
-                        $this->add('recommend_telephone', 'tel', [
+        //如果是默认推荐人，给更改机会
+        $user = Auth::user();
+        if ($user) {
+            $profile = $user->profiles->first();
+            if ($profile) {
+                $recommendUid= $profile->recommend_uid;
+                if ($recommendUid === 1) {
+                    $this->add('recommend_telephone', 'tel', [
                             'label' => '推荐人手机号',
                             'help_block' => [
                                 'text' => '若无，可以留空',
@@ -74,10 +71,10 @@ class StudentRegisterForm extends Form
                                 'attr' => ['class' => 'form-text text-muted']
                             ],
                         ]);
-                    }
                 }
             }
-            $this->add('submit', 'submit', [
+        }
+        $this->add('submit', 'submit', [
                 'label' => 'Save',
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);

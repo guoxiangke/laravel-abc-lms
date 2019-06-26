@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class School extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-    	'name',
+        'name',
         'image',
         'remark',
-    	'user_id',
+        'user_id',
     ];
 
     public function user()

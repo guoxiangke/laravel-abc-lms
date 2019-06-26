@@ -3,8 +3,6 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\Student;
-use App\Models\Agency;
 use App\User;
 
 class ProfileForm extends Form
@@ -12,7 +10,9 @@ class ProfileForm extends Form
     public function buildForm()
     {
         $profile = $this->getData('entity');
-        if(!$profile) return;
+        if (! $profile) {
+            return;
+        }
         $this
             ->add('user_id', 'hidden', ['label' => 'User Id','value' => $profile->user_id,])
             ->add('name', 'text', [
@@ -27,7 +27,7 @@ class ProfileForm extends Form
                 'selected' => $profile->sex,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('birthday', 'date', ['label' => '生日','value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):NULL])
+            ->add('birthday', 'date', ['label' => '生日','value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):null])
             ->add('telephone', 'tel', [
                 'rules' => 'required|min:11',
                 'label' => '手机号',
@@ -43,15 +43,15 @@ class ProfileForm extends Form
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);
 
-            //介绍人只有管理员可以更改！
-            if($profile->user->isAdmin()){
-                $recommend = User::with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-                $this->addBefore('submit', 'recommend_uid', 'select', [
+        //介绍人只有管理员可以更改！
+        if ($profile->user->isAdmin()) {
+            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+            $this->addBefore('submit', 'recommend_uid', 'select', [
                     'label' => '介绍人',
                     'choices' => $recommend,
                     'selected' => $profile->recommend_uid,
                     'empty_value' => '=== Select ==='
                 ]);
-            }
+        }
     }
 }

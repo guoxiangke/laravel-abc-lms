@@ -9,7 +9,9 @@ class ZoomForm extends Form
     public function buildForm()
     {
         $entity = $this->getData('entity');
-        if(!$entity) return;
+        if (! $entity) {
+            return;
+        }
         $this->add('email', 'email', [
                 'rules' => 'required',
                 'value' => $entity->email,

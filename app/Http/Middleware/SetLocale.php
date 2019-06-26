@@ -25,7 +25,7 @@ class SetLocale
         } else {
             $locale = 'en';
 
-            if(Str::startsWith($request->server('HTTP_ACCEPT_LANGUAGE'), 'zh-CN')){
+            if (Str::startsWith($request->server('HTTP_ACCEPT_LANGUAGE'), 'zh-CN')) {
                 $locale = 'zh-CN';
             };
         }

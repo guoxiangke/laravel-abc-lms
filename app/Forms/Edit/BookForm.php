@@ -9,9 +9,10 @@ class BookForm extends Form
 {
     public function buildForm()
     {
-
         $book = $this->getData('entity');
-        if(!$book) return;
+        if (! $book) {
+            return;
+        }
         $this->add('name', 'text', [
                 'rules' => 'required',
                 'label' => 'Name',

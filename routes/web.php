@@ -33,7 +33,7 @@ Route::get('/dos', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 //验证码
-Route::get('/captcha/{config?}', function(\Mews\Captcha\Captcha $captcha, $config='default'){
+Route::get('/captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $config='default') {
     //GD Library extension not available with this PHP installation.
     return $captcha->create($config);
 });
@@ -45,7 +45,7 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('login/wechat', 'Auth\LoginController@redirectToWechatProvider')->name('login.weixin');
 Route::get('login/wechat/callback', 'Auth\LoginController@handleWechatProviderCallback');
 
-Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function(){
+Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function () {
     return 'TneROHDiBDphZRvS';
 });
 
@@ -55,11 +55,11 @@ Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProvid
 Route::resources(['socials' => 'SocialController']); //post need
 
 //admin
-Route::group( ['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
     // Route::resource('posts', 'PostController');
-    Route::resource('permissions','PermissionController');
+    Route::resource('permissions', 'PermissionController');
 
     Route::resources([
         'schools' => 'SchoolController',
@@ -79,32 +79,32 @@ Route::group( ['middleware' => ['auth']], function() {
         'bills' => 'BillController',
     ]);
     //升级学生用户为代理用户
-    Route::get('agencies/upgrade/{user}','AgencyController@upgrade')->name('agencies.upgrade');
-    Route::post('agencies/upgrade/{user}','AgencyController@upgradeStore')->name('agencies.upgradeStore');
+    Route::get('agencies/upgrade/{user}', 'AgencyController@upgrade')->name('agencies.upgrade');
+    Route::post('agencies/upgrade/{user}', 'AgencyController@upgradeStore')->name('agencies.upgradeStore');
     //覆盖create！！！
-    Route::get('rrules/create/{order}','RruleController@create')->name('rrules.create');
+    Route::get('rrules/create/{order}', 'RruleController@create')->name('rrules.create');
 
     //登陆用户 角色登记
-    Route::get('student/register','StudentController@register')->name('students.register');
-    Route::get('teacher/register','TeacherController@register')->name('teachers.register');
-    Route::get('agency/register','AgencyController@register')->name('agencies.register');
-    Route::post('student/register','StudentController@registerStore');
-    Route::post('teacher/register','TeacherController@registerStore');
-    Route::post('agency/register','AgencyController@registerStore');
+    Route::get('student/register', 'StudentController@register')->name('students.register');
+    Route::get('teacher/register', 'TeacherController@register')->name('teachers.register');
+    Route::get('agency/register', 'AgencyController@register')->name('agencies.register');
+    Route::post('student/register', 'StudentController@registerStore');
+    Route::post('teacher/register', 'TeacherController@registerStore');
+    Route::post('agency/register', 'AgencyController@registerStore');
 
     //老师、学生(代理不可以)的上课记录列表
-    Route::get('class-records','ClassRecordController@indexByRole')->name('classRecords.indexByRole');
+    Route::get('class-records', 'ClassRecordController@indexByRole')->name('classRecords.indexByRole');
     // 代理： 我的学生
-    Route::get('student-recommend','StudentController@indexByRecommend')->name('students.recommend');
-    Route::get('classRecords/order/{order}','ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
+    Route::get('student-recommend', 'StudentController@indexByRecommend')->name('students.recommend');
+    Route::get('classRecords/order/{order}', 'ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
     //某个学生的上课记录 for agncy！
-    Route::get('classRecords/student/{student}','ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
+    Route::get('classRecords/student/{student}', 'ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
     //某个学生的上课记录 for tacher
-    Route::get('classRecords/teacher/{teacher}','ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
+    Route::get('classRecords/teacher/{teacher}', 'ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
     //老师/管理人员快速请假标记 ajax
-    Route::post('/classRecords/{classRecord}/exception/{id}','ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
+    Route::post('/classRecords/{classRecord}/exception/{id}', 'ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 
-    Route::post('/order/{order}/status/{id}','OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
+    Route::post('/order/{order}/status/{id}', 'OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
 
 
     Route::get('/referrals', function () {
@@ -116,8 +116,7 @@ Route::group( ['middleware' => ['auth']], function() {
     })->name('autologin');
 
 
-    Route::get('charts','ChartController@index');
-    
+    Route::get('charts', 'ChartController@index');
 });
 
 Route::any('botman', 'BotmanController@handle')->name('botman');
@@ -136,8 +135,8 @@ Route::get('/callback', 'AuthController@callback');
 Route::get('/signout', 'AuthController@signout');
 
 //for dev
-//todo Comment when live 
-Route::get('/dev/su/{id}', function($id){
+//todo Comment when live
+Route::get('/dev/su/{id}', function ($id) {
     Auth::loginUsingId($id);
     return redirect('home');
 })->name('sudo.su')->middleware('admin');

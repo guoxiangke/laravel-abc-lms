@@ -18,7 +18,8 @@ use Carbon\Carbon;
 
 class SchoolController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
@@ -31,11 +32,14 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::with(
-                'user', 'user.paymethod', 'user.profiles', 'user.profiles.contacts'
+            'user',
+            'user.paymethod',
+            'user.profiles',
+            'user.profiles.contacts'
             )
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             ->paginate(100);
-        return view('schools.index',compact('schools'));
+        return view('schools.index', compact('schools'));
     }
 
     /**
@@ -49,7 +53,7 @@ class SchoolController extends Controller
             'method' => 'POST',
             'url' => action('SchoolController@store')
             // 'url' => route('schools.store', [],false),
-        ]); 
+        ]);
         return view('schools.create', compact('form'));
     }
 
@@ -66,7 +70,7 @@ class SchoolController extends Controller
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
@@ -78,7 +82,7 @@ class SchoolController extends Controller
         $user->save();
         //give role
         $user->assignRole(User::ROLES['school']);
-        //todo 
+        //todo
         // dd(Storage::disk('onedrive')->put('/', $request->file('image'))) ;
         // $user->addMedia($pathToImage)->toMediaCollection('avatar');
         // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
@@ -95,7 +99,7 @@ class SchoolController extends Controller
             'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([
@@ -133,7 +137,7 @@ class SchoolController extends Controller
      */
     public function show(school $school)
     {
-        return view('schools.show',compact('school'));
+        return view('schools.show', compact('school'));
     }
 
     /**
@@ -145,13 +149,13 @@ class SchoolController extends Controller
     public function edit(school $school)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('SchoolController@update', ['id'=>$school->id])
             ],
             ['entity' => $school],
-        ); 
+        );
         return view('schools.edit', compact('form'));
     }
 
@@ -165,7 +169,7 @@ class SchoolController extends Controller
     public function update(Request $request, school $school)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -184,7 +188,7 @@ class SchoolController extends Controller
         //give role
         // $user->assignRole(User::ROLES['school']);
 
-        //todo 
+        //todo
         // dd(Storage::disk('onedrive')->put('/', $request->file('image'))) ;
         // $user->addMedia($pathToImage)->toMediaCollection('avatar');
         // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
@@ -197,7 +201,7 @@ class SchoolController extends Controller
 
         //确保只有一个手机号
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
         $profile->fill([

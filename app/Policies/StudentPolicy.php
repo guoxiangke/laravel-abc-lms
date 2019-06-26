@@ -33,7 +33,7 @@ class StudentPolicy
     {
         //如果登陆用户没有 角色，则可以创建
         //如果登陆用户是代理，也可以创建一个吧？
-        return !$user->hasRole('student')
+        return ! $user->hasRole('student')
             || $user->isAdmin();
     }
 

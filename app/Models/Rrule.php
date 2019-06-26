@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-use App\Models\Order;
 
-
-class Rrule  extends Model implements AuditableContract
+class Rrule extends Model implements AuditableContract
 {
     use SoftDeletes;
     use Auditable;
@@ -57,7 +55,8 @@ class Rrule  extends Model implements AuditableContract
     }
 
     //"MO,WE,FR" => '1,3,5'
-    public function toDayOfWeek(){
+    public function toDayOfWeek()
+    {
         $byDayString = $this->getRrule('BYDAY');
         $byDayArray = explode(',', $byDayString);
         foreach ($byDayArray as $key => $value) {
@@ -66,7 +65,8 @@ class Rrule  extends Model implements AuditableContract
         return $byDayArray;
     }
     
-    public function getRule(){
+    public function getRule()
+    {
         $timezone = config('app.timezone');
         $rruleString = $this->string;
         $startDate = $this->start_at;
@@ -74,14 +74,16 @@ class Rrule  extends Model implements AuditableContract
         return $rule;
     }
 
-    public function toText(){
+    public function toText()
+    {
         $transformer = new \Recurr\Transformer\TextTransformer();
         $rruleText = $transformer->transform($this->getRule());
         return $rruleText;
     }
     
     // get BYDAY as dayOfWeek
-    public function getRrule($key=false){//'BYDAY'
+    public function getRrule($key=false)
+    {//'BYDAY'
         // RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=MO
         $rruleStrings = explode(';', $this->string);
         $rruleArray = [];
@@ -89,7 +91,7 @@ class Rrule  extends Model implements AuditableContract
             $keyvalue = explode('=', $value);
             $rruleArray[$keyvalue[0]] = $keyvalue[1];
         }
-        if($key){
+        if ($key) {
             return $rruleArray[$key];
         }
         return $rruleArray;
@@ -106,7 +108,8 @@ class Rrule  extends Model implements AuditableContract
     //     return  $rruleCollection;
     // }
     // public static function  getRruleCollection
-    public static function transCollection(\Recurr\Rule $rule){
+    public static function transCollection(\Recurr\Rule $rule)
+    {
         $transformer = new \Recurr\Transformer\ArrayTransformer();
         $transformerConfig = new \Recurr\Transformer\ArrayTransformerConfig();
         $transformerConfig->enableLastDayOfMonthFix();
@@ -114,18 +117,21 @@ class Rrule  extends Model implements AuditableContract
         return $transformer->transform($rule);
     }
 
-    public static function transArray(\Recurr\Rule $rule){
+    public static function transArray(\Recurr\Rule $rule)
+    {
         return static::transCollection($rule)->toArray();
     }
 
-    public static function transByStart(\Recurr\Rule $rule){
-        return static::transCollection($rule)->map(function($recurrence){
+    public static function transByStart(\Recurr\Rule $rule)
+    {
+        return static::transCollection($rule)->map(function ($recurrence) {
             return $recurrence->getStart()->format('Y-m-d H:i:s');
         });
     }
 
     //0:arrayToSave 1:collection
-    public static function buildRrule($value, $returnRruleCollection=0){
+    public static function buildRrule($value, $returnRruleCollection=0)
+    {
         $timezone = config('app.timezone');
         // DTSTART;TZID=Asia/Hong_Kong:20190330T180000
         // DTSTART:20190330T180000Z
@@ -154,7 +160,7 @@ class Rrule  extends Model implements AuditableContract
         $transformerConfig->enableLastDayOfMonthFix();
         $transformer->setConfig($transformerConfig);
         $rruleCollection = $transformer->transform($rule);
-        if($returnRruleCollection){
+        if ($returnRruleCollection) {
             return  $rruleCollection;
         }
 
@@ -170,8 +176,8 @@ class Rrule  extends Model implements AuditableContract
     public function isToday()
     {
         return collect($this->transArray()->toArray())
-            ->filter(function($recurrence){
-                if($recurrence->getStart()->format('Y-m-d') == Carbon::now()->format('Y-m-d')){
+            ->filter(function ($recurrence) {
+                if ($recurrence->getStart()->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
                     return true;
                 }
                 return false;
@@ -180,11 +186,11 @@ class Rrule  extends Model implements AuditableContract
 
     public function order()
     {
-        return $this->hasOne(Order::class,'id','order_id');
+        return $this->hasOne(Order::class, 'id', 'order_id');
     }
 
     /**
-     * 
+     *
         all classRecords
         🙅不需要补课/即顺延的课程
         $rrule->classRecords()->absent()->count();
@@ -196,5 +202,4 @@ class Rrule  extends Model implements AuditableContract
         return $this
                 ->hasMany(ClassRecord::class);
     }
-
 }

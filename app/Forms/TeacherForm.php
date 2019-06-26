@@ -14,10 +14,10 @@ class TeacherForm extends Form
     {
         //select zooms un-used!
         $zooms = Zoom::with('teacher')
-            ->orderBy('id','desc')->get()->filter(function($zoom){
-                return !$zoom->teacher;
+            ->orderBy('id', 'desc')->get()->filter(function ($zoom) {
+                return ! $zoom->teacher;
             })
-            ->pluck('email','id')
+            ->pluck('email', 'id')
             ->toArray();
 
         $this->add('school_id', 'select', [
@@ -25,7 +25,9 @@ class TeacherForm extends Form
                 'choices' => School::all()->pluck('name', 'id')->toArray(),
                 'empty_value' => 'Freelancer/自由职业'
             ])
-            ->add('profile_name', 'text',
+            ->add(
+                'profile_name',
+                'text',
                 ['rules' => 'required','label' => '姓名']
             )
             ->add('user_password', 'text', [
@@ -51,7 +53,7 @@ class TeacherForm extends Form
                 // 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'label' => '联系方式账户ID'
             ])
@@ -88,7 +90,7 @@ class TeacherForm extends Form
                 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'label' => '付款账户ID（中教必填）'
             ])
             ->add('pay_remark', 'textarea', [

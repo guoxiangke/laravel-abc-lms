@@ -3,6 +3,7 @@ namespace App\Services;
 
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\PathGenerator\PathGenerator;
+
 class MediaLibraryCustomPath implements PathGenerator
 {
 
@@ -40,4 +41,3 @@ class MediaLibraryCustomPath implements PathGenerator
         return $this->getBasePath($media).'/responsive-images/';
     }
 }
-

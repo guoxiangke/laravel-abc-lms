@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Charts\OverViews;
-use ConsoleTVs\Charts\Classes\Chartjs\Chart;
-use App\User;
-use DB;
 
 class ChartController extends Controller
 {
@@ -38,6 +33,6 @@ class ChartController extends Controller
             'borderWidth'=> 1,
         ]);
 
-        return view('charts.index',compact('data','chart'));
+        return view('charts.index', compact('data', 'chart'));
     }
 }

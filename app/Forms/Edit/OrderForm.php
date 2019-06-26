@@ -3,11 +3,7 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
-use App\Models\School;
 use App\Models\Product;
-use App\Models\Zoom;
 use App\Models\Order;
 use App\Models\Book;
 use App\User;
@@ -17,7 +13,9 @@ class OrderForm extends Form
     public function buildForm()
     {
         $order = $this->getData('entity');
-        if(!$order) return;
+        if (! $order) {
+            return;
+        }
         $rrule = $order->rrules->first();
         $this->add('order', 'static', [
                 'label' => '订单Id',
@@ -25,7 +23,7 @@ class OrderForm extends Form
             ]);
         
         $products = Product::all()
-                    ->pluck('name','id')
+                    ->pluck('name', 'id')
                     ->toArray();
         $this->add('product_id', 'select', [
                 'label' => 'Product',
@@ -34,10 +32,10 @@ class OrderForm extends Form
                 'choices' => $products,
             ]);
 
-        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-        $books = Book::where('type',1)->get()->pluck('name','id')->toArray();
+        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
         $this
             ->add('user_id', 'select', [
                 'label' => 'Student',

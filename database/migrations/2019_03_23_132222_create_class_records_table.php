@@ -17,9 +17,9 @@ class CreateClassRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('rrule_id');
-                $table->unsignedBigInteger('user_id')->comment('学生id');
-                $table->unsignedBigInteger('agency_uid')->default(1)->comment('1无代理');
-                $table->unsignedBigInteger('teacher_uid')->nullable(); //老师可能临时改变！
+            $table->unsignedBigInteger('user_id')->comment('学生id');
+            $table->unsignedBigInteger('agency_uid')->default(1)->comment('1无代理');
+            $table->unsignedBigInteger('teacher_uid')->nullable(); //老师可能临时改变！
             // $table->string('page')->nullable()->comment('页码');
             $table->text('remark')->nullable();
             $table->boolean('weight')->default(true)->comment('上课计数');
@@ -37,15 +37,15 @@ class CreateClassRecordsTable extends Migration
             $table->foreign('teacher_uid')
                 ->references('id')
                 ->on('users');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
             $table->foreign('agency_uid')
                 ->references('id')
                 ->on('users');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
 
             $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
         });

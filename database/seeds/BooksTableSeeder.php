@@ -16,7 +16,7 @@ class BooksTableSeeder extends Seeder
                 'name' => "{$i}年级上（一年级起点）",
                 'type' => 0,
                 'publisher' => '人教版'
-            ]); 
+            ]);
             Book::create([
                 'name' => "{$i}年级下（一年级起点）",
                 'type' => 0,
@@ -27,7 +27,7 @@ class BooksTableSeeder extends Seeder
                 'name' => "{$i}年级上（一年级起点）",
                 'type' => 0,
                 'publisher' => '外研社'
-            ]); 
+            ]);
             Book::create([
                 'name' => "{$i}年级下（一年级起点）",
                 'type' => 0,
@@ -38,19 +38,19 @@ class BooksTableSeeder extends Seeder
                 'name' => "{$i}年级上",
                 'type' => 0,
                 'publisher' => '沪教版'
-            ]); 
+            ]);
             Book::create([
                 'name' => "{$i}年级下",
                 'type' => 0,
                 'publisher' => '沪教版'
             ]);
 
-            if($i>=3){
+            if ($i>=3) {
                 Book::create([
                     'name' => "{$i}年级上（三年级起点）",
                     'type' => 0,
                     'publisher' => '人教版'
-                ]); 
+                ]);
                 Book::create([
                     'name' => "{$i}年级下（三年级起点）",
                     'type' => 0,
@@ -62,7 +62,7 @@ class BooksTableSeeder extends Seeder
                     'name' => "{$i}年级上（三年级起点）",
                     'type' => 0,
                     'publisher' => '外研社'
-                ]); 
+                ]);
                 Book::create([
                     'name' => "{$i}年级下（三年级起点）",
                     'type' => 0,
@@ -70,6 +70,5 @@ class BooksTableSeeder extends Seeder
                 ]);
             }
         }
-
     }
 }

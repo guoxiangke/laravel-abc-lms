@@ -11,10 +11,10 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 class BookController extends Controller
 {
-
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
@@ -25,7 +25,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::orderBy('id','desc')
+        $books = Book::orderBy('id', 'desc')
                     ->paginate(100);
         return view('books.index', compact('books'));
     }
@@ -40,7 +40,7 @@ class BookController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('BookController@store')
-        ]); 
+        ]);
         return view('books.create', compact('form'));
     }
 
@@ -78,13 +78,13 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('BookController@update', ['id'=>$book->id])
             ],
             ['entity' => $book],
-        ); 
+        );
         return view('books.edit', compact('form'));
     }
 
@@ -98,7 +98,7 @@ class BookController extends Controller
     public function update(Request $request, Book $book, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $book->fill($request->all())->save();

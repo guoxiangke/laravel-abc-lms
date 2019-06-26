@@ -10,7 +10,7 @@ $factory->define(PayMethod::class, function (Faker $faker) {
                 ->create()
                 ->id;
         },
-        'type' => rand(0,4),
+        'type' => rand(0, 4),
         'number' => $faker->creditCardNumber,
         'remark'=> $faker->paragraph,
     ];

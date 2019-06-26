@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zoom;
-use App\Models\Teacher;
 use App\Forms\ZoomForm as CreateForm;
 use App\Forms\Edit\ZoomForm as EditForm;
 
@@ -15,7 +14,8 @@ class ZoomController extends Controller
 {
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
@@ -26,8 +26,8 @@ class ZoomController extends Controller
      */
     public function index()
     {
-        $zooms = Zoom::with('teacher','teacher.user.profiles')
-                    ->orderBy('id','desc')
+        $zooms = Zoom::with('teacher', 'teacher.user.profiles')
+                    ->orderBy('id', 'desc')
                     ->paginate(100);
         return view('zooms.index', compact('zooms'));
     }
@@ -42,7 +42,7 @@ class ZoomController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('ZoomController@store')
-        ]); 
+        ]);
         return view('zooms.create', compact('form'));
     }
 
@@ -56,7 +56,7 @@ class ZoomController extends Controller
     {
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $zoom = Zoom::firstOrCreate(
@@ -90,13 +90,13 @@ class ZoomController extends Controller
     public function edit(Zoom $zoom)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('ZoomController@update', ['id'=>$zoom->id])
             ],
             ['entity' => $zoom],
-        ); 
+        );
         return view('zooms.edit', compact('form'));
     }
 
@@ -111,7 +111,7 @@ class ZoomController extends Controller
     {
         $form = $this->form(EditForm::class);
         // dd($rrule->toArray(),$form->isValid(),$form->getErrors());
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         //https://stackoverflow.com/questions/1809494/post-unchecked-html-checkboxes

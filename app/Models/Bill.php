@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\HasPriceField;
 use App\User;
-use App\Models\Order;
+
 class Bill extends Model
 {
     use SoftDeletes;

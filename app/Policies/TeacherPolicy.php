@@ -30,7 +30,7 @@ class TeacherPolicy
      */
     public function create(User $user)
     {
-        return !$user->hasRole('teacher');
+        return ! $user->hasRole('teacher');
     }
 
     /**

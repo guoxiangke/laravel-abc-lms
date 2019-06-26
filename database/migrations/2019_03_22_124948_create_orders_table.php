@@ -39,21 +39,20 @@ class CreateOrdersTable extends Migration
             $table->foreign('teacher_uid')
                 ->references('id')
                 ->on('users');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
             $table->foreign('agency_uid')
                 ->references('id')
                 ->on('users');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
                 
             $table->foreign('book_id')
                 ->references('id')
                 ->on('books');
-                // ->onDelete('cascade');
+            // ->onDelete('cascade');
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products');
-                // ->onDelete('cascade');
-                
+            // ->onDelete('cascade');
         });
     }
 

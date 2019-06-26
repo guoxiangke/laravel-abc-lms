@@ -13,7 +13,9 @@ class AgencyForm extends Form
     {
         //agency_id 上级代理
         $agency = $this->getData('entity');
-        if(!$agency) return;
+        if (! $agency) {
+            return;
+        }
         $user = $agency->user;
         // dd($zoomId);
         $paymethod = $user->paymethod;
@@ -21,7 +23,7 @@ class AgencyForm extends Form
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();
-        $recommend = Agency::with('profiles')->where('user_id','<>',$profile->user_id)->get()->pluck('profiles.0.name','user_id')->toArray();
+        $recommend = Agency::with('profiles')->where('user_id', '<>', $profile->user_id)->get()->pluck('profiles.0.name', 'user_id')->toArray();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'value' => $profile->name,
@@ -47,7 +49,7 @@ class AgencyForm extends Form
                 'choices' => Contact::TYPES,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'value' => $contact->number,
                 'label' => '联系方式账户ID'
@@ -66,7 +68,7 @@ class AgencyForm extends Form
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '生日',
-                'value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):NULL
+                'value'=>$profile->birthday?$profile->birthday->format('Y-m-d'):null
             ])
             ->add('pay_method', 'select', [
                 'label' => '付款方式',
@@ -75,7 +77,7 @@ class AgencyForm extends Form
                 'selected' => $paymethod->type,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'value' => $paymethod->number,
                 'label' => '付款账户ID'
@@ -92,7 +94,7 @@ class AgencyForm extends Form
                 'selected' => $agency->type,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('agency_discount', 'number',[
+            ->add('agency_discount', 'number', [
                 'value' => $agency->discount,
                 'rules' => 'min:0|max:100',
                 'label' => '优惠折扣0-100'

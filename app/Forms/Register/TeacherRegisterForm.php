@@ -13,9 +13,9 @@ class TeacherRegisterForm extends Form
     public function buildForm()
     {
         //select zooms un-used!
-        $zooms = Zoom::with('teacher')->get()->filter(function($zoom){
-            return !$zoom->teacher;
-        })->pluck('email','id')->toArray();
+        $zooms = Zoom::with('teacher')->get()->filter(function ($zoom) {
+            return ! $zoom->teacher;
+        })->pluck('email', 'id')->toArray();
 
         $this->add('school_id', 'select', [
                 'label' => 'School',
@@ -37,7 +37,7 @@ class TeacherRegisterForm extends Form
                 // 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'label' => '联系方式账户ID*'
             ])
@@ -81,7 +81,7 @@ class TeacherRegisterForm extends Form
                 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'label' => '付款账户ID（中教必填）'
             ])
             ->add('pay_remark', 'textarea', [

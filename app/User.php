@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -33,7 +32,6 @@ class User extends Authenticatable implements HasMedia
             ->addMediaCollection('avatar')
             // ->useDisk('public')
             ->singleFile();
-
     }
     // $yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
     // $yourModel->getMedia('avatar')->count(); // returns 1
@@ -134,10 +132,11 @@ class User extends Authenticatable implements HasMedia
     }
 
     //姓名转pinyin和english
-    public static function pinyin($name){
+    public static function pinyin($name)
+    {
         $name = str_replace(' ', '', $name);//去除空格
         $name = implode('', pinyin($name, 16));//PINYIN_NAME
-        if(!$name){
+        if (! $name) {
             $name = implode('_', pinyin($name, 64));//PINYIN_KEEP_ENGLISH
         }
         return $name;
@@ -147,7 +146,7 @@ class User extends Authenticatable implements HasMedia
     {
         $openId = 'oTjEws-8eAAUqgR4q_ns7pbd0zN8';
         $social = $this->socials->first();
-        if($social && $social->type == Social::TYPE_WECHAT){
+        if ($social && $social->type == Social::TYPE_WECHAT) {
             $openId = $social->social_id;
         }
         return $openId;

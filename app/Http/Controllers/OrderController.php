@@ -4,17 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\User;
-use App\Models\Agency;
 use App\Models\Student;
-use App\Models\Contact;
-use App\Models\Profile;
-use App\Models\PayMethod;
 use App\Models\Rrule;
 use Carbon\Carbon;
 use App\Models\ClassRecord;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\OrderForm as CreateForm;
@@ -24,7 +19,8 @@ class OrderController extends Controller
 {
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']);
     }
 
@@ -36,15 +32,18 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(
-            'user', 'user.profiles',
-            'teacher', 'teacher.profiles',
-            'agency', 'agency.profiles',
+            'user',
+            'user.profiles',
+            'teacher',
+            'teacher.profiles',
+            'agency',
+            'agency.profiles',
             'schedules',
             'schedules.classRecords',
             'book',
             'product',
         )
-        ->orderBy('id','desc')
+        ->orderBy('id', 'desc')
         ->paginate(100);//todo debug 第二页有N+1问题
         return view('orders.index', compact('orders'));
     }
@@ -56,11 +55,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('OrderController@store')
-        ]); 
+        ]);
         return view('orders.create', compact('form'));
     }
 
@@ -77,7 +75,7 @@ class OrderController extends Controller
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $order = Order::firstOrNew([
@@ -92,7 +90,7 @@ class OrderController extends Controller
             'remark' => $request->input('remark'),
             'status' => $request->input('status'),
         ]);
-        if(isset($order->id)){
+        if (isset($order->id)) {
             $order->price = $request->input('price'); //还原价格
         }
         $order->save();
@@ -101,7 +99,7 @@ class OrderController extends Controller
         $rrules[] = $request->input('rrule_repeated');
         foreach ($rrules as $rrule) {
             // 如果没有填写第二个！
-            if(is_null($rrule)) {
+            if (is_null($rrule)) {
                 continue;
             }
             $rruleReslovedArray = Rrule::buildRrule($rrule);
@@ -128,7 +126,7 @@ class OrderController extends Controller
     {
         $events = [];
         // dd($order->hasClassToday());
-        if(!$order->isActive()){
+        if (! $order->isActive()) {
             //todo
             // return redirect()->back()->with('message', 'order is not Active.');
         }
@@ -140,16 +138,16 @@ class OrderController extends Controller
         //     $order->regenAolsSchedule(),
         // //     // $order->reDiffAols(),
         // //     // $order->historyRecords(),
-        // //     // $order->getAllAols(), 
+        // //     // $order->getAllAols(),
         // //     // $order->getDiffAols(),
         //     $order->regenRruleSchedule(),
         // );
 
         collect($order->regenRruleSchedule())
-            ->map(function($startDateString) use (&$events){
+            ->map(function ($startDateString) use (&$events) {
                 $start = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
                 //去除今日的 计划。 今日的0点生生了记录
-                if($start->format('Y-m-d') ==  Carbon::now()->format('Y-m-d') ){
+                if ($start->format('Y-m-d') ==  Carbon::now()->format('Y-m-d')) {
                     return;
                 }
                 $events[] = [
@@ -165,7 +163,7 @@ class OrderController extends Controller
             });
 
         collect($order->reDiffAols())
-            ->map(function($startDateString) use (&$events){
+            ->map(function ($startDateString) use (&$events) {
                 $start = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
                 $events[] = [
                     'start' =>  $startDateString,
@@ -180,12 +178,12 @@ class OrderController extends Controller
             });
 
         $order->classRecords()//historyRecords
-            ->each(function($classRecord) use (&$events, $order){
+            ->each(function ($classRecord) use (&$events, $order) {
                 $link = route('classRecords.index', $order->id);
                 $now = Carbon::now()->format('Y-m-d ');
                 $isToday = $classRecord->generated_at->format('Y-m-d ') == $now;
                 $title = $isToday?'⚠️今日有课':'上课记录';
-                if($classRecord->exception){
+                if ($classRecord->exception) {
                     //学生老师/正常/异常请假
                     $title = ClassRecord::EXCEPTION_TYPES[$classRecord->exception];
                 }
@@ -203,7 +201,7 @@ class OrderController extends Controller
         
         // dd($events);
         // $default_events = json_encode($events);
-        return view('orders.show', compact('order','events'));
+        return view('orders.show', compact('order', 'events'));
     }
 
     /**
@@ -215,13 +213,13 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('OrderController@update', ['id' => $order->id])
             ],
             ['entity' => $order],
-        ); 
+        );
         return view('orders.edit', compact('form'));
     }
 
@@ -238,7 +236,7 @@ class OrderController extends Controller
             'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -258,7 +256,7 @@ class OrderController extends Controller
         $start_at = $request->input('start_at');
         $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
         $string = $request->input('rrule');
-        $order->rrules->first()->fill(compact('start_at','string'))->save();
+        $order->rrules->first()->fill(compact('start_at', 'string'))->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
         return redirect()->route('orders.index');
     }
@@ -278,5 +276,5 @@ class OrderController extends Controller
     {
         $order->status = $status;
         return ['success'=>$order->save()];
-    } 
+    }
 }

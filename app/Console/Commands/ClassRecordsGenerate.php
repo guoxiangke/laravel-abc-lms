@@ -45,19 +45,19 @@ class ClassRecordsGenerate extends Command
         $orderId = $this->option('order')??null;
 
         $date = $this->option('date')??0; //2019-06-24 00:00:00
-        if($date){
+        if ($date) {
             $offset = Carbon::parse($date)->diffInDays(Carbon::now());
         }
 
         $this->info("Generate ClassRecords for $orderId begin!");
-        if($orderId){
+        if ($orderId) {
             $order = Order::find($orderId);
-            if($order->isActive()){
+            if ($order->isActive()) {
                 ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
-            }else{
-                \Log::error(__CLASS__,['order is not active']);
+            } else {
+                \Log::error(__CLASS__, ['order is not active']);
             }
-        }else{
+        } else {
             Order::active()
                 ->each(function (Order $order) use ($offset) {
                     ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');

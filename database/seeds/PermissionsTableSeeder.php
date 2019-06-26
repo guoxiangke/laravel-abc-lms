@@ -2,9 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\User;
-use Illuminate\Support\Str;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -15,8 +13,8 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-    	foreach (User::ROLES as $roleName) {
-  			Role::create(['name' => $roleName]);
-    	}
+        foreach (User::ROLES as $roleName) {
+            Role::create(['name' => $roleName]);
+        }
     }
 }

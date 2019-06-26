@@ -12,6 +12,4 @@ class RruleRepository extends AbstractRepository
      * @return string
      */
     protected $model = \App\Models\Rrule::class;
-
-
 }

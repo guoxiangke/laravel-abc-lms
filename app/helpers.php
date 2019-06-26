@@ -1,9 +1,9 @@
 <?php
 
-if (! function_exists('bark_notify')){
+if (! function_exists('bark_notify')) {
     // https://day.app/2018/06/bark-server-document/
     // https://www.v2ex.com/t/467407
-    // // eg: 
+    // // eg:
     // bark_notify('验证码是0000');
     // bark_notify('验证码是0001','这是body解释');
     // bark_notify('点击打开网址', 'https://cn.bing.com');
@@ -14,13 +14,13 @@ if (! function_exists('bark_notify')){
         $key = \Config::get('notify.bark.'. $sendTo);
         $url = $host . '/' . $key . '/' . urlencode($title);
         $query = [];
-        if(filter_var($bodyOrUrlOrCopy, FILTER_VALIDATE_URL)){
+        if (filter_var($bodyOrUrlOrCopy, FILTER_VALIDATE_URL)) {
             $query['url'] = $bodyOrUrlOrCopy;
-        }else{
+        } else {
             //有copy就不要body了！
-            if($copy){
+            if ($copy) {
                 $query['copy'] = $bodyOrUrlOrCopy?:$title;//如果没有填写body，复制title
-            }else{
+            } else {
                 $url .= '/'. urlencode($bodyOrUrlOrCopy);
             }
         }
@@ -39,11 +39,12 @@ if (! function_exists('bark_notify')){
     }
 }
 
-if (! function_exists('ftqq_notify')){
+if (! function_exists('ftqq_notify')) {
     // http://sc.ftqq.com/?c=code
     //ftqq_notify('title', "###No MarkDown Body###", 'manager');
     //ftqq_notify('title2', "###No MarkDown Body###");
-    function ftqq_notify($title, $markdown='No MarkDown Body', $sendTo='admin'){
+    function ftqq_notify($title, $markdown='No MarkDown Body', $sendTo='admin')
+    {
         $admins = \Config::get('notify.sc');
         $key = $admins[$sendTo];
         $postdata = http_build_query([
@@ -61,6 +62,4 @@ if (! function_exists('ftqq_notify')){
         $context = stream_context_create($opts);
         return $result = file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
     }
-
 }
-

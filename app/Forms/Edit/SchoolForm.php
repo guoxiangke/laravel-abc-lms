@@ -10,27 +10,32 @@ class SchoolForm extends Form
     public function buildForm()
     {
         $school = $this->getData('entity');
-        if(!$school) return;
+        if (! $school) {
+            return;
+        }
         $user = $school->user;
         $paymethod = $user->paymethod;
         
         $profile = $user->profiles->first();
         $contact = null;
         $paymethod = null;
-        if($profile){
+        if ($profile) {
             $contact = $profile->contacts->first();
             $paymethod = $school->user->paymethod;
         }
         // $contact = $profile->contacts->first();
-        $this->add('school_name', 'text',
-                [
+        $this->add(
+            'school_name',
+            'text',
+            [
                 'label' => '学校名字',
                 'value' => $school->name,
                 'rules' => 'required|min:2',
                 'error_messages' => [
                     'title.required' => 'The school name field is mandatory.'
                 ]
-            ])
+            ]
+        )
             ->add('image', 'file', [
                 'label' => 'Logo: todo',
                 'attr' => ['placeholder' => '学校Logo']
@@ -62,10 +67,10 @@ class SchoolForm extends Form
             ])
             ->add('profile_birthday', 'date', [
                 'label' => '管理员生日',
-                'value' => $profile?($profile->birthday?$profile->birthday->format('Y-m-d'):NULL):NULL,
+                'value' => $profile?($profile->birthday?$profile->birthday->format('Y-m-d'):null):null,
             ])
             ->add('telephone', 'tel', [
-                'value' => $profile?$profile->telephone:NULL,
+                'value' => $profile?$profile->telephone:null,
                 'rules' => 'required|min:13',
                 'label' => '管理员手机号',
                 'help_block' => [
@@ -74,7 +79,7 @@ class SchoolForm extends Form
                     'attr' => ['class' => 'form-text text-muted']
                 ],
             ])
-            ->add('contact_skype', 'text',[
+            ->add('contact_skype', 'text', [
                 'value' => $contact?$contact->number:null,
                 'rules' => 'required|min:4',
                 'label' => '管理员/联系人Skype'
@@ -91,7 +96,7 @@ class SchoolForm extends Form
                 'selected' => $paymethod?$paymethod->type:null,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'value' => $paymethod?$paymethod->number:null,
                 'label' => '付款账户ID'

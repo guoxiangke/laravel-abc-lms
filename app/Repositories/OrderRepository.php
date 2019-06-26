@@ -12,6 +12,4 @@ class OrderRepository extends AbstractRepository
      * @return string
      */
     protected $model = \App\Models\Order::class;
-
-
 }

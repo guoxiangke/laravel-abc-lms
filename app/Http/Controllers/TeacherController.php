@@ -7,7 +7,6 @@ use App\Models\Teacher;
 use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\PayMethod;
-use App\Models\Zoom;
 use App\Forms\TeacherForm as CreateForm;
 use App\Forms\Edit\TeacherForm as EditForm;
 use App\Forms\Register\TeacherRegisterForm;
@@ -20,7 +19,8 @@ use Carbon\Carbon;
 
 class TeacherController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']);
         //todo https://abc.dev/teacher/register
         // $this->middleware(['admin'], ['only' => ['index','edit']]);
@@ -35,13 +35,16 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with(
-                'user','school','zoom', 
-                'user.profiles', 'user.profiles.contacts',
-                'school',
-            )//'user.paymethod', 
-            ->orderBy('id','desc')
+            'user',
+            'school',
+            'zoom',
+            'user.profiles',
+            'user.profiles.contacts',
+            'school',
+            )//'user.paymethod',
+            ->orderBy('id', 'desc')
             ->paginate(100);
-        return view('teachers.index',compact('teachers'));
+        return view('teachers.index', compact('teachers'));
     }
 
     /**
@@ -54,7 +57,7 @@ class TeacherController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('TeacherController@store')
-        ]); 
+        ]);
         return view('teachers.create', compact('form'));
     }
 
@@ -65,7 +68,7 @@ class TeacherController extends Controller
         $form = $this->form(TeacherRegisterForm::class, [
             'method' => 'POST',
             'url' => action('TeacherController@registerStore')
-        ]); 
+        ]);
         return view('teachers.register', compact('form'));
     }
     /**
@@ -77,17 +80,16 @@ class TeacherController extends Controller
     public function registerStore(Request $request, FormBuilder $formBuilder)
     {
         //必须是没XX角色才可以注册
-        $this->authorize('create', Teacher::class,);
+        $this->authorize('create', Teacher::class, );
         $form = $formBuilder->create(TeacherRegisterForm::class);
 
         $this->validate($request, [
             'telephone'=>'required|min:11|unique:profiles',
         ]);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $user = $request->user();
-
     }
     /**
      * Store a newly created resource in storage.
@@ -102,17 +104,17 @@ class TeacherController extends Controller
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type')?:0;//0-4
         $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
-        $user = User::where('email',$teacherEmail)->first();
+        $user = User::where('email', $teacherEmail)->first();
 
-        if(!$user){
-            if($password=$request->input('user_password')?:'Teacher123'){
+        if (! $user) {
+            if ($password=$request->input('user_password')?:'Teacher123') {
                 $password = Hash::make($password);
             }
             $userData = [
@@ -132,7 +134,7 @@ class TeacherController extends Controller
         $user->teacher()->save($teacher);
 
 
-        if($zoomId = $request->input('zoom_id')){
+        if ($zoomId = $request->input('zoom_id')) {
             $teacher->zoom_id = $zoomId;
             $teacher->save();
         }
@@ -142,7 +144,7 @@ class TeacherController extends Controller
             'telephone' => $request->input('telephone'),
         ]);
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             //1966-11-18
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
@@ -163,7 +165,7 @@ class TeacherController extends Controller
         // $contact = $profile->contact()->save($contact);
 
         //3. 中教必有 save payment
-        if($request->input('pay_number')){
+        if ($request->input('pay_number')) {
             $paymethod = PayMethod::firstOrNew([
                 'user_id' => $user->id,
                 'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
@@ -197,13 +199,13 @@ class TeacherController extends Controller
     public function edit(teacher $teacher)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('TeacherController@update', ['id'=>$teacher->id])
             ],
             ['entity' => $teacher],
-        ); 
+        );
         return view('teachers.edit', compact('form'));
     }
 
@@ -217,7 +219,7 @@ class TeacherController extends Controller
     public function update(Request $request, teacher $teacher, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -234,7 +236,7 @@ class TeacherController extends Controller
         $contactType = $request->input('contact_type')?:0;//0-4
         $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
 
-        if($password=$request->input('user_password')?:'Teacher123'){
+        if ($password=$request->input('user_password')?:'Teacher123') {
             $password = Hash::make($password);
         }
         $userData = [
@@ -247,19 +249,19 @@ class TeacherController extends Controller
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([
             // 'user_id' => $user->id,
-            'zoom_id' => $request->input('zoom_id')?:NULL,
-            'school_id' => $request->input('school_id')?:NULL,
+            'zoom_id' => $request->input('zoom_id')?:null,
+            'school_id' => $request->input('school_id')?:null,
         ])->save();
         
         //确保只有一个手机号
         $birthday = $request->input('profile_birthday');
-        if($birthday){
+        if ($birthday) {
             //1966-11-18
             $birthday = Carbon::createFromFormat('Y-m-d', $birthday);
         }
-        if($profile){
+        if ($profile) {
             $contact = $profile->contacts->first();
-        }else{
+        } else {
             //bug!!!
             $profile = Profile::create([
                 'telephone' => $request->input('telephone'),
@@ -293,15 +295,15 @@ class TeacherController extends Controller
         // $contact = $profile->contact()->save($contact);
 
         //3. 中教必有 save payment
-        if($request->input('pay_number') || $request->input('pay_remark')){
-            if($paymethod){
+        if ($request->input('pay_number') || $request->input('pay_remark')) {
+            if ($paymethod) {
                 $paymethod->fill([
                     // 'user_id' => $user->id,
                     'type' => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
                     'number' => $request->input('pay_number'),
                     'remark' => $request->input('pay_remark'),
                 ])->save();
-            }else{
+            } else {
                 Session::flash('alert-danger', 'Payment has not been saved!');
                 // Session::flash('alert-danger-detail', 'Payment has not been saved!');
             }

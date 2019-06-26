@@ -21,10 +21,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAdmin()){
-            $profiles = Profile::with('recommend')->orderBy('id','desc')->paginate(50);
-        }else{
-            $profiles =  Profile::with('recommend')->orderBy('id','desc')->where('user_id', Auth::id())->paginate(10);
+        if (Auth::user()->isAdmin()) {
+            $profiles = Profile::with('recommend')->orderBy('id', 'desc')->paginate(50);
+        } else {
+            $profiles =  Profile::with('recommend')->orderBy('id', 'desc')->where('user_id', Auth::id())->paginate(10);
         }
         
         return view('profiles.index', compact('profiles'));
@@ -38,9 +38,9 @@ class ProfileController extends Controller
     public function create()
     {
         $user = Auth::user();
-        if(!$user->isAdmin()){
+        if (! $user->isAdmin()) {
             $profile = $user->profiles->first();
-            if($profile){
+            if ($profile) {
                 // 跳转到编辑页面
                 return $this->edit($profile);
             }
@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('ProfileController@store')
-        ]); 
+        ]);
         return view('profiles.create', compact('form'));
     }
 
@@ -62,7 +62,7 @@ class ProfileController extends Controller
     {
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $profile = Profile::firstOrCreate(
@@ -96,7 +96,7 @@ class ProfileController extends Controller
     public function edit(profile $profile)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('ProfileController@update', ['id'=>$profile->id])
@@ -116,7 +116,7 @@ class ProfileController extends Controller
     public function update(Request $request, profile $profile, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 

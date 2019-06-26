@@ -4,18 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Auth;
 // 引入 laravel-permission 模型
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-use Session;
 
-class RoleController extends Controller {
-
-    public function __construct() {
+class RoleController extends Controller
+{
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
-
     }
 
     /**
@@ -23,7 +21,8 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $roles = Role::all();// 获取所有角色
 
         return view('roles.index')->with('roles', $roles);
@@ -34,7 +33,8 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $permissions = Permission::all();// 获取所有权限
 
         $roles = Role::all();// 获取所有角色
@@ -47,9 +47,12 @@ class RoleController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //验证 name 和 permissions 字段
-        $this->validate($request, [
+        $this->validate(
+            $request,
+            [
                 'name'=>'required|unique:roles|max:10',
                 'permissions' =>'required',
             ]
@@ -64,15 +67,17 @@ class RoleController extends Controller {
         $role->save();
         // 遍历选择的权限
         foreach ($permissions as $permission) {
-            $p = Permission::where('id', '=', $permission)->firstOrFail(); 
+            $p = Permission::where('id', '=', $permission)->firstOrFail();
             // 获取新创建的角色并分配权限
-            $role = Role::where('name', '=', $name)->first(); 
+            $role = Role::where('name', '=', $name)->first();
             $role->givePermissionTo($p);
         }
 
         return redirect()->route('roles.index')
-            ->with('flash_message',
-             'Role'. $role->name.' added!'); 
+            ->with(
+                'flash_message',
+                'Role'. $role->name.' added!'
+            );
     }
 
     /**
@@ -81,7 +86,8 @@ class RoleController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         return redirect('roles');
     }
 
@@ -91,7 +97,8 @@ class RoleController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
@@ -105,8 +112,8 @@ class RoleController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-
+    public function update(Request $request, $id)
+    {
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         $this->validate($request, [
@@ -121,7 +128,7 @@ class RoleController extends Controller {
         $p_all = Permission::all();//获取所有权限
 
         foreach ($p_all as $p) {
-            $role->revokePermissionTo($p); // 移除与角色关联的所有权限            
+            $role->revokePermissionTo($p); // 移除与角色关联的所有权限
         }
 
         foreach ($permissions as $permission) {
@@ -130,8 +137,10 @@ class RoleController extends Controller {
         }
 
         return redirect()->route('roles.index')
-            ->with('flash_message',
-             'Role'. $role->name.' updated!');
+            ->with(
+                'flash_message',
+                'Role'. $role->name.' updated!'
+            );
     }
 
     /**
@@ -146,8 +155,9 @@ class RoleController extends Controller {
         $role->delete();
 
         return redirect()->route('roles.index')
-            ->with('flash_message',
-             'Role deleted!');
-
+            ->with(
+                'flash_message',
+                'Role deleted!'
+            );
     }
 }

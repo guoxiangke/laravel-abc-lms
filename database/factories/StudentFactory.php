@@ -1,6 +1,5 @@
 <?php
 use App\Models\Student;
-use App\Models\Agency;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -13,7 +12,7 @@ $factory->define(Student::class, function (Faker $faker) {
                 ->id;
         },
         'name' => 'e_' . $faker->name, //英文名字
-        'grade' =>  rand(0,17),
+        'grade' =>  rand(0, 17),
         //todo book_id
         'level' => $faker->randomDigit,
         'remark' => $faker->paragraph,

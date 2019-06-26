@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Teacher;
 use App\Forms\ProductForm as CreateForm;
 use App\Forms\Edit\ProductForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -12,7 +11,8 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 class ProductController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
     
@@ -25,8 +25,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::
-            orderBy('id','desc')
-            ->paginate(100);;
+            orderBy('id', 'desc')
+            ->paginate(100);
+        ;
         return view('products.index', compact('products'));
     }
 
@@ -40,7 +41,7 @@ class ProductController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('ProductController@store')
-        ]); 
+        ]);
         return view('products.create', compact('form'));
     }
 
@@ -52,14 +53,13 @@ class ProductController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-
         $this->validate($request, [
             'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
 
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -95,13 +95,13 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('ProductController@update', ['id'=>$product->id])
             ],
             ['entity' => $product],
-        ); 
+        );
         return view('products.edit', compact('form'));
     }
 
@@ -118,7 +118,7 @@ class ProductController extends Controller
             'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $data = $request->all();

@@ -3,9 +3,6 @@
 namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
-use App\Models\School;
 
 class ProductForm extends Form
 {

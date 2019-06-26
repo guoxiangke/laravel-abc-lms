@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Teacher;
-use App\Models\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,11 +14,10 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Support\Facades\Storage;
 
-
 class ClassRecord extends Model implements AuditableContract, HasMedia
 {
-	use SoftDeletes;
-	use Auditable;
+    use SoftDeletes;
+    use Auditable;
     use Commentable;
     use HasMediaTrait;
 
@@ -32,7 +29,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         $this->addMediaCollection('mp3')
             ->useDisk(self::DISK)
             ->singleFile();
-            //todo acceptsFile('mp3')
+        //todo acceptsFile('mp3')
         $this->addMediaCollection('mp4')
             ->useDisk(self::DISK)
             ->singleFile();
@@ -84,10 +81,10 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         //默认=1/ture 如果有任何异常，标记为false，不作为已上课时总数计算 $order->AllDoneClassRecordes('weight')->sum()
         'weight',
         // 默认为0，正常
-        // 学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算 
-        // 老师请假 2 需要补课，标记 weight = 0，不作为已上课时总数计算 
+        // 学生请假 1 需要补课，标记 weight = 0，不作为已上课时总数计算
+        // 老师请假 2 需要补课，标记 weight = 0，不作为已上课时总数计算
         // 学生异常请假 3  计算课时 标红 🙅不需要补课
-        // 老师异常 4  计算课时 标黄 | 需要补课， 标记 weight = 0，不作为已上课时总数计算 
+        // 老师异常 4  计算课时 标黄 | 需要补课， 标记 weight = 0，不作为已上课时总数计算
         'exception',
         'generated_at', //特别有用，自动生成记录时，唯一确认是否新建
     ];
@@ -98,9 +95,9 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         //需要补课的，标记为false，即不计算在课程总数内
         $this->attributes['weight'] = true; //weight默认是1
         //只有学生旷课时，标记为weight=1，即需要计算在内, 其他为0
-        if(in_array($value,[1,2,4])){
+        if (in_array($value, [1,2,4])) {
             $this->attributes['weight'] = false;
-            \Log::debug(__FUNCTION__,['ClassRecord weight updated by exception changed']);
+            \Log::debug(__FUNCTION__, ['ClassRecord weight updated by exception changed']);
         }
         $this->attributes['exception'] = $value;
     }
@@ -174,22 +171,23 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         return $this->belongsTo(Rrule::class);
     }
 
-    public function getMp3Attribute(){
-        if($firstMedia=$this->getFirstMedia('mp3')){
+    public function getMp3Attribute()
+    {
+        if ($firstMedia=$this->getFirstMedia('mp3')) {
             return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
-        return NULL;
+        return null;
     }
 
-    public function getMp4Attribute(){
-        if($firstMedia=$this->getFirstMedia('mp4')){
+    public function getMp4Attribute()
+    {
+        if ($firstMedia=$this->getFirstMedia('mp4')) {
             return self::DOS_CDN .'/'. $firstMedia->getPath();
         }
-        return NULL;
+        return null;
     }
     
     // public function getUrl($type='mp3'){
     //     return Storage::disk(self::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
     // }
-
 }

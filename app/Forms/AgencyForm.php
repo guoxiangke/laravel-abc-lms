@@ -34,7 +34,7 @@ class AgencyForm extends Form
                 'choices' => Contact::TYPES,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'label' => '联系方式账户ID'
             ])
@@ -57,7 +57,7 @@ class AgencyForm extends Form
                 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'label' => '付款账户ID'
             ])
@@ -72,13 +72,13 @@ class AgencyForm extends Form
                 'selected' => 0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('agency_discount', 'number',[
+            ->add('agency_discount', 'number', [
                 'rules' => 'min:0|max:100',
                 'label' => '优惠折扣0-100'
             ])//todo 0-100 check!
             ->add('agency_id', 'select', [
                 'label' => '介绍人/推荐人',
-                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name','user_id')->toArray(),
+                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [

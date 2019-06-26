@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Overtrue\EasySms\EasySms;
-use Mews\Captcha\Captcha;
-
 class HomeController extends Controller
 {
     /**

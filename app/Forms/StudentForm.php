@@ -3,18 +3,15 @@
 namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
 use App\Models\Student;
 use App\Models\Agency;
 use App\Models\Book;
-use App\User;
 
 class StudentForm extends Form
 {
     public function buildForm()
     {
-        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name','user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name','user_id'))->unique()->toArray();
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->unique()->toArray();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'label' => '姓名',
@@ -52,10 +49,10 @@ class StudentForm extends Form
             ])
             ->add('book_id', 'select', [
                 'label' => '同步教材',
-                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name','id')->toArray(),
+                'choices' => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'label' => 'Wechat/QQ/手机号',
             ])
             ->add('contact_remark', 'textarea', [
@@ -64,7 +61,7 @@ class StudentForm extends Form
                     'rows' => 2,
                     'placeholder' => 'Wechat/QQ/手机号 可不填,备注写这里',
 
-                ], 
+                ],
             ])
             ->add('recommend_uid', 'select', [
                 'label' => '介绍人',

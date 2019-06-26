@@ -30,7 +30,7 @@ class AgencyPolicy
      */
     public function create(User $user)
     {
-        return !$user->hasRole('agency') 
+        return ! $user->hasRole('agency')
             || $user->isAdmin();
     }
 

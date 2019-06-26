@@ -39,21 +39,21 @@ class ProfileForm extends Form
                 'label' => 'Save',
                 'attr' => ['class' => 'btn btn-outline-primary'],
             ]);
-            $user = Auth::user();
-            if($user->isAdmin()){
-                $recommend = User::with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-                $this->addBefore('submit', 'recommend_uid', 'select', [
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+            $this->addBefore('submit', 'recommend_uid', 'select', [
                     'label' => '介绍人',
                     'choices' => $recommend,
                     'empty_value' => '=== Select ==='
                 ]);
-                $this->addBefore('name', 'user_id' , 'select', [
+            $this->addBefore('name', 'user_id', 'select', [
                     'label' => 'User',
                     'choices' => $recommend,
                     'empty_value' => '=== Select ==='
                 ]);
-            }else{
-                $this->addBefore('name', 'user_id', 'static', ['label' => 'User Id','value' => $profile->user_id]);
-            }
+        } else {
+            $this->addBefore('name', 'user_id', 'static', ['label' => 'User Id','value' => $profile->user_id]);
+        }
     }
 }

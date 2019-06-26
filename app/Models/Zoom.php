@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+
 class Zoom extends Model implements AuditableContract
 {
-	use SoftDeletes;
+    use SoftDeletes;
     use Auditable;
     protected $fillable = [
-    	'email',
-    	'password',
+        'email',
+        'password',
         'pmi', //https://zoom.us/j/9292858384
     ];
 

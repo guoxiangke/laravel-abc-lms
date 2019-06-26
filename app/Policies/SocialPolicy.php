@@ -44,8 +44,7 @@ class SocialPolicy
     public function update(User $user, Social $social)
     {
         return $user->id === $social->user_id
-            || $user->isAdmin()
-            ;
+            || $user->isAdmin();
     }
 
     /**
@@ -58,8 +57,6 @@ class SocialPolicy
     public function delete(User $user, Social $social)
     {
         return $user->id === $social->user_id
-            || $user->isAdmin()
-            ;
+            || $user->isAdmin();
     }
-
 }

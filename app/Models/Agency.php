@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Agency extends Model
 {
     use SoftDeletes;
@@ -17,7 +18,7 @@ class Agency extends Model
     ];
 
     protected $fillable = [
-    	'user_id',
+        'user_id',
         'type',
         'discount', //0-99+%折扣
     ];
@@ -39,7 +40,8 @@ class Agency extends Model
     }
 
 
-    public function students(){
+    public function students()
+    {
         return $this
                 ->hasMany(Profile::class, 'recommend_uid', 'user_id');
     }

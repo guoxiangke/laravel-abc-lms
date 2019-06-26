@@ -4,7 +4,6 @@ namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use App\Models\PayMethod;
-use App\Models\Contact;
 use App\Models\Agency;
 
 class AgencyUpgradeForm extends Form
@@ -13,7 +12,9 @@ class AgencyUpgradeForm extends Form
     {
         //agency_id 上级代理
         $user = $this->getData('entity');
-        if(!$user) return;
+        if (! $user) {
+            return;
+        }
 
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
@@ -36,7 +37,7 @@ class AgencyUpgradeForm extends Form
                 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'label' => '付款账户ID'
             ])
@@ -50,14 +51,14 @@ class AgencyUpgradeForm extends Form
                 'selected' => 0,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('discount', 'number',[
+            ->add('discount', 'number', [
                 'rules' => 'required|min:0|max:100',
                 'value' => 90,
                 'label' => '优惠折扣0-100'
             ])//todo 0-100 check!
             ->add('agency_uid', 'select', [
                 'label' => '介绍人/推荐人',
-                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name','user_id')->toArray(),
+                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [

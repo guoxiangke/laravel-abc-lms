@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Models\Rrule;
 use Faker\Generator as Faker;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -41,6 +42,5 @@ class UsersTableSeeder extends Seeder
         // $orders = factory(Order::class, 10)->create();
 
         $orders = factory(Rrule::class, 1)->create();
-
     }
 }

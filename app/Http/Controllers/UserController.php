@@ -8,13 +8,12 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 // 用于输出一次性信息
-use Session;
-use Auth;
 use App\User;
 
 class UserController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 
@@ -23,8 +22,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-    //Get all users and pass it to the view
+    public function index()
+    {
+        //Get all users and pass it to the view
         $users = User::with('roles')
             ->orderBy('id', 'desc')
             ->paginate(10);
@@ -36,7 +36,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         // 获取所有角色并将其传递到视图
         $roles = Role::get();
         return view('users.create', ['roles'=>$roles]);
@@ -48,7 +49,8 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // 验证 name、email 和 password 字段
         $this->validate($request, [
             'name'=>'required|max:120',
@@ -62,14 +64,16 @@ class UserController extends Controller
         // 检查是否某个角色被选中
         if (isset($roles)) {
             foreach ($roles as $role) {
-                $role_r = Role::where('id', '=', $role)->firstOrFail();            
+                $role_r = Role::where('id', '=', $role)->firstOrFail();
                 $user->assignRole($role_r); //Assigning role to user
             }
-        }        
+        }
         // 重定向到 users.index 视图并显示消息
         return redirect()->route('users.index')
-            ->with('flash_message',
-             'User successfully added.');
+            ->with(
+                'flash_message',
+                'User successfully added.'
+            );
     }
 
     /**
@@ -78,8 +82,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        return redirect('users'); 
+    public function show($id)
+    {
+        return redirect('users');
     }
 
     /**
@@ -88,12 +93,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $user = User::findOrFail($id); // 通过给定id获取用户
         $roles = Role::get(); // 获取所有角色
 
         return view('users.edit', compact('user', 'roles')); // 将用户和角色数据传递到视图
-
     }
 
     /**
@@ -103,7 +108,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $user = User::findOrFail($id); // 通过id获取给定角色
         // 验证 name, email 和 password 字段
         $this->validate($request, [
@@ -116,14 +122,16 @@ class UserController extends Controller
         $roles = $request['roles']; // 获取所有角色
         $user->fill($input)->save();
 
-        if (isset($roles)) {        
+        if (isset($roles)) {
             $user->roles()->sync($roles);  // 如果有角色选中与用户关联则更新用户角色
         } else {
             $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
         }
         return redirect()->route('users.index')
-            ->with('flash_message',
-             'User successfully edited.');
+            ->with(
+                'flash_message',
+                'User successfully edited.'
+            );
     }
 
     /**
@@ -132,13 +140,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         // 通过给定id获取并删除用户
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('flash_message',
-             'User successfully deleted.');
+            ->with(
+                'flash_message',
+                'User successfully deleted.'
+            );
     }
 }

@@ -3,16 +3,15 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\PayMethod;
-use App\Models\Contact;
-use App\Models\School;
 
 class ProductForm extends Form
 {
     public function buildForm()
     {
         $product = $this->getData('entity');
-        if(!$product) return;
+        if (! $product) {
+            return;
+        }
         $this->add('name', 'text', [
                 'rules' => 'required',
                 'value' => $product->name,

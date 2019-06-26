@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Laravel\Horizon\Horizon;
 use Carbon\Carbon;
 // use Spatie\Flash\Flash;
 use Illuminate\Support\Facades\URL;
@@ -37,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Carbon::setLocale('zh');
         
-        if(Config::get('app.env') === 'production') {
+        if (Config::get('app.env') === 'production') {
             URL::forceScheme('https');
         }
         

@@ -3,16 +3,15 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
-use App\Models\Rrule;
-use App\Models\Order;
 
 class RruleForm extends Form
 {
     public function buildForm()
     {
-
         $rrule = $this->getData('entity');
-        if(!$rrule) return;
+        if (! $rrule) {
+            return;
+        }
         
         $this->add('order', 'static', [
                     'label' => '订单Id',

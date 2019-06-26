@@ -13,7 +13,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Models\Profile;
 use Illuminate\Support\Str;
 
-
 class RegisterController extends Controller
 {
     /*
@@ -74,7 +73,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $name = User::pinyin($data['name']);
-        if(!$name) {
+        if (! $name) {
             $name = str_replace(' ', '_', $data['name']);
         }
         $name = 'u_' .  $name;
@@ -85,7 +84,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if($user){
+        if ($user) {
             try {
                 $userProfile = new Profile;
                 $userProfile->user_id = $user->id;
@@ -93,9 +92,9 @@ class RegisterController extends Controller
                 $userProfile->sex = $data['sex'];
                 $userProfile->birthday = $data['birthday'];
                 $telephone = $data['telephone'];
-                if(Str::startsWith($telephone, '86')){
+                if (Str::startsWith($telephone, '86')) {
                     $telephone = substr($telephone, 2);
-                }else{
+                } else {
                     $telephone = '+' .$telephone; //+63XXXX
                 }
                 $userProfile->telephone = $telephone;
@@ -103,9 +102,9 @@ class RegisterController extends Controller
                 $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
                 alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
-                Log::info(__CLASS__,[__FUNCTION__,__LINE__,'Create an Profile for ' . $user->name]);
+                Log::info(__CLASS__, [__FUNCTION__,__LINE__,'Create an Profile for ' . $user->name]);
             } catch (\Exception $e) {
-                Log::error(__CLASS__,[__FUNCTION__,__LINE__,$e->getMessage()]);
+                Log::error(__CLASS__, [__FUNCTION__,__LINE__,$e->getMessage()]);
             }
         }
         return $user;
@@ -120,5 +119,4 @@ class RegisterController extends Controller
     {
         return view('auth.register', ['uid' => $user->id]);
     }
-
 }

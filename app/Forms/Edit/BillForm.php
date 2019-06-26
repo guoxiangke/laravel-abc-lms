@@ -13,12 +13,14 @@ class BillForm extends Form
     public function buildForm()
     {
         $bill = $this->getData('entity');
-        if(!$bill) return;
+        if (! $bill) {
+            return;
+        }
 
-        $users = User::with('profiles')->get()->pluck('profiles.0.name','id')->toArray();
-        $orders = Order::with(['user','teacher','agency','user.profiles','teacher.profiles','agency.profiles'])->active()->get()->map(function($order){
+        $users = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $orders = Order::with(['user','teacher','agency','user.profiles','teacher.profiles','agency.profiles'])->active()->get()->map(function ($order) {
             return ['id'=>$order->id,'title'=>$order->title];
-        })->pluck('title','id')->toArray();
+        })->pluck('title', 'id')->toArray();
         $this
             ->add('type', 'select', [
                 'label' => '类型',

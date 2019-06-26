@@ -11,8 +11,8 @@ $factory->define(Agency::class, function (Faker $faker) {
                 ->create(['name'=>$name])
                 ->id;
         },
-        'type' => rand(0,1),
-        'discount' => rand(80,100),
+        'type' => rand(0, 1),
+        'discount' => rand(80, 100),
     ];
 });
 

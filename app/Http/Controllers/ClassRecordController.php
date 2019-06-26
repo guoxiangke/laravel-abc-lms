@@ -10,13 +10,11 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ClassRecordForm as EditForm;
 
 use App\Models\Order;
-use App\Models\RRule;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
-
 
 class ClassRecordController extends Controller
 {
@@ -27,7 +25,8 @@ class ClassRecordController extends Controller
      */
     // protected $classRecord; todo
 
-    public function __construct(ClassRecord $classRecord) {
+    public function __construct(ClassRecord $classRecord)
+    {
         // $this->classRecord = $classRecord;
         //中间件让具备指定权限的用户才能访问该资源
         //只有管理员可以访问所有 /classRecords
@@ -42,25 +41,29 @@ class ClassRecordController extends Controller
     {
         $classRecords = ClassRecord::with(
             'rrule',
-            'teacher', 'teacher.profiles',
-            'agency', 'agency.profiles',
-            'user', 'user.profiles',
+            'teacher',
+            'teacher.profiles',
+            'agency',
+            'agency.profiles',
+            'user',
+            'user.profiles',
             'media'
             )
-            ->orderBy('generated_at','desc')
+            ->orderBy('generated_at', 'desc')
             ->paginate(100);
         return view('classRecords.index', compact('classRecords'));
     }
     
-    public function indexbyOrder(Order $order){
+    public function indexbyOrder(Order $order)
+    {
         $classRecords = ClassRecord::with(
-                'rrule',
-                'teacher',
-                'user',
-                'media'
+            'rrule',
+            'teacher',
+            'user',
+            'media'
                 )
             ->where('order_id', $order->id) //user_id
-            ->orderBy('generated_at','desc')
+            ->orderBy('generated_at', 'desc')
             ->paginate(50);
         return view('classRecords.index4order', compact('classRecords'));
     }
@@ -71,7 +74,7 @@ class ClassRecordController extends Controller
         //谁可以拥有此列表
         //只有老师、学生、和代理可以拥有本列表
         // const ALLOW_LIST_ROLES =['agency', 'teacher', 'student'];
-        if(!$user->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
+        if (! $user->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             abort(403);
         }
         //$this->authorize('indexByRole');
@@ -84,7 +87,7 @@ class ClassRecordController extends Controller
 
         foreach (ClassRecord::ALLOW_LIST_ROLES as $role) {
             $roleName = $role;
-            if(!$user->hasRole($role)){
+            if (! $user->hasRole($role)) {
                 continue;
             }
             $userName = $user->profiles->first()->name;
@@ -93,13 +96,14 @@ class ClassRecordController extends Controller
                 'user',
                 'user.profiles',
                 'teacher',//teacher user!
-                'teacherModel','teacherModel.zoom',
+                'teacherModel',
+                'teacherModel.zoom',
                 'media',
                 )
-            ->orderBy('generated_at','desc')
+            ->orderBy('generated_at', 'desc')
             ->where($allowRolesMap[$role], $user->id);
             //只让学生看好看的！！！
-            if($user->hasAnyRole(['student', 'agency'])){
+            if ($user->hasAnyRole(['student', 'agency'])) {
                 //给学生看的状态[0,1,3]
                 $classRecords = $classRecords->whereIn('exception', [0,1,3]);
             }
@@ -110,11 +114,11 @@ class ClassRecordController extends Controller
         $aolCount = 0;
         //为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？
             
-        if($user->hasRole('student')){
+        if ($user->hasRole('student')) {
             $start = new Carbon('first day of this month');
-            $aolCount = ClassRecord::whereIn('exception',[ClassRecord::NORMAL_EXCEPTION_STUDENT, ClassRecord::EXCEPTION_STUDENT]) // 请假和旷课都算进去
+            $aolCount = ClassRecord::whereIn('exception', [ClassRecord::NORMAL_EXCEPTION_STUDENT, ClassRecord::EXCEPTION_STUDENT]) // 请假和旷课都算进去
                 ->where('user_id', $user->id)
-                ->where('updated_at','>=', $start)
+                ->where('updated_at', '>=', $start)
                 ->pluck('exception')
                 ->count();
         }
@@ -125,12 +129,12 @@ class ClassRecordController extends Controller
     public function indexByStudent(Student $student)
     {
         $classRecords = ClassRecord::with(
-                'rrule',
-                'user',
-                'user.profiles',
+            'rrule',
+            'user',
+            'user.profiles',
                 )
             ->where('user_id', $student->user_id)
-            ->orderBy('generated_at','desc')
+            ->orderBy('generated_at', 'desc')
             ->paginate(50);
         return view('classRecords.index4agency', compact('classRecords'));
     }
@@ -138,12 +142,12 @@ class ClassRecordController extends Controller
     public function indexByTeacher(Teacher $teacher)
     {
         $classRecords = ClassRecord::with(
-                'rrule',
-                'user',
-                'user.profiles',
+            'rrule',
+            'user',
+            'user.profiles',
                 )
             ->where('teacher_uid', $teacher->user_id)
-            ->orderBy('generated_at','desc')
+            ->orderBy('generated_at', 'desc')
             ->paginate(50);
         return view('classRecords.index4teacher', compact('classRecords'));
     }
@@ -184,7 +188,6 @@ class ClassRecordController extends Controller
      */
     public function edit(ClassRecord  $classRecord)
     {
-
         $this->authorize('edit', $classRecord);
 
         $form = $this->form(
@@ -194,8 +197,8 @@ class ClassRecordController extends Controller
                 'url' => action('ClassRecordController@update', ['id' => $classRecord->id])
             ],
             ['entity' => $classRecord],
-        ); 
-        return view('classRecords.edit', compact('form','classRecord'));
+        );
+        return view('classRecords.edit', compact('form', 'classRecord'));
     }
 
     /**
@@ -208,7 +211,7 @@ class ClassRecordController extends Controller
     public function update(Request $request, ClassRecord $classRecord, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $this->authorize('edit', $classRecord);
@@ -218,13 +221,13 @@ class ClassRecordController extends Controller
         // https://github.com/spatie/laravel-medialibrary/issues/241#issuecomment-226027435
         // https://github.com/spatie/laravel-medialibrary/issues/1018
         $md5Id = $classRecord->id .'_'. time();//md5($classRecord->id . );
-        if($request->file('mp3')){
+        if ($request->file('mp3')) {
             $classRecord->clearMediaCollection('mp3');
             $fileMp3Adder = $classRecord->addMediaFromRequest('mp3')
                 ->usingFileName($md5Id . '.m4a')
-                ->toMediaCollection('mp3'); 
+                ->toMediaCollection('mp3');
         }
-        if($request->file('mp4')){
+        if ($request->file('mp4')) {
             $classRecord->clearMediaCollection('mp4');
             $fileMp4Adder = $classRecord->addMediaFromRequest('mp4')
                 ->usingFileName($md5Id . '.mp4')
@@ -235,18 +238,18 @@ class ClassRecordController extends Controller
         
         $data = $request->all();
         $generated_at = $request->input('generated_at');
-        if($generated_at) {
+        if ($generated_at) {
             $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at);//2019-04-09T06:00
             $data['generated_at'] = $generated_at;
         }
-        if(!$request->input('agency_uid')) {
+        if (! $request->input('agency_uid')) {
             unset($data['agency_uid']);
         }
 
         $classRecord->fill($data)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
 
-        if(Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
+        if (Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             return redirect(route('classRecords.indexByRole'));
         }
         return redirect(route('classRecords.show', $classRecord->id));
@@ -275,9 +278,9 @@ class ClassRecordController extends Controller
         }
 
         $classRecord->exception = $exception;
-        //默认=1/ture，如果有任何异常，标记为false，不作为已上课时总数计算 
+        //默认=1/ture，如果有任何异常，标记为false，不作为已上课时总数计算
         //@see setExceptionAttribute 不用操心 weight
         // $classRecord->weight = 1;
         return ['success'=>$classRecord->save()];
-    } 
+    }
 }

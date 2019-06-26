@@ -4,18 +4,22 @@ namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use App\Models\PayMethod;
+
 class SchoolForm extends Form
 {
     public function buildForm()
     {
-        $this->add('school_name', 'text',
-                [
+        $this->add(
+            'school_name',
+            'text',
+            [
                 'label' => '学校名字',
                 'rules' => 'required|min:2',
                 'error_messages' => [
                     'title.required' => 'The school name field is mandatory.'
                 ]
-            ])
+            ]
+        )
             ->add('image', 'file', [
                 'label' => 'Logo: todo',
                 'attr' => ['placeholder' => '学校Logo']
@@ -48,7 +52,7 @@ class SchoolForm extends Form
                 'rules' => 'required|min:13',
                 'label' => '管理员手机号',
             ])
-            ->add('contact_skype', 'text',[
+            ->add('contact_skype', 'text', [
                 'rules' => 'required|min:4',
                 'label' => '管理员/联系人Skype'
             ])// type =0 skype number=contact_skype
@@ -63,7 +67,7 @@ class SchoolForm extends Form
                 'selected' => 0, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'label' => '付款账户ID'
             ])

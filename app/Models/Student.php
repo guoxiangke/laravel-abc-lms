@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use App\User;
-use App\Models\Agency;
-use App\Models\Profile;
-use App\Models\Order;
 
 class Student extends Model implements AuditableContract
 {

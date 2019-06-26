@@ -10,7 +10,6 @@ use App\Models\Profile;
 use Yansongda\LaravelNotificationWechat\WechatChannel;
 use Yansongda\LaravelNotificationWechat\WechatMessage;
 
-
 class BirthdayNotification extends Notification implements ShouldQueue
 {
     use Queueable;

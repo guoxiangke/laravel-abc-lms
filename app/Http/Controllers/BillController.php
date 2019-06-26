@@ -14,7 +14,8 @@ class BillController extends Controller
 {
     use FormBuilderTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
     /**
@@ -24,7 +25,7 @@ class BillController extends Controller
      */
     public function index()
     {
-        $bills = Bill::orderBy('id','desc')
+        $bills = Bill::orderBy('id', 'desc')
                     ->paginate(100);
         return view('bills.index', compact('bills'));
     }
@@ -39,7 +40,7 @@ class BillController extends Controller
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url' => action('BillController@store')
-        ]); 
+        ]);
         return view('bills.create', compact('form'));
     }
 
@@ -56,7 +57,7 @@ class BillController extends Controller
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
@@ -88,13 +89,13 @@ class BillController extends Controller
     public function edit(Bill $bill)
     {
         $form = $this->form(
-            EditForm::class, 
+            EditForm::class,
             [
                 'method' => 'PUT',
                 'url' => action('BillController@update', ['id'=>$bill->id])
             ],
             ['entity' => $bill],
-        ); 
+        );
         return view('bills.edit', compact('form'));
     }
 
@@ -111,7 +112,7 @@ class BillController extends Controller
             'price'=>'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
         $form = $this->form(EditForm::class);
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $postData = $request->all();

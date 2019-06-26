@@ -9,18 +9,19 @@ use App\Traits\HasPriceField;
 
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+
 //$table->string('image')->nullable();
 
 class Product extends Model implements HasMedia
 {
-	use SoftDeletes;
+    use SoftDeletes;
     use HasPriceField;
     use HasMediaTrait;
     protected $fillable = [
-    	'name',
-    	'description',
-    	'price',
-    	'remark'
+        'name',
+        'description',
+        'price',
+        'remark'
     ];
 
     public function registerMediaCollections()
@@ -29,6 +30,5 @@ class Product extends Model implements HasMedia
             ->addMediaCollection('images') //产品图片
             // ->useDisk('s3')
             ->singleFile();
-
     }
 }

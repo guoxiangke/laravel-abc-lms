@@ -18,11 +18,10 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         // $request->user()->hasRole('admin')
-        if($request->user() && (
+        if ($request->user() && (
             $request->user()->isSuperuser()
             || $request->user()->hasAnyRole(User::MANAGER_ROLES)
-        )){
-
+        )) {
             return $next($request);
         }
         // if (!Auth::user()->hasPermissionTo('Administer roles & permissions')) // 用户是否具备此权限

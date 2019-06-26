@@ -27,7 +27,7 @@ class AgencyRegisterForm extends Form
                 'choices' => Contact::TYPES,
                 'empty_value' => '=== Select ==='
             ])
-            ->add('contact_number', 'text',[
+            ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
                 'label' => '联系方式账户ID'
             ])
@@ -46,13 +46,13 @@ class AgencyRegisterForm extends Form
                 'selected' => 1, //'PayPal'
                 'empty_value' => '=== Select ==='
             ])
-            ->add('pay_number', 'text',[
+            ->add('pay_number', 'text', [
                 'rules' => 'required',
                 'label' => '付款账户ID*'
             ])
             ->add('agency_id', 'select', [
                 'label' => '上级代理/推荐人',
-                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name','id')->toArray(),
+                'choices' => Agency::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray(),
                 'empty_value' => '=== Select ==='
             ])
             ->add('submit', 'submit', [

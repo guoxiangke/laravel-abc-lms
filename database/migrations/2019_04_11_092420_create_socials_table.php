@@ -14,7 +14,7 @@ class CreateSocialsTable extends Migration
     public function up()
     {
         Schema::create('socials', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
+            $table->bigIncrements('id');
             $table->string('social_id')->index();
             // ALTER TABLE `socials` CHANGE COLUMN `social_id` `social_id` VARCHAR(255);
             $table->unsignedBigInteger('user_id');

@@ -15,11 +15,11 @@ $factory->define(Rrule::class, function (Faker $faker) {
         // "DTSTART:20190323T180000Z\nRRULE:FREQ=WEEKLY;COUNT=10;INTERVAL=1;WKST=MO;BYDAY=SA,SU",
         // "DTSTART:20190323T180000Z\nRRULE:FREQ=WEEKLY;COUNT=20;INTERVAL=1;WKST=MO;BYDAY=FR",
     ];
-    $rrule = $rrules[rand(0,count($rrules)-1)];
+    $rrule = $rrules[rand(0, count($rrules)-1)];
     $rruleArray = Rrule::buildRrule($rrule);
-    return array_merge($rruleArray,[
+    return array_merge($rruleArray, [
         'type' => Rrule::TYPE_SCHEDULE, //rand(0,1),//'AOL','SCHEDULE',
-        'order_id' => function(){
+        'order_id' => function () {
             return factory(Order::class)
                 ->create()
                 ->id;

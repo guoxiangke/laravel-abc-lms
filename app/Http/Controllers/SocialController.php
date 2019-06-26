@@ -21,9 +21,9 @@ class SocialController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAdmin()){
+        if (Auth::user()->isAdmin()) {
             $socials = Social::paginate(50);
-        }else{
+        } else {
             $socials =  Social::where('user_id', Auth::id())->paginate(10);
         }
         
@@ -48,25 +48,26 @@ class SocialController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        if(Auth::id()) return redirect('home');
+        if (Auth::id()) {
+            return redirect('home');
+        }
 
         $this->validate($request, [
             'username'=>'required',
             'password'=>'required',
         ]);
         $account = $request->get('username');
-        if(is_numeric($account)){
+        if (is_numeric($account)) {
             $field = 'id';
             $account = Profile::select('user_id')->where('telephone', $account)->first();
             $account = ($account==null)?0:$account->user_id;
-        }
-        elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
+        } elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
-        }else{
+        } else {
             $field = 'name';
         }
         $password = $request->get('password');
-        if (Auth::attempt([$field => $account, 'password' => $password],true)){
+        if (Auth::attempt([$field => $account, 'password' => $password], true)) {
             alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
             Social::firstOrCreate(
                 [
@@ -75,7 +76,7 @@ class SocialController extends Controller
                     'type' => $request->input('type'),
                 ]
             );
-        }else{
+        } else {
             alert()->toast(__('Wrong Credentials'), 'error', 'top-center')->autoClose(3000);
             return redirect('login');
         }
@@ -128,7 +129,7 @@ class SocialController extends Controller
         $this->authorize('delete', $social);
         $social->delete();
         alert()->toast(__('Unbind Success'), 'success', 'top-center')->autoClose(3000);
-        if(Auth::user()->isAdmin()){
+        if (Auth::user()->isAdmin()) {
             return redirect('students');
         }
         return redirect('socials');

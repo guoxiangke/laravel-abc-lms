@@ -23,15 +23,15 @@ class PayMethod extends Model implements AuditableContract
     ];
 
     protected $fillable = [
-    	'type',
-    	'number',
-    	'remark',
+        'type',
+        'number',
+        'remark',
         'user_id',
     ];
 
     // getType = teacher
-    public function user() {
+    public function user()
+    {
         return $this->hasOne(User::class);
     }
-
 }
