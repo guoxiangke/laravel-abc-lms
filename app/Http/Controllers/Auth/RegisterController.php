@@ -54,7 +54,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'          => ['required', 'string', 'max:25'],//, 'unique:users'
+            'name'          => ['required', 'string', 'max:25'], //, 'unique:users'
             'sex'           => ['required', 'boolean'],
             'birthday'      => ['required', 'string', 'max:25'],
             'telephone'     => ['required', 'digits_between:9,13', 'unique:profiles'],
@@ -102,9 +102,9 @@ class RegisterController extends Controller
                 $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
                 alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
-                Log::info(__CLASS__, [__FUNCTION__,__LINE__,'Create an Profile for ' . $user->name]);
+                Log::info(__CLASS__, [__FUNCTION__, __LINE__, 'Create an Profile for ' . $user->name]);
             } catch (\Exception $e) {
-                Log::error(__CLASS__, [__FUNCTION__,__LINE__,$e->getMessage()]);
+                Log::error(__CLASS__, [__FUNCTION__, __LINE__, $e->getMessage()]);
             }
         }
         return $user;

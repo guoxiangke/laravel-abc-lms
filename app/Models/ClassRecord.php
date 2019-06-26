@@ -36,26 +36,26 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     }
 
     const EXCEPTION_TYPES = [
-        '正常',//0
-        '学生请假',//1
-        '老师请假',//2
-        '学生旷课',//3
-        '老师异常标记',//老师异常,不给老师算课时，需要给学生补课 4
+        '正常', //0
+        '学生请假', //1
+        '老师请假', //2
+        '学生旷课', //3
+        '老师异常标记', //老师异常,不给老师算课时，需要给学生补课 4
     ];
 
     const EXCEPTION_TYPES_EN = [
-        'Normal',//0
-        'AOL',//1-by-Student
-        'Holiday',//2 AOL-by-Teacher
-        'Absent',//学生异常 3-by-Student
-        'EXCEPTION',//Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
+        'Normal', //0
+        'AOL', //1-by-Student
+        'Holiday', //2 AOL-by-Teacher
+        'Absent', //学生异常 3-by-Student
+        'EXCEPTION', //Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
     ];
     //给学生看的状态[0,1,3]
     const EXCEPTION_TYPES_STU = [
-        '正常',//0
-        '请假',//1
+        '正常', //0
+        '请假', //1
         '顺延AOL-by-Teacher',
-        '正 常',//旷课 给学生看，好让学生数课时
+        '正 常', //旷课 给学生看，好让学生数课时
         '老师异常',
     ];
     //@see ClassRecordPolicy 谁可以列表查看
@@ -68,13 +68,13 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     const EXCEPTION_TEACHER = 4;
 
     //是否需要补课
-    const EXCEPTIONS_NEED_PATCH = [1,2,4];
-    const EXCEPTIONS_NONEED_PATCH = [0,3];
+    const EXCEPTIONS_NEED_PATCH = [1, 2, 4];
+    const EXCEPTIONS_NONEED_PATCH = [0, 3];
 
     protected $fillable = [
         'rrule_id',
         'order_id',
-        'user_id',//'student_uid',
+        'user_id', //'student_uid',
         'teacher_uid',
         'agency_uid',
         'remark', //book, page, mistake, ...
@@ -95,7 +95,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         //需要补课的，标记为false，即不计算在课程总数内
         $this->attributes['weight'] = true; //weight默认是1
         //只有学生旷课时，标记为weight=1，即需要计算在内, 其他为0
-        if (in_array($value, [1,2,4])) {
+        if (in_array($value, [1, 2, 4])) {
             $this->attributes['weight'] = false;
             \Log::debug(__FUNCTION__, ['ClassRecord weight updated by exception changed']);
         }

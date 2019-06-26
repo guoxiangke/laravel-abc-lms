@@ -13,7 +13,7 @@ class Teacher extends Model
     
     protected $fillable = [
         'user_id', // 关联用户 可为空
-        'school_id',//NULL为自由职业freelancer
+        'school_id', //NULL为自由职业freelancer
         'zoom_id',
     ];
 

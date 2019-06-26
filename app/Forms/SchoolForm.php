@@ -43,7 +43,7 @@ class SchoolForm extends Form
             ->add('profile_sex', 'select', [
                 'label'       => '管理员性别',
                 'rules'       => 'required',
-                'choices'     => ['女','男'],
+                'choices'     => ['女', '男'],
                 'selected'    => 0,
                 'empty_value' => '=== Select ===',
             ])

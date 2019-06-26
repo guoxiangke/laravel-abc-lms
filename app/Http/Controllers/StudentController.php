@@ -233,7 +233,7 @@ class StudentController extends Controller
 
         Contact::firstOrNew([
             'profile_id' => $profile->id,
-            'type'       => 1,// Contact::TYPES[1] = 'wechat/qq',
+            'type'       => 1, // Contact::TYPES[1] = 'wechat/qq',
             'number'     => $request->input('contact_number') ?: $request->input('telephone'),
             'remark'     => $request->input('contact_remark'),
         ])->save();

@@ -62,7 +62,7 @@ class AgencyForm extends Form
             ->add('profile_sex', 'select', [
                 'label'       => '性别',
                 'rules'       => 'required',
-                'choices'     => ['女','男'],
+                'choices'     => ['女', '男'],
                 'selected'    => $profile->sex,
                 'empty_value' => '=== Select ===',
             ])

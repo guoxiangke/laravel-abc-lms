@@ -39,14 +39,14 @@ class User extends Authenticatable implements HasMedia
 
     const ROLES = [
         'admin'     => 'admin',
-        'developer' => 'developer',// '开发者',
-        'manager'   => 'manager',// '管理人员',
-        'editor'    => 'editor',// '网站编辑',
+        'developer' => 'developer', // '开发者',
+        'manager'   => 'manager', // '管理人员',
+        'editor'    => 'editor', // '网站编辑',
 
-        'school'  => 'school',// 'schoolMaster',
-        'teacher' => 'teacher',// 'Teacher',
-        'student' => 'student',// '学生',
-        'agency'  => 'agency',// '代理',
+        'school'  => 'school', // 'schoolMaster',
+        'teacher' => 'teacher', // 'Teacher',
+        'student' => 'student', // '学生',
+        'agency'  => 'agency', // '代理',
     ];
 
     //@see ClassRecordPolicy 谁可以评论 //谁可以查看

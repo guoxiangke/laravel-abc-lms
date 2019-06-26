@@ -168,7 +168,7 @@ class TeacherController extends Controller
         if ($request->input('pay_number')) {
             $paymethod = PayMethod::firstOrNew([
                 'user_id' => $user->id,
-                'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                'type'    => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
                 'number'  => $request->input('pay_number'),
                 'remark'  => $request->input('pay_remark'),
             ])->save();
@@ -299,7 +299,7 @@ class TeacherController extends Controller
             if ($paymethod) {
                 $paymethod->fill([
                     // 'user_id' => $user->id,
-                    'type'   => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                    'type'   => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
                     'number' => $request->input('pay_number'),
                     'remark' => $request->input('pay_remark'),
                 ])->save();

@@ -27,7 +27,7 @@ class BookForm extends Form
             ])
             ->add('page', 'number', [
                 'label' => '页数',
-                'value' => 0,//default 0
+                'value' => 0, //default 0
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

@@ -12,19 +12,19 @@ class Bill extends Model
     use SoftDeletes;
     use HasPriceField;
     const TYPES = [
-        '收入',//0
-        '支出',//1
+        '收入', //0
+        '支出', //1
     ];
     //0:append 1:approved已成交/入账
-    const STATUS = ['Append','Approved'];
+    const STATUS = ['Append', 'Approved'];
     protected $fillable = [
         'type',
         'user_id',
         'order_id',
-        'price',//amount
+        'price', //amount
         'paymethod_type',
         'status',
-        'remark',//经手人 //收/付款时间etc.
+        'remark', //经手人 //收/付款时间etc.
     ];
 
     public function user()

@@ -86,7 +86,7 @@ class RruleController extends Controller
         $rrule = Rrule::firstOrCreate(
             array_merge($rruleReslovedArray, [
                 'order_id' => $request->input('order_id'),
-                'type'     => $request->input('type') ?: 0,//'AOL','SCHEDULE', Rrule::TYPE_SCHEDULE
+                'type'     => $request->input('type') ?: 0, //'AOL','SCHEDULE', Rrule::TYPE_SCHEDULE
             ])
         );
         if ($rrule->wasRecentlyCreated) {

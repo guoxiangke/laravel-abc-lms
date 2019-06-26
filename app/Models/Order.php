@@ -33,15 +33,15 @@ class Order extends Model implements AuditableContract
     ];
     
     protected $fillable = [
-        'user_id',//'student_id',
+        'user_id', //'student_id',
         'teacher_uid',
         'agency_uid',
         'book_id', //todo
         'product_id',
-        'price',//'单位yuan'
-        'period',//'课时' 20
-        'expired_at',//有效期
-        'status',//default 1
+        'price', //'单位yuan'
+        'period', //'课时' 20
+        'expired_at', //有效期
+        'status', //default 1
         'remark',
     ];
     
@@ -69,7 +69,7 @@ class Order extends Model implements AuditableContract
                 . '-' . $this->period ;
                 
         //学生和老师不显示价格
-        if (Auth::user() && ! Auth::user()->hasAnyRole(['student','teacher',])) {
+        if (Auth::user() && ! Auth::user()->hasAnyRole(['student', 'teacher', ])) {
             $title .= '-' . $this->price;
         }
         return $title;

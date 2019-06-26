@@ -79,7 +79,7 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $order = Order::firstOrNew([
-            'user_id'     => $request->input('user_id'),//student_uid
+            'user_id'     => $request->input('user_id'), //student_uid
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
             'book_id'     => $request->input('book_id') ?: 1 ,
@@ -107,7 +107,7 @@ class OrderController extends Controller
                 'string'   => $rruleReslovedArray['string'],
                 'start_at' => $rruleReslovedArray['start_at'],
                 'order_id' => $order->id,
-                'type'     => Rrule::TYPE_SCHEDULE,//2个都是上课计划
+                'type'     => Rrule::TYPE_SCHEDULE, //2个都是上课计划
             ]);
         }
 
@@ -241,7 +241,7 @@ class OrderController extends Controller
         }
 
         $order->fill([
-            'user_id'     => $request->input('user_id'),//student_uid
+            'user_id'     => $request->input('user_id'), //student_uid
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
             'book_id'     => $request->input('book_id') ?: 1 ,

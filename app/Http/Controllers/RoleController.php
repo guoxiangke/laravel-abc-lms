@@ -37,7 +37,7 @@ class RoleController extends Controller
         $permissions = Permission::all();// 获取所有权限
 
         $roles = Role::all();// 获取所有角色
-        return view('roles.create', ['permissions'=>$permissions,'roles'=>$roles]);
+        return view('roles.create', ['permissions'=>$permissions, 'roles'=>$roles]);
     }
 
     /**

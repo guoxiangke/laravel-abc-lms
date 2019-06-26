@@ -18,11 +18,11 @@ class Profile extends Model implements AuditableContract
     ];
     protected $fillable = [
         //$contact = $school->user->profiles->first()->contacts->first();
-        'user_id',//可为空，一个用户可以有多个profiles，一个profile也可以对应多个contacts
+        'user_id', //可为空，一个用户可以有多个profiles，一个profile也可以对应多个contacts
         'name',
         'sex',
         'birthday',
-        'telephone',//唯一，用于登陆！
+        'telephone', //唯一，用于登陆！
         'recommend_uid',
     ];
 

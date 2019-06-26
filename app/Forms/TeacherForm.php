@@ -28,7 +28,7 @@ class TeacherForm extends Form
             ->add(
                 'profile_name',
                 'text',
-                ['rules' => 'required','label' => '姓名']
+                ['rules' => 'required', 'label' => '姓名']
             )
             ->add('user_password', 'text', [
                 'label'      => '登陆密码',
@@ -39,7 +39,7 @@ class TeacherForm extends Form
                 ],
             ])
             ->add('telephone', 'tel', [
-                'rules'      => 'required|min:11',//+639158798611
+                'rules'      => 'required|min:11', //+639158798611
                 'label'      => '手机号',
                 'help_block' => [
                     'text' => '13位，带+63',
@@ -79,7 +79,7 @@ class TeacherForm extends Form
             ->add('profile_sex', 'select', [
                 'label'       => '性别',
                 'rules'       => 'required',
-                'choices'     => ['女','男'],
+                'choices'     => ['女', '男'],
                 'selected'    => 0,
                 'empty_value' => '=== Select ===',
             ])

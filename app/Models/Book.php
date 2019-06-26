@@ -12,10 +12,10 @@ class Book extends Model
     protected $fillable = [
         'name',
         'type',
-        'publisher',//出版社
-        'path',//XXX.pdf
-        'page',//页数
+        'publisher', //出版社
+        'path', //XXX.pdf
+        'page', //页数
     ];
-    const TYPES = ['同步教材','外教教材'];
+    const TYPES = ['同步教材', '外教教材'];
     const SYNC = 0; //同步教材
 }

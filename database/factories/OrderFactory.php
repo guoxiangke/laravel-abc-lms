@@ -35,7 +35,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'product_id'=> 1,
         'price'     => 159,
         'period'    => 5,
-        'status'    => 1,//rand(0,4),
+        'status'    => 1, //rand(0,4),
         'expired_at'=> $faker->dateTimeBetween('+30 days', '+90 days'),
         'remark'    => $faker->paragraph,
     ];

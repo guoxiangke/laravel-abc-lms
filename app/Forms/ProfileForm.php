@@ -21,7 +21,7 @@ class ProfileForm extends Form
             ->add('sex', 'select', [
                 'label'       => '性别',
                 'rules'       => 'required',
-                'choices'     => ['女','男'],
+                'choices'     => ['女', '男'],
                 'selected'    => 0,
                 'empty_value' => '=== Select ===',
             ])
@@ -53,7 +53,7 @@ class ProfileForm extends Form
                     'empty_value' => '=== Select ===',
                 ]);
         } else {
-            $this->addBefore('name', 'user_id', 'static', ['label' => 'User Id','value' => $profile->user_id]);
+            $this->addBefore('name', 'user_id', 'static', ['label' => 'User Id', 'value' => $profile->user_id]);
         }
     }
 }

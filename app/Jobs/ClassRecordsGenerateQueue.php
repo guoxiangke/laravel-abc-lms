@@ -42,7 +42,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         
         //找出今天/昨天需要上的2节课 的时间H:i
         $byDay = Carbon::now()->subDays($this->offset);//sub方便为过去的日期生成记录！！
-        Log::info(__CLASS__, [$order->title, $order->id, $byDay,'info']);
+        Log::info(__CLASS__, [$order->title, $order->id, $byDay, 'info']);
         $todayClassTimes = $order->hasClass($byDay); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
         //标记完成如果 已经上课=订单PERIOD
@@ -82,7 +82,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                         'generated_at' => $byDay->format('Y-m-d ' . $rrule->start_at->format('H:i') .':00'),
                         //必须，固定为生成当天的XX开始时间，避免重复生产
                         //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
-                        'user_id'    => $order->user_id,//'student_uid',
+                        'user_id'    => $order->user_id, //'student_uid',
                         'agency_uid' => $order->agency_uid,
                         'order_id'   => $order->id,
                     ]);

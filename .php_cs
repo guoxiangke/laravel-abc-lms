@@ -119,6 +119,7 @@ $rules = [
     'ordered_imports' => [
         'sortAlgorithm' => 'length',
     ],
+    'whitespace_after_comma_in_array' => true,
     // 'phpdoc_add_missing_param_annotation' => true,
     // 'phpdoc_indent' => true,
     // 'phpdoc_no_package' => true,

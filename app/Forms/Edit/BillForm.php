@@ -18,8 +18,8 @@ class BillForm extends Form
         }
 
         $users = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
-        $orders = Order::with(['user','teacher','agency','user.profiles','teacher.profiles','agency.profiles'])->active()->get()->map(function ($order) {
-            return ['id'=>$order->id,'title'=>$order->title];
+        $orders = Order::with(['user', 'teacher', 'agency', 'user.profiles', 'teacher.profiles', 'agency.profiles'])->active()->get()->map(function ($order) {
+            return ['id'=>$order->id, 'title'=>$order->title];
         })->pluck('title', 'id')->toArray();
         $this
             ->add('type', 'select', [

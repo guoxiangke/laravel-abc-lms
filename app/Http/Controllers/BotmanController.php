@@ -45,7 +45,7 @@ class BotmanController extends Controller
         $botman->fallback(function (BotMan $bot) use ($request) {
             $bot->reply('Sorry, I did not understand these commands. Here is a list of commands I understand: ...');
             bark_notify('访客'. substr($request->input('userId'), 0, 4) .'发来消息: '. $request->input('message') .'，点击回复', 'https://cn.bing.com');
-            \Log::error(__CLASS__, [$request->all(),$bot->getMessage()->getPayload()]);
+            \Log::error(__CLASS__, [$request->all(), $bot->getMessage()->getPayload()]);
         });
         // Start listening
         $botman->listen();

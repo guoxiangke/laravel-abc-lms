@@ -105,7 +105,7 @@ class ClassRecordController extends Controller
             //只让学生看好看的！！！
             if ($user->hasAnyRole(['student', 'agency'])) {
                 //给学生看的状态[0,1,3]
-                $classRecords = $classRecords->whereIn('exception', [0,1,3]);
+                $classRecords = $classRecords->whereIn('exception', [0, 1, 3]);
             }
             $classRecords = $classRecords->paginate(50);
             break;//按上下↕️顺序找到第一个角色的即可返回

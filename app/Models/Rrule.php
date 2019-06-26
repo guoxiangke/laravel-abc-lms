@@ -19,7 +19,7 @@ class Rrule extends Model implements AuditableContract
     // DTSTART:20190322T000000Z
     // RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU
     protected $fillable = [
-        'string',//ori_sting withour first Line
+        'string', //ori_sting withour first Line
         // 'text',//TransformerText
         'type', //'AOL', 0 'SCHEDULE',1
         'order_id',
@@ -29,7 +29,7 @@ class Rrule extends Model implements AuditableContract
 
     const TYPE_AOL = 0;
     const TYPE_SCHEDULE = 1;
-    const TYPES = ['AOL','Schedule',];
+    const TYPES = ['AOL', 'Schedule', ];
 
     const BYDAYS = [
         'SU'=> 0,

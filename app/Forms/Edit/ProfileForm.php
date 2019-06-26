@@ -14,7 +14,7 @@ class ProfileForm extends Form
             return;
         }
         $this
-            ->add('user_id', 'hidden', ['label' => 'User Id','value' => $profile->user_id,])
+            ->add('user_id', 'hidden', ['label' => 'User Id', 'value' => $profile->user_id, ])
             ->add('name', 'text', [
                 'rules' => 'required',
                 'value' => $profile->name,
@@ -23,11 +23,11 @@ class ProfileForm extends Form
             ->add('sex', 'select', [
                 'label'       => '性别',
                 'rules'       => 'required',
-                'choices'     => ['女','男'],
+                'choices'     => ['女', '男'],
                 'selected'    => $profile->sex,
                 'empty_value' => '=== Select ===',
             ])
-            ->add('birthday', 'date', ['label' => '生日','value'=>$profile->birthday ? $profile->birthday->format('Y-m-d') : null])
+            ->add('birthday', 'date', ['label' => '生日', 'value'=>$profile->birthday ? $profile->birthday->format('Y-m-d') : null])
             ->add('telephone', 'tel', [
                 'rules'      => 'required|min:11',
                 'label'      => '手机号',

@@ -162,7 +162,7 @@ class AgencyController extends Controller
         //3. 必有 save payment
         $paymethod = PayMethod::create([
             'user_id' => $user->id,
-            'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'type'    => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
             'number'  => $request->input('pay_number'),
             'remark'  => $request->input('pay_remark'),
         ]);
@@ -261,7 +261,7 @@ class AgencyController extends Controller
         //3. 必有 save payment
         $paymethod->fill([
             // 'user_id' => $user->id,
-            'type'   => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'type'   => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
             'number' => $request->input('pay_number'),
             'remark' => $request->input('pay_remark'),
         ])->save();
@@ -301,7 +301,7 @@ class AgencyController extends Controller
         //3. 必有 save payment
         $paymethod = PayMethod::create([
             'user_id' => $user->id,
-            'type'    => $request->input('pay_method'),//'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+            'type'    => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
             'number'  => $request->input('pay_number'),
             'remark'  => $request->input('pay_remark'),
         ]);
