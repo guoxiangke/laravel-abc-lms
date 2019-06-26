@@ -17,7 +17,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
-{// php-cs-fixer pre commit hook start
+{
     use Notifiable;
     use HasRoles;
     use HasMediaTrait;
@@ -32,7 +32,8 @@ class User extends Authenticatable implements HasMedia
             ->singleFile();
     }
 
-    // $yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
+    // php-cs-fixer pre commit hook start
+    //$yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
     // $yourModel->getMedia('avatar')->count(); // returns 1
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
 
