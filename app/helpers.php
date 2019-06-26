@@ -11,17 +11,17 @@ if (! function_exists('bark_notify')) {
     // bark_notify('验证码是4567，已复制所有文本到剪切板。', false, true);
     function bark_notify($title, $bodyOrUrlOrCopy = false, $copy = false, $host = 'https://api.day.app', $sendTo = 'admin')
     {
-        $key = \Config::get('notify.bark.'. $sendTo);
-        $url = $host . '/' . $key . '/' . urlencode($title);
+        $key = \Config::get('notify.bark.'.$sendTo);
+        $url = $host.'/'.$key.'/'.urlencode($title);
         $query = [];
         if (filter_var($bodyOrUrlOrCopy, FILTER_VALIDATE_URL)) {
             $query['url'] = $bodyOrUrlOrCopy;
         } else {
             //有copy就不要body了！
             if ($copy) {
-                $query['copy'] = $bodyOrUrlOrCopy ?: $title;//如果没有填写body，复制title
+                $query['copy'] = $bodyOrUrlOrCopy ?: $title; //如果没有填写body，复制title
             } else {
-                $url .= '/'. urlencode($bodyOrUrlOrCopy);
+                $url .= '/'.urlencode($bodyOrUrlOrCopy);
             }
         }
         $query['automaticallyCopy'] = 1;
@@ -60,6 +60,7 @@ if (! function_exists('ftqq_notify')) {
             ],
         ];
         $context = stream_context_create($opts);
+
         return $result = file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
     }
 }

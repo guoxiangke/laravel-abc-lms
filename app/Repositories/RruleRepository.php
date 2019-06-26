@@ -7,7 +7,7 @@ use Torann\LaravelRepository\Repositories\AbstractRepository;
 class RruleRepository extends AbstractRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */

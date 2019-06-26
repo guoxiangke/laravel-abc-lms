@@ -15,8 +15,9 @@ class ProductController extends Controller
     {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
-    
+
     use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +28,7 @@ class ProductController extends Controller
         $products = Product::
             orderBy('id', 'desc')
             ->paginate(100);
-        ;
+
         return view('products.index', compact('products'));
     }
 
@@ -42,6 +43,7 @@ class ProductController extends Controller
             'method' => 'POST',
             'url'    => action('ProductController@store'),
         ]);
+
         return view('products.create', compact('form'));
     }
 
@@ -72,6 +74,7 @@ class ProductController extends Controller
             'remark' => $request->input('remark'),
         ]);
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('products.index');
     }
 
@@ -102,6 +105,7 @@ class ProductController extends Controller
             ],
             ['entity' => $product],
         );
+
         return view('products.edit', compact('form'));
     }
 
@@ -124,6 +128,7 @@ class ProductController extends Controller
         $data = $request->all();
         $product->fill($data)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('products.index');
     }
 

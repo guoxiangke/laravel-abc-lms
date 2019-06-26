@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Zoom;
 use Faker\Generator as Faker;
 

@@ -51,12 +51,13 @@ class StudentController extends Controller
             )//'user.paymethod',
             ->orderBy('id', 'desc')
             ->paginate(100);
+
         return view('students.index', compact('students'));
     }
 
     /**
      * Display a listing of the resource.
-     * 代理： 我的学生页
+     * 代理： 我的学生页.
      * @return \Illuminate\Http\Response
      */
     public function indexByRecommend()
@@ -95,6 +96,7 @@ class StudentController extends Controller
             'method' => 'POST',
             'url'    => action('StudentController@store'),
         ]);
+
         return view('students.create', compact('form'));
     }
 
@@ -107,8 +109,10 @@ class StudentController extends Controller
             'method' => 'POST',
             'url'    => action('StudentController@registerStore'),
         ]);
+
         return view('students.register', compact('form'));
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -157,9 +161,8 @@ class StudentController extends Controller
         }
         //endregion
 
-
         // dd($request->all(),$request->user()->toArray());
-        
+
         $student = Student::firstOrCreate([
             'user_id' => $user->id,
             'grade'   => $request->input('grade'),
@@ -170,6 +173,7 @@ class StudentController extends Controller
         if ($student) {
             $user->assignRole(User::ROLES['student']);
             alert()->toast('学员登记成功，欢迎您！', 'success', 'top-center')->autoClose(3000);
+
             return redirect()->route('home');
         }
     }
@@ -196,8 +200,8 @@ class StudentController extends Controller
         if (! $name) {
             $name = str_replace(' ', '_', $profileName);
         }
-        $name = 's_' .  $name;
-        $email = $name .'_'. Str::random(6) . '@student.com';
+        $name = 's_'.$name;
+        $email = $name.'_'.Str::random(6).'@student.com';
         $userData = [
             'name'     => $name,
             'email'    => $email,
@@ -240,6 +244,7 @@ class StudentController extends Controller
         // $contact = $profile->contact()->save($contact);
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('students.index');
     }
 
@@ -270,6 +275,7 @@ class StudentController extends Controller
             ],
             ['entity' => $student],
         );
+
         return view('students.edit', compact('form', 'student'));
     }
 
@@ -283,7 +289,7 @@ class StudentController extends Controller
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
         $form = $this->form(EditForm::class);
-        
+
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -291,18 +297,17 @@ class StudentController extends Controller
         $user = $student->user;
         // dd($zoomId);
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();
-
 
         // create login user
 
         $profileName = $request->input('profile_name');
         $name = $request->input('name'); //英文名！
         if (! $name) {
-            $name = 's_'. User::pinyin($profileName);
+            $name = 's_'.User::pinyin($profileName);
         }
         // $email = $name . '@student.com';
         $password = $request->input('password') ?: 'dxjy1234';
@@ -340,6 +345,7 @@ class StudentController extends Controller
         // $contact = $profile->contact()->save($contact);
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('students.index');
     }
 

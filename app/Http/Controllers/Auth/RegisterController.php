@@ -76,7 +76,7 @@ class RegisterController extends Controller
         if (! $name) {
             $name = str_replace(' ', '_', $data['name']);
         }
-        $name = 'u_' .  $name;
+        $name = 'u_'.$name;
 
         $user = User::create([
             'name'     => $name, //处理后的用户名
@@ -95,24 +95,25 @@ class RegisterController extends Controller
                 if (Str::startsWith($telephone, '86')) {
                     $telephone = substr($telephone, 2);
                 } else {
-                    $telephone = '+' .$telephone; //+63XXXX
+                    $telephone = '+'.$telephone; //+63XXXX
                 }
                 $userProfile->telephone = $telephone;
                 //如果没有推荐人，都指向用户1，前端默认值为1
                 $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
                 alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
-                Log::info(__CLASS__, [__FUNCTION__, __LINE__, 'Create an Profile for ' . $user->name]);
+                Log::info(__CLASS__, [__FUNCTION__, __LINE__, 'Create an Profile for '.$user->name]);
             } catch (\Exception $e) {
                 Log::error(__CLASS__, [__FUNCTION__, __LINE__, $e->getMessage()]);
             }
         }
+
         return $user;
     }
 
     /**
      * Show the application registration form.
-     * 推荐用户注册表单
+     * 推荐用户注册表单.
      * @return \Illuminate\Http\Response
      */
     public function showRegistrationFormByRecommend(User $user)

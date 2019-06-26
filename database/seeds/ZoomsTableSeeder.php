@@ -80,7 +80,7 @@ class ZoomsTableSeeder extends Seeder
         foreach ($accounts as $account) {
             $info = explode(' ', trim($account));
             Zoom::create([
-                'email'    => $info[0]. '@abc-chinaedu.com',
+                'email'    => $info[0].'@abc-chinaedu.com',
                 'password' => $info[1],
                 'pmi'      => $info[2],
             ]);

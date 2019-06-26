@@ -19,7 +19,7 @@ class Order extends Model implements AuditableContract
     use SoftDeletes;
     use Auditable;
     use HasPriceField;
-    
+
     // 0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
     const STATU_ACTIVE = 1;
     const STATU_COMPLETED = 2;
@@ -31,7 +31,7 @@ class Order extends Model implements AuditableContract
         '暂停',
         '过期',
     ];
-    
+
     protected $fillable = [
         'user_id', //'student_id',
         'teacher_uid',
@@ -44,7 +44,7 @@ class Order extends Model implements AuditableContract
         'status', //default 1
         'remark',
     ];
-    
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -63,18 +63,18 @@ class Order extends Model implements AuditableContract
     {
         //190101-studentName-TeacherName-AgencyName-20-159
         $title = $this->created_at->format('ymd')
-                . '-' . $this->user->profiles->first()->name
-                . '-' . $this->teacher->profiles->first()->name
-                . '-' . $this->agency->profiles->first()->name
-                . '-' . $this->period ;
-                
+                .'-'.$this->user->profiles->first()->name
+                .'-'.$this->teacher->profiles->first()->name
+                .'-'.$this->agency->profiles->first()->name
+                .'-'.$this->period;
+
         //学生和老师不显示价格
-        if (Auth::user() && ! Auth::user()->hasAnyRole(['student', 'teacher', ])) {
-            $title .= '-' . $this->price;
+        if (Auth::user() && ! Auth::user()->hasAnyRole(['student', 'teacher'])) {
+            $title .= '-'.$this->price;
         }
+
         return $title;
     }
-
 
     //课程记录 一个订单有很多rrule 每个rrule有很多classRecords
     //上课计划 只有1个，可以修改！
@@ -84,7 +84,7 @@ class Order extends Model implements AuditableContract
                 ->hasMany(Rrule::class, 'order_id', 'id')
                 ->where('rrules.type', Rrule::TYPE_SCHEDULE);
     }
-    
+
     //请假计划
     //https://laracasts.com/discuss/channels/laravel/where-in-hasmany-relation
     // https://laravel.com/docs/5.3/eloquent-relationships#querying-relationship-existence
@@ -114,6 +114,7 @@ class Order extends Model implements AuditableContract
     {
         return $this->belongsTo(User::class, 'agency_uid');
     }
+
     // $order->teacher->teacher
     public function teacher()
     {
@@ -126,23 +127,23 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-    * Scope a query to only include active users.
-    *
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
+     * Scope a query to only include active users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeActive($query)
     {
         return $query->where('status', static::STATU_ACTIVE);
     }
-    
+
     public function isActive()
     {
         return $this->status == static::STATU_ACTIVE;
     }
 
     /**
-     * 所有de上课计划的上课历史记录/包含异常
+     * 所有de上课计划的上课历史记录/包含异常.
      */
     public function classRecords()
     {
@@ -150,13 +151,14 @@ class Order extends Model implements AuditableContract
         foreach ($this->schedules as $rrule) {
             $classRecords = $classRecords->merge($rrule->classRecords);
         }
+
         return  $classRecords;
     }
 
     /**
      * 已上课时
      * exception = [0,3]
-     * 舍弃：$rrule->classRecords()->noPack()
+     * 舍弃：$rrule->classRecords()->noPack().
      */
     public function classDoneRecords()
     {
@@ -174,7 +176,7 @@ class Order extends Model implements AuditableContract
     /**
      * 老师已请假    学生已请假   学生旷课即作废
      * 学生旷课即作废课时计算 scopeByException(ClassRecord::EXCEPTION_STUDENT)
-     * 舍弃：$rrule->classRecords()->byException($exceptionInt)
+     * 舍弃：$rrule->classRecords()->byException($exceptionInt).
      */
     public function classRecordsAolBy($exception = 'absent')
     {
@@ -191,7 +193,6 @@ class Order extends Model implements AuditableContract
             $exceptionInt = ClassRecord::EXCEPTION_TEACHER;
         } //老师异常：龙卷风
 
-        
         return $this->classRecords()->filter(function ($classRecord) use ($exceptionInt) {
             return  $classRecord->exception == $exceptionInt;
         });
@@ -204,12 +205,11 @@ class Order extends Model implements AuditableContract
         // return  $classRecords;
     }
 
-
     /**
      * 判断某天是否有课！！
      * hasClassesByDay / classesToday
      * 找出今天需要上的2节课 的时间H:i
-     * 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
+     * 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord.
      */
     public function hasClass(Carbon $byDay = null)
     {
@@ -218,10 +218,11 @@ class Order extends Model implements AuditableContract
             $byDay = Carbon::now();
             $history = false;
         }
+
         return $this->regenRruleSchedule($history)->filter(function ($startDateString) use ($byDay) {
             return Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->format('Y-m-d') == $byDay->format('Y-m-d');
         })->map(function ($dateString) {
-            return substr($dateString, 11, 5);//H:i
+            return substr($dateString, 11, 5); //H:i
         })->toArray();
     }
 
@@ -261,11 +262,12 @@ class Order extends Model implements AuditableContract
                 })
             );
         }
+
         return $rruleSchedulesCollections;
     }
 
     /**
-     * 大于今天的请假计划 + 历史记录的（学生和老师）正常请假计划
+     * 大于今天的请假计划 + 历史记录的（学生和老师）正常请假计划.
      */
     public function regenAolsSchedule()
     {
@@ -285,16 +287,16 @@ class Order extends Model implements AuditableContract
         //endregion
 
         $aolsDateStringCollection = $aolsDateStringCollection->merge($classRecordNormalExecptionAddToAol);
+
         return $aolsDateStringCollection;
     }
-
 
     /**
      * 实际请假
      * 可能有的请假不在计划范围中呢(即多了)
      * 也有可能少了！比如就到某天截止，而后面还有请假
      * 各自有效请假次数/时间 = 最远schedule ∩ reAol
-     * 最远schedule = rruleEndDate=expired_at （或错略计算为2倍课时数）
+     * 最远schedule = rruleEndDate=expired_at （或错略计算为2倍课时数）.
      */
     // public function getDiffAols()
     // {
@@ -309,8 +311,8 @@ class Order extends Model implements AuditableContract
         /**
          * $aolByRules =
          * array:1 [▼
-              "18:00" => DateTime @1553940000 {#830 ▶}
-            ]
+         * "18:00" => DateTime @1553940000 {#830 ▶}
+         * ]
          */
         // $aolsLastByRule = new Collection; 每一个请假计划的最后一个有效期
         $aolsLastByRule = [];
@@ -359,11 +361,12 @@ class Order extends Model implements AuditableContract
 
         $AllValidAols = $AllValidAols->intersect($farSchedules);
         $AllValidAols = $AllValidAols->diff($historyRecords);
+
         return $AllValidAols;
     }
 
     /**
-     * 所有请假计划的StartTime[]
+     * 所有请假计划的StartTime[].
      */
     public function getAllAols()
     {
@@ -371,7 +374,7 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-     * 所有上课计划的StartTime[]
+     * 所有上课计划的StartTime[].
      */
     public function getAllSchedules()
     {
@@ -387,6 +390,7 @@ class Order extends Model implements AuditableContract
             $rule = $rrule->getRule();
             $recurrenceCollections = $recurrenceCollections->merge(collect(Rrule::transArray($rule)));
         }
+
         return $recurrenceCollections->map(function ($recurrence) {
             return $recurrence->getStart()->format('Y-m-d H:i:s');
         });

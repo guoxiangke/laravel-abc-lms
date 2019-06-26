@@ -25,6 +25,6 @@ class AdminMiddleware
             return $next($request);
         }
         // if (!Auth::user()->hasPermissionTo('Administer roles & permissions')) // 用户是否具备此权限
-        return abort('403') ;//|| redirect('/');
+        return abort('403'); //|| redirect('/');
     }
 }

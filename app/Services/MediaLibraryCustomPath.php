@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Spatie\MediaLibrary\Models\Media;
@@ -6,15 +7,13 @@ use Spatie\MediaLibrary\PathGenerator\PathGenerator;
 
 class MediaLibraryCustomPath implements PathGenerator
 {
-
-
     /*
      * Get a unique base path for the given media.
      */
     protected function getBasePath(Media $media): string
     {
         // return $media->getKey();
-        return 'media/'. $media->updated_at->subHours(8)->format('Y/m/d/') . $media->getKey();
+        return 'media/'.$media->updated_at->subHours(8)->format('Y/m/d/').$media->getKey();
     }
 
     /*

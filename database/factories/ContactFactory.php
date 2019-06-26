@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Contact;
 use App\Models\Profile;
 use Faker\Generator as Faker;

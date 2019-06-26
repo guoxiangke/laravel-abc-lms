@@ -19,7 +19,7 @@ class AgencyForm extends Form
         $user = $agency->user;
         // dd($zoomId);
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();

@@ -18,6 +18,7 @@ class BillController extends Controller
     {
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +28,7 @@ class BillController extends Controller
     {
         $bills = Bill::orderBy('id', 'desc')
                     ->paginate(100);
+
         return view('bills.index', compact('bills'));
     }
 
@@ -41,6 +43,7 @@ class BillController extends Controller
             'method' => 'POST',
             'url'    => action('BillController@store'),
         ]);
+
         return view('bills.create', compact('form'));
     }
 
@@ -66,6 +69,7 @@ class BillController extends Controller
         $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('bills.index');
     }
 
@@ -96,6 +100,7 @@ class BillController extends Controller
             ],
             ['entity' => $bill],
         );
+
         return view('bills.edit', compact('form'));
     }
 
@@ -119,9 +124,9 @@ class BillController extends Controller
         $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('bills.index');
     }
-
 
     /**
      * Remove the specified resource from storage.

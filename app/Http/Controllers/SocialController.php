@@ -13,7 +13,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 class SocialController extends Controller
 {
     use FormBuilderTrait;
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +26,7 @@ class SocialController extends Controller
         } else {
             $socials = Social::where('user_id', Auth::id())->paginate(10);
         }
-        
+
         return view('socials.index', compact('socials'));
     }
 
@@ -78,8 +78,10 @@ class SocialController extends Controller
             );
         } else {
             alert()->toast(__('Wrong Credentials'), 'error', 'top-center')->autoClose(3000);
+
             return redirect('login');
         }
+
         return redirect('home');
     }
 
@@ -92,6 +94,7 @@ class SocialController extends Controller
     public function show(Social $social)
     {
         $this->authorize('view', $social);
+
         return view('socials.show', compact('social'));
     }
 
@@ -132,6 +135,7 @@ class SocialController extends Controller
         if (Auth::user()->isAdmin()) {
             return redirect('students');
         }
+
         return redirect('socials');
     }
 }

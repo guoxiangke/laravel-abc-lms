@@ -1,17 +1,19 @@
 <?php
+
 use App\User;
 use App\Models\Student;
 use Faker\Generator as Faker;
 
 $factory->define(Student::class, function (Faker $faker) {
-    $name = 's_' . $faker->firstNameMale;
+    $name = 's_'.$faker->firstNameMale;
+
     return [
         'user_id' => function () use ($name) {
             return factory(User::class)
                 ->create(['name'=>$name])
                 ->id;
         },
-        'name'  => 'e_' . $faker->name, //英文名字
+        'name'  => 'e_'.$faker->name, //英文名字
         'grade' => rand(0, 17),
         //todo book_id
         'level'  => $faker->randomDigit,

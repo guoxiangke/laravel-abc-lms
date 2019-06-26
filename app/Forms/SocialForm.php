@@ -14,7 +14,7 @@ class SocialForm extends Form
         if (! ($socialUser && $socialType)) {
             abort(403);
         }
-        alert()->toast('Welcome ' . $socialUser->nickname ?: $socialUser->name, 'success', 'top-center')->autoClose(3000);
+        alert()->toast('Welcome '.$socialUser->nickname ?: $socialUser->name, 'success', 'top-center')->autoClose(3000);
         $this->add('type', 'hidden', [
                 'label' => 'type',
                 'value' => $socialType,

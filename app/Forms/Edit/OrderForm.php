@@ -21,7 +21,7 @@ class OrderForm extends Form
                 'label' => '订单Id',
                 'value' => $order->id,
             ]);
-        
+
         $products = Product::all()
                     ->pluck('name', 'id')
                     ->toArray();

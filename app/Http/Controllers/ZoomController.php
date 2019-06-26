@@ -29,6 +29,7 @@ class ZoomController extends Controller
         $zooms = Zoom::with('teacher', 'teacher.user.profiles')
                     ->orderBy('id', 'desc')
                     ->paginate(100);
+
         return view('zooms.index', compact('zooms'));
     }
 
@@ -43,6 +44,7 @@ class ZoomController extends Controller
             'method' => 'POST',
             'url'    => action('ZoomController@store'),
         ]);
+
         return view('zooms.create', compact('form'));
     }
 
@@ -67,6 +69,7 @@ class ZoomController extends Controller
             ]
         );
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('zooms.index'); //todo last page! or order
     }
 
@@ -97,6 +100,7 @@ class ZoomController extends Controller
             ],
             ['entity' => $zoom],
         );
+
         return view('zooms.edit', compact('form'));
     }
 
@@ -120,6 +124,7 @@ class ZoomController extends Controller
         // dd($rrule->toArray());
         $zoom->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('zooms.index');
     }
 

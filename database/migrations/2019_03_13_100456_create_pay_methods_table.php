@@ -23,7 +23,7 @@ class CreatePayMethodsTable extends Migration
             $table->text('remark')->comment('备注')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('user_id')
                ->references('id')->on('users')
                ->onDelete('cascade');

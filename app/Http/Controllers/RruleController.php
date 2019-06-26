@@ -49,6 +49,7 @@ class RruleController extends Controller
             )
             ->orderBy('id', 'desc')
             ->paginate(100);
+
         return view('rrules.index', compact('rrules'));
     }
 
@@ -63,6 +64,7 @@ class RruleController extends Controller
             'method' => 'POST',
             'url'    => action('RruleController@store'),
         ], ['entity' => $order]);
+
         return view('rrules.create', compact('form'));
     }
 
@@ -94,7 +96,7 @@ class RruleController extends Controller
         } else {
             alert()->toast('已存在相同的计划', 'error', 'top-center')->autoClose(3000);
         }
-  
+
         return redirect()->route('rrules.index');
     }
 
@@ -125,6 +127,7 @@ class RruleController extends Controller
             ],
             ['entity' => $rrule],
         );
+
         return view('rrules.edit', compact('form'));
     }
 
@@ -144,11 +147,12 @@ class RruleController extends Controller
         }
         //https://stackoverflow.com/questions/1809494/post-unchecked-html-checkboxes
         $start_at = $request->input('start_at');
-        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
+        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at); //2019-04-09T06:00
         $string = $request->input('string');
         $rrule = $rrule->fill(compact('start_at', 'string'));
         $rrule->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('rrules.index');
     }
 

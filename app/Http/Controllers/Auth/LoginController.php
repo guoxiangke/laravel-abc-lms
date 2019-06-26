@@ -46,7 +46,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
     /**
      * Get the login username to be used by the controller.
      *
@@ -76,6 +75,7 @@ class LoginController extends Controller
             $field = 'name'; //禁用用户名登陆，因重名缘故
         }
         $password = $request->get('password');
+
         return $this->guard()->attempt([$field => $account, 'password' => $password], $request->filled('remember'));
     }
 
@@ -97,15 +97,16 @@ class LoginController extends Controller
     }
 
     /**
-    * Redirect the user to the GitHub authentication page.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function redirectToProvider()
     {
         if (Auth::id()) {
             return redirect('home');
         }
+
         return Socialite::driver('github')->redirect();
     }
 
@@ -120,24 +121,26 @@ class LoginController extends Controller
             return redirect('home');
         }
         $socialUser = Socialite::driver('github')->user();
+
         return $this->bind($socialUser, Social::TYPE_GITHUB);
     }
-
 
     public function redirectToFacebookProvider()
     {
         if (Auth::id()) {
             return redirect('home');
         }
+
         return Socialite::driver('facebook')->redirect();
     }
-    
+
     public function handleFacebookProviderCallback()
     {
         if (Auth::id()) {
             return redirect('home');
         }
         $socialUser = Socialite::driver('facebook')->user();
+
         return $this->bind($socialUser, Social::TYPE_FACEBOOK);
     }
 
@@ -146,9 +149,9 @@ class LoginController extends Controller
         if (Auth::id()) {
             return redirect('home');
         }
+
         return Socialite::driver('weixin')->redirect();
     }
-
 
     public function handleWechatProviderCallback()
     {
@@ -157,6 +160,7 @@ class LoginController extends Controller
         }
 
         $socialUser = Socialite::driver('weixin')->user();
+
         return $this->bind($socialUser, Social::TYPE_WECHAT);
     }
 
@@ -173,10 +177,12 @@ class LoginController extends Controller
                 ],
                 ['socialUser' => $socialUser, 'socialType' => $type],
             );
+
             return view('socials.create', compact('form'));
         }
         $user = Auth::loginUsingId($userId, true);
         $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
+
         return redirect('home');
     }
 
@@ -187,6 +193,7 @@ class LoginController extends Controller
             ->firstOrFail();
         $social->avatar = $avatar;
         $social->name = $nickname;
+
         return $social->save();
     }
 }

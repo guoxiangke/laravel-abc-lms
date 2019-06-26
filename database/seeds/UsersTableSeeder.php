@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user->assignRole(User::ROLES['admin']);
-        
+
         $user = factory(User::class)->create([
             'email'    => 'monika@daxiangyingyu.com',
             'password' => Hash::make('love0325'),
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         // $students = factory(Student::class, 3)->create();
 
         // $books = factory(Book::class, 5)->create();
-        
+
         // $orders = factory(Order::class, 10)->create();
 
         $orders = factory(Rrule::class, 1)->create();

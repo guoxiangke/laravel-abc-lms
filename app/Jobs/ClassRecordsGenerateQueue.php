@@ -20,6 +20,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
 
     protected $order;
     protected $offset;
+
     /**
      * Create a new job instance.
      *
@@ -39,9 +40,9 @@ class ClassRecordsGenerateQueue implements ShouldQueue
     public function handle()
     {
         $order = $this->order;
-        
+
         //找出今天/昨天需要上的2节课 的时间H:i
-        $byDay = Carbon::now()->subDays($this->offset);//sub方便为过去的日期生成记录！！
+        $byDay = Carbon::now()->subDays($this->offset); //sub方便为过去的日期生成记录！！
         Log::info(__CLASS__, [$order->title, $order->id, $byDay, 'info']);
         $todayClassTimes = $order->hasClass($byDay); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
@@ -51,14 +52,16 @@ class ClassRecordsGenerateQueue implements ShouldQueue
             Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_COMPLETED']);
             $order->status = Order::STATU_COMPLETED;
             $order->save();
+
             return;
         }
-        
+
         //标记过期的订单！
         if ($order->expired_at <= Carbon::now()) {
             Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_OVERDUE']);
             $order->status = Order::STATU_OVERDUE;
             $order->save();
+
             return;
         }
 
@@ -70,6 +73,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
         if (! $todayClassTimes) {
             Log::info(__CLASS__, [$order->title, $order->id, 'NoClassTodayOr']);
+
             return;
         }
         //2节课的情况 + 请假情况！！
@@ -79,7 +83,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                     $classRecord = ClassRecord::firstOrCreate([
                         'rrule_id'     => $rrule->id,
                         'teacher_uid'  => $order->teacher_uid,
-                        'generated_at' => $byDay->format('Y-m-d ' . $rrule->start_at->format('H:i') .':00'),
+                        'generated_at' => $byDay->format('Y-m-d '.$rrule->start_at->format('H:i').':00'),
                         //必须，固定为生成当天的XX开始时间，避免重复生产
                         //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
                         'user_id'    => $order->user_id, //'student_uid',

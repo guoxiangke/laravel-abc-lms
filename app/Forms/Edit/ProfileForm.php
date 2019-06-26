@@ -14,7 +14,7 @@ class ProfileForm extends Form
             return;
         }
         $this
-            ->add('user_id', 'hidden', ['label' => 'User Id', 'value' => $profile->user_id, ])
+            ->add('user_id', 'hidden', ['label' => 'User Id', 'value' => $profile->user_id])
             ->add('name', 'text', [
                 'rules' => 'required',
                 'value' => $profile->name,

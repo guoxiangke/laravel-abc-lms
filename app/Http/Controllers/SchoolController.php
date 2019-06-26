@@ -24,6 +24,7 @@ class SchoolController extends Controller
     }
 
     use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -39,6 +40,7 @@ class SchoolController extends Controller
             )
             ->orderBy('id', 'desc')
             ->paginate(100);
+
         return view('schools.index', compact('schools'));
     }
 
@@ -54,6 +56,7 @@ class SchoolController extends Controller
             'url'    => action('SchoolController@store'),
             // 'url' => route('schools.store', [],false),
         ]);
+
         return view('schools.create', compact('form'));
     }
 
@@ -126,6 +129,7 @@ class SchoolController extends Controller
         $user->paymethod()->save($paymethod);
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('schools.index');
     }
 
@@ -156,6 +160,7 @@ class SchoolController extends Controller
             ],
             ['entity' => $school],
         );
+
         return view('schools.edit', compact('form'));
     }
 
@@ -176,7 +181,7 @@ class SchoolController extends Controller
         // create login user
         $user = $school->user;
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
 
@@ -229,6 +234,7 @@ class SchoolController extends Controller
         // $user->paymethod()->save($paymethod);
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('schools.index');
     }
 

@@ -20,7 +20,7 @@ class CreateTeachersTable extends Migration
             $table->unsignedBigInteger('school_id')->nullable()->comment('学校id，NULL 为freelancer');
             $table->unsignedBigInteger('zoom_id')->nullable();
             // $table->unsignedBigInteger('teacher_uid')->nullable()->comment('推荐关系');
-            
+
             $table->timestamps();
             $table->softDeletes();
 
@@ -28,7 +28,7 @@ class CreateTeachersTable extends Migration
                 ->references('id')
                 ->on('schools')
                 ->onDelete('cascade');
-                
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

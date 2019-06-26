@@ -27,6 +27,7 @@ class BookController extends Controller
     {
         $books = Book::orderBy('id', 'desc')
                     ->paginate(100);
+
         return view('books.index', compact('books'));
     }
 
@@ -41,6 +42,7 @@ class BookController extends Controller
             'method' => 'POST',
             'url'    => action('BookController@store'),
         ]);
+
         return view('books.create', compact('form'));
     }
 
@@ -55,6 +57,7 @@ class BookController extends Controller
         $book = new Book;
         $book->fill($request->all())->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('books.index');
     }
 
@@ -85,6 +88,7 @@ class BookController extends Controller
             ],
             ['entity' => $book],
         );
+
         return view('books.edit', compact('form'));
     }
 
@@ -103,6 +107,7 @@ class BookController extends Controller
         }
         $book->fill($request->all())->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('books.index');
     }
 

@@ -35,7 +35,6 @@ class ClassRecordPolicy
         return $classRecord->user_id == $user->id || $this->edit($user, $classRecord);
     }
 
-
     //上传mp3 mp4 //谁可以编辑 == upload
     //学生可以查看，但不能编辑
     public function edit(User $user, ClassRecord $classRecord)

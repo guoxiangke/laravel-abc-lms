@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 class SetLocale
 {
     /**
-     *
      * Handle an incoming request.
      * @see https://glutendesign.com/posts/detect-and-change-language-on-the-fly-with-laravel
      * @param  \Illuminate\Http\Request  $request
@@ -27,7 +26,7 @@ class SetLocale
 
             if (Str::startsWith($request->server('HTTP_ACCEPT_LANGUAGE'), 'zh-CN')) {
                 $locale = 'zh-CN';
-            };
+            }
         }
         App::setLocale($locale);
 

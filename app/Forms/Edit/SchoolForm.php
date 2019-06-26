@@ -15,7 +15,7 @@ class SchoolForm extends Form
         }
         $user = $school->user;
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
         $contact = null;
         $paymethod = null;

@@ -19,7 +19,7 @@ class Social extends Model
     const TYPE_GITHUB = 3;
 
     const TYPES = ['None', '微信', 'Facebook', 'Github'];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

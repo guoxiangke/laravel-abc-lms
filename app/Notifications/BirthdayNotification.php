@@ -1,5 +1,7 @@
 <?php
-# doc https://laravelacademy.org/post/19514.html
+
+// doc https://laravelacademy.org/post/19514.html
+
 namespace App\Notifications;
 
 use App\Models\Profile;
@@ -45,13 +47,14 @@ class BirthdayNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $profile = $this->profile;
+
         return (new MailMessage)
                     ->from('noreply@birthday.com', 'BirthdayNotification')
                     ->subject("{$profile->name} {$profile->birthday->format('n-d (Y)')}")
-                    ->line('Name: '. $profile->name)
-                    ->line('Birthday: '. $profile->birthday->format('M-jS (Y) l'))
-                    ->line('Sex: '. Profile::SEXS[$profile->sex])
-                    ->line('Role: '. $profile->user->getRoleNames()->implode('-'))
+                    ->line('Name: '.$profile->name)
+                    ->line('Birthday: '.$profile->birthday->format('M-jS (Y) l'))
+                    ->line('Sex: '.Profile::SEXS[$profile->sex])
+                    ->line('Role: '.$profile->user->getRoleNames()->implode('-'))
                     ->line("邮寄地址:  XXX{$profile->name}XXX")
                     ->line("收件人电话:  {$profile->telephone}")
                     ->action('User Info', url('/'))
@@ -67,6 +70,7 @@ class BirthdayNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         $profile = $this->profile;
+
         return [
             'profile_id' => $profile->id,
             'name'       => $profile->name,

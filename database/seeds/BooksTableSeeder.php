@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Book;
 use Illuminate\Database\Seeder;
 
@@ -56,7 +57,6 @@ class BooksTableSeeder extends Seeder
                     'type'      => 0,
                     'publisher' => '人教版',
                 ]);
-
 
                 Book::create([
                     'name'      => "{$i}年级上（三年级起点）",

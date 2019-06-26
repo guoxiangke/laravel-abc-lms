@@ -24,7 +24,7 @@ class StudentPolicy
 
     /**
      * Determine whether the user can create students.
-     * 必须是没学生角色才可以注册后post
+     * 必须是没学生角色才可以注册后post.
      *
      * @param  \App\User  $user
      * @return mixed

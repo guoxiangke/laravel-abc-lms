@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             // 0代表幼儿园 1-9年级 高中1-3(10-12) 大学1-4(13-16) 17成人
             $table->unsignedTinyInteger('grade')->nullable()->comment('年级0-17');
             $table->unsignedTinyInteger('level')->nullable()->comment('英语水平等级 or 测试等级');
-            $table->unsignedBigInteger('book_id')->nullable()->comment('同步教材id');//todo
+            $table->unsignedBigInteger('book_id')->nullable()->comment('同步教材id'); //todo
             $table->text('remark')->comment('备注')->nullable();
 
             $table->timestamps();

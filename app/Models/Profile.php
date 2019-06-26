@@ -27,7 +27,7 @@ class Profile extends Model implements AuditableContract
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'birthday'];
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      * @doc User 有profles， 学生和老师、代理也可以有一个proflie
@@ -43,14 +43,12 @@ class Profile extends Model implements AuditableContract
         return $this->hasMany(Contact::class);
     }
 
-
     // agency
     public function recommend()
     {
         return $this->hasOne(Profile::class, 'user_id', 'recommend_uid');
     }
 
-    
     public function teacher()
     {
         return $this->hasOne(Teacher::class, 'user_id', 'user_id');
@@ -65,7 +63,6 @@ class Profile extends Model implements AuditableContract
     {
         return $this->hasOne(Agency::class, 'user_id', 'user_id');
     }
-
 
     public function user()
     {

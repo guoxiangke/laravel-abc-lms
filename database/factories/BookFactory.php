@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Book;
 use Faker\Generator as Faker;
 

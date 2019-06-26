@@ -1,5 +1,7 @@
 <?php
+
 // @see https://docs.microsoft.com/zh-cn/graph/tutorials/php?tutorial-step=3
+
 namespace App\TokenStore;
 
 class TokenCache

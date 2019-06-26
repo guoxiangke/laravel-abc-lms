@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Microsoft\Graph\Graph;
@@ -64,6 +65,7 @@ class AuthController extends Controller
           ->execute();
                 $tokenCache = new TokenCache();
                 $tokenCache->storeTokens($accessToken, $user);
+
                 return redirect('/');
             } catch (League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
                 return redirect('/')
@@ -71,14 +73,17 @@ class AuthController extends Controller
           ->with('errorDetail', $e->getMessage());
             }
         }
+
         return redirect('/')
       ->with('error', $request->query('error'))
       ->with('errorDetail', $request->query('error_description'));
     }
+
     public function signout()
     {
         $tokenCache = new TokenCache();
         $tokenCache->clearTokens();
+
         return redirect('/');
     }
 }

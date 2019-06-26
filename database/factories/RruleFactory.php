@@ -17,6 +17,7 @@ $factory->define(Rrule::class, function (Faker $faker) {
     ];
     $rrule = $rrules[rand(0, count($rrules) - 1)];
     $rruleArray = Rrule::buildRrule($rrule);
+
     return array_merge($rruleArray, [
         'type'     => Rrule::TYPE_SCHEDULE, //rand(0,1),//'AOL','SCHEDULE',
         'order_id' => function () {

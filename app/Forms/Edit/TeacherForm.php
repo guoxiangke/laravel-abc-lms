@@ -26,8 +26,6 @@ class TeacherForm extends Form
         if ($profile) {
             $contact = $profile->contacts->first();
         }
-        
-
 
         //select zooms un-used!
         $zooms = Zoom::with('teacher')

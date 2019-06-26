@@ -18,7 +18,7 @@ class UserController extends Controller
     }
 
     /**
-     * 显示用户列表
+     * 显示用户列表.
      *
      * @return \Illuminate\Http\Response
      */
@@ -28,11 +28,12 @@ class UserController extends Controller
         $users = User::with('roles')
             ->orderBy('id', 'desc')
             ->paginate(10);
+
         return view('users.index')->with('users', $users);
     }
 
     /**
-     * 显示创建用户角色表单
+     * 显示创建用户角色表单.
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,11 +41,12 @@ class UserController extends Controller
     {
         // 获取所有角色并将其传递到视图
         $roles = Role::get();
+
         return view('users.create', ['roles'=>$roles]);
     }
 
     /**
-     * 在数据库中保存新创建的资源
+     * 在数据库中保存新创建的资源.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -77,7 +79,7 @@ class UserController extends Controller
     }
 
     /**
-     * 显示指定用户
+     * 显示指定用户.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -88,7 +90,7 @@ class UserController extends Controller
     }
 
     /**
-     * 显示编辑用户角色表单
+     * 显示编辑用户角色表单.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -102,7 +104,7 @@ class UserController extends Controller
     }
 
     /**
-     * 更新数据库中的给定用户
+     * 更新数据库中的给定用户.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -127,6 +129,7 @@ class UserController extends Controller
         } else {
             $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
         }
+
         return redirect()->route('users.index')
             ->with(
                 'flash_message',
@@ -135,7 +138,7 @@ class UserController extends Controller
     }
 
     /**
-     * 删除用户
+     * 删除用户.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

@@ -25,9 +25,9 @@ Route::get('/dos', function () {
     // https://github.com/spatie/laravel-medialibrary/issues/241
     Storage::disk('spaces')->setVisibility($fileName, 'public'); // Set the visibility to public.
     $url = Storage::disk('spaces')->url($fileName);
+
     return Response::json(['success' => true, 'response' => $url]);
 });
-
 
 //登录后第一页
 Route::get('/home', 'HomeController@index')->name('home');
@@ -106,7 +106,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/order/{order}/status/{id}', 'OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
 
-
     Route::get('/referrals', function () {
         return view('referrals');
     })->name('referrals');
@@ -114,7 +113,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/autologin', function () {
         return view('autologin');
     })->name('autologin');
-
 
     Route::get('charts', 'ChartController@index');
 });
@@ -128,7 +126,6 @@ Route::any('botman', 'BotmanController@handle')->name('botman');
 // PUT/PATCH	/photos/{photo}	update	photos.update
 // DELETE	/photos/{photo}	destroy	photos.destroy
 
-
 //OAuth2 test！！
 Route::get('/signin', 'AuthController@signin');
 Route::get('/callback', 'AuthController@callback');
@@ -138,5 +135,6 @@ Route::get('/signout', 'AuthController@signout');
 //todo Comment when live
 Route::get('/dev/su/{id}', function ($id) {
     Auth::loginUsingId($id);
+
     return redirect('home');
 })->name('sudo.su')->middleware('admin');

@@ -44,7 +44,7 @@ class OrderController extends Controller
             'product',
         )
         ->orderBy('id', 'desc')
-        ->paginate(100);//todo debug 第二页有N+1问题
+        ->paginate(100); //todo debug 第二页有N+1问题
         return view('orders.index', compact('orders'));
     }
 
@@ -59,6 +59,7 @@ class OrderController extends Controller
             'method' => 'POST',
             'url'    => action('OrderController@store'),
         ]);
+
         return view('orders.create', compact('form'));
     }
 
@@ -82,7 +83,7 @@ class OrderController extends Controller
             'user_id'     => $request->input('user_id'), //student_uid
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
-            'book_id'     => $request->input('book_id') ?: 1 ,
+            'book_id'     => $request->input('book_id') ?: 1,
             'product_id'  => $request->input('product_id'),
             'price'       => $request->input('price'),
             'period'      => $request->input('period'),
@@ -112,6 +113,7 @@ class OrderController extends Controller
         }
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('orders.index');
     }
 
@@ -121,7 +123,6 @@ class OrderController extends Controller
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-
     public function show(Order $order)
     {
         $events = [];
@@ -153,7 +154,7 @@ class OrderController extends Controller
                 $events[] = [
                     'start'   => $startDateString,
                     'end'     => $start->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title'   => $start->subMinutes(25)->format('m/d H:i'). '有课',
+                    'title'   => $start->subMinutes(25)->format('m/d H:i').'有课',
                     'icon'    => 'lunch',
                     'class'   => 'schedule',
                     'content' => '<i class="v-icon material-icons">directions_run</i>',
@@ -168,7 +169,7 @@ class OrderController extends Controller
                 $events[] = [
                     'start'   => $startDateString,
                     'end'     => Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title'   => $start->format('m/d H:i') . ' 计划请假',
+                    'title'   => $start->format('m/d H:i').' 计划请假',
                     'icon'    => 'lunch',
                     'class'   => 'aol',
                     'content' => '<i class="v-icon material-icons">directions_run</i>',
@@ -190,7 +191,7 @@ class OrderController extends Controller
                 $events[] = [
                     'start'   => $classRecord->generated_at->format('Y-m-d H:i:s'),
                     'end'     => $classRecord->generated_at->addMinutes(25)->format('Y-m-d H:i:s'),
-                    'title'   => $classRecord->generated_at->format('m/d H:i') . $title,
+                    'title'   => $classRecord->generated_at->format('m/d H:i').$title,
                     'icon'    => 'lunch',
                     'class'   => $isToday ? 'today' : 'history',
                     'content' => '<i class="v-icon material-icons">directions_run</i>',
@@ -198,7 +199,7 @@ class OrderController extends Controller
                     'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
-        
+
         // dd($events);
         // $default_events = json_encode($events);
         return view('orders.show', compact('order', 'events'));
@@ -220,6 +221,7 @@ class OrderController extends Controller
             ],
             ['entity' => $order],
         );
+
         return view('orders.edit', compact('form'));
     }
 
@@ -244,7 +246,7 @@ class OrderController extends Controller
             'user_id'     => $request->input('user_id'), //student_uid
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
-            'book_id'     => $request->input('book_id') ?: 1 ,
+            'book_id'     => $request->input('book_id') ?: 1,
             'product_id'  => $request->input('product_id'),
             'price'       => $request->input('price'),
             'period'      => $request->input('period'),
@@ -252,12 +254,13 @@ class OrderController extends Controller
             'remark'      => $request->input('remark'),
             'status'      => $request->input('status'),
         ])->save();
-        
+
         $start_at = $request->input('start_at');
-        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at);//2019-04-09T06:00
+        $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at); //2019-04-09T06:00
         $string = $request->input('rrule');
         $order->rrules->first()->fill(compact('start_at', 'string'))->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('orders.index');
     }
 
@@ -275,6 +278,7 @@ class OrderController extends Controller
     public function flagStatus(Request $request, Order $order, $status)
     {
         $order->status = $status;
+
         return ['success'=>$order->save()];
     }
 }

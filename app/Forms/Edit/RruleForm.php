@@ -12,7 +12,7 @@ class RruleForm extends Form
         if (! $rrule) {
             return;
         }
-        
+
         $this->add('order', 'static', [
                     'label' => '订单Id',
                     'rules' => 'required',

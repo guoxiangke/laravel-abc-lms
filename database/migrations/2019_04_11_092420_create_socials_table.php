@@ -22,7 +22,7 @@ class CreateSocialsTable extends Migration
             // ALTER TABLE `socials` Add COLUMN `name` VARCHAR(255) DEFAULT NULL AFTER user_id;
             // ALTER TABLE `socials` Add COLUMN `avatar` VARCHAR(255) DEFAULT NULL AFTER user_id;
             $table->string('avatar')->nullable();
-            $table->unsignedTinyInteger('type')->default(1);//1wechat 2facebook
+            $table->unsignedTinyInteger('type')->default(1); //1wechat 2facebook
             $table->timestamps();
 
             $table->foreign('user_id')

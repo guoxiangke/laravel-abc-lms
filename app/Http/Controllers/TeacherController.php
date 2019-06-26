@@ -25,8 +25,9 @@ class TeacherController extends Controller
         //todo https://abc.dev/teacher/register
         // $this->middleware(['admin'], ['only' => ['index','edit']]);
     }
-    
+
     use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -44,6 +45,7 @@ class TeacherController extends Controller
             )//'user.paymethod',
             ->orderBy('id', 'desc')
             ->paginate(100);
+
         return view('teachers.index', compact('teachers'));
     }
 
@@ -58,6 +60,7 @@ class TeacherController extends Controller
             'method' => 'POST',
             'url'    => action('TeacherController@store'),
         ]);
+
         return view('teachers.create', compact('form'));
     }
 
@@ -69,8 +72,10 @@ class TeacherController extends Controller
             'method' => 'POST',
             'url'    => action('TeacherController@registerStore'),
         ]);
+
         return view('teachers.register', compact('form'));
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -91,6 +96,7 @@ class TeacherController extends Controller
         }
         $user = $request->user();
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -109,8 +115,8 @@ class TeacherController extends Controller
         }
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type') ?: 0;//0-4
-        $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
+        $contactType = $request->input('contact_type') ?: 0; //0-4
+        $teacherEmail = $teacherUserName.'@teacher.com'; //'. Contact::TYPES[$contactType] . '
         $user = User::where('email', $teacherEmail)->first();
 
         if (! $user) {
@@ -133,12 +139,11 @@ class TeacherController extends Controller
         ]);
         $user->teacher()->save($teacher);
 
-
         if ($zoomId = $request->input('zoom_id')) {
             $teacher->zoom_id = $zoomId;
             $teacher->save();
         }
-        
+
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
             'telephone' => $request->input('telephone'),
@@ -176,6 +181,7 @@ class TeacherController extends Controller
         }
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('teachers.index');
     }
 
@@ -206,6 +212,7 @@ class TeacherController extends Controller
             ],
             ['entity' => $teacher],
         );
+
         return view('teachers.edit', compact('form'));
     }
 
@@ -228,13 +235,13 @@ class TeacherController extends Controller
         $zoomId = $teacher->zoom ? $teacher->zoom->id : 0;
         // dd($zoomId);
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
 
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type') ?: 0;//0-4
-        $teacherEmail = $teacherUserName.'@teacher.com';//'. Contact::TYPES[$contactType] . '
+        $contactType = $request->input('contact_type') ?: 0; //0-4
+        $teacherEmail = $teacherUserName.'@teacher.com'; //'. Contact::TYPES[$contactType] . '
 
         if ($password = $request->input('user_password') ?: 'Teacher123') {
             $password = Hash::make($password);
@@ -252,7 +259,7 @@ class TeacherController extends Controller
             'zoom_id'   => $request->input('zoom_id') ?: null,
             'school_id' => $request->input('school_id') ?: null,
         ])->save();
-        
+
         //确保只有一个手机号
         $birthday = $request->input('profile_birthday');
         if ($birthday) {
@@ -309,6 +316,7 @@ class TeacherController extends Controller
             }
         }
         Session::flash('alert-success', __('Success'));
+
         return redirect()->route('teachers.index');
     }
 

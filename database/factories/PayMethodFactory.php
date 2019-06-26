@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use App\Models\PayMethod;
 use Faker\Generator as Faker;

@@ -31,7 +31,6 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-
             $table->foreign('user_id')
                ->references('id')
                ->on('users')
@@ -44,7 +43,7 @@ class CreateOrdersTable extends Migration
                 ->references('id')
                 ->on('users');
             // ->onDelete('cascade');
-                
+
             $table->foreign('book_id')
                 ->references('id')
                 ->on('books');

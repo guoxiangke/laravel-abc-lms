@@ -33,6 +33,7 @@ class User extends Authenticatable implements HasMedia
             // ->useDisk('public')
             ->singleFile();
     }
+
     // $yourModel->addMedia($pathToImage)->toMediaCollection('avatar');
     // $yourModel->getMedia('avatar')->count(); // returns 1
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
@@ -50,7 +51,7 @@ class User extends Authenticatable implements HasMedia
     ];
 
     //@see ClassRecordPolicy 谁可以评论 //谁可以查看
-    const MANAGER_ROLES = ['developer', 'manager'];//todo , 'editor'
+    const MANAGER_ROLES = ['developer', 'manager']; //todo , 'editor'
 
     public function school()
     {
@@ -71,7 +72,6 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasOne(Agency::class);
     }
-
 
     public function profiles()
     {
@@ -115,10 +115,9 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    
     /**
-     * for Horizon::auth
-     * @return boolean [description]
+     * for Horizon::auth.
+     * @return bool [description]
      */
     public function isSuperuser()
     {
@@ -134,11 +133,12 @@ class User extends Authenticatable implements HasMedia
     //姓名转pinyin和english
     public static function pinyin($name)
     {
-        $name = str_replace(' ', '', $name);//去除空格
-        $name = implode('', pinyin($name, 16));//PINYIN_NAME
+        $name = str_replace(' ', '', $name); //去除空格
+        $name = implode('', pinyin($name, 16)); //PINYIN_NAME
         if (! $name) {
-            $name = implode('_', pinyin($name, 64));//PINYIN_KEEP_ENGLISH
+            $name = implode('_', pinyin($name, 64)); //PINYIN_KEEP_ENGLISH
         }
+
         return $name;
     }
 
@@ -149,6 +149,7 @@ class User extends Authenticatable implements HasMedia
         if ($social && $social->type == Social::TYPE_WECHAT) {
             $openId = $social->social_id;
         }
+
         return $openId;
     }
 }

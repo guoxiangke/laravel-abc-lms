@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use App\Models\Contact;
 use App\Models\Profile;
@@ -26,7 +27,6 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token'    => Str::random(10),
     ];
 });
-
 
 $factory->afterMaking(User::class, function ($user, $faker) {
     //user profile

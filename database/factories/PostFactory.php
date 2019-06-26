@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Post;
 use Faker\Generator as Faker;
 

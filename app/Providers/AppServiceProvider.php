@@ -35,11 +35,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Carbon::setLocale('zh');
-        
+
         if (Config::get('app.env') === 'production') {
             URL::forceScheme('https');
         }
-        
+
         // Flash::levels([
         //     'success' => 'alert-success',
         //     'warning' => 'alert-warning',

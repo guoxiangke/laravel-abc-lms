@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Forms\AgencyForm as CreateForm;
 
-
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\AgencyForm as EditForm;
 use App\Forms\Register\AgencyRegisterForm;
@@ -40,6 +39,7 @@ class AgencyController extends Controller
         $agencies = Agency::with('user', 'user.profiles', 'user.paymethod', 'user.profiles.recommend')
             ->orderBy('id', 'desc')
             ->paginate(100);
+
         return view('agencies.index', compact('agencies'));
     }
 
@@ -54,6 +54,7 @@ class AgencyController extends Controller
             'method' => 'POST',
             'url'    => action('AgencyController@store'),
         ]);
+
         return view('agencies.create', compact('form'));
     }
 
@@ -65,6 +66,7 @@ class AgencyController extends Controller
             'method' => 'POST',
             'url'    => action('AgencyController@registerStore'),
         ]);
+
         return view('agencies.register', compact('form'));
     }
 
@@ -88,7 +90,7 @@ class AgencyController extends Controller
         }
         $user = $request->user();
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -107,8 +109,8 @@ class AgencyController extends Controller
         }
         // create login user
         $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type');//0-3
-        $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
+        $contactType = $request->input('contact_type'); //0-3
+        $email = $userName.'@'.Contact::TYPES[$contactType].'.com';
         $user = User::where('email', $email)->first();
 
         if (! $user) {
@@ -173,7 +175,6 @@ class AgencyController extends Controller
         return redirect()->route('agencies.index');
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -190,6 +191,7 @@ class AgencyController extends Controller
             ],
             ['entity' => $agency],
         );
+
         return view('agencies.edit', compact('form'));
     }
 
@@ -209,15 +211,14 @@ class AgencyController extends Controller
 
         $user = $agency->user;
         $paymethod = $user->paymethod;
-        
+
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
 
-
         // create login user
         $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
-        $contactType = $request->input('contact_type');//0-3
-        $email = $userName.'@'. Contact::TYPES[$contactType] . '.com';
+        $contactType = $request->input('contact_type'); //0-3
+        $email = $userName.'@'.Contact::TYPES[$contactType].'.com';
 
         if ($password = $request->input('user_password') ?: 'Agency1234') {
             $password = Hash::make($password);
@@ -267,6 +268,7 @@ class AgencyController extends Controller
         ])->save();
 
         alert()->toast('Update Success', 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('agencies.index');
     }
 
@@ -280,6 +282,7 @@ class AgencyController extends Controller
             ],
             ['entity' => $user],
         );
+
         return view('agencies.upgrade', compact('form'));
     }
 

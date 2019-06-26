@@ -12,7 +12,7 @@ class ClassRecordsGenerate extends Command
     /**
      * The name and signature of the console command.
      *  为订单=8的某个日期进行生成 php artisan classrecords:generate --order=8 --date=2019-04-24
-     *  对前X天的生成！ php artisan classrecords:generate 3 --order=2
+     *  对前X天的生成！ php artisan classrecords:generate 3 --order=2.
      * @var string
      */
     protected $signature = 'classrecords:generate {offset?} {--order=} {--date=}';

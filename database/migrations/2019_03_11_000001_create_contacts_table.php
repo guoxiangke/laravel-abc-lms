@@ -23,7 +23,6 @@ class CreateContactsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-
             $table->foreign('profile_id')
                ->references('id')->on('profiles')
                ->onDelete('cascade');

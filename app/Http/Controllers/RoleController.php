@@ -16,32 +16,32 @@ class RoleController extends Controller
     }
 
     /**
-     * 显示角色列表
+     * 显示角色列表.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $roles = Role::all();// 获取所有角色
+        $roles = Role::all(); // 获取所有角色
 
         return view('roles.index')->with('roles', $roles);
     }
 
     /**
-     * 显示创建角色表单
+     * 显示创建角色表单.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $permissions = Permission::all();// 获取所有权限
+        $permissions = Permission::all(); // 获取所有权限
 
-        $roles = Role::all();// 获取所有角色
+        $roles = Role::all(); // 获取所有角色
         return view('roles.create', ['permissions'=>$permissions, 'roles'=>$roles]);
     }
 
     /**
-     * 保存新创建的角色
+     * 保存新创建的角色.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -75,12 +75,12 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
             ->with(
                 'flash_message',
-                'Role'. $role->name.' added!'
+                'Role'.$role->name.' added!'
             );
     }
 
     /**
-     * 显示指定角色
+     * 显示指定角色.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -91,7 +91,7 @@ class RoleController extends Controller
     }
 
     /**
-     * 显示编辑角色表单
+     * 显示编辑角色表单.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -105,7 +105,7 @@ class RoleController extends Controller
     }
 
     /**
-     * 更新角色
+     * 更新角色.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -124,7 +124,7 @@ class RoleController extends Controller
         $permissions = $request['permissions'];
         $role->fill($input)->save();
 
-        $p_all = Permission::all();//获取所有权限
+        $p_all = Permission::all(); //获取所有权限
 
         foreach ($p_all as $p) {
             $role->revokePermissionTo($p); // 移除与角色关联的所有权限
@@ -138,12 +138,12 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
             ->with(
                 'flash_message',
-                'Role'. $role->name.' updated!'
+                'Role'.$role->name.' updated!'
             );
     }
 
     /**
-     * 删除指定权限
+     * 删除指定权限.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

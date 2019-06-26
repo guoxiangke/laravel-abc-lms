@@ -15,7 +15,7 @@ class CreateRrulesTable extends Migration
     {
         Schema::create('rrules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('order_id');//上课计划
+            $table->unsignedBigInteger('order_id'); //上课计划
             $table->string('string');
             $table->boolean('type')->default(1); //'AOL', 0 'SCHEDULE',1
             //计算属性

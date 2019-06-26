@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use App\Models\Profile;
 use Faker\Generator as Faker;

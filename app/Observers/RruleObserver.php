@@ -9,7 +9,7 @@ class RruleObserver
 {
     /**
      * Handle the rrule "created" event.
-     * 创建当天的课程记录
+     * 创建当天的课程记录.
      * @param  \App\Models\Rrule  $rrule
      * @return void
      */
@@ -24,7 +24,6 @@ class RruleObserver
             // }
         }
     }
-
 
     /**
      * Handle the class record "updated" event.

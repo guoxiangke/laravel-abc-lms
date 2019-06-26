@@ -14,6 +14,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 class ProfileController extends Controller
 {
     use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +27,7 @@ class ProfileController extends Controller
         } else {
             $profiles = Profile::with('recommend')->orderBy('id', 'desc')->where('user_id', Auth::id())->paginate(10);
         }
-        
+
         return view('profiles.index', compact('profiles'));
     }
 
@@ -49,6 +50,7 @@ class ProfileController extends Controller
             'method' => 'POST',
             'url'    => action('ProfileController@store'),
         ]);
+
         return view('profiles.create', compact('form'));
     }
 
@@ -72,6 +74,7 @@ class ProfileController extends Controller
         );
         $profile = $profile->fill($request->except('user_id'))->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('profiles.index');
     }
 
@@ -84,6 +87,7 @@ class ProfileController extends Controller
     public function show(profile $profile)
     {
         $this->authorize('view', $profile);
+
         return view('profiles.show', compact('profile'));
     }
 
@@ -103,6 +107,7 @@ class ProfileController extends Controller
             ],
             ['entity' => $profile],
         );
+
         return view('profiles.edit', compact('form'));
     }
 
@@ -122,6 +127,7 @@ class ProfileController extends Controller
 
         $profile = $profile->fill($request->all())->save();
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+
         return redirect()->route('profiles.index');
     }
 

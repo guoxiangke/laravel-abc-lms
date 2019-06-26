@@ -1,5 +1,7 @@
 <?php
+
 //Only gen by Console.
+
 namespace App\Models;
 
 use App\User;
@@ -21,9 +23,10 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     use Commentable;
     use HasMediaTrait;
 
-    const DISK = 'spaces';//ClassRecord::DISK upyun
+    const DISK = 'spaces'; //ClassRecord::DISK upyun
     // const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
     const DOS_CDN = 'https://upcdn.do.abc-chinaedu.com';
+
     public function registerMediaCollections()
     {
         $this->addMediaCollection('mp3')
@@ -103,17 +106,16 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     }
 
     /**
-    * Scope a query to only include active users.
-    * 不🙅需要补课
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
+     * Scope a query to only include active users.
+     * 不🙅需要补课.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     //用于已上课时计算
     public function scopeNoPack($query)
     {
-        return $query->whereIn('exception', self::EXCEPTIONS_NONEED_PATCH);//0,3
+        return $query->whereIn('exception', self::EXCEPTIONS_NONEED_PATCH); //0,3
     }
-
 
     public function scopeByException($query, $exception = self::NO_EXCEPTION)
     {
@@ -121,14 +123,14 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     }
 
     /**
-    * Scope a query to only include active users.
-    * 需要补课, 三种正常请假模式！
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
+     * Scope a query to only include active users.
+     * 需要补课, 三种正常请假模式！
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeExceptions($query)
     {
-        return $query->whereIn('exception', self::EXCEPTIONS_NEED_PATCH);//1,2,4
+        return $query->whereIn('exception', self::EXCEPTIONS_NEED_PATCH); //1,2,4
     }
 
     /**
@@ -174,19 +176,17 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     public function getMp3Attribute()
     {
         if ($firstMedia = $this->getFirstMedia('mp3')) {
-            return self::DOS_CDN .'/'. $firstMedia->getPath();
+            return self::DOS_CDN.'/'.$firstMedia->getPath();
         }
-        return null;
     }
 
     public function getMp4Attribute()
     {
         if ($firstMedia = $this->getFirstMedia('mp4')) {
-            return self::DOS_CDN .'/'. $firstMedia->getPath();
+            return self::DOS_CDN.'/'.$firstMedia->getPath();
         }
-        return null;
     }
-    
+
     // public function getUrl($type='mp3'){
     //     return Storage::disk(self::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
     // }

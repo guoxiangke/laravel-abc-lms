@@ -18,14 +18,14 @@ class CreateBillsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedTinyInteger('type');
             $table->unsignedBigInteger('order_id')->nullable();
-            $table->unsignedInteger('price');//0-100价格amount，单位分
+            $table->unsignedInteger('price'); //0-100价格amount，单位分
             $table->unsignedTinyInteger('paymethod_type');
             $table->boolean('status')->default(0); //0:append 1:approved已成交/入账
             $table->text('remark')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('user_id')
                ->references('id')
                ->on('users');

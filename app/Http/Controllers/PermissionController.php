@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
 // 引入 laravel-permission 模型
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -17,7 +16,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * 显示权限列表
+     * 显示权限列表.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +28,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * 显示创建权限表单
+     * 显示创建权限表单.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +40,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * 保存新创建的权限
+     * 保存新创建的权限.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -72,12 +71,12 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')
             ->with(
                 'flash_message',
-                'Permission'. $permission->name.' added!'
+                'Permission'.$permission->name.' added!'
             );
     }
 
     /**
-     * 显示给定权限
+     * 显示给定权限.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -88,7 +87,7 @@ class PermissionController extends Controller
     }
 
     /**
-     * 显示编辑权限表单
+     * 显示编辑权限表单.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -101,12 +100,12 @@ class PermissionController extends Controller
     }
 
     /**
-    * 更新指定权限
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
+     * 更新指定权限.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $permission = Permission::findOrFail($id);
@@ -119,12 +118,12 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')
             ->with(
                 'flash_message',
-                'Permission'. $permission->name.' updated!'
+                'Permission'.$permission->name.' updated!'
             );
     }
 
     /**
-     * 删除给定权限
+     * 删除给定权限.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

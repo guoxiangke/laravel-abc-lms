@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -18,13 +19,13 @@ class ProductsTableSeeder extends Seeder
             'price'       => 199,
         ]);
 
-        $remark = <<<EOF
+        $remark = <<<'EOF'
         1.上课时间为上午5点至晚上23点，一节课25分钟或者50分钟 
         2.学生需固定上课时间，特殊情况提前2个小时请假，勿需每日预约
         4.周卡必须上5节课，不足5节课的每少上1节扣除一课时
         5.周卡建议两人拼团，比如一学生上一三五，另一学生二四上课
-        EOF ;
-        
+        EOF;
+
         $products = [
             [
                 'name'        => '次卡基础班80课时（12个月有效）',

@@ -19,7 +19,7 @@ class CreateProfilesTable extends Migration
             $table->string('name')->nullable()->coment('真名');
             $table->boolean('sex')->default(0);
             $table->date('birthday')->nullable();
-            $table->string('telephone', 22)->unique()->index();//用来登陆账户9-13 with(+)86
+            $table->string('telephone', 22)->unique()->index(); //用来登陆账户9-13 with(+)86
             $table->unsignedBigInteger('recommend_uid')->nullable()->comment('用户关系');
             //country. see telephone with(+)86
             $table->timestamps();

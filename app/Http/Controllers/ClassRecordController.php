@@ -32,6 +32,7 @@ class ClassRecordController extends Controller
         //只有管理员可以访问所有 /classRecords
         $this->middleware(['admin'], ['only' => ['index']]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,9 +52,10 @@ class ClassRecordController extends Controller
             )
             ->orderBy('generated_at', 'desc')
             ->paginate(100);
+
         return view('classRecords.index', compact('classRecords'));
     }
-    
+
     public function indexbyOrder(Order $order)
     {
         $classRecords = ClassRecord::with(
@@ -65,8 +67,10 @@ class ClassRecordController extends Controller
             ->where('order_id', $order->id) //user_id
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
+
         return view('classRecords.index4order', compact('classRecords'));
     }
+
     //indexByRole 我的所有课程记录
     public function indexByRole()
     {
@@ -108,12 +112,12 @@ class ClassRecordController extends Controller
                 $classRecords = $classRecords->whereIn('exception', [0, 1, 3]);
             }
             $classRecords = $classRecords->paginate(50);
-            break;//按上下↕️顺序找到第一个角色的即可返回
+            break; //按上下↕️顺序找到第一个角色的即可返回
         }
 
         $aolCount = 0;
         //为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？
-            
+
         if ($user->hasRole('student')) {
             $start = new Carbon('first day of this month');
             $aolCount = ClassRecord::whereIn('exception', [ClassRecord::NORMAL_EXCEPTION_STUDENT, ClassRecord::EXCEPTION_STUDENT]) // 请假和旷课都算进去
@@ -122,9 +126,9 @@ class ClassRecordController extends Controller
                 ->pluck('exception')
                 ->count();
         }
+
         return view('classRecords.index4'.$roleName, compact('classRecords', 'aolCount'));
     }
-
 
     public function indexByStudent(Student $student)
     {
@@ -136,6 +140,7 @@ class ClassRecordController extends Controller
             ->where('user_id', $student->user_id)
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
+
         return view('classRecords.index4agency', compact('classRecords'));
     }
 
@@ -149,6 +154,7 @@ class ClassRecordController extends Controller
             ->where('teacher_uid', $teacher->user_id)
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
+
         return view('classRecords.index4teacher', compact('classRecords'));
     }
 
@@ -162,9 +168,9 @@ class ClassRecordController extends Controller
     {
         // $classRecord->load('comments');
         $this->authorize('view', $classRecord);
+
         return view('classRecords.show', compact('classRecord'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -176,9 +182,9 @@ class ClassRecordController extends Controller
     {
         $classRecord->delete();
         Session::flash('alert-success', '删除成功！');
+
         return redirect()->route('classRecords.indexbyOrder', $classRecord->order_id);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -198,6 +204,7 @@ class ClassRecordController extends Controller
             ],
             ['entity' => $classRecord],
         );
+
         return view('classRecords.edit', compact('form', 'classRecord'));
     }
 
@@ -220,26 +227,26 @@ class ClassRecordController extends Controller
         // https://github.com/spatie/laravel-medialibrary/issues/241
         // https://github.com/spatie/laravel-medialibrary/issues/241#issuecomment-226027435
         // https://github.com/spatie/laravel-medialibrary/issues/1018
-        $md5Id = $classRecord->id .'_'. time();//md5($classRecord->id . );
+        $md5Id = $classRecord->id.'_'.time(); //md5($classRecord->id . );
         if ($request->file('mp3')) {
             $classRecord->clearMediaCollection('mp3');
             $fileMp3Adder = $classRecord->addMediaFromRequest('mp3')
-                ->usingFileName($md5Id . '.m4a')
+                ->usingFileName($md5Id.'.m4a')
                 ->toMediaCollection('mp3');
         }
         if ($request->file('mp4')) {
             $classRecord->clearMediaCollection('mp4');
             $fileMp4Adder = $classRecord->addMediaFromRequest('mp4')
-                ->usingFileName($md5Id . '.mp4')
+                ->usingFileName($md5Id.'.mp4')
                 ->toMediaCollection('mp4');
         }
         // $newsItem->getMedia('mp3')->first()->getUrl('thumb');
         // \Log::error(__FUNCTION__,[__CLASS__, $fileMp3Adder,$fileMp4Adder]);
-        
+
         $data = $request->all();
         $generated_at = $request->input('generated_at');
         if ($generated_at) {
-            $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at);//2019-04-09T06:00
+            $generated_at = Carbon::createFromFormat('Y-m-d\TH:i', $generated_at); //2019-04-09T06:00
             $data['generated_at'] = $generated_at;
         }
         if (! $request->input('agency_uid')) {
@@ -252,6 +259,7 @@ class ClassRecordController extends Controller
         if (Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             return redirect(route('classRecords.indexByRole'));
         }
+
         return redirect(route('classRecords.show', $classRecord->id));
     }
 
@@ -262,14 +270,14 @@ class ClassRecordController extends Controller
         switch ($exception) {
             case ClassRecord::NORMAL_EXCEPTION_TEACHER://2老师请假
             case ClassRecord::EXCEPTION_STUDENT://3学生旷课
-                $this->authorize('edit', $classRecord);//编辑权限
+                $this->authorize('edit', $classRecord); //编辑权限
                 break;
             case ClassRecord::NORMAL_EXCEPTION_STUDENT://1学生请假
-                $this->authorize('aol', $classRecord);//aol权限
+                $this->authorize('aol', $classRecord); //aol权限
                 break;
             case ClassRecord::NO_EXCEPTION://0归位正常
             case ClassRecord::EXCEPTION_TEACHER://4老师异常
-                $this->authorize('admin', $classRecord);//管理员可操作
+                $this->authorize('admin', $classRecord); //管理员可操作
                 break;
             default:
                 // return abort('403');
