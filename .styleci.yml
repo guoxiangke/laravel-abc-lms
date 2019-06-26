@@ -1,8 +1,15 @@
-php:
-  preset: laravel
-  disabled:
-    - unused_use
-  finder:
-    not-name:
-      - index.php
-      - server.php
+# https://github.com/laravel/laravel/blob/master/.styleci.yml
+# 
+preset: laravel
+risky: false
+finder:
+  not-name:
+    - index.php
+    - server.php
+  exclude:
+    - modules
+    - node_modules
+    - storage
+    - vendor
+  name: "*.php"
+  not-name: "*.blade.php"
