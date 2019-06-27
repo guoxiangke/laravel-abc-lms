@@ -25,8 +25,20 @@ class BillController extends Controller
      */
     public function index()
     {
-        $bills = Bill::orderBy('id', 'desc')
-                    ->paginate(100);
+        $bills = Bill::with(
+            'user',
+            'user.profiles',
+            // $order->title
+            'order',
+            'order.user',
+            'order.user.profiles',
+            'order.teacher',
+            'order.teacher.profiles',
+            'order.agency',
+            'order.agency.profiles'
+            )
+            ->orderBy('id', 'desc')
+            ->paginate(100);
 
         return view('bills.index', compact('bills'));
     }

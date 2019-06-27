@@ -61,6 +61,8 @@ class ClassRecordController extends Controller
             'rrule',
             'teacher',
             'user',
+            'agency',
+            'agency.profiles',
             'media'
                 )
             ->where('order_id', $order->id) //user_id
