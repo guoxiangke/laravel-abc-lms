@@ -61,6 +61,17 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::resource('posts', 'PostController');
     Route::resource('permissions', 'PermissionController');
 
+    Route::get('orders/trial', 'OrderController@index')
+        ->name('orders.trail');
+    Route::get('orders/trash', 'OrderController@index')
+        ->name('orders.trash');
+    Route::get('orders/done', 'OrderController@index')
+        ->name('orders.done');
+    Route::get('orders/pause', 'OrderController@index')
+        ->name('orders.pause');
+    Route::get('orders/all', 'OrderController@index')
+        ->name('orders.all');
+
     Route::resources([
         'schools'      => 'SchoolController',
         'teachers'     => 'TeacherController',

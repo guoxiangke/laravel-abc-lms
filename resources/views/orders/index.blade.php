@@ -1,10 +1,19 @@
 @extends('layouts.app')
 
-@section('title', __('Orders'))
+@section('title', $type . __('Orders'))
 
 @section('content')
 <div class="container">
-	<h1>{{__('Orders')}}</h1>
+	<h1>{{ $type }} {{__('Orders')}}</h1>
+  <div class="show-links">
+    <a href="{{ route('orders.index') }}" class="btn btn-primary"> {{__('Default')}}</a>
+    <a href="{{ route('orders.trail') }}" class="btn btn-primary"> {{__('Trial')}}</a>
+    <a href="{{ route('orders.pause') }}" class="btn btn-primary"> {{__('Pause')}}</a>
+    <a href="{{ route('orders.done') }}" class="btn btn-primary"> {{__('Done')}}</a>
+    <a href="{{ route('orders.trash') }}" class="btn btn-primary"> {{__('Trash')}}</a>
+    <a href="{{ route('orders.all') }}" class="btn btn-primary"> {{__('All')}}</a>
+  </div>
+
   <div class="show-links">
       <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
       <a href="{{ route('orders.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>

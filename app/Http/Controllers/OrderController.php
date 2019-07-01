@@ -28,7 +28,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $orders = Order::with(
             'user',
@@ -41,10 +41,44 @@ class OrderController extends Controller
             'schedules.classRecords',
             'book',
             'product',
-        )
-        ->orderBy('id', 'desc')
-        ->paginate(100); //todo debug 第二页有N+1问题
-        return view('orders.index', compact('orders'));
+        );
+        $type = 'Default'; // 默认
+        //0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
+        // 试听订单页面
+        if ($request->is('orders/trial')) {
+            $type = 'Trial';
+            $orders = $orders->where('period', 1);
+        }
+        // ！试听订单页面
+        if ($request->is('orders/trash')) {
+            $orders = $orders->where('period', '!=', 1)
+                ->where('status', Order::STATU_TRASH);
+            $type = 'Trash';
+        }
+
+        if ($request->is('orders/done')) {
+            $orders = $orders->where('status', Order::STATU_COMPLETED)
+                ->where('period', '!=', 1);
+            $type = 'Done';
+        }
+
+        if ($request->is('orders/pause')) {
+            $orders = $orders->where('status', Order::STATU_PAUSE);
+            $type = 'Pause';
+        }
+
+        if ($request->is('orders/all')) {
+            $type = 'All';
+        }
+        // 默认
+        // 有效订单页面
+        if ($type == 'Default') {
+            $orDers = $orders->where('period', '!=', 1)
+                ->where('status', Order::STATU_ACTIVE);
+        }
+        $orders = $orders->orderBy('id', 'desc')
+            ->paginate(100); //todo debug 第二页有N+1问题 /orders/done?page=1
+        return view('orders.index', compact('orders', 'type'));
     }
 
     /**
