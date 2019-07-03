@@ -80,7 +80,7 @@
     FILENAME=cn.lms.abc.$(date '+%Y%m%d%H%M%S').db.backup.sql
 
     echo "Backup On CN begin ..."
-    echo "scp ubuntu@154.8.216.229:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
+    echo "scp root@154.8.216.229:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
     
     docker-compose exec -T db mysqldump -uroot -proot laravel > /tmp/$FILENAME \
     && echo 'sync to sfo2 ...' \
@@ -144,4 +144,15 @@
     docker-compose exec -T app bash -c "
         php artisan classrecords:generate 1 --order=2
         "
+@endtask
+
+
+@task('backupCN4dev', ['on' => 'qq3'])
+    cd /var/www/html/lms-abc
+    FILENAME=cn.lms.abc.$(date '+%Y%m%d%H%M%S').db.backup.sql
+
+    echo "Backup On CN begin ..."
+    echo "scp root@154.8.216.229:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
+    
+    docker-compose exec -T db mysqldump -uroot -proot laravel > /tmp/$FILENAME
 @endtask

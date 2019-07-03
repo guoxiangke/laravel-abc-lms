@@ -79,12 +79,12 @@ class StudentForm extends Form
                 'empty_value' => '=== Select ===',
             ])
             ->add('contact_number', 'text', [
-                'value' => $contact->number,
+                'value' => $contact ? $contact->number : '',
                 'label' => 'Wechat/QQ/手机号',
             ])
             ->add('contact_remark', 'textarea', [
                 'label' => '联系方式备注',
-                'value' => $contact->remark,
+                'value' => $contact ? $contact->remark : '',
                 'attr'  => [
                     'rows'        => 2,
                     'placeholder' => 'Wechat/QQ/手机号 可不填,备注写这里',
