@@ -3,7 +3,6 @@
 namespace App\Forms\Register;
 
 use App\User;
-use App\Models\Book;
 use App\Models\Student;
 use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
@@ -18,11 +17,6 @@ class StudentRegisterForm extends Form
                 'rules'       => 'required',
                 'choices'     => Student::GRADES,
                 'empty_value' => '=== 请选择 ===',
-            ])
-            ->add('book_id', 'select', [
-                'label'       => '同步教材',
-                'choices'     => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
-                'empty_value' => '=== Select ===',
             ])
             ->add('english_name', 'text', [
                 'label'      => '英文名',

@@ -49,7 +49,7 @@ class StudentForm extends Form
             ])
             ->add('book_id', 'select', [
                 'label'       => '同步教材',
-                'choices'     => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(),
+                'choices'     => Book::where('type', Book::SYNC)->get()->pluck('name', 'id')->toArray(), // todo add publisher
                 'empty_value' => '=== Select ===',
             ])
             ->add('contact_number', 'text', [
