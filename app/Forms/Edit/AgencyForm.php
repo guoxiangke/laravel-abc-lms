@@ -45,18 +45,18 @@ class AgencyForm extends Form
             ->add('contact_type', 'select', [
                 'label'       => '其他联系方式',
                 'rules'       => 'required',
-                'selected'    => $contact->type,
+                'selected'    => $contact ? $contact->type : '',
                 'choices'     => Contact::TYPES,
                 'empty_value' => '=== Select ===',
             ])
             ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',
-                'value' => $contact->number,
+                'value' => $contact ? $contact->number : '',
                 'label' => '联系方式账户ID',
             ])
             ->add('contact_remark', 'textarea', [
                 'label' => '联系方式备注',
-                'value' => $contact->remark,
+                'value' => $contact ? $contact->remark : '',
                 'attr'  => ['rows' => 2],
             ])
             ->add('profile_sex', 'select', [

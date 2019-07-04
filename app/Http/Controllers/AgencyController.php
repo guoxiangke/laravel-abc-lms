@@ -211,6 +211,14 @@ class AgencyController extends Controller
 
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
+        if (! $contact) {
+            $contact = Contact::create([
+                'profile_id' => $profile->id,
+                'type'   => $request->input('contact_type'),
+                'number' => $request->input('contact_number'),
+                'remark' => $request->input('contact_remark'),
+            ]);
+        }
 
         // create login user
         $userName = 'agency_'.str_replace(' ', '', $request->input('profile_name'));
@@ -247,13 +255,6 @@ class AgencyController extends Controller
             'sex'           => $request->input('profile_sex'),
             'birthday'      => $birthday,
             'recommend_uid' => $request->input('agency_id'),
-        ])->save();
-
-        $contact->fill([
-            // 'profile_id' => $profile->id,
-            'type'   => $request->input('contact_type'),
-            'number' => $request->input('contact_number'),
-            'remark' => $request->input('contact_remark'),
         ])->save();
 
         //3. 必有 save payment

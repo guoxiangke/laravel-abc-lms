@@ -297,6 +297,14 @@ class StudentController extends Controller
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();
+        if (! $contact) {
+            $contact = Contact::create([
+                'profile_id' => $profile->id,
+                'type'       => 1, // Contact::TYPES[1] = 'wechat/qq',
+                'number' => $request->input('contact_number') ?: $request->input('telephone'),
+                'remark' => $request->input('contact_remark'),
+            ]);
+        }
 
         // create login user
 
@@ -331,14 +339,6 @@ class StudentController extends Controller
             'birthday'      => $birthday,
             'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
-
-        $contact->fill([
-            // 'profile_id' => $profile->id,
-            // 'type' => 1,// Contact::TYPES[1] = 'wechat/qq',
-            'number' => $request->input('contact_number') ?: $request->input('telephone'),
-            'remark' => $request->input('contact_remark'),
-        ])->save();
-        // $contact = $profile->contact()->save($contact);
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
 
