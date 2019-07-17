@@ -5,10 +5,8 @@ namespace App\Providers;
 use Carbon\Carbon;
 use App\Models\Rrule;
 // use Spatie\Flash\Flash;
-use App\Models\ClassRecord;
 use App\Observers\RruleObserver;
 use Illuminate\Support\Facades\URL;
-use App\Observers\ClassRecordObserver;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
@@ -45,7 +43,6 @@ class AppServiceProvider extends ServiceProvider
         //     'error' => 'alert-error',
         // ]);
         //observes
-        ClassRecord::observe(ClassRecordObserver::class);
         Rrule::observe(RruleObserver::class);
     }
 }

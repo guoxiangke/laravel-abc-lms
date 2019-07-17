@@ -18,10 +18,6 @@ class RruleObserver
         // 针对上课计划 而不是请假计划
         if ($rrule->type == Rrule::TYPE_SCHEDULE) {
             ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
-            // //自动生成过去1个月的记录，特殊记录请编辑修改状态！！！
-            // for ($i=0; $i < 31; $i++) {
-            //     ClassRecordsGenerateQueue::dispatch($rrule->order,$i)->onQueue('high');
-            // }
         }
     }
 
@@ -35,10 +31,10 @@ class RruleObserver
     {
         if ($rrule->type == Rrule::TYPE_SCHEDULE) {
             //自动生成过去1个月的记录，特殊记录请编辑修改状态！！！
-            for ($i = 0; $i < 31; $i++) {
-                ClassRecordsGenerateQueue::dispatch($rrule->order, $i)->onQueue('high');
-            }
-            // ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
+            // for ($i = 0; $i < 31; $i++) {
+            //     ClassRecordsGenerateQueue::dispatch($rrule->order, $i)->onQueue('high');
+            // }
+            ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
         }
     }
 }
