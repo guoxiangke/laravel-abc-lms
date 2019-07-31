@@ -9,7 +9,7 @@ if (! function_exists('bark_notify')) {
     // bark_notify('点击打开网址', 'https://cn.bing.com');
     // bark_notify('验证码是1234，已复制1234到剪切板，粘贴即可。','12345', true);
     // bark_notify('验证码是4567，已复制所有文本到剪切板。', false, true);
-    function bark_notify($title, $bodyOrUrlOrCopy = false, $copy = false, $host = 'https://api.day.app', $sendTo = 'admin')
+    function bark_notify($title, $bodyOrUrlOrCopy = false, $copy = false, $sendTo = 'admin', $host = 'https://api.day.app')
     {
         $key = \Config::get('notify.bark.'.$sendTo);
         $url = $host.'/'.$key.'/'.urlencode($title);

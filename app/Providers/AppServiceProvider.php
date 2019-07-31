@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use Carbon\Carbon;
 use App\Models\Rrule;
-// use Spatie\Flash\Flash;
+use App\Models\Profile;
+use App\Models\Student;
 use App\Observers\RruleObserver;
+use App\Observers\ProfileObserver;
+use App\Observers\StudentObserver;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
@@ -42,7 +45,10 @@ class AppServiceProvider extends ServiceProvider
         //     'warning' => 'alert-warning',
         //     'error' => 'alert-error',
         // ]);
+
         //observes
         Rrule::observe(RruleObserver::class);
+        Student::observe(StudentObserver::class);
+        Profile::observe(ProfileObserver::class);
     }
 }
