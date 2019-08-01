@@ -32,13 +32,9 @@
 				  </thead>
 				  <tbody>
 					@foreach($students as $student)
-					    <tr id={{$student->id}}>
-					      <th scope="row" data-label="Id">
-					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
-					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
-					  </th>
-					      @php
-					      	$profile = $student->user->profiles->first();
+				      @php
+				      	$profile = $student->user->profiles->first();
+				      	if($profile){
 				      		$birthday = $profile->birthday;
 							
 				      		$recommend = $profile->recommend;
@@ -46,7 +42,15 @@
 
 				      		$contact = $profile->contacts->first();
 				      		$social = $student->user->socials->first();
-					      @endphp
+				      	}
+					    @endphp
+
+						@if($profile)
+					    <tr id={{$student->id}}>
+					      <th scope="row" data-label="Id">
+					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
+					  	  </th>
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">
@@ -73,6 +77,16 @@
 					      </td>
 					      
 					    </tr>
+					    @else
+					    <tr id={{$student->id}}>
+					      <th scope="row" data-label="Id">
+					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
+					  	  </th>
+						  <td>error!</td>
+						  <td>No profile!</td>
+					    </tr>
+					    @endif
 					@endforeach
 				  </tbody>
 				</table>

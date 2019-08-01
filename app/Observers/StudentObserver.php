@@ -14,12 +14,9 @@ class StudentObserver
      */
     public function created(Student $student)
     {
-        $title = '学生资料登记成功';
-        $profile = $student->user->profiles->first();
-        $recommend = $student->user ? $profile->recommend->name : '-';
-        $detail = "用户名：$profile->name\n介绍人：$recommend\n";
-        bark_notify($title, $detail);
-        ftqq_notify($title.$detail, 'None', 'manager');
+        $title = '学生注册登记成功';
+        bark_notify($title, $student->user->id);
+        ftqq_notify($title, 'None', 'manager');
     }
 
     /**

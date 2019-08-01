@@ -27,7 +27,7 @@ class ProfileObserver
      */
     public function created(Profile $profile)
     {
-        $title = '新用户注册';
+        $title = '资料登记成功';
         $recommend = $profile->recommend_uid ? $profile->recommend->name : '-';
         $detail = "用户名：$profile->name\n介绍人：$recommend\n";
         bark_notify($title, $detail);
