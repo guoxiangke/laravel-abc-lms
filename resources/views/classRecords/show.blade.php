@@ -23,6 +23,7 @@
       @endcan
 
       @can('delete', $classRecord)
+      <a href="{{ route('videos.cut', $classRecord->id) }}" class="btn btn-warning">Cut</a>
       <div class="mt-3 mb-1">
       {{ Form::open(['method' => 'DELETE', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
           {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}

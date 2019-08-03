@@ -88,7 +88,10 @@ Route::group(['middleware' => ['auth']], function () {
         'socials'  => 'SocialController',
         'profiles' => 'ProfileController',
         'bills'    => 'BillController',
+
+        'videos'        => 'VideoController',
     ]);
+    Route::get('videos/cut/{class_record}', 'VideoController@cut')->name('videos.cut');
     //升级学生用户为代理用户
     Route::get('agencies/upgrade/{user}', 'AgencyController@upgrade')->name('agencies.upgrade');
     Route::post('agencies/upgrade/{user}', 'AgencyController@upgradeStore')->name('agencies.upgradeStore');

@@ -185,6 +185,28 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         }
     }
 
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    public function getMp4Path()
+    {
+        if ($firstMedia = $this->getFirstMedia('mp4')) {
+            return $firstMedia->getPath();
+        }
+    }
+
+    // /0/xxx/xx/xxx.mp4
+    // /1/xxx/xx/xxx.mp4
+    public function getNextCutVideoPath()
+    {
+        $count = $this->videos()->count();
+        if ($firstMedia = $this->getFirstMedia('mp4')) {
+            return  '/'.$count.'/'.$firstMedia->getPath();
+        }
+    }
+
     // public function getUrl($type='mp3'){
     //     return Storage::disk(self::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
     // }
