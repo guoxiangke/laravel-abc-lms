@@ -75,13 +75,13 @@ class SocialController extends Controller
                     'type'      => $request->input('type'),
                 ]
             );
+
+            return redirect('home');
         } else {
             alert()->toast(__('Wrong Credentials'), 'error', 'top-center')->autoClose(3000);
 
             return redirect('login');
         }
-
-        return redirect('home');
     }
 
     /**
