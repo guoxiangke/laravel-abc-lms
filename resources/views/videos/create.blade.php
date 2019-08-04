@@ -38,6 +38,11 @@
         <div class="col-md-6 col-sm-6"> 
           @foreach($classRecord->videos as $video)
           <div>
+                <div class="mt-3  mb-1">
+                {{ Form::open(['method' => 'DELETE', 'route' => ['videos.destroy', $video->id]]) }}
+                   {{$video->start_time}} - {{$video->end_time}} {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
+                {{ Form::close() }}
+                </div>
                 <video width="70%" height="auto" 
                   controls
                   preload="none">

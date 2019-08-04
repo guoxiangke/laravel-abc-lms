@@ -16,6 +16,7 @@
                         </div>
                     @endif
                     @hasanyrole('manager|admin')
+                    <a class="btn btn-sm btn-danger btn-delete" target="_blank" href="http://123.206.80.254:9002/hooks/lms">数据同步</a>
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex">
                             <a class="p-2 text-muted" href="/schools">{{__('Schools')}}</a>
@@ -116,4 +117,18 @@
 @section('styles')
 <style>
 </style>
+@endsection
+
+@section('scripts')
+<script>
+    window.onload = function () {
+        $('.btn-delete').click(function(e){
+          e.preventDefault();
+          if (confirm('Are you sure?')) {
+              window.open($(this).attr('href'), '_blank', 'location=no,titlebar=no,toolbar=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350,status=yes');;
+          }
+        });
+
+    }
+</script>
 @endsection

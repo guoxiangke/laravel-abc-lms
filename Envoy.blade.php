@@ -119,7 +119,7 @@
 
     docker network connect bridge abc-webserver
     docker restart abc-webserver a-nginx a-nginx-gen
-    sleep 10;
+    sleep 30;
     docker restart abc-webserver a-nginx a-nginx-gen
 
     docker-compose exec -T app bash -c "

@@ -8,6 +8,7 @@ use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Upyun\Config as UpyunConfig;
 use App\Forms\VideoForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
@@ -101,6 +102,17 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        //
+        $video->forceDelete();
+
+        $config = new UpyunConfig(config('upyun.bucket'), config('upyun.operator'), config('upyun.password'));
+        $config->processNotifyUrl = 'https://lms.abc-chinaedu.com/upyun/cut/callback';
+        $upyun = new Upyun($config);
+        $res = $upyun->delete($video->path);
+        if ($res) {
+            alert()->toast('Deleted Success', 'success', 'top-center')->autoClose(3000);
+            // Session::flash('alert-success', 'Upyun文件删除成功！');
+        }
+
+        return redirect()->back();
     }
 }
