@@ -45,8 +45,8 @@ Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('login/wechat', 'Auth\LoginController@redirectToWechatProvider')->name('login.weixin');
 Route::get('login/wechat/callback', 'Auth\LoginController@handleWechatProviderCallback');
 
-Route::get('/MP_verify_TneROHDiBDphZRvS.txt', function () {
-    return 'TneROHDiBDphZRvS';
+Route::get('/MP_verify_0Tyj6A2d0WC0Yizo.txt', function () {
+    return '0Tyj6A2d0WC0Yizo';
 });
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider')->name('login.facebook');
