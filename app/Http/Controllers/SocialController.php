@@ -50,9 +50,9 @@ class SocialController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         \Log::error(__FUNCTION__, [__CLASS__, __LINE__, Auth::id()]);
-        if (Auth::id()) {
-            return redirect('home');
-        }
+        // if (Auth::id()) {
+        //     return redirect('home');
+        // }
 
         $this->validate($request, [
             'username'=> 'required',
@@ -203,6 +203,7 @@ class SocialController extends Controller
     {
         $userId = Auth::id();
         $socialUser = Socialite::driver('weixin')->user();
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
         if ($userId) {
             $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
             alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);

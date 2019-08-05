@@ -42,8 +42,9 @@ Route::get('/captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $conf
 Route::get('/MP_verify_0Tyj6A2d0WC0Yizo.txt', function () {
     return '0Tyj6A2d0WC0Yizo';
 });
+
+Route::get('login/wechat/callback', 'SocialController@handleWechatProviderCallback')->name('login.weixin.callback');
 Route::get('login/wechat', 'SocialController@redirectToWechatProvider')->name('login.weixin');
-Route::get('login/wechat/callback', 'SocialController@handleWechatProviderCallback');
 
 Route::get('login/github', 'SocialController@redirectToGithubProvider');
 Route::get('login/github/callback', 'SocialController@handleGithubProviderCallback');
