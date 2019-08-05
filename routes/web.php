@@ -39,18 +39,17 @@ Route::get('/captcha/{config?}', function (\Mews\Captcha\Captcha $captcha, $conf
 });
 
 //社交认证登陆路由
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
-
-Route::get('login/wechat', 'Auth\LoginController@redirectToWechatProvider')->name('login.weixin');
-Route::get('login/wechat/callback', 'Auth\LoginController@handleWechatProviderCallback');
-
 Route::get('/MP_verify_0Tyj6A2d0WC0Yizo.txt', function () {
     return '0Tyj6A2d0WC0Yizo';
 });
+Route::get('login/wechat', 'SocialController@redirectToWechatProvider')->name('login.weixin');
+Route::get('login/wechat/callback', 'SocialController@handleWechatProviderCallback');
 
-Route::get('login/facebook', 'Auth\LoginController@redirectToFacebookProvider')->name('login.facebook');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback');
+Route::get('login/github', 'SocialController@redirectToGithubProvider');
+Route::get('login/github/callback', 'SocialController@handleGithubProviderCallback');
+
+Route::get('login/facebook', 'SocialController@redirectToFacebookProvider')->name('login.facebook');
+Route::get('login/facebook/callback', 'SocialController@handleFacebookProviderCallback');
 
 Route::resources(['socials' => 'SocialController']); //post need
 

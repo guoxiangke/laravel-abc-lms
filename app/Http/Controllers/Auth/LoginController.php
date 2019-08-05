@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Socialite;
-use App\Models\Social;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Forms\SocialForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -42,9 +38,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')
-            ->except('logout')
-            ->except('login/wechat');
+        $this->middleware('guest')->except('logout');
     }
 
     /**
@@ -95,116 +89,5 @@ class LoginController extends Controller
             'password'        => 'required|string',
             'captcha'         => 'required|captcha',
         ]);
-    }
-
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function redirectToProvider()
-    {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-
-        return Socialite::driver('github')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleProviderCallback()
-    {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-        $socialUser = Socialite::driver('github')->user();
-
-        return $this->bind($socialUser, Social::TYPE_GITHUB);
-    }
-
-    public function redirectToFacebookProvider()
-    {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-
-        return Socialite::driver('facebook')->redirect();
-    }
-
-    public function handleFacebookProviderCallback()
-    {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-        $socialUser = Socialite::driver('facebook')->user();
-
-        return $this->bind($socialUser, Social::TYPE_FACEBOOK);
-    }
-
-    public function redirectToWechatProvider()
-    {
-        // if (Auth::id()) {
-        //     return redirect('home');
-        // }
-
-        return Socialite::driver('weixin')->redirect();
-    }
-
-    public function handleWechatProviderCallback()
-    {
-        $userId = Auth::id();
-        $socialUser = Socialite::driver('weixin')->user();
-        if ($userId) {
-            $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
-            alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
-            \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
-            dd($userId);
-
-        //return redirect('home');
-        } else {
-            dd($socialUser, __LINE__);
-            //return $this->bind($socialUser, Social::TYPE_WECHAT);
-        }
-    }
-
-    public function bind($socialUser, $type)
-    {
-        $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
-        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
-        //bind
-        if (! $userId) {
-            $form = $this->form(
-                CreateForm::class,
-                [
-                    'method' => 'POST',
-                    'url'    => action('SocialController@store'),
-                ],
-                ['socialUser' => $socialUser, 'socialType' => $type],
-            );
-            \Log::error(__FUNCTION__, [__CLASS__, __LINE__, 'socials.create']);
-
-            return view('socials.create', compact('form'));
-        }
-        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
-        $user = Auth::loginUsingId($userId, true);
-        $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
-        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
-
-        return redirect('home');
-    }
-
-    public function socialUpdate($userId, $type, $avatar, $nickname)
-    {
-        $social = Social::where('user_id', $userId)
-            ->where('type', $type)
-            ->firstOrFail();
-        $social->avatar = $avatar;
-        $social->name = $nickname;
-
-        return $social->save();
     }
 }
