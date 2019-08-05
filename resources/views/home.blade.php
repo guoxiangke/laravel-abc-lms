@@ -16,6 +16,7 @@
                         </div>
                     @endif
                     @hasanyrole('manager|admin')
+                    <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="/bind">微信绑定</a>
                     <a class="btn btn-sm btn-danger btn-delete" target="_blank" href="http://123.206.80.254:9002/hooks/lms">数据同步</a>
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex">
