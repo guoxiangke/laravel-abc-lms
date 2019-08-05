@@ -32,16 +32,6 @@ class SocialController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,10 +39,6 @@ class SocialController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        // if (Auth::id()) {
-        //     return redirect('home');
-        // }
-
         $this->validate($request, [
             'username'=> 'required',
             'password'=> 'required',
@@ -147,10 +133,6 @@ class SocialController extends Controller
      */
     public function redirectToGithubProvider()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-
         return Socialite::driver('github')->redirect();
     }
 
@@ -161,9 +143,6 @@ class SocialController extends Controller
      */
     public function handleGithubProviderCallback()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
         $socialUser = Socialite::driver('github')->user();
 
         return $this->bind($socialUser, Social::TYPE_GITHUB);
@@ -171,18 +150,11 @@ class SocialController extends Controller
 
     public function redirectToFacebookProvider()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-
         return Socialite::driver('facebook')->redirect();
     }
 
     public function handleFacebookProviderCallback()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
         $socialUser = Socialite::driver('facebook')->user();
 
         return $this->bind($socialUser, Social::TYPE_FACEBOOK);
@@ -190,25 +162,14 @@ class SocialController extends Controller
 
     public function redirectToWechatProvider()
     {
-        // if (Auth::id()) {
-        //     return redirect('home');
-        // }
-
         return Socialite::driver('weixin')->redirect();
     }
 
     public function handleWechatProviderCallback()
     {
-        $userId = Auth::id();
         $socialUser = Socialite::driver('weixin')->user();
-        if ($userId) {
-            $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
-            alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
 
-            return redirect('home');
-        } else {
-            return $this->bind($socialUser, Social::TYPE_WECHAT);
-        }
+        return $this->bind($socialUser, Social::TYPE_WECHAT);
     }
 
     public function bind($socialUser, $type)
@@ -216,16 +177,28 @@ class SocialController extends Controller
         $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
         //bind
         if (! $userId) {
-            $form = $this->form(
-                CreateForm::class,
-                [
-                    'method' => 'POST',
-                    'url'    => action('SocialController@store'),
-                ],
-                ['socialUser' => $socialUser, 'socialType' => $type],
-            );
+            $loginedId = Auth::id();
+            if (! $loginedId) {
+                $form = $this->form(
+                    CreateForm::class,
+                    [
+                        'method' => 'POST',
+                        'url'    => action('SocialController@store'),
+                    ],
+                    ['socialUser' => $socialUser, 'socialType' => $type],
+                );
 
-            return view('socials.create', compact('form'));
+                return view('socials.create', compact('form'));
+            } else {
+                alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
+                Social::firstOrCreate(
+                    [
+                        'social_id' => $socialUser->id,
+                        'user_id'   => $loginedId,
+                        'type'      => $type,
+                    ]
+                );
+            }
         }
         $user = Auth::loginUsingId($userId, true);
         $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
