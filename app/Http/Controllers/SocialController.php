@@ -203,7 +203,7 @@ class SocialController extends Controller
     {
         $userId = Auth::id();
         $socialUser = Socialite::driver('weixin')->user();
-        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser->nickname]);
         if ($userId) {
             $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
             alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
