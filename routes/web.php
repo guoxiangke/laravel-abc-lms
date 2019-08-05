@@ -85,7 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         'rrules' => 'RruleController', //except create!!! create from order
 
-        'socials'  => 'SocialController',
+        // 'socials'  => 'SocialController', // bug!!! only for anonymous
         'profiles' => 'ProfileController',
         'bills'    => 'BillController',
 
