@@ -158,8 +158,9 @@ class LoginController extends Controller
         $socialUser = Socialite::driver('weixin')->user();
         if ($userId) {
             $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
-            //alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
+            alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
             \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
+            dd($userId);
 
             return redirect('home');
         } else {
