@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Social;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $isWeixinBind = Social::where('user_id', Auth::id())
+            ->where('type', Social::TYPE_WECHAT)
+            ->first();
+
+        return view('home', compact('isWeixinBind'));
     }
 }

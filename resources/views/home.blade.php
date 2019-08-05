@@ -15,8 +15,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    @hasrole('teacher')
+                    
+                    @else
+                        @if(!$isWeixinBind)
+                        <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
+                        @endif
+                    @endhasrole
+                    
                     @hasanyrole('manager|admin')
-                    <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="/login/wechat">微信绑定</a>
                     <a class="btn btn-sm btn-danger btn-delete" target="_blank" href="http://123.206.80.254:9002/hooks/lms">数据同步</a>
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex">
@@ -69,9 +77,6 @@
                           <div class="row">
                             <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6 mt-4">
                                 <a href="{{ route('classRecords.indexByRole') }}" class="btn btn-lg btn-success"><img class="icon-img" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</a>
-                            </div>
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
-                                <a href="{{ route('autologin') }}" class="btn btn-lg btn-success"><img class="icon-img" src="{{asset('images/icons/internet_security_login_fingerprint_scan-512.png')}}" alt=""> 免密登陆</a>
                             </div>
                             <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
                                 <a href="{{ route('referrals') }}" class="btn btn-lg btn-primary"><img class="icon-img" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
