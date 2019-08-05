@@ -42,7 +42,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')
+            ->except('logout')
+            ->except('login/wechat');
     }
 
     /**
@@ -145,9 +147,9 @@ class LoginController extends Controller
 
     public function redirectToWechatProvider()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
+        // if (Auth::id()) {
+        //     return redirect('home');
+        // }
 
         return Socialite::driver('weixin')->redirect();
     }
@@ -162,9 +164,10 @@ class LoginController extends Controller
             \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
             dd($userId);
 
-            return redirect('home');
+        //return redirect('home');
         } else {
-            return $this->bind($socialUser, Social::TYPE_WECHAT);
+            dd($socialUser, __LINE__);
+            //return $this->bind($socialUser, Social::TYPE_WECHAT);
         }
     }
 
