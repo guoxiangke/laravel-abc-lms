@@ -47,6 +47,7 @@ class SocialController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, Auth::id()]);
         if (Auth::id()) {
             return redirect('home');
         }
@@ -66,7 +67,7 @@ class SocialController extends Controller
             $field = 'name';
         }
         $data = [$field => $account, 'password' => request('password')];
-        dd(__CLASS__, [$data]);
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $data]);
         if (Auth::attempt($data, true)) {
             alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
             Social::firstOrCreate(

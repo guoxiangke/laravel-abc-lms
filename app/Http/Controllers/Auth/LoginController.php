@@ -154,18 +154,23 @@ class LoginController extends Controller
 
     public function handleWechatProviderCallback()
     {
-        if (Auth::id()) {
-            return redirect('home');
-        }
-
+        $userId = Auth::id();
         $socialUser = Socialite::driver('weixin')->user();
+        if ($userId) {
+            $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
+            //alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
+            \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
 
-        return $this->bind($socialUser, Social::TYPE_WECHAT);
+            return redirect('home');
+        } else {
+            return $this->bind($socialUser, Social::TYPE_WECHAT);
+        }
     }
 
     public function bind($socialUser, $type)
     {
         $userId = Social::where('social_id', $socialUser->id)->pluck('user_id')->first();
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
         //bind
         if (! $userId) {
             $form = $this->form(
@@ -176,11 +181,14 @@ class LoginController extends Controller
                 ],
                 ['socialUser' => $socialUser, 'socialType' => $type],
             );
+            \Log::error(__FUNCTION__, [__CLASS__, __LINE__, 'socials.create']);
 
             return view('socials.create', compact('form'));
         }
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
         $user = Auth::loginUsingId($userId, true);
         $this->socialUpdate($userId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
+        \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $userId]);
 
         return redirect('home');
     }
