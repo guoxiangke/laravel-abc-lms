@@ -198,6 +198,9 @@ class SocialController extends Controller
                         'type'      => $type,
                     ]
                 );
+                $this->socialUpdate($loginedId, $type, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
+
+                return redirect('home');
             }
         }
         $user = Auth::loginUsingId($userId, true);
