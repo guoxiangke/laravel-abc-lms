@@ -207,12 +207,10 @@ class SocialController extends Controller
             $this->socialUpdate($userId, Social::TYPE_WECHAT, $socialUser->avatar, $socialUser->nickname ?: $socialUser->name);
             alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
             \Log::error(__FUNCTION__, [__CLASS__, __LINE__, $socialUser]);
-            dd($userId);
 
-        //return redirect('home');
+            return redirect('home');
         } else {
-            dd($socialUser, __LINE__);
-            //return $this->bind($socialUser, Social::TYPE_WECHAT);
+            return $this->bind($socialUser, Social::TYPE_WECHAT);
         }
     }
 
