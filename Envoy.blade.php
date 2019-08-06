@@ -23,6 +23,7 @@
     FILENAME=lms-abc.sync.$(date '+%Y%m%d%H%M%S').db.backup.sql
     docker-compose exec -T db mysqldump -uroot -proot laravel \
       users \
+      socials \
       roles \
       profiles \
       agencies \

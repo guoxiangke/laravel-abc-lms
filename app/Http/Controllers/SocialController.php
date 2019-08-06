@@ -16,19 +16,13 @@ class SocialController extends Controller
     use FormBuilderTrait;
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * The user repository instance.
      */
-    public function index()
-    {
-        if (Auth::user()->isAdmin()) {
-            $socials = Social::paginate(50);
-        } else {
-            $socials = Social::where('user_id', Auth::id())->paginate(10);
-        }
+    // protected $classRecord; todo
 
-        return view('socials.index', compact('socials'));
+    public function __construct()
+    {
+        $this->middleware(['admin'], ['only' => ['destroy']]);
     }
 
     /**
@@ -73,42 +67,6 @@ class SocialController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Social  $social
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Social $social)
-    {
-        $this->authorize('view', $social);
-
-        return view('socials.show', compact('social'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Social  $social
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Social $social)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Social  $social
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Social $social)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Social  $social
@@ -116,14 +74,12 @@ class SocialController extends Controller
      */
     public function destroy(Social $social)
     {
-        $this->authorize('delete', $social);
+        // $this->authorize('delete', $social);
+
         $social->delete();
         alert()->toast(__('Unbind Success'), 'success', 'top-center')->autoClose(3000);
-        if (Auth::user()->isAdmin()) {
-            return redirect('students');
-        }
 
-        return redirect('socials');
+        return redirect('students');
     }
 
     /**

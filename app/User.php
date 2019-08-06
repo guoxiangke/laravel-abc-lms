@@ -150,4 +150,14 @@ class User extends Authenticatable implements HasMedia
 
         return $openId;
     }
+
+    /**
+     * isWeixinBind or isFacebookBind.
+     */
+    public function isSocialBind($type = Social::TYPE_WECHAT)
+    {
+        return Social::where('user_id', $this->id)
+            ->where('type', $type)
+            ->first();
+    }
 }

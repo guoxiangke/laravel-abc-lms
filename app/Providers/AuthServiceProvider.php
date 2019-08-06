@@ -9,7 +9,6 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ClassRecord;
 use App\Policies\AgencyPolicy;
-// use App\Policies\SocialPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\TeacherPolicy;

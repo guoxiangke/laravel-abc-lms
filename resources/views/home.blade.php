@@ -19,7 +19,7 @@
                     @hasrole('teacher')
                     
                     @else
-                        @if(!$isWeixinBind)
+                        @if(!Auth::user()->isSocialBind())
                         <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
                         @endif
                     @endhasrole
