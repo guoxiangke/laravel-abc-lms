@@ -62,6 +62,12 @@ class OrderController extends Controller
             $type = 'Done';
         }
 
+        if ($request->is('orders/overdue')) {
+            $orders = $orders->where('status', Order::STATU_OVERDUE)
+                ->where('period', '!=', 1);
+            $type = 'Overdue';
+        }
+
         if ($request->is('orders/pause')) {
             $orders = $orders->where('status', Order::STATU_PAUSE);
             $type = 'Pause';

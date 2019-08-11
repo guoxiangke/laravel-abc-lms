@@ -8,6 +8,7 @@
   <div class="show-links">
     <a href="{{ route('orders.index') }}" class="btn btn-primary"> {{__('Default')}}</a>
     <a href="{{ route('orders.trail') }}" class="btn btn-primary"> {{__('Trial')}}</a>
+    <a href="{{ route('orders.overdue') }}" class="btn btn-primary"> {{__('Overdue')}}</a>
     <a href="{{ route('orders.pause') }}" class="btn btn-primary"> {{__('Pause')}}</a>
     <a href="{{ route('orders.done') }}" class="btn btn-primary"> {{__('Done')}}</a>
     <a href="{{ route('orders.trash') }}" class="btn btn-primary"> {{__('Trash')}}</a>

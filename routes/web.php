@@ -71,6 +71,8 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('orders.pause');
     Route::get('orders/all', 'OrderController@index')
         ->name('orders.all');
+    Route::get('orders/overdue', 'OrderController@index')
+        ->name('orders.overdue');
 
     Route::resources([
         'schools'      => 'SchoolController',
