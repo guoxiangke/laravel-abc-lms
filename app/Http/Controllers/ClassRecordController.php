@@ -10,6 +10,8 @@ use App\Models\Teacher;
 use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Forms\ClassGenForm as GenForm;
+use App\Jobs\ClassRecordsGenerateQueue;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -68,8 +70,28 @@ class ClassRecordController extends Controller
             ->where('order_id', $order->id) //user_id
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
+        $form = $this->form(
+            GenForm::class,
+            [
+                'method' => 'POST',
+                'url'    => action('ClassRecordController@generate', ['id' => $order->id]),
+            ]
+        );
 
-        return view('classRecords.index4order', compact('classRecords'));
+        return view('classRecords.index4order', compact('classRecords', 'form'));
+    }
+
+    public function generate(Request $request, Order $order, FormBuilder $formBuilder)
+    {
+        $form = $this->form(GenForm::class);
+        if (! $form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+        alert()->toast('正在生成，请稍后刷新', 'success', 'top-center')->autoClose(3000);
+
+        ClassRecordsGenerateQueue::dispatch($order, request('days'))->onQueue('high');
+
+        return redirect()->back();
     }
 
     //indexByRole 我的所有课程记录

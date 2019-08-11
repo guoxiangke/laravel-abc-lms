@@ -9,6 +9,11 @@
   <div class="show-links">
       <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
       <button class="btn btn-light">本页记录数量：{{count($classRecords)}}</button>
+
+      <div class="mt-3 mb-1">
+        {!! form($form) !!}
+      </div>
+      
   </div>
   
   <div class="col-md-12 col-sm-12">
@@ -71,4 +76,15 @@
 
 @section('scripts')
   @include('classRecords.aol-script')
+<script>
+    window.onload = function () {
+        $('.btn-confirm').click(function(e){
+          e.preventDefault();
+          if (confirm('Are you sure?')) {
+              $(this).parent('form').submit();
+          }
+        });
+
+    }
+</script>
 @endsection

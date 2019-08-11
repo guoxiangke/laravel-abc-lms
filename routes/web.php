@@ -120,6 +120,9 @@ Route::group(['middleware' => ['auth']], function () {
     //老师/管理人员快速请假标记 ajax
     Route::post('/classRecords/{classRecord}/exception/{id}', 'ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 
+    //自动生成0-1-2-3-4-5-6-7 今天/昨天/前天 过去7天记录
+    Route::post('/classRecords/order/{order}/generate', 'ClassRecordController@generate')->name('classRecords.generate');
+
     Route::post('/order/{order}/status/{id}', 'OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
 
     Route::get('/referrals', function () {
