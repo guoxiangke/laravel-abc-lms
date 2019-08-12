@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->everyMinute();
         // $schedule->command('horizon:snapshot')->everyFiveMinutes();
-        $schedule->command('classrecords:generate')->daily()->at('01:30');
-        $schedule->command('classrecords:generate')->daily()->at('06:00');
+        $schedule->command('classrecords:generate')->daily()->at('06:30');
+        $schedule->command('expiration:reminder')->weeklyOn(1, '7:00');
         // $schedule->command('backup:clean --disable-notifications')->daily()->at('01:00');
         // $schedule->command('backup:run --disable-notifications')->daily()->at('02:00');
     }

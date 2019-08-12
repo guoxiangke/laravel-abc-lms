@@ -51,6 +51,9 @@ class ClassRecordsGenerateQueue implements ShouldQueue
             $order->status = Order::STATU_COMPLETED;
             $order->save();
 
+            bark_notify('订单完成', "{$order->title}");
+            ftqq_notify("完成提醒{$order->title}", '', 'manager');
+
             return;
         }
 
@@ -60,15 +63,12 @@ class ClassRecordsGenerateQueue implements ShouldQueue
             $order->status = Order::STATU_OVERDUE;
             $order->save();
 
+            bark_notify('订单过期', "{$order->title}");
+            ftqq_notify("过期提醒{$order->title}", '', 'manager');
+
             return;
         }
 
-        //7天内每周一通知管理员
-        $left = $order->period - $count;
-        if ($left <= 7 && date('N') == 1) {
-            bark_notify('到期提醒', "还剩{$left}天！{$order->title}");
-            ftqq_notify("{$left}天到期提醒", "###{$order->title}### {$left}天到期", 'manager');
-        }
         if (! $todayClassTimes) {
             Log::info(__CLASS__, [$order->title, $order->id, 'NoClassTodayOr']);
 
