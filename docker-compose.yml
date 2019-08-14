@@ -3,7 +3,7 @@ services:
   # https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose
   #PHP Service
   app:
-    image: laravel-fpm
+    image: guoxiangke/abc
     links:
       - db:mysql
       - redis
@@ -20,6 +20,7 @@ services:
       REDIS_HOST: redis
     volumes:
       - code:/var/www/html/
+      - .env:/var/www/html/.env
       - ./docker/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./storage/app:/var/www/html/storage/app
     networks:
@@ -32,6 +33,7 @@ services:
     restart: unless-stopped
     volumes:
       - code:/var/www/html/
+      - .env:/var/www/html/.env
       - ./docker/nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf:ro
       - ./storage/app:/var/www/html/storage/app:ro
     environment:
@@ -65,7 +67,7 @@ services:
       - backend
 
   scheduler:
-    image: laravel-fpm
+    image: guoxiangke/abc
     restart: always
     depends_on:
       - app
@@ -84,7 +86,7 @@ services:
       QUEUE_DRIVER: redis
       REDIS_HOST: redis
   queue:
-    image: laravel-fpm
+    image: guoxiangke/abc
     restart: always
     depends_on:
       - app
