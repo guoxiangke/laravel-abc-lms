@@ -116,7 +116,10 @@
     docker-compose down
     # 更新代码
     docker volume rm lms-abc_code
-    docker-compose up -d --build
+
+    docker pull guoxiangke/abc
+    docker-compose up -d
+    # docker-compose up -d --build
 
     docker network connect bridge abc-webserver
     docker restart abc-webserver a-nginx a-nginx-gen
@@ -139,7 +142,7 @@
 
 @task('qq3disablequeue', ['on' => ['qq3']])
  cd /var/www/html/lms-abc
- docker-compose stop scheduler queue
+ docker-compose rm -f scheduler queue
 @endtask
 
 @task('cg', ['on' => 'sfo2'])

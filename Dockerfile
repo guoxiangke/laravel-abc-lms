@@ -8,7 +8,7 @@ COPY database/ database/
 
 COPY composer.json composer.json
 COPY composer.lock composer.lock
-COPY auth.json auth.json
+# COPY auth.json auth.json
 
 RUN composer install \
     --no-dev \
