@@ -100,6 +100,7 @@ class RegisterController extends Controller
                 //如果没有推荐人，都指向用户1，前端默认值为1
                 $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
+                Session::flash('alert-success', '你已经成功申请价值298元的外教体验课！客服将稍后与您联系，请注意微信或来电！');
                 alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
                 Log::info(__CLASS__, [__FUNCTION__, __LINE__, 'Create an Profile for '.$user->name]);
             } catch (\Exception $e) {
