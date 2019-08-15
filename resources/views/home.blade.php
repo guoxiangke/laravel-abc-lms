@@ -20,7 +20,9 @@
                     
                     @else
                         @if(!Auth::user()->isSocialBind())
-                        <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
+                        <div class="container links-2 pb-2">
+                            <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
+                        </div>
                         @endif
                     @endhasrole
                     
