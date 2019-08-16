@@ -33,6 +33,7 @@
 					    <tr id="{{$teacher->id}}">
 					      <th scope="row">
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >Edit</a>
+							<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >上课记录</a>
 					      </th>
 					      @php
 					      	$birthday = false;
@@ -48,7 +49,7 @@
 					      <td data-label="ZoomPassword">{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
 					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
 					      <td data-label="Birthday">
-					      	{{ $birthday ? $birthday->format('y/m/d') : '-' }}
+					      	{{ $birthday ? $birthday->format('Y-m-d') : '-' }}
 					      </td>
 					      <td data-label="Tel">{{$profile?$profile->telephone:'-'}}</td>
 					      <td data-label="School">{{ $school ? $school->name : 'FreeLancer' }}</td>

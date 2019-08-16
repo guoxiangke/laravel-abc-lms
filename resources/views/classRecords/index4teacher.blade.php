@@ -17,6 +17,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Student</th>
+                <th scope="col">Teacher</th>
                 <th scope="col">Class Time</th>
               	<th scope="col">Status</th>
                 <th scope="col">Flag</th>
@@ -38,6 +39,7 @@
                           
                     </th>
                     <td data-label="Student">{{$classRecord->user->name}}</td>
+                    <td data-label="Teacher">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('F j H:i D')}}</td>
                     <td class="exception" data-label="exception">
                       {{\App\Models\ClassRecord::EXCEPTION_TYPES_EN[$classRecord->exception]}}

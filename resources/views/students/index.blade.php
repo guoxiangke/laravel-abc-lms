@@ -54,7 +54,7 @@
 					      <td data-label="Name">{{$profile->name}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">
-					      	{{$birthday?$birthday->format('m/d'):'-'}}
+					      	{{$birthday?$birthday->format('Y-m-d'):'-'}}
 					      </td>
 					      <td data-label="Grade">{{ App\Models\Student::GRADES[$student->grade] }}</td>
 					      <td data-label="登陆手机">{{$profile->telephone}}</td>
