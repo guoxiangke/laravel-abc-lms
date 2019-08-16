@@ -25,7 +25,7 @@
                     </th> 
                     <td data-label="Name">{{$profile->name}}</td>
                     <td data-label="Sex">{{App\Models\Profile::SEXS[$profile->sex]}}</td>
-                    <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('m/d'):'-'}}</td>
+                    <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('Y-m-d'):'-'}}</td>
                     <td data-label="Telephone">{{$profile->telephone}}</td>
                     <td data-label="Recommender">{{$profile->recommend?$profile->recommend->name:'-'}}</td>
                   </tr>
