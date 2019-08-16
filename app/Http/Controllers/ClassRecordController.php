@@ -28,15 +28,23 @@ class ClassRecordController extends Controller
 
     public function __construct(ClassRecord $classRecord)
     {
-        // $this->classRecord = $classRecord;
-        //中间件让具备指定权限的用户才能访问该资源
-        //只有管理员可以访问所有 /classRecords
-        $this->middleware(['admin'], ['only' => ['index']]);
+        // 一些管理页面的list
+        $this->middleware(['admin'], [
+            'except' => [
+                'show',
+                'edit',
+                'update',
+                'destroy',
+                'generate',
+                'indexByRole',
+                'flagException',
+            ],
+        ]);
     }
 
     /**
      * Display a listing of the resource.
-     *
+     * https://abc.dev/classRecords.
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -57,6 +65,7 @@ class ClassRecordController extends Controller
         return view('classRecords.index', compact('classRecords'));
     }
 
+    // https://abc.dev/classRecords/order/165
     public function indexbyOrder(Order $order)
     {
         $classRecords = ClassRecord::with(
@@ -94,7 +103,7 @@ class ClassRecordController extends Controller
         return redirect()->back();
     }
 
-    //indexByRole 我的所有课程记录
+    // https://abc.dev/class-records 我的所有课程记录
     public function indexByRole()
     {
         $user = Auth::user();
@@ -153,6 +162,7 @@ class ClassRecordController extends Controller
         return view('classRecords.index4'.$roleName, compact('classRecords', 'aolCount'));
     }
 
+    // https://abc.dev/classRecords/student/131
     public function indexByStudent(Student $student)
     {
         $classRecords = ClassRecord::with(
@@ -167,6 +177,7 @@ class ClassRecordController extends Controller
         return view('classRecords.index4agency', compact('classRecords'));
     }
 
+    // https://abc.dev/classRecords/teacher/6
     public function indexByTeacher(Teacher $teacher)
     {
         $classRecords = ClassRecord::with(
@@ -203,6 +214,8 @@ class ClassRecordController extends Controller
      */
     public function destroy(ClassRecord  $classRecord)
     {
+        $this->authorize('delete', $classRecord);
+
         $classRecord->delete();
         Session::flash('alert-success', '删除成功！');
 
@@ -240,11 +253,11 @@ class ClassRecordController extends Controller
      */
     public function update(Request $request, ClassRecord $classRecord, FormBuilder $formBuilder)
     {
+        $this->authorize('edit', $classRecord);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        $this->authorize('edit', $classRecord);
         //mp3 mp4
         // Setting 'public' permission for files uploaded on S3
         // https://github.com/spatie/laravel-medialibrary/issues/241

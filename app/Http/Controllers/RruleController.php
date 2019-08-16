@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Rrule;
 use Illuminate\Http\Request;
-use App\Repositories\RruleRepository;
+// use App\Repositories\RruleRepository;
 use App\Forms\RruleForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\RruleForm as EditForm;
@@ -19,11 +19,11 @@ class RruleController extends Controller
     /**
      * @var UserRepository
      */
-    protected $repository;
+    // protected $repository;
 
-    public function __construct(RruleRepository $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        // $this->repository = $repository;
         $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
     }
 

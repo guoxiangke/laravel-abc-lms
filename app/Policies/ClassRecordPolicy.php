@@ -25,8 +25,7 @@ class ClassRecordPolicy
     {
         //可以评论的人一定能查看
         return $this->comment($user, $classRecord)
-            || $classRecord->agency_uid == $user->id //代理可以查看但不可以评论
-;
+            || $classRecord->agency_uid == $user->id; //代理可以查看但不可以评论
     }
 
     //谁可以评论？学生可以

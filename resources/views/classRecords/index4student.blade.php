@@ -34,7 +34,8 @@
                     </th>
                     <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
                     <td data-label="上课时间">{{$classRecord->generated_at->format('m.d H:i  周N')}}</td>
-                    <td class="exception" data-label="课程状态">{{\App\Models\ClassRecord::EXCEPTION_TYPES_STU[$classRecord->exception]}}
+                    <td class="exception" data-label="课程状态"> 
+                      <a href="javascript:void(0);" class="btn btn-sm btn-{{$classRecord->exception==1?'success':'outline-success'}} text-uppercase">{{\App\Models\ClassRecord::EXCEPTION_TYPES_STU[$classRecord->exception]}}</a>
                     </td>
 
 

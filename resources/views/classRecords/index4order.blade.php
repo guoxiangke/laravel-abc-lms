@@ -76,15 +76,4 @@
 
 @section('scripts')
   @include('classRecords.aol-script')
-<script>
-    window.onload = function () {
-        $('.btn-confirm').click(function(e){
-          e.preventDefault();
-          if (confirm('Are you sure?')) {
-              $(this).parent('form').submit();
-          }
-        });
-
-    }
-</script>
 @endsection
