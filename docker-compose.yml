@@ -78,6 +78,7 @@ services:
       - backend
     volumes:
       - ./storage/app:/var/www/html/storage/app
+      - .env:/var/www/html/.env
     environment:
       REDIS_PORT: 6379
       CONTAINER_ROLE: scheduler
@@ -97,6 +98,7 @@ services:
       - backend
     volumes:
       - ./storage/app:/var/www/html/storage/app
+      - .env:/var/www/html/.env
     environment:
       REDIS_PORT: 6379
       CONTAINER_ROLE: queue
