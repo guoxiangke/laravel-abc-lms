@@ -129,6 +129,10 @@ class TeacherController extends Controller
                 'password' => $password,
             ];
             $user = User::create($userData);
+        } else {
+            Session::flash('alert-danger', '邮箱重复！');
+
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
         $user->assignRole(User::ROLES['teacher']);
@@ -252,7 +256,14 @@ class TeacherController extends Controller
             'email'    => $teacherEmail,
             'password' => $password,
         ];
-        $user->fill($userData)->save();
+
+        try {
+            $user->fill($userData)->save();
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('alert-danger', '邮箱可能重复了！');
+
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
 
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([

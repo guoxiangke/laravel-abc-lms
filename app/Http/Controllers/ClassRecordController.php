@@ -276,8 +276,6 @@ class ClassRecordController extends Controller
                 ->usingFileName($md5Id.'.mp4')
                 ->toMediaCollection('mp4');
         }
-        // $newsItem->getMedia('mp3')->first()->getUrl('thumb');
-        // \Log::error(__FUNCTION__,[__CLASS__, $fileMp3Adder,$fileMp4Adder]);
 
         $data = $request->all();
         $generated_at = $request->input('generated_at');

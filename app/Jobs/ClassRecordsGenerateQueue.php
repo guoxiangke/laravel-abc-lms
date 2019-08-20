@@ -89,10 +89,10 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                         'order_id'   => $order->id,
                     ]);
 
-                    //todo more notication : XXX has class today!!!
-                    Log::info(__CLASS__, [$order->title, $order->id, $classRecord->wasRecentlyCreated ? 'wasRecentlyCreated' : 'NoRecentlyCreated', $classRecord->id]);
+                    // $title = $classRecord->wasRecentlyCreated ? 'wasRecentlyCreated' : 'NoRecentlyCreated';
+                    // Log::debug($title, [__CLASS__, __FUNCTION__, __LINE__, $order->title, $order->id, $classRecord->id]);
                 } catch (\Exception $e) {
-                    Log::error(__CLASS__, [$order->title, $e->getMessage()]);
+                    Log::error($e->getMessage(), [__CLASS__, __FUNCTION__, __LINE__, $order->title]);
                 }
             }
         }

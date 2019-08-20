@@ -18,6 +18,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        \Illuminate\Log\Events\MessageLogged::class => [
+            \App\Listeners\LoggingListener::class,
+        ],
+
          \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\Weixin\WeixinExtendSocialite@handle',
         ],

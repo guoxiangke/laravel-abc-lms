@@ -103,9 +103,9 @@ class RegisterController extends Controller
                 $userProfile->save();
                 Session::flash('alert-success', '你已经成功申请价值298元的外教体验课！客服将稍后与您联系，请注意微信或来电！');
                 alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
-                Log::info(__CLASS__, [__FUNCTION__, __LINE__, 'Create an Profile for '.$user->name]);
+                Log::debug('Create an Profile for '.$user->name, [__CLASS__, __FUNCTION__, __LINE__]);
             } catch (\Exception $e) {
-                Log::error(__CLASS__, [__FUNCTION__, __LINE__, $e->getMessage()]);
+                Log::error($e->getMessage(), [__CLASS__, __FUNCTION__, __LINE__]);
             }
         }
 

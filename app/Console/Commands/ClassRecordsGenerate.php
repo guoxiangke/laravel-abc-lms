@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use App\Jobs\ClassRecordsGenerateQueue;
 
 class ClassRecordsGenerate extends Command
@@ -55,7 +56,7 @@ class ClassRecordsGenerate extends Command
             if ($order->isActive()) {
                 ClassRecordsGenerateQueue::dispatch($order, $offset)->onQueue('high');
             } else {
-                \Log::error(__CLASS__, ['order is not active']);
+                Log::error('order is not active', [__CLASS__, __FUNCTION__, __LINE__]);
             }
         } else {
             Order::active()
