@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ea1e78fc0ab65eae566e0e3a51c47cc",
+    "content-hash": "90aaf0e58339394a076f44e4761ef2cf",
     "packages": [
         {
             "name": "actuallymab/laravel-comment",
@@ -1452,6 +1452,59 @@
                 "laravel"
             ],
             "time": "2019-02-27T20:23:16+00:00"
+        },
+        {
+            "name": "laravel-notification-channels/facebook",
+            "version": "v0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/facebook.git",
+                "reference": "033aaa9782c93146a60c4243cd1440d80202526c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-notification-channels/facebook/zipball/033aaa9782c93146a60c4243cd1440d80202526c",
+                "reference": "033aaa9782c93146a60c4243cd1440d80202526c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "illuminate/notifications": "^5.3",
+                "illuminate/support": "^5.1",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Facebook\\FacebookServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Facebook\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Syed Irfaq R.",
+                    "role": "Developer",
+                    "email": "syed@lukonet.com",
+                    "homepage": "https://lukonet.com"
+                }
+            ],
+            "description": "Facebook Notifications Channel for Laravel 5.3",
+            "homepage": "https://github.com/laravel-notification-channels/facebook",
+            "time": "2018-09-09T21:55:18+00:00"
         },
         {
             "name": "laravel/framework",
