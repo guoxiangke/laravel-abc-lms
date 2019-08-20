@@ -55,6 +55,10 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
+            ->add('user_email', 'text', [
+                'label'      => '登陆邮箱',
+                'value'      => $user->email,
+            ])
             ->add('telephone', 'tel', [
                 'value'      => $profile ? $profile->telephone : null,
                 'rules'      => 'required|min:11', //+639158798611

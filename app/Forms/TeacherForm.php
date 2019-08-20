@@ -38,6 +38,14 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
+            ->add('user_email', 'text', [
+                'label'      => '登陆邮箱',
+                'help_block' => [
+                    'text' => '不填，默认为：t_姓名@teacher.com',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
             ->add('telephone', 'tel', [
                 'rules'      => 'required|min:11', //+639158798611
                 'label'      => '手机号',

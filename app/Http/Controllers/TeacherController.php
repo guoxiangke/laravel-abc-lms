@@ -116,7 +116,7 @@ class TeacherController extends Controller
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type') ?: 0; //0-4
-        $teacherEmail = $teacherUserName.'@teacher.com'; //'. Contact::TYPES[$contactType] . '
+        $teacherEmail = $request->input('user_email') ?: $teacherUserName.'@teacher.com';
         $user = User::where('email', $teacherEmail)->first();
 
         if (! $user) {
@@ -241,7 +241,8 @@ class TeacherController extends Controller
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type') ?: 0; //0-4
-        $teacherEmail = $teacherUserName.'@teacher.com'; //'. Contact::TYPES[$contactType] . '
+
+        $teacherEmail = $request->input('user_email') ?: $teacherUserName.'@teacher.com';
 
         if ($password = $request->input('user_password') ?: 'Teacher123') {
             $password = Hash::make($password);
