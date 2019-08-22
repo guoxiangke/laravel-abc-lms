@@ -125,9 +125,9 @@ class TeacherForm extends Form
             ])
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',
+                'value' => $paymethod ? $paymethod->remark : null,
                 'attr'  => [
                     'rows'  => 2,
-                    'value' => $paymethod ? $paymethod->remark : null,
                 ],
             ])
             ->add('submit', 'submit', [

@@ -323,7 +323,13 @@ class TeacherController extends Controller
                     'remark' => $request->input('pay_remark'),
                 ])->save();
             } else {
-                Session::flash('alert-danger', 'Payment has not been saved!');
+                $paymethod = PayMethod::firstOrNew([
+                    'user_id' => $user->id,
+                    'type'    => $request->input('pay_method'), //'支付类型 0-4'// 'PayPal','AliPay','WechatPay','Bank','Skype',
+                    'number'  => $request->input('pay_number'),
+                    'remark'  => $request->input('pay_remark'),
+                ])->save();
+                Session::flash('alert-success', 'New Payment has been saved!');
                 // Session::flash('alert-danger-detail', 'Payment has not been saved!');
             }
         }
