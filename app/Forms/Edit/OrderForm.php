@@ -109,7 +109,7 @@ class OrderForm extends Form
             ->add('remark', 'textarea', [
                 'value' => $order->remark,
                 'label' => '备注',
-                'attr'  => ['rows' => 4],
+                'attr'  => ['rows' => 8],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
