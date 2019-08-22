@@ -97,7 +97,7 @@
                             <a href="/class-records" class="btn btn-outline-dark">ClassRecords</a>
                         @endrole
 
-                        @hasanyrole('student|agency|teacher')
+                        @hasanyrole('student|agency|teacher|admin')
                         @else
                         <a href="{{ route('students.register') }}" class="btn btn-outline-dark"><i class="fas fa-graduation-cap fa-large"></i> 学生信息修改</a>
                         
