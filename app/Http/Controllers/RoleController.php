@@ -21,6 +21,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        // eager load with('Spatie\Permission\Models\Permission')->
         $roles = Role::all(); // 获取所有角色
 
         return view('roles.index')->with('roles', $roles);

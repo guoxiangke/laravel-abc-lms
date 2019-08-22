@@ -26,7 +26,7 @@ class UserController extends Controller
         //Get all users and pass it to the view
         $users = User::with('roles')
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(100);
 
         return view('users.index')->with('users', $users);
     }

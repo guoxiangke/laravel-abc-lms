@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class='col-lg-4 col-lg-offset-4'>
+<div class="container">
 
     <h1><i class='fa fa-key'></i> Add Role</h1>
     <hr>
