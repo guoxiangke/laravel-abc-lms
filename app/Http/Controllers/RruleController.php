@@ -24,7 +24,7 @@ class RruleController extends Controller
     public function __construct()
     {
         // $this->repository = $repository;
-        $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        $this->middleware(['admin']);
     }
 
     /**

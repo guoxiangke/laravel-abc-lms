@@ -6,19 +6,21 @@
 <div class="container">
 	<h1>{{ $type }} {{__('Orders')}}</h1>
   <div class="show-links">
-    <a href="{{ route('orders.index') }}" class="btn btn-primary"> {{__('Default')}}</a>
-    <a href="{{ route('orders.trail') }}" class="btn btn-primary"> {{__('Trial')}}</a>
-    <a href="{{ route('orders.overdue') }}" class="btn btn-primary"> {{__('Overdue')}}</a>
-    <a href="{{ route('orders.pause') }}" class="btn btn-primary"> {{__('Pause')}}</a>
-    <a href="{{ route('orders.done') }}" class="btn btn-primary"> {{__('Done')}}</a>
-    <a href="{{ route('orders.trash') }}" class="btn btn-primary"> {{__('Trash')}}</a>
-    <a href="{{ route('orders.all') }}" class="btn btn-primary"> {{__('All')}}</a>
+    
   </div>
 
   <div class="show-links">
-      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-      <a href="{{ route('orders.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
-      <button class="btn btn-light">本页记录数量：{{count($orders)}}</button>
+      <a href="{{ route('home') }}" class="btn btn-outline-dark mt-1"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+      <a href="{{ route('orders.create') }}" class="btn btn-outline-primary mt-1">{{__('Create')}}</a>
+
+      @foreach(App\Models\Order::LIST_BY as $item)
+        @php
+          $route = "orders.{$item}";
+          $isActive = url()->current() == route($route);
+        @endphp
+        <a href="{{ route($route) }}" class="btn btn-{{$isActive?'':'outline-'}}primary mt-1 text-capitalize">{{ $item }} </a>
+      @endforeach
+      <button class="btn btn-light mt-1">本页记录数量：{{count($orders)}}</button>
   </div>
 
   <div class="col-md-12 col-sm-12"> 

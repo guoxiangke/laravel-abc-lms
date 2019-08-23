@@ -37,7 +37,7 @@ class User extends Authenticatable implements HasMedia
     // $yourModel->getFirstMediaUrl('avatar'); // will return an url to the `$pathToImage` file
 
     const ROLES = [
-        'admin'     => 'admin',
+        'admin'     => 'admin', //root todo no-use!!!!
         'developer' => 'developer', // '开发者',
         'manager'   => 'manager', // '管理人员',
         'editor'    => 'editor', // '网站编辑',
@@ -49,7 +49,7 @@ class User extends Authenticatable implements HasMedia
     ];
 
     //@see ClassRecordPolicy 谁可以评论 //谁可以查看
-    const MANAGER_ROLES = ['developer', 'manager']; //todo , 'editor'
+    const ADMIN_ROLES = ['developer', 'manager'];
 
     public function school()
     {
@@ -117,15 +117,14 @@ class User extends Authenticatable implements HasMedia
      * for Horizon::auth.
      * @return bool [description]
      */
-    public function isSuperuser()
+    public function isRoot()
     {
         return $this->id == 1;
     }
 
     public function isAdmin()
     {
-        return $this->isSuperuser()
-            || $this->hasAnyRole(self::MANAGER_ROLES);
+        return $this->isRoot() || $this->hasAnyRole(self::ADMIN_ROLES);
     }
 
     //姓名转pinyin和english

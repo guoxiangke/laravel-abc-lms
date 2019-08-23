@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminMiddleware
+class RootMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->isAdmin()) {
+        if ($request->user() && $request->user()->isRoot()) {
             return $next($request);
         }
-        // if (!Auth::user()->hasPermissionTo('Administer roles & permissions')) // 用户是否具备此权限
+
         return abort('403');
     }
 }

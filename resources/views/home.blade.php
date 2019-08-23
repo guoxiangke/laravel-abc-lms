@@ -28,6 +28,7 @@
                     
                     @hasanyrole('manager|admin')
                     <a class="btn btn-sm btn-danger btn-delete" target="_blank" href="http://123.206.80.254:9002/hooks/lms">数据同步</a>
+                    <a class="btn btn-outline-danger" href="/admin/genClass">手动生成课程记录</a>
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex">
                             <a class="p-2 text-muted" href="/schools">{{__('Schools')}}</a>
@@ -48,7 +49,7 @@
                             <a class="p-2 text-muted" href="/bills">{{__('Bills')}}</a>
                         </nav>
                       </div>
-                    @role('admin')
+                    @role('manager')
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex justify-content">
                             <a class="p-2 text-muted" href="/users">{{__('Users')}}</a>
@@ -97,7 +98,7 @@
                             <a href="/class-records" class="btn btn-outline-dark">ClassRecords</a>
                         @endrole
 
-                        @hasanyrole('student|agency|teacher|admin')
+                        @hasanyrole('student|teacher|agency|manager|admin')
                         @else
                         <a href="{{ route('students.register') }}" class="btn btn-outline-dark"><i class="fas fa-graduation-cap fa-large"></i> 学生信息修改</a>
                         

@@ -54,25 +54,18 @@ Route::get('login/facebook/callback', 'SocialController@handleFacebookProviderCa
 
 Route::resources(['socials' => 'SocialController']); //post need
 
-//admin
+// https://abc.dev/orders/overdue
+// https://abc.dev/orders/done
+// https://abc.dev/orders/xxxx
+foreach (App\Models\Order::LIST_BY as $item) {
+    Route::get("orders/$item", 'OrderController@index')->middleware('admin')->name("orders.$item");
+}
+
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
     // Route::resource('posts', 'PostController');
     Route::resource('permissions', 'PermissionController');
-
-    Route::get('orders/trial', 'OrderController@index')
-        ->name('orders.trail');
-    Route::get('orders/trash', 'OrderController@index')
-        ->name('orders.trash');
-    Route::get('orders/done', 'OrderController@index')
-        ->name('orders.done');
-    Route::get('orders/pause', 'OrderController@index')
-        ->name('orders.pause');
-    Route::get('orders/all', 'OrderController@index')
-        ->name('orders.all');
-    Route::get('orders/overdue', 'OrderController@index')
-        ->name('orders.overdue');
 
     Route::resources([
         'schools'      => 'SchoolController',
@@ -136,7 +129,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('charts', 'ChartController@index');
 });
 
-Route::any('botman', 'BotmanController@handle')->name('botman');
+// Route::any('botman', 'BotmanController@handle')->name('botman');
 // GET	/photos	index	photos.index
 // GET	/photos/create	create	photos.create
 // POST	/photos	store	photos.store
@@ -150,10 +143,8 @@ Route::get('/signin', 'AuthController@signin');
 Route::get('/callback', 'AuthController@callback');
 Route::get('/signout', 'AuthController@signout');
 
-//for dev
-//todo Comment when live
-Route::get('/dev/su/{id}', function ($id) {
-    Auth::loginUsingId($id);
+// only for dev root user!
+Route::get('dev/su/{id}', 'RootController@su')->name('sudo.su');
 
-    return redirect('home');
-})->name('sudo.su')->middleware('admin');
+// AdminController only for admin middleware
+Route::get('admin/genClass', 'AdminController@genClass')->name('admin.genClass');

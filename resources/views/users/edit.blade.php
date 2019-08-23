@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| Edit User')
+@section('title', 'Edit User')
 
 @section('content')
 
@@ -43,7 +43,7 @@
 
     </div>
 
-    {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
 
     {{ Form::close() }}
 

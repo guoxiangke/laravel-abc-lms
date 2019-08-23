@@ -58,7 +58,7 @@ class ClassRecordsReminder extends Command
             $title = "$student 将在 $date 上课, 老师：$teacher";
 
             bark_notify($title, $classRecord->order->title);
-            ftqq_notify($title, '###No MarkDown Body###', 'manager');
+            // ftqq_notify($title, '###No MarkDown Body###', 'manager');
         });
     }
 }

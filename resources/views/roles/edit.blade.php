@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| Edit Role')
+@section('title', 'Edit Role')
 
 @section('content')
 
@@ -23,7 +23,7 @@
 
     @endforeach
     <br>
-    {{ Form::submit('Edit', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
 
     {{ Form::close() }}    
 </div>

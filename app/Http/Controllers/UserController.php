@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        $this->middleware(['admin']);
     }
 
     /**
@@ -116,10 +116,14 @@ class UserController extends Controller
         $this->validate($request, [
             'name'    => 'required|max:120',
             'email'   => 'required|email',
-            'password'=> 'min:6|confirmed',
+            'password'=> 'nullable|min:6|confirmed',
         ]);
-        dd($user->toArray());
-        $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
+
+        if ($request->input('password')) {
+            $input = $request->only(['name', 'email', 'password']);
+        } else {
+            $input = $request->only(['name', 'email']);
+        }
         $roles = $request['roles']; // 获取所有角色
         $user->fill($input)->save();
 
@@ -129,11 +133,7 @@ class UserController extends Controller
             $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
         }
 
-        return redirect()->route('users.index')
-            ->with(
-                'flash_message',
-                'User successfully edited.'
-            );
+        return redirect()->route('users.index');
     }
 
     /**

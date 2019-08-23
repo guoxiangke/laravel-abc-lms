@@ -77,7 +77,7 @@
                                 </div>
                             </li>
                         @endguest
-                        @hasanyrole('manager|admin')
+                        @hasanyrole('manager')
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Switch <span class="caret"></span>

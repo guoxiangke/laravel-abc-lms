@@ -11,7 +11,7 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['admin']); // isAdmin 中间件让具备指定权限的用户才能访问该资源
+        $this->middleware(['admin']);
     }
 
     /**
@@ -116,30 +116,27 @@ class RoleController extends Controller
         $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         $this->validate($request, [
-            'name'        => 'required|max:10|unique:roles,name,'.$id,
-            'permissions' => 'required',
+            'name'        => 'required|max:10|unique:roles',
+            'permissions' => 'nullable',
         ]);
-
         $input = $request->except(['permissions']);
-        $permissions = $request['permissions'];
         $role->fill($input)->save();
 
-        $p_all = Permission::all(); //获取所有权限
+        $permissions = $request['permissions'];
+        if ($permissions) {
+            $p_all = Permission::all(); //获取所有权限
 
-        foreach ($p_all as $p) {
-            $role->revokePermissionTo($p); // 移除与角色关联的所有权限
+            foreach ($p_all as $p) {
+                $role->revokePermissionTo($p); // 移除与角色关联的所有权限
+            }
+
+            foreach ($permissions as $permission) {
+                $p = Permission::where('id', '=', $permission)->firstOrFail(); //从数据库中获取相应权限
+                $role->givePermissionTo($p);  // 分配权限到角色
+            }
         }
 
-        foreach ($permissions as $permission) {
-            $p = Permission::where('id', '=', $permission)->firstOrFail(); //从数据库中获取相应权限
-            $role->givePermissionTo($p);  // 分配权限到角色
-        }
-
-        return redirect()->route('roles.index')
-            ->with(
-                'flash_message',
-                'Role'.$role->name.' updated!'
-            );
+        return redirect()->route('roles.index');
     }
 
     /**

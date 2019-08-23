@@ -9,8 +9,10 @@
   <div class="show-links">
     <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
     <a href="{{ route('users.index') }}" class="btn btn-outline-primary">{{__('Users')}}</a>
+    <a href="{{ route('roles.index') }}" class="btn btn-primary">{{__('Roles')}}</a>
     <a href="{{ route('permissions.index') }}" class="btn btn-outline-primary">{{__('Permissions')}}</a>
     <button class="btn btn-light">本页记录数量：{{count($roles)}}</button>
+    <a href="{{ route('roles.create') }}" class="btn btn-warning">Create a Role</a>
   </div>
 
   <div class="col-md-12 col-sm-12"> 
