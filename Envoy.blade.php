@@ -110,7 +110,7 @@
 
 @task('deploy01', ['on' => ['sfo2','qq3'], 'parallel' => true])
     cd /var/www/html/lms-abc
-    # git checkout . 
+    git checkout . 
     git pull origin master 
     cat docker-compose.yml | grep lms
     docker-compose down

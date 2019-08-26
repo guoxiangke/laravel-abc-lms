@@ -5,6 +5,7 @@
 return [
     'bark' => [
         'admin'    => env('BARK_KEY_BLUESKY', ''),
+        'ipad'     => env('BARK_KEY_IPAD', ''),
     ],
     'sc' => [
         'admin' => env('SC_KEY_BLUESKY', ''),

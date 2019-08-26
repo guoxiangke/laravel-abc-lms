@@ -57,7 +57,7 @@ class ClassRecordsReminder extends Command
             $date = $classRecord->generated_at->format('H:i 周N');
             $title = "$student 将在 $date 上课, 老师：$teacher";
             $zoom = 'https://zoom.us/j/'.$classRecord->teacher->teacher->zoom->pmi;
-            bark_notify($title.$classRecord->order->title, $zoom);
+            bark_notify($title.$classRecord->order->title, $zoom, false, 'ipad');
             // ftqq_notify($title, '###No MarkDown Body###', 'manager');
         });
     }
