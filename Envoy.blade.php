@@ -109,15 +109,17 @@
 @endtask
 
 @task('deploy01', ['on' => ['sfo2','qq3'], 'parallel' => true])
+    docker pull guoxiangke/abc
+
     cd /var/www/html/lms-abc
     git checkout . 
     git pull origin master 
-    cat docker-compose.yml | grep lms
+    cat .env | grep DOMAIN
+    
     docker-compose down
     # 更新代码
     docker volume rm lms-abc_code
-
-    docker pull guoxiangke/abc
+    
     docker-compose up -d
     # docker-compose up -d --build
 

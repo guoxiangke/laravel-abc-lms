@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\ClassRecord;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-
 use Illuminate\Notifications\Messages\MailMessage;
 
 class ClassComing extends Notification
