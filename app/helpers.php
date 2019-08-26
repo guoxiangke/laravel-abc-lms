@@ -35,7 +35,7 @@ if (! function_exists('bark_notify')) {
         ];
         $context = stream_context_create($opts);
 
-        return file_get_contents($url, false, $context);
+        return @file_get_contents($url, false, $context);
     }
 }
 
@@ -64,6 +64,6 @@ if (! function_exists('ftqq_notify')) {
         ];
         $context = stream_context_create($opts);
 
-        return $result = file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
+        return @file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
     }
 }
