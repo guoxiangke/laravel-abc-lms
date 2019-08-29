@@ -9,6 +9,7 @@ use App\Models\Rrule;
 use App\Models\Student;
 use App\Models\ClassRecord;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\OrderForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\OrderForm as EditForm;
@@ -39,8 +40,6 @@ class OrderController extends Controller
             'agency.profiles',
             'schedules',
             'schedules.classRecords',
-            'book',
-            'product',
         );
         $type = 'Default'; // 默认
         //0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
@@ -82,8 +81,13 @@ class OrderController extends Controller
             $orDers = $orders->where('period', '!=', 1)
                 ->where('status', Order::STATU_ACTIVE);
         }
-        $orders = $orders->orderBy('id', 'desc')
-            ->paginate(100); //todo debug 第二页有N+1问题 /orders/done?page=1
+        $orders = $orders->orderBy('id', 'desc'); //todo debug 第二页有N+1问题 /orders/done?page=1
+
+        $orders = QueryBuilder::for($orders)
+            ->allowedIncludes(['user.profiles', 'teacher.profiles', 'agency.profiles'])
+            ->allowedFilters(['user.name', 'user.profiles.name', 'teacher.profiles.name', 'agency.profiles.name'])
+            ->paginate(100);
+
         return view('orders.index', compact('orders', 'type'));
     }
 
