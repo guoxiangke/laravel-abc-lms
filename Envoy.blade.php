@@ -144,6 +144,7 @@
 
 @task('qq3disablequeue', ['on' => ['qq3']])
  cd /var/www/html/lms-abc
+ docker-compose stop scheduler queue
  docker-compose rm -f scheduler queue
 @endtask
 
