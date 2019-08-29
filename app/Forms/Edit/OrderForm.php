@@ -36,6 +36,9 @@ class OrderForm extends Form
         $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
         $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
+
+        preg_match_all('/\n/', $order->remark, $matches);
+        $rows = count($matches[0]) + 5;
         $this
             ->add('user_id', 'select', [
                 'label'       => 'Student',
@@ -109,7 +112,7 @@ class OrderForm extends Form
             ->add('remark', 'textarea', [
                 'value' => $order->remark,
                 'label' => '备注',
-                'attr'  => ['rows' => 8],
+                'attr'  => ['rows' => $rows],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
