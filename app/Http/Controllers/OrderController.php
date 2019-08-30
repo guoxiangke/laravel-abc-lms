@@ -44,7 +44,7 @@ class OrderController extends Controller
         $type = 'Default'; // 默认
         //0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
         // 试听订单页面
-        if ($request->is('orders/trial')) {
+        if (request()->is('orders/trail')) {
             $type = 'Trial';
             $orders = $orders->where('period', 1);
         }
