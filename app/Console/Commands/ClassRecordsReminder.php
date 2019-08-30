@@ -21,7 +21,7 @@ class ClassRecordsReminder extends Command
      *
      * @var string
      */
-    protected $description = 'Reminder teacher/student class is begining';
+    protected $description = 'Reminder teacher/admin class is begining';
 
     /**
      * Create a new command instance.
