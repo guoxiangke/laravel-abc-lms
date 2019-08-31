@@ -41,9 +41,9 @@ class ClassRecordsNotification extends Command
     public function handle()
     {
         $now = Carbon::now();
-        if ($now->minute == 30) {
+        if ($now->minute == 45) {
             $now->startOfHour()->addHour();
-        } else { //==00
+        } else { //==15
             $now->minute = 30;
             $now->second = 0;
         }

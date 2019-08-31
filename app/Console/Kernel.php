@@ -33,8 +33,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('expiration:reminder')->weeklyOn(1, '7:00');
         // 提醒老師、管理员即將上課,提前5+1分鐘。
         $schedule->command('classrecords:reminder')->cron('26,56 * * * *');
-        // 通知学生 提前30分钟
-        $schedule->command('classrecords:notification')->everyThirtyMinutes();
+        // 通知学生 提前15分钟
+        $schedule->command('classrecords:notification')->cron('15,45 * * * *');
         // $schedule->command('backup:clean --disable-notifications')->daily()->at('01:00');
         // $schedule->command('backup:run --disable-notifications')->daily()->at('02:00');
     }

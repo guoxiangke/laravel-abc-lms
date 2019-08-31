@@ -41,14 +41,14 @@ class ClassComing extends Notification
     {
         // https://github.com/yansongda/laravel-notification-wechat
         // $accessToken = "n2McCJoqWKRi7hJbKFOqftgtU_EX6u2ZOvIi1lpx0fZJ3YW5Oo4iIPZEpi0ecct2lHMagK84xGF5rEm_DSMKrZFfCEZiYw1yZN3nZXzFSlHM-y88sIi5-dYeeCWx9S1iHXWaAJAMCB";
-
-        $time = $this->classRecord->generated_at->format('H:i m/d 周N');
+        // 'oH16Q5hX4-75CyIPAvXpNr7I4PXo'
+        $time = $this->classRecord->generated_at->format('H:i （n月d日 l）');
         $zoomId = $this->classRecord->teacher->teacher->zoom->pmi;
         $data = [
-            'first'    => '👉您好，您预约的外教课堂即将开始！',
-            'keyword1' => '大象英语外教一对一',
-            'keyword2' => $time,
-            'remark'   => ["外教Zoom：{$zoomId}\n 请先预习，准备好电脑、耳麦、测试网络，等待上课。", '#173177'],
+            'first'    => ['尊贵的学员您好，您预约的在线外教课堂马上开始！', '#4F4AEF'],
+            'keyword1' => ['大象英语外教一对一', '#FF246C'],
+            'keyword2' => [$time, '#FF246C'],
+            'remark'   => ["外教ID：{$zoomId}\n准备工作：\n 👉1.请打开电脑、测试耳麦及网络\n 👉2.请打开教材预习本次学习内容\n 👉3.请提前3分钟进入网络教室", '#4F4AEF'],
         ];
 
         return WechatMessage::create()
