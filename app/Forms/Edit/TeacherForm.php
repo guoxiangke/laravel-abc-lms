@@ -5,6 +5,7 @@ namespace App\Forms\Edit;
 use App\Models\Zoom;
 use App\Models\School;
 use App\Models\Contact;
+use App\Models\Teacher;
 use App\Models\PayMethod;
 use Kris\LaravelFormBuilder\Form;
 
@@ -36,11 +37,19 @@ class TeacherForm extends Form
             ->pluck('email', 'id')
             ->toArray();
 
+        $recommend = Teacher::with(['user', 'user.profiles'])->get()->pluck('user.profiles.0.name', 'user_id')->toArray();
+
         $this->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),
                 'selected'    => $schoolId,
                 'empty_value' => 'Freelancer/自由职业',
+            ])
+            ->add('recommend_uid', 'select', [
+                    'label'       => 'Referrer/推荐人',
+                    'choices'     => $recommend,
+                    'selected'    => $profile ? $profile->recommend_uid : null,
+                    'empty_value' => '=== Select ===',
             ])
             ->add(
                 'profile_name',

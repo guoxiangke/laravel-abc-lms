@@ -42,6 +42,7 @@ class TeacherController extends Controller
             'user.profiles',
             'user.profiles.contacts',
             'school',
+            'user.profiles.recommend'
             )//'user.paymethod',
             ->orderBy('id', 'desc')
             ->paginate(100);
@@ -162,6 +163,7 @@ class TeacherController extends Controller
             'name'     => $request->input('profile_name'),
             'sex'      => $request->input('profile_sex'),
             'birthday' => $birthday,
+            'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 
@@ -302,6 +304,7 @@ class TeacherController extends Controller
             'name'     => $request->input('profile_name'),
             'sex'      => $request->input('profile_sex'),
             'birthday' => $birthday,
+            'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
         // $profile = $user->profiles()->save($profile);
 
