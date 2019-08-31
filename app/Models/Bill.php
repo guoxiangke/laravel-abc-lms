@@ -15,6 +15,12 @@ class Bill extends Model
         '收入', //0
         '支出', //1
     ];
+    //currencies
+    const CURRENCIES = [
+        '$', //美元
+        '¥', //人民币
+        '₱', //比索
+    ];
     //0:append 1:approved已成交/入账
     const STATUS = ['Append', 'Approved'];
     protected $fillable = [
@@ -22,6 +28,7 @@ class Bill extends Model
         'user_id',
         'order_id',
         'price', //amount
+        'currency',
         'paymethod_type',
         'status',
         'remark', //经手人 //收/付款时间etc.

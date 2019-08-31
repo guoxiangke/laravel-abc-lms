@@ -31,7 +31,7 @@
                       <td data-label="type">{{App\Models\Bill::TYPES[$bill->type]}}</td>
                       <td data-label="user">{{$bill->user->profiles->first()->name}}</td>
                       <td data-label="order">{{$bill->order?$bill->order->title:'-'}}</td>
-                      <td data-label="price">{{$bill->price}}</td>
+                      <td data-label="price">{{App\Models\Bill::CURRENCIES[$bill->currency]}}{{$bill->price}}</td>
                       <td data-label="paymethod">{{App\Models\PayMethod::TYPES[$bill->paymethod_type]}}</td>
                       <td data-label="status">{{App\Models\Bill::STATUS[$bill->status]}}</td>
                       <td data-label="remark">{{$bill->remark}}</td>

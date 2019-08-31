@@ -29,7 +29,7 @@ class BillForm extends Form
                 'value'   => $bill->type,
             ])
             ->add('user_id', 'select', [
-                'label'    => 'Student',
+                'label'    => 'User',
                 'rules'    => 'required',
                 'choices'  => $users,
                 'selected' => $bill->user_id,
@@ -45,6 +45,12 @@ class BillForm extends Form
                 'label' => 'Price',
                 'value' => $bill->price,
                 'attr'  => ['placeholder' => '单位元,可带2为小数'],
+            ])
+            ->add('currency', 'select', [
+                'label'       => 'Currency',
+                'choices'     => Bill::CURRENCIES,
+                'selected'    => $bill->currency,
+                'empty_value' => '=== Select ===',
             ])
             ->add('paymethod_type', 'select', [
                 'label'    => '付款方式',

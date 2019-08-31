@@ -19,6 +19,8 @@ class CreateBillsTable extends Migration
             $table->unsignedTinyInteger('type');
             $table->unsignedBigInteger('order_id')->nullable();
             $table->unsignedInteger('price'); //0-100价格amount，单位分
+            $table->unsignedTinyInteger('currency')->default(0); //货币类型，默认美元
+            // ALTER TABLE `bills` Add COLUMN `currency` tinyint(3) NOT NULL DEFAULT(0) AFTER price;
             $table->unsignedTinyInteger('paymethod_type');
             $table->boolean('status')->default(0); //0:append 1:approved已成交/入账
             $table->text('remark')->nullable();
