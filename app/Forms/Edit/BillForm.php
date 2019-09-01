@@ -21,12 +21,14 @@ class BillForm extends Form
         $orders = Order::with(['user', 'teacher', 'agency', 'user.profiles', 'teacher.profiles', 'agency.profiles'])->active()->get()->map(function ($order) {
             return ['id'=>$order->id, 'title'=>$order->title];
         })->pluck('title', 'id')->toArray();
+        preg_match_all('/\n/', $bill->remark, $matches);
+        $rows = count($matches[0]) + 5;
         $this
             ->add('type', 'select', [
                 'label'   => '类型',
                 'rules'   => 'required',
                 'choices' => Bill::TYPES,
-                'value'   => $bill->type,
+                'selected'   => $bill->type,
             ])
             ->add('user_id', 'select', [
                 'label'    => 'User',
@@ -70,7 +72,7 @@ class BillForm extends Form
             ->add('remark', 'textarea', [
                 'label' => '备注',
                 'value' => $bill->remark,
-                'attr'  => ['rows' => 2],
+                'attr'  => ['rows' => $rows],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

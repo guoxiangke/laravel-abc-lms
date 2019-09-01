@@ -61,7 +61,7 @@ class BillForm extends Form
             ])
             ->add('remark', 'textarea', [
                 'label' => '备注',
-                'attr'  => ['rows' => 2],
+                'attr'  => ['rows' => 5],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
