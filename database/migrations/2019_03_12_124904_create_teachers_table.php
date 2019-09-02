@@ -19,7 +19,8 @@ class CreateTeachersTable extends Migration
             // contact_id -> skype
             $table->unsignedBigInteger('school_id')->nullable()->comment('学校id，NULL 为freelancer');
             $table->unsignedBigInteger('zoom_id')->nullable();
-            // $table->unsignedBigInteger('teacher_uid')->nullable()->comment('推荐关系');
+            $table->unsignedInteger('price'); //0-100价格amount，单位分
+            // ALTER TABLE `teachers` Add COLUMN `price` int NOT NULL DEFAULT(0) AFTER zoom_id;
 
             $table->timestamps();
             $table->softDeletes();

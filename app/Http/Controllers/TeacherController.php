@@ -142,12 +142,14 @@ class TeacherController extends Controller
             'user_id'   => $user->id,
             'school_id' => $request->input('school_id'),
         ]);
-        $user->teacher()->save($teacher);
 
         if ($zoomId = $request->input('zoom_id')) {
             $teacher->zoom_id = $zoomId;
-            $teacher->save();
         }
+        if ($price = $request->input('price')) {
+            $teacher->price = $price;
+        }
+        $teacher->save();
 
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -270,6 +272,7 @@ class TeacherController extends Controller
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([
             // 'user_id' => $user->id,
+            'price'      => $request->input('price') ?: 0,
             'zoom_id'   => $request->input('zoom_id') ?: null,
             'school_id' => $request->input('school_id') ?: null,
         ])->save();

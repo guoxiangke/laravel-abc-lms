@@ -60,7 +60,7 @@
 					      </td>
 					      <td data-label="School">{{ $school ? $school->name : 'FreeLancer' }}</td>
 					      <td data-label="Referrer">{{ $recommend ? $profile->recommend->name : '-' }}</td>
-					      <td data-label="Rate">{{$rate??'-'}}</td>
+					      <td data-label="Rate">{{$teacher->price??'-'}}</td>
 					    </tr>
 					@endforeach
 				  </tbody>
@@ -71,3 +71,5 @@
     </div>
 </div>
 @endsection
+
+@include('layouts.chosen')

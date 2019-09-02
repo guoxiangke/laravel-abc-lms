@@ -3,17 +3,20 @@
 namespace App\Models;
 
 use App\User;
+use App\Traits\HasPriceField;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Teacher extends Model
 {
     use SoftDeletes;
+    use HasPriceField;
 
     protected $fillable = [
         'user_id', // 关联用户 可为空
         'school_id', //NULL为自由职业freelancer
         'zoom_id',
+        'price', //rate
     ];
 
     public function user()

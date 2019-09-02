@@ -35,6 +35,20 @@ class TeacherForm extends Form
                     'empty_value' => '=== Select ===',
             ])
             ->add(
+                'price',
+                'number',
+                [
+                    'rules' => 'required',
+                    'label' => 'Rate',
+                    'value'=> 0,
+                    'help_block' => [
+                        'text' => '单位：₱150.00/hour 默认为：0',
+                        'tag'  => 'small',
+                        'attr' => ['class' => 'form-text text-muted'],
+                    ],
+                ],
+            )
+            ->add(
                 'profile_name',
                 'text',
                 ['rules' => 'required', 'label' => '姓名']
