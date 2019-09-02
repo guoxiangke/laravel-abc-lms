@@ -17,16 +17,16 @@
 			  <table class="table">
 				  <thead>
 				    <tr>
-				    	<th scope="col">#</th>
-						<th scope="col">Records</th>
+				    	<th scope="col"># Records</th>
+						<th scope="col">Name</th>
 						<th scope="col">PMI</th>
 						<th scope="col">Zoom</th>
-						<th scope="col">Password</th>
+						<th scope="col">phone/Password</th>
 						<th scope="col">Sex</th>
 						<th scope="col">Birthday</th>
-						<th scope="col">telephone</th>
 						<th scope="col">School</th>
 						<th scope="col">Referrer</th>
+						<th scope="col">Rate</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -34,6 +34,7 @@
 					    <tr id="{{$teacher->id}}">
 					      <th scope="row">
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >Edit</a>
+					      	<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul fa-large"></i></a>
 						  </th>
 					      @php
 					      	$birthday = false;
@@ -44,17 +45,22 @@
 						    $recommend = $profile->recommend;
 							$school = $teacher->school; 
 					      @endphp
-					      <td data-label="Records"><a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >{{$profile?$profile->name:'-'}}</a></td>
+					      <td data-label="Records">{{$profile?$profile->name:'-'}}
+					      	
+					      </td>
 					      <td data-label="PMI"><a target="_blank" href="https://zoom.us/j/{{$teacher->zoom?$teacher->zoom->pmi:'-'}}">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</a></td>
 					      <td data-label="ZoomEmail">{{$teacher->zoom? explode('@',$teacher->zoom->email)[0] :'-'}}</td>
-					      <td data-label="ZoomPassword">{{$teacher->zoom?$teacher->zoom->password:'-'}}</td>
+					      <td data-label="ZoomPassword">
+					      	{{$profile?$profile->telephone:'-'}}<br/>
+					      	{{$teacher->zoom?$teacher->zoom->password:'-'}}
+					      </td>
 					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('Y-m-d') : '-' }}
 					      </td>
-					      <td data-label="Tel">{{$profile?$profile->telephone:'-'}}</td>
 					      <td data-label="School">{{ $school ? $school->name : 'FreeLancer' }}</td>
 					      <td data-label="Referrer">{{ $recommend ? $profile->recommend->name : '-' }}</td>
+					      <td data-label="Rate">{{$rate??'-'}}</td>
 					    </tr>
 					@endforeach
 				  </tbody>
