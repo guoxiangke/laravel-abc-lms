@@ -250,14 +250,14 @@ class TeacherController extends Controller
 
         $teacherEmail = $request->input('user_email') ?: $teacherUserName.'@teacher.com';
 
-        if ($password = $request->input('user_password') ?: 'Teacher123') {
-            $password = Hash::make($password);
-        }
         $userData = [
             'name'     => $teacherUserName,
             'email'    => $teacherEmail,
-            'password' => $password,
         ];
+
+        if ($password = $request->input('user_password')) {
+            $userData['password'] = Hash::make($password);
+        }
 
         try {
             $user->fill($userData)->save();
