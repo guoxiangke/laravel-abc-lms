@@ -48,8 +48,8 @@
 					      <td data-label="Records">{{$profile?$profile->name:'-'}}
 					      	
 					      </td>
-					      <td data-label="PMI"><a target="_blank" href="https://zoom.us/j/{{$teacher->zoom?$teacher->zoom->pmi:'-'}}">{{$teacher->zoom?$teacher->zoom->pmi:'-'}}</a></td>
-					      <td data-label="ZoomEmail">{{$teacher->zoom? explode('@',$teacher->zoom->email)[0] :'-'}}</td>
+					      <td data-label="PMI"><a target="_blank" href="https://zoom.us/j/{{$teacher->zoom?$teacher->zoom->pmi:'-'}}">{{$teacher->zoom?$teacher->zoom->pmi:''}}</a></td>
+					      <td data-label="ZoomEmail"><a target="_blank" href="/zooms/{{$teacher->zoom?$teacher->zoom->id :'#' }}/edit">{{$teacher->zoom? explode('@',$teacher->zoom->email)[0] :''}}</a></td>
 					      <td data-label="ZoomPassword">
 					      	{{$profile?$profile->telephone:'-'}}<br/>
 					      	{{$teacher->zoom?$teacher->zoom->password:'-'}}
