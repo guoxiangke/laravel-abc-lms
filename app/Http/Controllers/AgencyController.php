@@ -10,6 +10,7 @@ use App\Models\Profile;
 use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\AgencyForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\AgencyForm as EditForm;
@@ -34,7 +35,11 @@ class AgencyController extends Controller
     public function index()
     {
         $agencies = Agency::with('user', 'user.profiles', 'user.paymethod', 'user.profiles.recommend')
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc');
+
+        $agencies = QueryBuilder::for($agencies)
+            ->allowedIncludes(['user.profiles'])
+            ->allowedFilters(['user.name', 'user.profiles.name'])
             ->paginate(100);
 
         return view('agencies.index', compact('agencies'));

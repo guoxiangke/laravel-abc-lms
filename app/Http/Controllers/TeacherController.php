@@ -10,6 +10,7 @@ use App\Models\Teacher;
 use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\Session;
 use App\Forms\TeacherForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -44,7 +45,10 @@ class TeacherController extends Controller
             'school',
             'user.profiles.recommend'
             )//'user.paymethod',
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc');
+        $teachers = QueryBuilder::for($teachers)
+            ->allowedIncludes(['user.profiles'])
+            ->allowedFilters(['user.name', 'user.profiles.name'])
             ->paginate(100);
 
         return view('teachers.index', compact('teachers'));

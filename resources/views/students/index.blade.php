@@ -11,6 +11,7 @@
     	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
 		<a href="{{ route('students.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
 		<button class="btn btn-light">本页记录数量：{{count($students)}}</button>
+		@include('shared.search')
 	</div>
 
     <div class="row justify-content-center">
@@ -110,4 +111,5 @@
 
     }
 </script>
+@include('scripts.search')
 @endsection

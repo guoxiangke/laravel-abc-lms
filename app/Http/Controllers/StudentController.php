@@ -13,6 +13,7 @@ use App\Models\PayMethod;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\StudentForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\StudentForm as EditForm;
@@ -45,7 +46,11 @@ class StudentController extends Controller
             'user.profiles.recommend',
             'user.socials',
             )//'user.paymethod',
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc');
+
+        $students = QueryBuilder::for($students)
+            ->allowedIncludes(['user.profiles'])
+            ->allowedFilters(['user.name', 'user.profiles.name'])
             ->paginate(100);
 
         return view('students.index', compact('students'));

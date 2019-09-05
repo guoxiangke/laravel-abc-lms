@@ -21,19 +21,7 @@
         <a href="{{ route($route) }}" class="btn btn-{{$isActive?'':'outline-'}}primary mt-1 text-capitalize">{{ $item }} </a>
       @endforeach
       <button class="btn btn-light mt-1">本页记录数量：{{count($orders)}}</button>
-      <div class="d-inline">
-        @php
-          $filterValue = '';
-          $filter = request('filter');
-          if($filter)
-            $filterValue = array_pop($filter);
-        @endphp
-        <input type="text" name="studentName" id="studentName" class="form-control" style="width: auto; display: inline-block;" @if($filterValue) value="{{$filterValue}}" @else placeholder="Search by student" @endif>
-        <button class="btn btn-warning" id="search">搜索</button>
-        @if($filterValue) 
-        <button class="btn btn-warning" id="reset">Reset</button>
-        @endif
-      </div>
+      @include('shared.search')
       
   </div>
 
@@ -95,30 +83,6 @@
 @section('scripts')
 <script type="text/javascript">
     window.onload = function () {
-      $('#reset').click(function(e){
-        e.preventDefault();
-        return window.location = window.location.pathname;
-      });
-      
-      $('#studentName').keypress(function (e) {
-        if (e.which == 13) {
-          $('#search').trigger('click');
-          return false;    //<---- Add this line
-        }
-      });
-
-
-      $('#search').click(function(e){
-        e.preventDefault();
-        var regex = /[a-z]{2}/gi; //pinyin
-        $input = $('#studentName').val();
-
-        if(regex.test($input)){
-          return window.location = window.location.pathname + "?filter[user.name]="+$input;
-        }else{
-          return window.location = window.location.pathname + "?filter[user.profiles.name]="+$input;
-        }
-      });
 
         $('.post-action').click(function(e){
           e.preventDefault();
@@ -172,5 +136,5 @@
         });
     }
 </script>
-
+  @include('scripts.search')
 @endsection
