@@ -4,7 +4,7 @@
     <script type="text/javascript">
         window.onload = function () {
             $('select').selectize({
-                create: true,
+                create: false,
                 sortField: 'text'
             });
         }

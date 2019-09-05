@@ -71,6 +71,7 @@ class ClassRecordController extends Controller
         $classRecords = ClassRecord::with(
             'rrule',
             'teacher',
+            'teacher.profiles',
             'user',
             'agency',
             'agency.profiles',
