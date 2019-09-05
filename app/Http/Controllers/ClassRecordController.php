@@ -185,6 +185,9 @@ class ClassRecordController extends Controller
             'rrule',
             'user',
             'user.profiles',
+            'media',
+            'teacher',
+            'teacher.profiles',
                 )
             ->where('teacher_uid', $teacher->user_id)
             ->orderBy('generated_at', 'desc')
