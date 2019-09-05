@@ -3,10 +3,12 @@
 namespace App\Forms;
 
 use App\User;
+use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\Order;
 use App\Models\Product;
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Facades\Input;
 
 class OrderForm extends Form
 {
@@ -25,11 +27,34 @@ class OrderForm extends Form
         $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
         $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
+        $input = Input::all();
+
+        $userId = null;
+        $price = null;
+        $period = null;
+        $expiredAt = null;
+        $agency = null;
+        $rrule = "DTSTART:2019????T180000Z\nRRULE:FREQ=DAILY;COUNT=?;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
+        if (isset($input['user_id'])) {
+            $userId = $input['user_id'];
+        }
+        if (isset($input['trail'])) {
+            $now = Carbon::now();
+            $today = $now->format('Ymd');
+            $rrule = "DTSTART:{$today}T180000Z\nRRULE:FREQ=DAILY;COUNT=1;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
+            $period = 1;
+            $price = 0.00;
+            $expiredAt = $now->addDays(5)->format('Y-m-d');
+        }
+        if (isset($input['agency'])) {
+            $agency = $input['agency'];
+        }
         $this
             ->add('user_id', 'select', [
                 'label'       => 'Student',
                 'rules'       => 'required',
                 'choices'     => $students,
+                'selected'    => $userId,
                 'empty_value' => '=== Select ===',
             ])
             ->add('teacher_uid', 'select', [
@@ -41,6 +66,7 @@ class OrderForm extends Form
             ->add('agency_uid', 'select', [
                 'label'       => 'Agency',
                 'choices'     => $agencies,
+                'selected'    => $agency,
                 'empty_value' => '=== Select ===',
             ])
             ->add('book_id', 'select', [
@@ -52,11 +78,13 @@ class OrderForm extends Form
             ->add('price', 'text', [
                 'rules' => 'required',
                 'label' => 'Price',
+                'value' => $price,
                 'attr'  => ['placeholder' => '成交价,单位元,可带2为小数'],
             ])
             ->add('period', 'number', [
                 'rules' => 'required',
                 'label' => 'Period',
+                'value' => $period,
                 'attr'  => ['placeholder' => '课时'],
             ])
             ->add('rrule', 'repeated', [
@@ -65,6 +93,7 @@ class OrderForm extends Form
                 'first_options' => [
                     'rules' => 'required',
                     'label' => '上课计划',
+                    'value' => $rrule,
                     'attr'  => [
                         'rows'        => 3,
                         'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU",
@@ -90,6 +119,7 @@ class OrderForm extends Form
             ])
             ->add('expired_at', 'date', [
                 'rules' => 'required',
+                'value' => $expiredAt,
                 'label' => '有效期至',
             ])
             ->add('status', 'select', [
@@ -106,5 +136,11 @@ class OrderForm extends Form
                 'label' => 'Save',
                 'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);
+        if (isset($input['trail'])) {
+            $this->add('trail', 'hidden', [
+                'rules' => 'required',
+                'value' => 1,
+            ]);
+        }
     }
 }

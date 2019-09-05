@@ -157,6 +157,10 @@ class OrderController extends Controller
 
         alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
 
+        if ($request->has('trail')) {
+            return redirect()->route('orders.trail');
+        }
+
         return redirect()->route('orders.index');
     }
 
