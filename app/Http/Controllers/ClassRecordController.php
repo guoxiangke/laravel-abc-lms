@@ -196,8 +196,47 @@ class ClassRecordController extends Controller
             ->where('teacher_uid', $teacher->user_id)
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
+        // 1-5号显示上个月的统计
+        // 5-30/31显示本月统计
+        $counts = [];
+        $dt = Carbon::now();
+        if ($dt->day <= 5) {
+            $whichMonth = [$dt->copy()->subMonth()->startOfMonth(), $dt->subMonth()->endOfMonth()];
+            $counts['month'] = $dt->month;
+        } else {
+            $whichMonth = [Carbon::now()->startOfMonth(), Carbon::now()];
+            $counts['month'] = $dt->month;
+        }
+        // 'AOL', //1-by-Student
+        $counts['aol'] = ClassRecord::where('teacher_uid', $teacher->user_id)
+            ->whereBetween('generated_at', $whichMonth)
+            ->where('exception', ClassRecord::NORMAL_EXCEPTION_STUDENT)
+            ->count();
+        // 'Absent', //学生异常 3-by-Student
+        $counts['absent'] = ClassRecord::where('teacher_uid', $teacher->user_id)
+            ->whereBetween('generated_at', $whichMonth)
+            ->where('exception', ClassRecord::EXCEPTION_STUDENT)
+            ->count();
+        // 'Holiday', //2 AOL-by-Teacher
+        $counts['holiday'] = ClassRecord::where('teacher_uid', $teacher->user_id)
+            ->whereBetween('generated_at', $whichMonth)
+            ->where('exception', ClassRecord::NORMAL_EXCEPTION_TEACHER)
+            ->count();
+        // 'EXCEPTION', //Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
+        $counts['exception'] = ClassRecord::where('teacher_uid', $teacher->user_id)
+            ->whereBetween('generated_at', $whichMonth)
+            ->where('exception', ClassRecord::EXCEPTION_TEACHER)
+            ->count();
 
-        return view('classRecords.index4teacher', compact('classRecords'));
+        // 'Normal', //0 算给老师工资
+        // 'Absent', //学生异常 3-by-Student  算给老师工资
+        // + no records!!! no pay!
+        $counts['total'] = ClassRecord::where('teacher_uid', $teacher->user_id)
+            ->whereBetween('generated_at', $whichMonth)
+            ->whereIn('exception', [ClassRecord::NO_EXCEPTION, ClassRecord::EXCEPTION_STUDENT])
+            ->count();
+        // dd($countsThisMonth,$countsLastMonth);
+        return view('classRecords.indexByteacher4admin', compact('classRecords', 'counts'));
     }
 
     /**
