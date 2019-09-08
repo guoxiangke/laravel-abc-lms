@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('classRecords/order/{order}', 'ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
     //某个学生的上课记录 for agncy！
     Route::get('classRecords/student/{student}', 'ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
-    //某个学生的上课记录 for tacher
+    //某个学生的上课记录 by teacher, only for Admin
     Route::get('classRecords/teacher/{teacher}', 'ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
     //老师/管理人员快速请假标记 ajax
     Route::post('/classRecords/{classRecord}/exception/{id}', 'ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');

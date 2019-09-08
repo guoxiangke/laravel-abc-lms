@@ -77,22 +77,6 @@
                                 </div>
                             </li>
                         @endguest
-                        @hasanyrole('manager')
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Switch <span class="caret"></span>
-                                </a>
-                                
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach( \App\User::where('id','!=',auth()->user()->id)->get() as $user)
-                                    <a class="dropdown-item" href="{{ route('sudo.su', $user->id) }}">
-                                        {{$user->name}}
-                                    </a>
-                                    @endforeach
-                                </div>
-                            </li>
-                        @else
-                        @endhasanyrole
                     </ul>
                 </div>
             </div>

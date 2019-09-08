@@ -40,8 +40,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
         // https://github.com/spatie/laravel-permission/wiki/Global-%22Admin%22-role
         //If you want an "Admin" role to respond true to all permissions, without needing to assign all those permissions to a role, you can use Laravel's Gate::before() method. For example:
         // Implicitly grant "Admin" role all permissions

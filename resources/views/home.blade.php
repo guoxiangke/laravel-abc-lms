@@ -106,8 +106,9 @@
                     </div>
                     <br>
                     <div class="row">
-
                     @hasanyrole('manager|admin')
+
+                    @include('shared.su')
                         <div class="col-md-4 pt-5 text-center bg-light">
                             <h5 class="display-5">微信专属登陆码</h5>
                             <p class="lead">长按收藏，一键登陆</p>
@@ -124,11 +125,12 @@
 @endsection
 
 @section('styles')
-<style>
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 @endsection
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous" defer></script>
+
 <script>
     window.onload = function () {
         $('.btn-delete').click(function(e){
@@ -136,6 +138,19 @@
           if (confirm('Are you sure?')) {
               window.open($(this).attr('href'), '_blank', 'location=no,titlebar=no,toolbar=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350,status=yes');;
           }
+        });
+
+        $('select').selectize({
+            create: false,
+            sortField: 'text'
+        });
+
+        $('#su').change(function(e){
+            e.preventDefault();
+            if($(this).val()) {
+                return window.location = '/dev/su/' + $(this).val();
+            }
+            
         });
 
     }

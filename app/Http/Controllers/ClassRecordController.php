@@ -26,29 +26,15 @@ class ClassRecordController extends Controller
      */
     // protected $classRecord; todo
 
-    public function __construct(ClassRecord $classRecord)
-    {
-        // 一些管理页面的list
-        $this->middleware(['admin'], [
-            'except' => [
-                'show',
-                'edit',
-                'update',
-                'destroy',
-                'generate',
-                'indexByRole',
-                'flagException',
-            ],
-        ]);
-    }
-
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for administrator
      * https://abc.dev/classRecords.
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        $this->authorize('administrator');
+
         $classRecords = ClassRecord::with(
             'rrule',
             'teacher',
@@ -68,6 +54,8 @@ class ClassRecordController extends Controller
     // https://abc.dev/classRecords/order/165
     public function indexbyOrder(Order $order)
     {
+        $this->authorize('administrator');
+
         $classRecords = ClassRecord::with(
             'rrule',
             'teacher',
@@ -93,6 +81,8 @@ class ClassRecordController extends Controller
 
     public function generate(Request $request, Order $order, FormBuilder $formBuilder)
     {
+        $this->authorize('administrator');
+
         $form = $this->form(GenForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -166,6 +156,15 @@ class ClassRecordController extends Controller
     // https://abc.dev/classRecords/student/131
     public function indexByStudent(Student $student)
     {
+        //权限 只有代理可以拥有本列表
+        if (! Auth::user()->hasRole('agency')) {
+            abort(403);
+        }
+        // 只有该学生的代理是他时，才可以查看。
+        if ($student->user->profiles()->first()->recommend_uid != Auth::id()) {
+            abort(403);
+        }
+
         $classRecords = ClassRecord::with(
             'rrule',
             'user',
@@ -181,6 +180,11 @@ class ClassRecordController extends Controller
     // https://abc.dev/classRecords/teacher/6
     public function indexByTeacher(Teacher $teacher)
     {
+        //权限 只有管理员可以拥有本列表
+        if (! Auth::user()->hasAnyRole(['admin', 'manager'])) {
+            abort(403);
+        }
+
         $classRecords = ClassRecord::with(
             'rrule',
             'user',
@@ -188,7 +192,7 @@ class ClassRecordController extends Controller
             'media',
             'teacher',
             'teacher.profiles',
-                )
+            )
             ->where('teacher_uid', $teacher->user_id)
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
