@@ -43,11 +43,6 @@ class ClassRecordPolicy
 
     public function delete(User $user, ClassRecord $classRecord)
     {
-        return $this->administrator($user);
-    }
-
-    public function administrator(User $user)
-    {
         return $user->isAdmin();
     }
 

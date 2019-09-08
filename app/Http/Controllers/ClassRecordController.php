@@ -33,7 +33,7 @@ class ClassRecordController extends Controller
      */
     public function index()
     {
-        $this->authorize('administrator');
+        $this->authorize('admin');
 
         $classRecords = ClassRecord::with(
             'rrule',
@@ -54,7 +54,7 @@ class ClassRecordController extends Controller
     // https://abc.dev/classRecords/order/165
     public function indexbyOrder(Order $order)
     {
-        $this->authorize('administrator');
+        $this->authorize('admin');
 
         $classRecords = ClassRecord::with(
             'rrule',
@@ -81,7 +81,7 @@ class ClassRecordController extends Controller
 
     public function generate(Request $request, Order $order, FormBuilder $formBuilder)
     {
-        $this->authorize('administrator');
+        $this->authorize('admin');
 
         $form = $this->form(GenForm::class);
         if (! $form->isValid()) {
@@ -319,7 +319,7 @@ class ClassRecordController extends Controller
                 break;
             case ClassRecord::NO_EXCEPTION://0归位正常
             case ClassRecord::EXCEPTION_TEACHER://4老师异常
-                $this->authorize('admin', $classRecord); //管理员可操作
+                $this->authorize('admin');
                 break;
             default:
                 // return abort('403');
