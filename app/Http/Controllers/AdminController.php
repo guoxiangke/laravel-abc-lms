@@ -23,4 +23,14 @@ class AdminController extends Controller
         // return redirect('classRecords');
         return route('classRecords.index');
     }
+
+    // switch user for dev
+    // su -i
+    public function su($uid)
+    {
+        Auth::loginUsingId($uid);
+        alert()->toast('切换登录成功！', 'success', 'top-center')->autoClose(3000);
+
+        return redirect('home');
+    }
 }

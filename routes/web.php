@@ -18,17 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dos', function () {
-    $fileName = time().'.txt'; // generate unique name.
-    $res = Storage::disk('spaces')->put($fileName, 'Hi,');
-    // Setting 'public' permission for files uploaded on S3
-    // https://github.com/spatie/laravel-medialibrary/issues/241
-    Storage::disk('spaces')->setVisibility($fileName, 'public'); // Set the visibility to public.
-    $url = Storage::disk('spaces')->url($fileName);
-
-    return Response::json(['success' => true, 'response' => $url]);
-});
-
 //登录后第一页
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -129,22 +118,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('charts', 'ChartController@index');
 });
 
-// Route::any('botman', 'BotmanController@handle')->name('botman');
-// GET	/photos	index	photos.index
-// GET	/photos/create	create	photos.create
-// POST	/photos	store	photos.store
-// GET	/photos/{photo}	show	photos.show
-// GET	/photos/{photo}/edit	edit	photos.edit
-// PUT/PATCH	/photos/{photo}	update	photos.update
-// DELETE	/photos/{photo}	destroy	photos.destroy
-
 //OAuth2 test！！
 Route::get('/signin', 'AuthController@signin');
 Route::get('/callback', 'AuthController@callback');
 Route::get('/signout', 'AuthController@signout');
 
-// only for dev root user!
-Route::get('dev/su/{id}', 'RootController@su')->name('sudo.su');
-
 // AdminController only for admin middleware
 Route::get('admin/genClass', 'AdminController@genClass')->name('admin.genClass');
+Route::get('dev/su/{id}', 'AdminController@su')->name('sudo.su');

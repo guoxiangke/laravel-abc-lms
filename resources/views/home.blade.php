@@ -26,7 +26,7 @@
                         @endif
                     @endhasrole
                     
-                    @hasanyrole('manager|admin')
+                    @can('admin')
                     <a class="btn btn-sm btn-danger btn-delete" target="_blank" href="http://123.206.80.254:9002/hooks/lms">数据同步</a>
                     <a class="btn btn-outline-danger" href="/admin/genClass">手动生成课程记录</a>
                     <div class="nav-scroller py-1 mb-2">
@@ -49,7 +49,7 @@
                             <a class="p-2 text-muted" href="/bills">{{__('Bills')}}</a>
                         </nav>
                       </div>
-                    @role('manager')
+                    
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex justify-content">
                             <a class="p-2 text-muted" href="/users">{{__('Users')}}</a>
@@ -72,8 +72,7 @@
                             </ul>
                         </nav>
                     </div>
-                    @endrole
-                    @endhasanyrole
+                    @endcan
 
                     @hasanyrole('agency|student')
                         <div class="container">
@@ -106,15 +105,15 @@
                     </div>
                     <br>
                     <div class="row">
-                    @hasanyrole('manager|admin')
-
-                    @include('shared.su')
+                    
+                    @can('admin')
+                        @include('shared.su')
                         <div class="col-md-4 pt-5 text-center bg-light">
                             <h5 class="display-5">微信专属登陆码</h5>
                             <p class="lead">长按收藏，一键登陆</p>
                             <img src="{{ asset('storage/loginqr/default0424.png') }}" alt="" width="300px" loading="lazy">
                         </div>
-                    @endhasanyrole
+                    @endcan
                     </div>
             </div>
         </div>
