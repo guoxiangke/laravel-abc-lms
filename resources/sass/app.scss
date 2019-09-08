@@ -113,6 +113,10 @@ table th {
     border-bottom: 0;
   }
 }
+.table thead th{
+    background-color: #f6f9fc;
+    color: #8898aa;
+}
 
 h1, .h1 {
   font-size: 1.25rem;
@@ -125,5 +129,21 @@ h1, .h1 {
 
 .btn-info{
   color:#fff;
+}
+
+
+.card-header {
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.05)
+}
+
+.card-header:first-child {
+    border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0
+}
+
+.card-header+.list-group .list-group-item:first-child {
+    border-top: 0
 }
 

@@ -15,7 +15,7 @@
     <a href="{{ route('roles.create') }}" class="btn btn-warning">Create a Role</a>
   </div>
 
-  <div class="col-md-12 col-sm-12"> 
+  <div class="col-md-12 col-sm-12 p-0"> 
       <div class="table-responsive">
         <table class="table">
             <thead>

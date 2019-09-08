@@ -10,7 +10,7 @@
       <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
   </div>
   
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-12 col-sm-12 p-0">
       <div class="table-responsive">
         <table class="table">
             <thead>

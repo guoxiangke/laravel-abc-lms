@@ -236,7 +236,7 @@ class ClassRecordController extends Controller
             ->whereIn('exception', [ClassRecord::NO_EXCEPTION, ClassRecord::EXCEPTION_STUDENT])
             ->count();
         // dd($countsThisMonth,$countsLastMonth);
-        return view('classRecords.indexByteacher4admin', compact('classRecords', 'counts'));
+        return view('classRecords.indexByteacher4admin', compact('classRecords', 'counts', 'teacher'));
     }
 
     /**

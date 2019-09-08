@@ -16,7 +16,7 @@
       
   </div>
   
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-12 col-sm-12 p-0">
       <div class="table-responsive">
         <table class="table">
             <thead>
