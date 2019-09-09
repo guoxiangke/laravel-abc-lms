@@ -10,7 +10,6 @@ use App\Observers\RruleObserver;
 use App\Observers\ProfileObserver;
 use App\Observers\StudentObserver;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,10 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Carbon::setLocale('zh');
-
-        if (Config::get('app.env') === 'production') {
-            URL::forceScheme('https');
-        }
+        URL::forceScheme('https');
 
         // Flash::levels([
         //     'success' => 'alert-success',
