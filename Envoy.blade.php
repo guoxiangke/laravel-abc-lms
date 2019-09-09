@@ -9,7 +9,7 @@
 
 @story('deploy')
     deploy01
-    qq3disablequeue
+    rmQueue
 @endstory
 
 @story('backup')
@@ -142,10 +142,16 @@
           && chown www-data:www-data storage/app/ -R"
 @endtask
 
-@task('qq3disablequeue', ['on' => ['qq3']])
+@task('rmQueue', ['on' => ['qq3']])
  cd /var/www/html/lms-abc
- docker-compose stop scheduler queue
- docker-compose rm -f scheduler queue
+ docker-compose stop queue
+ docker-compose rm -f queue
+@endtask
+
+@task('rmScheduler', ['on' => ['qq3']])
+ cd /var/www/html/lms-abc
+ docker-compose stop scheduler
+ docker-compose rm -f scheduler
 @endtask
 
 @task('cg', ['on' => 'sfo2'])
