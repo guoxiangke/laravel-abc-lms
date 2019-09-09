@@ -20,8 +20,8 @@
                     
                     @else
                         @if(!Auth::user()->isSocialBind())
-                        <div class="container links-2 pb-2">
-                            <a class="text-center btn-sm btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
+                        <div class="d-sm-none links-2 pb-2">
+                            <a class="text-center btn btn-success text-white" target="_blank" href="{{ route('login.weixin') }}">微信绑定</a>
                         </div>
                         @endif
                     @endhasrole
@@ -83,9 +83,6 @@
                             <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
                                 <a href="{{ route('referrals') }}" class="btn btn-lg btn-primary"><img class="icon-img" src="{{asset('images/icons/63-512.png')}}" alt=""> 推荐好友</a>
                             </div>
-                            <div class="col-sm-6  col-md-3 col-lg-3 col-xl-2 col-6  mt-4">
-                                <a target="_blank" href="https://shimo.im/docs/252MhfluDU8VGlNa" class="btn btn-lg btn-primary"><img class="icon-img" src="{{asset('images/icons/34-01-256.png')}}" alt=""> 使用帮助</a>
-                            </div>
                           </div>
                         </div>
                         
@@ -107,11 +104,13 @@
                     <div class="row">
                     
                     @can('admin')
-                        @include('shared.su')
-                        <div class="col-md-4 pt-5 text-center bg-light">
+                        <div class="col-lg-6 col-md-4 pt-5 text-center bg-light">
                             <h5 class="display-5">微信专属登陆码</h5>
                             <p class="lead">长按收藏，一键登陆</p>
                             <img src="{{ asset('storage/loginqr/default0424.png') }}" alt="" width="300px" loading="lazy">
+                        </div>
+                        <div class="col-lg-6  col-md-4 pt-5 text-center bg-light">
+                            @include('shared.su')
                         </div>
                     @endcan
                     </div>

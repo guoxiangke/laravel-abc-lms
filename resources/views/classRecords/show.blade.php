@@ -18,14 +18,24 @@
     <div class="show-links">
       <a href="{{ $goBackLink }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
 
+      
+      @role('teacher')
+      <a class="btn btn-light" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">Student: {{$classRecord->user->name}}</a>
+      <a class="btn btn-light" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">{{$classRecord->generated_at->format('jS \o\f F  H:i')}}</a>
+      @else
+      <a class="btn btn-light" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">老师：{{$classRecord->teacher->profiles->first()->name}}</a>
+      <a class="btn btn-light" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">学生：{{$classRecord->user->profiles->first()->name}} </a>
+      <a class="btn btn-light" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">时间：{{$classRecord->generated_at->format('n月j日 H:i 周N')}}</a>
+      @endrole
+
       @can('edit', $classRecord)
       <a href="{{ route('classRecords.edit', $classRecord->id) }}" class="btn btn-warning">Edit</a>
       @endcan
 
       @can('delete', $classRecord)
       <a href="{{ route('videos.cut', $classRecord->id) }}" class="btn btn-warning">Cut</a>
-      <div class="mt-3 mb-1">
-      {{ Form::open(['method' => 'DELETE', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
+      <div class="d-inline">
+      {{ Form::open(['method' => 'DELETE', 'class'=>'d-inline', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
           {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
       {{ Form::close() }}
       </div>
@@ -36,6 +46,9 @@
           <a class="btn btn-warning" href="{{ route('classRecords.edit', $classRecord->id) }}#mp4">!mp4 <i class="far fa-file-video fa-large"></i></a>
         @endrole
       @endif
+      
+      
+      
     </div>
 
     <div class="row justify-content-center">
@@ -60,6 +73,8 @@
           @else
             @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#mp3">!mp3 <i class="far fa-file-audio fa-large"></i></a>
+            @else
+              <a class="btn btn-warning text-uppercase  btn-goback" href="#mp3"><i class="far fa-file-audio fa-large"></i> 课程暂未开始，或外教暂未上传课程录音，请耐心等待...</a>
             @endrole
           @endif
 
@@ -71,6 +86,7 @@
             @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#remark">Add Evaluation</a>
             @endrole
+
           @endif
 
           @role('teacher')

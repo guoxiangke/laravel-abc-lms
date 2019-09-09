@@ -174,7 +174,7 @@ class ClassRecordController extends Controller
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
 
-        return view('classRecords.index4agency', compact('classRecords'));
+        return view('classRecords.index4agency', compact('classRecords', 'student'));
     }
 
     // https://abc.dev/classRecords/teacher/6
