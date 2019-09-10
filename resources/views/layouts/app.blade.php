@@ -15,7 +15,7 @@
       | {{ config('app.name', 'Laravel') }}
     </title>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
@@ -108,7 +108,8 @@
     </div>
     @include('sweetalert::alert')
     <script type="text/javascript">
-        window.onload = function () {
+        (function($) {
+          $( document ).ready(function() {
             $('.close').on('click',function(){
                 $(this).parents('.close-it').slideUp('slowly');
             });
@@ -121,9 +122,11 @@
                   $(this).parent('form').submit();
               }
             });
-
-        }
+          });
+        })(jQuery);
     </script>
     @yield('scripts')
+    @yield('scripts1')
+    @yield('scripts2')
 </body>
 </html>

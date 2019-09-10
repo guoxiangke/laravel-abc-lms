@@ -1,6 +1,7 @@
-@section('scripts')
+@section('scripts1')
 <script type="text/javascript">
-    window.onload = function () {
+(function($) {
+	$( document ).ready(function() {
 
 		$('#reset').click(function(e){
 		e.preventDefault();
@@ -26,7 +27,7 @@
 		  return window.location = window.location.pathname + "?filter[user.profiles.name]="+$input;
 		}
 		});
-
-    }
+	});
+})(jQuery);
 </script>
 @endsection

@@ -82,8 +82,8 @@
 
 @section('scripts')
 <script type="text/javascript">
-    window.onload = function () {
-
+(function($) {
+  $( document ).ready(function() {
         $('.post-action').click(function(e){
           e.preventDefault();
           var msg = "This action cannot be undone, Are you sure to flag?";
@@ -133,8 +133,9 @@
               }
             });
           }
-        });
-    }
+        }); 
+      });
+})(jQuery);
 </script>
-  @include('scripts.search')
 @endsection
+@include('scripts.search')
