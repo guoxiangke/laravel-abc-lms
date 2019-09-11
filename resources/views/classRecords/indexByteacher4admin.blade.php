@@ -110,7 +110,7 @@
                       <th data-label="#" scope="row">
 
                         @if(!$classRecord->remark && $classRecord->generated_at->isToday())
-                        <a target="_blank" class="btn btn-sm btn-success text-uppercase" href="https://zoom.us/j/{{ $classRecord->teacher->teacher->zoom->pmi }}">Zoom</a>
+                        <a target="_blank" class="btn btn-sm btn-success text-uppercase" href="https://zhumu.me/j/{{ $classRecord->teacher->teacher->zoom->pmi }}">Zoom</a>
                         @endif
 
                         <a class="btn btn-sm btn-{{$classRecord->remark?'success':'warning'}} text-uppercase" href="{{ route('classRecords.'.($classRecord->remark?'show':'edit'), $classRecord->id) }}">Evaluation</a>

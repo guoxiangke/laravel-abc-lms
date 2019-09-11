@@ -10,6 +10,7 @@
 @story('deploy')
     deploy01
     rmQueue
+    rmScheduler
 @endstory
 
 @story('backup')
