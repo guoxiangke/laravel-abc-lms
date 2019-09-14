@@ -58,14 +58,14 @@ class ClassRecordForm extends Form
         }
 
         $this->add('remark', 'textarea', [
-                'label' => 'Evaluation：',
+                'label' => 'Evaluation',
                 'value' => $remark,
                 'attr'  => [
                     'rows'        => 10,
                     'placeholder' => "**Book:** ??\r\n**Page:** ??\r\n**Mispronounced word(s):** ??\r\n**Corrected Sentence(s):** ??\r\n**Comment:** ??\r\n**Homework:** ??",
                 ],
                 'help_block' => [
-                    'text' => '**This is bold text**<br/>~~This was mistaken text~~<br/>More <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists" target="_blank">Markdown</a> cheatsheet.<br/><s>You can copy blow as a template</s> (Don\'t remove **):<br/>**Book:** 《 Let\'s go 》<br/>**Today\'s lesson:** Page *7-9<br/>**Next lesson:** Page *10<br/><br/>**Mispronounced word(s):**<br/>1. <br/>2.<br/><br/>**Corrected Sentence(s):**<br/>1.<br/>2.<br/><br/>**Comment:**<br/>The student needs to practice reading.<br/><br/>**Homework:**<br/>The student needs to practice reading.<br/>',
+                    'text' => '**This is bold text**<br/>~~This was mistaken text~~<br/>More <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists" target="_blank">Markdown</a> cheatsheet.<br/><s>You can copy below as a template</s> (Don\'t remove **):<br/>**Book:** 《 Let\'s go 》<br/>**Today\'s lesson:** Page *7-9<br/>**Next lesson:** Page *10<br/><br/>**Mispronounced word(s):**<br/>1. <br/>2.<br/><br/>**Corrected Sentence(s):**<br/>1.<br/>2.<br/><br/>**Comment:**<br/>The student needs to practice reading.<br/><br/>**Homework:**<br/>The student needs to practice reading.<br/>',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
