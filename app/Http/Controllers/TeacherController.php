@@ -45,7 +45,8 @@ class TeacherController extends Controller
             'school',
             'user.profiles.recommend',
             'user.profiles.recommend.teacher',
-            )//'user.paymethod',
+            'paymethod',
+            )
             ->orderBy('school_id')
             ->orderBy('active', 'desc')
             ->orderBy('id', 'desc');

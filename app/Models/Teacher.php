@@ -48,4 +48,9 @@ class Teacher extends Model
     {
         return 'https://zhumu.me/j/'.$this->pmi;
     }
+
+    public function paymethod()
+    {
+        return $this->hasOne(PayMethod::class, 'user_id', 'user_id');
+    }
 }

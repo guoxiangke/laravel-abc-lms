@@ -47,7 +47,8 @@
 						      	$birthday = $profile->birthday;
 						    }
 						    $recommend = $profile->recommend;
-							$school = $teacher->school; 
+							$school = $teacher->school;
+
 					      @endphp
 					      <td data-label="Name" class="text-left">
 					      	{{$profile?$profile->name:'-'}}
@@ -79,7 +80,15 @@
 					      	@if($school)
 					      		{{$school->name}}
 					      	@else
-					      		<button class="btn btn-sm btn-outline-primary"><i class="fab fa-paypal"></i></button>
+					      		@if($teacher->paymethod)
+					      			<a class="btn btn-sm btn-outline-primary" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$teacher->paymethod->number}}">
+					      				<i class="fab fa-paypal"></i>
+					      			</a>
+					      		@else
+						      		<button class="btn btn-sm btn-outline-dark" >
+						      			<i class="fab fa-paypal"></i>
+						      		</button>
+					      		@endif
 					      	@endif
 
 					      </td>
