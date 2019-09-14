@@ -2,7 +2,6 @@
 
 namespace App\Forms\Edit;
 
-use App\Models\Zoom;
 use App\Models\School;
 use App\Models\Contact;
 use App\Models\Teacher;
@@ -19,8 +18,7 @@ class TeacherForm extends Form
         }
         $user = $teacher->user;
         $schoolId = $teacher->school ? $teacher->school->id : 0;
-        $zoomId = $teacher->zoom ? $teacher->zoom->id : 0;
-        // dd($zoomId);
+
         $paymethod = $user->paymethod;
         $contact = false;
         $profile = $user->profiles->first();
@@ -28,18 +26,45 @@ class TeacherForm extends Form
             $contact = $profile->contacts->first();
         }
 
-        //select zooms un-used!
-        $zooms = Zoom::with('teacher')
-            ->orderBy('id', 'desc')->get()->filter(function ($zoom) use ($zoomId) {
-                //它自己和没有分配的id
-                return ! $zoom->teacher || $zoom->id == $zoomId;
-            })
-            ->pluck('email', 'id')
-            ->toArray();
-
         $recommend = Teacher::with(['user', 'user.profiles'])->get()->pluck('user.profiles.0.name', 'user_id')->toArray();
-
-        $this->add('school_id', 'select', [
+        // dd($teacher->active);
+        $this->add('active', 'choice', [
+                'label' => '是否辞职',
+                'choices' => ['0' => '辞职', '1' => '在职'],
+                'selected' => $teacher->active,
+                'multiple' => false,
+            ])
+            ->add('passion', 'choice', [
+                'label' => '有无激情',
+                'choices' => ['1' => '有', '0' => '无'],
+                'selected' => $teacher->extra_attributes->passion ? 1 : 0,
+                'multiple' => false,
+            ])
+            ->add('ontime', 'choice', [
+                'label' => '准时情况',
+                'choices' => ['1' => '准时', '0' => '不准时'],
+                'selected' => $teacher->extra_attributes->ontime ? 1 : 0,
+                'multiple' => false,
+            ])
+            ->add('network', 'choice', [
+                'label' => '网络情况',
+                'choices' => ['1' => '稳定', '0' => '不稳定'],
+                'selected' => $teacher->extra_attributes->network ? 1 : 0,
+                'multiple' => false,
+            ])
+            ->add('noisy', 'choice', [
+                'label' => '环境嘈杂',
+                'choices' => ['1' => '安静', '0' => '嘈杂'],
+                'selected' => $teacher->extra_attributes->noisy ? 1 : 0,
+                'multiple' => false,
+            ])
+            ->add('christ', 'choice', [
+                'label' => '宗教信仰',
+                'choices' => ['0' => 'NONE', '1' => 'Christ'],
+                'selected' => $teacher->extra_attributes->christ ?: 0,
+                'multiple' => false,
+            ])
+            ->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),
                 'selected'    => $schoolId,
@@ -113,13 +138,29 @@ class TeacherForm extends Form
                 ],
                 'attr' => ['rows' => 2],
             ])
-            ->add('zoom_id', 'select', [
-                'label'       => 'Zoom',
-                'choices'     => $zooms,
-                'selected'    => $zoomId,
-                'empty_value' => '=== Select ===',
+            ->add('pmi', 'text', [
+                'label'       => 'Zhumu PMI',
+                'value'      => $teacher->pmi ?: null,
                 'help_block'  => [
-                    'text' => '选择一个已有的zoomId分配给新建的Teacher，或者填写下面3个内容同时创建一个新zoom',
+                    'text' => '可以带-或纯数字: 174-546-4410',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
+            ->add('messenger', 'text', [
+                'label'       => 'Messenger',
+                'value' => $teacher->extra_attributes->messenger,
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
+            ->add('avatar', 'url', [
+                'label'       => 'Avatar',
+                'value' => $teacher->extra_attributes->avatar,
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
@@ -152,8 +193,7 @@ class TeacherForm extends Form
                 'attr'  => [
                     'rows'  => 2,
                 ],
-            ])
-            ->add('submit', 'submit', [
+            ])->add('submit', 'submit', [
                 'label' => 'Save',
                 'attr'  => ['class' => 'btn btn-outline-primary'],
             ]);

@@ -3,10 +3,10 @@
 @section('title', __('Teachers'))
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 	<h1>{{__('Teachers')}}</h1>
 	<div class="show-links">
-    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left"></i> {{__('Go Back')}}</a>
 		<a href="{{ route('teachers.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
 		<button class="btn btn-light">本页记录数量：{{count($teachers)}}</button>
 		@include('shared.search')
@@ -21,8 +21,8 @@
 				    	<th scope="col"># Records</th>
 						<th scope="col">Name</th>
 						<th scope="col">PMI</th>
-						<th scope="col">Zoom</th>
-						<th scope="col">phone/Password</th>
+						<th scope="col">Login</th>
+						<th scope="col">辞退/激情/守时/网络/嘈杂/基督</th>
 						<th scope="col">Sex</th>
 						<th scope="col">Birthday</th>
 						<th scope="col">School</th>
@@ -34,8 +34,11 @@
 					@foreach($teachers as $teacher)
 					    <tr id="{{$teacher->id}}">
 					      <th scope="row">
-					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" >Edit</a>
-					      	<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul fa-large"></i></a>
+					      	<a href="#{{$teacher->id}}"></a>
+					      	<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul"></i></a>
+					      	<a href="{{$teacher->extra_attributes->messenger?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->messenger?'success':'dark'}}" ><i class="fab fa-facebook-messenger"></i></a>
+					      	<a href="{{$teacher->extra_attributes->avatar?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->avatar?'success':'dark'}}" ><i class="far fa-image"></i></a>
+					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" ><i class="fas fa-user-edit"></i></a>
 						  </th>
 					      @php
 					      	$birthday = false;
@@ -46,22 +49,50 @@
 						    $recommend = $profile->recommend;
 							$school = $teacher->school; 
 					      @endphp
-					      <td data-label="Records">{{$profile?$profile->name:'-'}}
-					      	
+					      <td data-label="Name" class="text-left">
+					      	{{$profile?$profile->name:'-'}}
 					      </td>
-					      <td data-label="PMI"><a target="_blank" href="https://zhumu.me/j/{{$teacher->zoom?$teacher->zoom->pmi:'-'}}">{{$teacher->zoom?$teacher->zoom->pmi:''}}</a></td>
-					      <td data-label="ZoomEmail"><a target="_blank" href="/zooms/{{$teacher->zoom?$teacher->zoom->id :'#' }}/edit">{{$teacher->zoom? explode('@',$teacher->zoom->email)[0] :''}}</a></td>
-					      <td data-label="ZoomPassword">
+					      <td data-label="PMI">
+					      	<a target="_blank" href="{{$teacher->zhumu}}">{{$teacher->pmi}}</a>
+					      </td>
+					      <td data-label="Phone/Password" class="text-left">
 					      	{{$profile?$profile->telephone:'-'}}<br/>
-					      	{{$teacher->zoom?$teacher->zoom->password:'-'}}
+					      	{{$teacher->zoom?$teacher->zoom->password:'XXX123'}}
 					      </td>
-					      <td data-label="SEX">{{ $profile?App\Models\Profile::SEXS[$profile->sex]:'-' }}</td>
+					      <td data-label="辞退/激情/守时/网络/嘈杂">
+					      	<button class="btn btn-sm btn-{{$teacher->active?'outline-primary':'dark'}}">R</button>
+					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->passion?'outline-primary':'dark'}}">P</button>
+					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->ontime?'outline-primary':'dark'}}">T</button>
+					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->network?'outline-primary':'dark'}}">W</button>
+					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->noisy?'outline-primary':'dark'}}">E</button>
+					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->christ?'primary':'outline-dark'}}"><i class="fas fa-cross"></i></button>
+					      </td>
+					      <td data-label="Sex">
+					      	<button class="btn btn-sm btn-{{$profile->sex==1?'':'outline-'}}primary">{{$profile->sex==1?'M':'F'}}</button>
+					      	
+							
+					      </td>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('Y-m-d') : '-' }}
 					      </td>
-					      <td data-label="School">{{ $school ? $school->name : 'FreeLancer' }}</td>
-					      <td data-label="Referrer">{{ $recommend ? $profile->recommend->name : '-' }}</td>
-					      <td data-label="Rate">{{$teacher->price??'-'}}</td>
+					      <td data-label="School">
+					      	@if($school)
+					      		{{$school->name}}
+					      	@else
+					      		<button class="btn btn-sm btn-outline-primary"><i class="fab fa-paypal"></i></button>
+					      	@endif
+
+					      </td>
+					      <td data-label="Referrer">
+					      	@if($recommend)
+					      	<a href="#{{$recommend->teacher->id}}">
+					      		{{ $recommend->name}}
+					      	</a>
+					      	@else
+					      	 - - 
+					      	@endif
+					      </td>
+					      <td data-label="Rate"  class="text-right">{{$teacher->price??'-'}}</td>
 					    </tr>
 					@endforeach
 				  </tbody>

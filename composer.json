@@ -41,6 +41,7 @@
         "spatie/laravel-medialibrary": "^7.0.0",
         "spatie/laravel-permission": "^2.36",
         "spatie/laravel-query-builder": "^2.0",
+        "spatie/laravel-schemaless-attributes": "^1.6",
         "torann/laravel-repository": "^0.5.10",
         "yansongda/laravel-notification-wechat": "^1.1"
     },

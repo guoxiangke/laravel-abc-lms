@@ -97,12 +97,10 @@ class TeacherForm extends Form
                 ],
                 'attr' => ['rows' => 2],
             ])
-            ->add('zoom_id', 'select', [
-                'label'       => 'Zoom',
-                'choices'     => $zooms,
-                'empty_value' => '=== Select ===',
+            ->add('pmi', 'text', [
+                'label'       => 'Zhumu PMI',
                 'help_block'  => [
-                    'text' => '选择一个已有的zoomId分配给新建的Teacher，或者填写下面3个内容同时创建一个新zoom',
+                    'text' => '可以带-或纯数字: 174-546-4410',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
@@ -127,6 +125,55 @@ class TeacherForm extends Form
             ->add('pay_remark', 'textarea', [
                 'label' => '付款方式备注',
                 'attr'  => ['rows' => 2],
+            ])
+            ->add('active', 'choice', [
+                'label' => '是否辞职',
+                'choices' => ['1' => '在职', '0' => '辞职'],
+                'selected' => 1,
+                'multiple' => false,
+            ])
+            ->add('passion', 'choice', [
+                'label' => '有无激情',
+                'choices' => ['1' => '有', '0' => '无'],
+                'selected' => 1,
+                'multiple' => false,
+            ])
+            ->add('ontime', 'choice', [
+                'label' => '准时情况',
+                'choices' => ['1' => '准时', '0' => '不准时'],
+                'selected' => 1,
+                'multiple' => false,
+            ])
+            ->add('network', 'choice', [
+                'label' => '网络情况',
+                'choices' => ['1' => '准时', '0' => '不准时'],
+                'multiple' => false,
+            ])
+            ->add('noisy', 'choice', [
+                'label' => '环境嘈杂',
+                'choices' => ['1' => '安静', '0' => '嘈杂'],
+                'multiple' => false,
+            ])
+            ->add('messenger', 'text', [
+                'label'       => 'Messenger',
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
+            ->add('avatar', 'url', [
+                'label'       => 'Avatar',
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
+            ->add('christ', 'choice', [
+                'label' => '宗教信仰',
+                'choices' => ['0' => 'NONE', '1' => 'Christ'],
+                'multiple' => false,
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

@@ -43,8 +43,11 @@ class TeacherController extends Controller
             'user.profiles',
             'user.profiles.contacts',
             'school',
-            'user.profiles.recommend'
+            'user.profiles.recommend',
+            'user.profiles.recommend.teacher',
             )//'user.paymethod',
+            ->orderBy('school_id')
+            ->orderBy('active', 'desc')
             ->orderBy('id', 'desc');
         $teachers = QueryBuilder::for($teachers)
             ->allowedIncludes(['user.profiles'])
@@ -147,11 +150,16 @@ class TeacherController extends Controller
             'school_id' => $request->input('school_id'),
         ]);
 
-        if ($zoomId = $request->input('zoom_id')) {
-            $teacher->zoom_id = $zoomId;
+        if ($pmi = $request->input('pmi')) {
+            $teacher->pmi = $pmi;
         }
         if ($price = $request->input('price')) {
             $teacher->price = $price;
+        }
+        $teacher->active = $request->input('active');
+
+        foreach (Teacher::EXTRA_ATTRIBUTES as $key) {
+            $teacher->extra_attributes->{$key} = $request->input($key);
         }
         $teacher->save();
 
@@ -244,8 +252,6 @@ class TeacherController extends Controller
 
         $user = $teacher->user;
         $schoolId = $teacher->school ? $teacher->school->id : 0;
-        $zoomId = $teacher->zoom ? $teacher->zoom->id : 0;
-        // dd($zoomId);
         $paymethod = $user->paymethod;
 
         $profile = $user->profiles->first();
@@ -275,11 +281,15 @@ class TeacherController extends Controller
 
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([
-            // 'user_id' => $user->id,
+            'active' => $request->input('active'),
             'price'      => $request->input('price') ?: 0,
-            'zoom_id'   => $request->input('zoom_id') ?: null,
+            'pmi'   => $request->input('pmi') ?: null,
             'school_id' => $request->input('school_id') ?: null,
-        ])->save();
+        ]);
+        foreach (Teacher::EXTRA_ATTRIBUTES as $key) {
+            $teacher->extra_attributes->{$key} = $request->input($key);
+        }
+        $teacher->save();
 
         //确保只有一个手机号
         $birthday = $request->input('profile_birthday');
