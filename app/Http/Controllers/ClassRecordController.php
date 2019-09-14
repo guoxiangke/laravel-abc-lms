@@ -154,14 +154,18 @@ class ClassRecordController extends Controller
     }
 
     // https://abc.dev/classRecords/student/131
+    // todo view classRecords by student
+    // admin
+    // agency
+    //供代理按学生查看上课记录，不显示老师姓名
     public function indexByStudent(Student $student)
     {
-        //权限 只有代理可以拥有本列表
-        if (! Auth::user()->hasRole('agency')) {
+        //权限 代理和管理员可以拥有本列表
+        if (! Auth::user()->hasAnyRole(['agency', 'admin', 'manager'])) {
             abort(403);
         }
-        // 只有该学生的代理是他时，才可以查看。
-        if ($student->user->profiles()->first()->recommend_uid != Auth::id()) {
+        // 如果是代理，只有该学生的代理是他时，才可以查看。
+        if (Auth::user()->hasRole('agency') && $student->user->profiles()->first()->recommend_uid != Auth::id()) {
             abort(403);
         }
 
