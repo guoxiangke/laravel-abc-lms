@@ -3,6 +3,7 @@
 @section('title', $order->title)
 
 @section('scripts')
+<script src="{{ asset('js/app.js') }}" defer></script>
 <script>
     var orderId =  "{{ 'Order_' . $order->id }}";
     var default_events = @json($events);
