@@ -96,7 +96,7 @@ class ClassRecordForm extends Form
 
         $this->add('submit', 'submit', [
             'label' => 'Save',
-            'attr'  => ['class' => 'btn btn-outline-primary'],
+            'attr'  => ['class' => 'btn btn-outline-primary submit-confirm', 'data-confirm'=>'Cilck Ok/Confirm to save, don\'t close before this page refresh.'],
         ]);
     }
 }

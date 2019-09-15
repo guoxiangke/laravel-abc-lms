@@ -21,7 +21,7 @@ class ClassGenForm extends Form
             ])
             ->add('submit', 'submit', [
                 'label' => 'Generate',
-                'attr'  => ['class' => 'btn btn-confirm btn-danger d-inline-block'],
+                'attr'  => ['class' => 'btn submit-confirm btn-danger d-inline-block'],
             ]);
     }
 }

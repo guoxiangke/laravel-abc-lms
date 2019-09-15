@@ -116,9 +116,12 @@
             setTimeout(function(){ $('.close-it').slideUp('slowly')}, 5000);
 
             
-            $('.btn-confirm').click(function(e){
+
+            $('.submit-confirm').click(function(e){
+              let msg = $(this).attr('data-confirm');
+              msg = typeof(msg)=='undefined'?'Are you sure!':msg;
               e.preventDefault();
-              if (confirm('Are you sure?')) {
+              if (confirm(msg)) {
                   $(this).parent('form').submit();
               }
             });
