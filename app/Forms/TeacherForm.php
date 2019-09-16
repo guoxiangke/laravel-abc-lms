@@ -165,7 +165,7 @@ class TeacherForm extends Form
             ->add('avatar', 'url', [
                 'label'       => 'Avatar',
                 'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy, then input xxx.yy',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],

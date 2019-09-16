@@ -64,6 +64,24 @@ class TeacherForm extends Form
                 'selected' => $teacher->extra_attributes->christ ?: 0,
                 'multiple' => false,
             ])
+            ->add('messenger', 'text', [
+                'label'       => 'Messenger',
+                'value' => $teacher->extra_attributes->messenger,
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy, then input xxx.yy',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
+            ->add('avatar', 'url', [
+                'label'       => 'Avatar',
+                'value' => $teacher->extra_attributes->avatar,
+                'help_block'  => [
+                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
+            ])
             ->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),
@@ -143,24 +161,6 @@ class TeacherForm extends Form
                 'value'      => $teacher->pmi ?: null,
                 'help_block'  => [
                     'text' => '可以带-或纯数字: 174-546-4410',
-                    'tag'  => 'small',
-                    'attr' => ['class' => 'form-text text-muted'],
-                ],
-            ])
-            ->add('messenger', 'text', [
-                'label'       => 'Messenger',
-                'value' => $teacher->extra_attributes->messenger,
-                'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
-                    'tag'  => 'small',
-                    'attr' => ['class' => 'form-text text-muted'],
-                ],
-            ])
-            ->add('avatar', 'url', [
-                'label'       => 'Avatar',
-                'value' => $teacher->extra_attributes->avatar,
-                'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
