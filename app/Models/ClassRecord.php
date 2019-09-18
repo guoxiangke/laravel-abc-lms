@@ -5,10 +5,12 @@
 namespace App\Models;
 
 use App\User;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -16,6 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class ClassRecord extends Model implements AuditableContract, HasMedia
 {
+    use Notifiable;
     use SoftDeletes;
     use Auditable;
     use Commentable;
@@ -210,4 +213,23 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     // public function getUrl($type='mp3'){
     //     return Storage::disk(self::DISK)->temporaryUrl($this->{$type}, now()->addMinutes(30));
     // }
+
+    /**
+     * Route notifications for the twilio channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForTwilio()
+    {
+        // return "+8613716587629"; //for test!
+        $telephone = $this->user->profiles->first()->telephone;
+
+        //Upyun SMS to chinese no need +86
+
+        // if(! Str::startsWith($telephone, '+')){
+        //     $telephone = "+86{$telephone}";
+        // }
+        return $telephone;
+    }
 }

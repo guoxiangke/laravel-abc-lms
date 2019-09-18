@@ -47,15 +47,17 @@ class ClassRecordsNotification extends Command
             $now->minute = 30;
             $now->second = 0;
         }
-        ClassRecord::where('generated_at', $now)->each(function (ClassRecord $classRecord) {
-            // 通知学生
-            // if user has socials type=1 wechat
-            // $openId = social_id
-            $classRecord->user->socials->map(function ($social) use ($classRecord) {
-                if ($social->type == 1) {
-                    $classRecord->user->notify(new ClassComing($classRecord, $social->social_id));
-                }
+        ClassRecord::where('generated_at', $now)
+             // todo delete for test users. 175 ran 36rui 9wei
+            ->whereIn('user_id', [1, 2, 82, 175, 36, 9])
+            ->each(function (ClassRecord $classRecord) {
+                // 通知学生
+                // todo $c = $classRecord->user; // ?
+                $classRecord->user->socials->map(function ($social) use ($classRecord) {
+                    if ($social->type == 1) {
+                        $classRecord->user->notify(new ClassComing($classRecord, $social->social_id));
+                    }
+                });
             });
-        });
     }
 }

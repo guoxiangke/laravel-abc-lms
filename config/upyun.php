@@ -6,4 +6,7 @@ return [
     'password'      => env('UPYUN_OPERATOR_PASSWORD'),
     'domain'        => env('UPYUN_DOMAIN'),
     'protocol'     => env('UPYUN_DOMAIN_HTTP'),
+    'token'=>[
+        'sms' =>  env('UPYUN_SMS_TOKEN'),
+    ],
 ];

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\Edit\ClassRecordForm as EditForm;
+use App\Notifications\StudentClassNotification;
+use App\Notifications\TeacherClassNotification;
 
 class ClassRecordController extends Controller
 {
@@ -104,7 +106,6 @@ class ClassRecordController extends Controller
         if (! $user->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             abort(403);
         }
-        //$this->authorize('indexByRole');
 
         $allowRolesMap = [
             'agency'  => 'agency_uid',
@@ -375,5 +376,26 @@ class ClassRecordController extends Controller
         //@see setExceptionAttribute 不用操心 weight
         // $classRecord->weight = 1;
         return ['success'=>$classRecord->save()];
+    }
+
+    public function classNotifyTeacher(Request $request, ClassRecord $classRecord)
+    {
+        $this->authorize('admin');
+
+        $classRecord->notify(new TeacherClassNotification($classRecord));
+
+        alert()->toast('已发短信给老师！', 'success', 'top-center')->autoClose(3000);
+
+        return redirect()->back();
+    }
+
+    public function classNotifyStudent(Request $request, ClassRecord $classRecord)
+    {
+        $this->authorize('admin');
+
+        // $classRecord->notify(new StudentClassNotification($classRecord));
+        alert()->toast('已发短信给学生！', 'success', 'top-center')->autoClose(3000);
+
+        return redirect()->back();
     }
 }

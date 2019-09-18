@@ -35,10 +35,10 @@
               @foreach($classRecords as $key => $classRecord)
                   <tr id="{{$classRecord->id}}">
                     <th scope="row">
-                      
                       <a class="btn btn-sm btn-outline-dark text-uppercase" href="{{ route('classRecords.edit', $classRecord->id) }}">
                         Edit
-                      </a></th>
+                      </a>
+                    </th>
                     <td scope="row" data-label="Status">
                       @if(!$classRecord->remark && $classRecord->generated_at->isToday())
                         <a  target="_blank" class="btn btn-sm btn-success text-uppercase" href="https://zhumu.me/j/{{ $classRecord->teacher->teacher->pmi }}">Zoom</a>
@@ -49,8 +49,18 @@
                       <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp4')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp4</a>
                           
                     </td>
-                    <td data-label="Student">{{$classRecord->user->profiles->first()->name}}</td>
-                    <td data-label="老师">{{$classRecord->teacher->profiles->first()->name}}</td>
+                    <td data-label="Student">
+                      {{$classRecord->user->profiles->first()->name}}
+                      @if($classRecord->generated_at->isToday())
+                      <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给学生吗？" href="{{route('admin.classNotifyStudent', $classRecord->id) }}"><i class="fas fa-mobile-alt fa-large"></i></a>
+                      @endif
+                    </td>
+                    <td data-label="老师">
+                      {{$classRecord->teacher->profiles->first()->name}}
+                      @if($classRecord->generated_at->isToday())
+                      <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给老师吗？" href="{{route('admin.classNotifyTeacher', $classRecord->id) }}"><i class="fab fa-telegram fa-large"></i></a>
+                      @endif
+                    </td>
                     <td data-label="agency">{{$classRecord->agency->profiles->first()->name}}</td>
                     <td data-label="ClassAt">{{$classRecord->generated_at->format('m/d H:i 周N')}}</td>
                     <td data-label="exception"  class="exception d-none">{{\App\Models\ClassRecord::EXCEPTION_TYPES[$classRecord->exception]}}

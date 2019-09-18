@@ -67,5 +67,9 @@ return [
         'appid' => env('WEIXIN_KEY'),
         'appsecret' => env('WEIXIN_SECRET'),
     ],
-
+    'twilio' => [
+        'auth_token' => env('TWILIO_AUTH_TOKEN'), // optional when using username and password
+        'account_sid' => env('TWILIO_ACCOUNT_SID'),
+        'from' => env('TWILIO_FROM'), // optional
+    ],
 ];

@@ -105,6 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
     //自动生成0-1-2-3-4-5-6-7 今天/昨天/前天 过去7天记录
     Route::post('/classRecords/order/{order}/generate', 'ClassRecordController@generate')->name('classRecords.generate');
 
+    //classNotify for teacher/student via sms
+    Route::get('classNotify/{classRecord}/teacher', 'ClassRecordController@classNotifyTeacher')->name('admin.classNotifyTeacher');
+    Route::get('classNotify/{classRecord}/student', 'ClassRecordController@classNotifyStudent')->name('admin.classNotifyStudent');
+
     Route::post('/order/{order}/status/{id}', 'OrderController@flagStatus')->name('orders.flagStatus')->where('id', '[0-4]');
 
     Route::get('/referrals', function () {
@@ -125,4 +129,6 @@ Route::get('/signout', 'AuthController@signout');
 
 // AdminController only for admin middleware
 Route::get('admin/genClass', 'AdminController@genClass')->name('admin.genClass');
+
+// classNotify by role via sms
 Route::get('dev/su/{id}', 'AdminController@su')->name('sudo.su');

@@ -115,12 +115,18 @@
             });
             setTimeout(function(){ $('.close-it').slideUp('slowly')}, 5000);
 
-            
+            $('a.btn-confirm').click(function(e){
+                let msg = $(this).attr('data-confirm');
+                msg = typeof(msg)=='undefined'?'Are you sure!':msg;
+                if (!confirm(msg)) {
+                    e.preventDefault();
+                }
+            });
 
             $('.submit-confirm').click(function(e){
+              e.preventDefault();
               let msg = $(this).attr('data-confirm');
               msg = typeof(msg)=='undefined'?'Are you sure!':msg;
-              e.preventDefault();
               if (confirm(msg)) {
                   $(this).parent('form').submit();
               }
