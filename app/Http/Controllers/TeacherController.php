@@ -39,7 +39,6 @@ class TeacherController extends Controller
         $teachers = Teacher::with(
             'user',
             'school',
-            'zoom',
             'user.profiles',
             'user.profiles.contacts',
             'school',
@@ -104,6 +103,7 @@ class TeacherController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $user = $request->user();
+        //??? todo registerStore
     }
 
     /**

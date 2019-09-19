@@ -58,7 +58,7 @@
 					      </td>
 					      <td data-label="Phone/Password" class="text-left">
 					      	{{$profile?$profile->telephone:'-'}}<br/>
-					      	{{$teacher->zoom?$teacher->zoom->password:'XXX123'}}
+					      	{{$profile?$profile->name.'123':'XXX123'}}
 					      </td>
 					      <td data-label="辞退/激情/守时/网络/嘈杂">
 					      	<button class="btn btn-sm btn-{{$teacher->active?'outline-primary':'dark'}}">R</button>

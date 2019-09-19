@@ -17,7 +17,6 @@ class AgencyForm extends Form
             return;
         }
         $user = $agency->user;
-        // dd($zoomId);
         $paymethod = $user->paymethod;
 
         $profile = $user->profiles->first();

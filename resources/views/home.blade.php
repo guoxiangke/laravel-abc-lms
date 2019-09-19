@@ -41,7 +41,6 @@
                     <div class="nav-scroller py-1 mb-2">
                         <nav class="nav d-flex">
                             <a class="p-2 text-muted" href="/books">{{__('Books')}}</a>
-                            <a class="p-2 text-muted" href="/zooms">{{__('Zooms')}}</a>
                             <a class="p-2 text-muted" href="/products">{{__('Products')}}</a>
                             <a class="p-2 text-muted" href="/rrules">{{__('Rrules')}}</a>
                             <a class="p-2 text-muted" href="/classRecords">{{__('ClassRecords')}}</a>

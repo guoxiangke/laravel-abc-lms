@@ -2,7 +2,6 @@
 
 namespace App\Forms;
 
-use App\Models\Zoom;
 use App\Models\School;
 use App\Models\Contact;
 use App\Models\Teacher;
@@ -13,14 +12,6 @@ class TeacherForm extends Form
 {
     public function buildForm()
     {
-        //select zooms un-used!
-        $zooms = Zoom::with('teacher')
-            ->orderBy('id', 'desc')->get()->filter(function ($zoom) {
-                return ! $zoom->teacher;
-            })
-            ->pluck('email', 'id')
-            ->toArray();
-
         $recommend = Teacher::with(['user', 'user.profiles'])->get()->pluck('user.profiles.0.name', 'user_id')->toArray();
 
         $this->add('school_id', 'select', [

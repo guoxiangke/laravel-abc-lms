@@ -43,7 +43,7 @@ class ClassComing extends Notification
         // $accessToken = "n2McCJoqWKRi7hJbKFOqftgtU_EX6u2ZOvIi1lpx0fZJ3YW5Oo4iIPZEpi0ecct2lHMagK84xGF5rEm_DSMKrZFfCEZiYw1yZN3nZXzFSlHM-y88sIi5-dYeeCWx9S1iHXWaAJAMCB";
         // 'oH16Q5hX4-75CyIPAvXpNr7I4PXo'
         $time = $this->classRecord->generated_at->format('H:i （n月d日 l）');
-        $zoomId = $this->classRecord->teacher->teacher->zoom->pmi;
+        $zoomId = $this->classRecord->teacher->teacher->pmi;
         $data = [
             'first'    => ['尊贵的学员您好，您预约的在线外教课堂马上开始！', '#4F4AEF'],
             'keyword1' => ['大象英语外教一对一', '#FF246C'],

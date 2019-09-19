@@ -2,7 +2,6 @@
 
 namespace App\Forms\Register;
 
-use App\Models\Zoom;
 use App\Models\School;
 use App\Models\Contact;
 use App\Models\PayMethod;
@@ -12,11 +11,6 @@ class TeacherRegisterForm extends Form
 {
     public function buildForm()
     {
-        //select zooms un-used!
-        $zooms = Zoom::with('teacher')->get()->filter(function ($zoom) {
-            return ! $zoom->teacher;
-        })->pluck('email', 'id')->toArray();
-
         $this->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),
@@ -45,27 +39,13 @@ class TeacherRegisterForm extends Form
                 'label' => '联系方式备注',
                 'attr'  => ['rows' => 2, 'placeholder'=>'登陆邮箱：teacher_name@wx/skype/qq.com'],
             ])
-            ->add('zoom_id', 'select', [
-                'label'       => 'Zoom',
-                'choices'     => $zooms,
-                'empty_value' => '=== Select ===',
+            ->add('pmi', 'text', [
+                'label'       => 'Zhumu PMI',
                 'help_block'  => [
-                    'text' => '选择一个已有的zoomId分配给新建的Teacher，或者填写下面3个内容创建一个新zoom',
+                    'text' => '可以带-或纯数字: 174-546-4410',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
-            ])
-            ->add('zoom_email', 'email', [
-                'label' => 'Zoom邮箱',
-                'attr'  => ['placeholder' => '新增Zoom登陆邮箱'],
-            ])
-            ->add('zoom_password', 'text', [
-                'label' => 'Zoom密码',
-                'attr'  => ['placeholder' => '新增Zoom登陆密码'],
-            ])
-            ->add('zoom_pmi', 'text', [
-                'label' => 'Zoom PMI',
-                'attr'  => ['placeholder' => '新增ZoomPMI'],
             ])
             ->add('profile_sex', 'select', [
                 'label'       => '性别',
