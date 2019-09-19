@@ -50,7 +50,7 @@
 							$school = $teacher->school;
 
 					      @endphp
-					      <td data-label="Name" class="text-left">
+					      <td data-label="Name">
 					      	{{$profile?$profile->name:'-'}}
 					      </td>
 					      <td data-label="PMI">

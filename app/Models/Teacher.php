@@ -38,12 +38,6 @@ class Teacher extends Model
         return $this->hasOne(School::class, 'id', 'school_id');
     }
 
-    // todo remove zoom();
-    public function zoom()
-    {
-        return $this->hasOne(Zoom::class, 'id', 'zoom_id');
-    }
-
     public function getZhumuAttribute()
     {
         return 'https://zhumu.me/j/'.$this->pmi;
