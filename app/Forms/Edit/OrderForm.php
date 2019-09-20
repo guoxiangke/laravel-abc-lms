@@ -32,9 +32,9 @@ class OrderForm extends Form
                 'choices'  => $products,
             ]);
 
-        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
 
         preg_match_all('/\n/', $order->remark, $matches);

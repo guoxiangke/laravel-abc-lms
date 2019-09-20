@@ -45,7 +45,7 @@ class ProfileForm extends Form
 
         //介绍人只有管理员可以更改！
         if ($profile->user->isAdmin()) {
-            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
             $this->addBefore('submit', 'recommend_uid', 'select', [
                     'label'       => '介绍人',
                     'choices'     => $recommend,

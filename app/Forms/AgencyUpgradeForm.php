@@ -58,7 +58,7 @@ class AgencyUpgradeForm extends Form
             ])//todo 0-100 check!
             ->add('agency_uid', 'select', [
                 'label'       => '介绍人/推荐人',
-                'choices'     => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->toArray(),
+                'choices'     => Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->filter()->toArray(),
                 'empty_value' => '=== Select ===',
             ])
             ->add('submit', 'submit', [

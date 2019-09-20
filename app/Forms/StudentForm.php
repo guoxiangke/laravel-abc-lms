@@ -11,7 +11,7 @@ class StudentForm extends Form
 {
     public function buildForm()
     {
-        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->unique()->toArray();
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->filter()->unique()->toArray();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'label' => '姓名',

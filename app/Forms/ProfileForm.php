@@ -3,8 +3,6 @@
 namespace App\Forms;
 
 use App\User;
-use App\Models\Agency;
-use App\Models\Student;
 use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +10,6 @@ class ProfileForm extends Form
 {
     public function buildForm()
     {
-        // $recommend = Student::with('profiles')->get()->pluck('profiles.0.name','user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name','user_id'))->unique()->toArray();
         $this
             ->add('name', 'text', [
                 'rules' => 'required',
@@ -41,7 +38,7 @@ class ProfileForm extends Form
             ]);
         $user = Auth::user();
         if ($user->isAdmin()) {
-            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
             $this->addBefore('submit', 'recommend_uid', 'select', [
                     'label'       => '介绍人',
                     'choices'     => $recommend,

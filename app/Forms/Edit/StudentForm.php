@@ -19,7 +19,7 @@ class StudentForm extends Form
         $paymethod = $user->paymethod;
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
-        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->unique()->toArray();
+        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->filter()->unique()->toArray();
         // dd($recommend);
 
         $this->add('profile_name', 'text', [

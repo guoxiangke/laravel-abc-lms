@@ -18,8 +18,8 @@ class ClassRecordForm extends Form
         $generated_at = $classRecord->generated_at->format('Y-m-d\TH:i');
         $rrule_id = $classRecord->rrule->order->title;
 
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
 
         $remark = $classRecord->remark;
         $exception = $classRecord->exception;

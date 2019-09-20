@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\Forms\BillForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use App\Forms\Edit\BillForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -112,7 +113,7 @@ class BillController extends Controller
             ['entity' => $bill],
         );
 
-        return view('bills.edit', compact('form'));
+        return view('bills.edit', compact('form', 'bill'));
     }
 
     /**
@@ -147,6 +148,9 @@ class BillController extends Controller
      */
     public function destroy(Bill $bill)
     {
-        //
+        $bill->delete();
+        Session::flash('alert-success', '删除成功！');
+
+        return redirect()->route('bills.index');
     }
 }

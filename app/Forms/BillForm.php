@@ -12,7 +12,7 @@ class BillForm extends Form
 {
     public function buildForm()
     {
-        $users = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->toArray();
+        $users = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
         $orders = Order::with(['user', 'teacher', 'agency', 'user.profiles', 'teacher.profiles', 'agency.profiles'])->active()->get()->map(function ($order) {
             return [$order->id=>$order->title];
         })->flatten()->toArray();
@@ -26,8 +26,8 @@ class BillForm extends Form
             ->add('user_id', 'select', [
                 'label'       => 'User',
                 'rules'       => 'required',
+                'attr'  => ['placeholder' => '输入中文姓名搜索学生/英文学校/老师'],
                 'choices'     => $users,
-                'empty_value' => '=== Select ===',
             ])
             ->add('order_id', 'select', [
                 'label'       => 'Order',

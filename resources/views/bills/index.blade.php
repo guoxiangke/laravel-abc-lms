@@ -30,13 +30,15 @@
                       <th scope="row"><a href="{{ route('bills.edit', $bill->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
                       <td data-label="type">{{App\Models\Bill::TYPES[$bill->type]}}</td>
                       <td data-label="user">
-                        
+                        @php
+                        $profile = $bill->user->profiles->first();
+                        @endphp
                         @if($bill->order)
                         <a href="{{ route('orders.edit', $bill->order->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">
-                        {{$bill->user->profiles->first()->name}}
+                        {{$profile?$profile->name:"-1-"}}
                         </a>
                         @else
-                        {{$bill->user->profiles->first()->name}}
+                        {{$profile?$profile->name:"-1-"}}
                         @endif
                       </td>
                       <td data-label="price">{{App\Models\Bill::CURRENCIES[$bill->currency]}}{{$bill->price}}</td>
