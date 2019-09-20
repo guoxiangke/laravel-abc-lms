@@ -95,7 +95,7 @@
 					      <td data-label="Referrer">
 					      	@if($recommend)
 					      	<a href="#{{$recommend->teacher->id}}">
-					      		{{ $recommend->name}}
+					      		{{ $recommend->profiles->first()->name}}
 					      	</a>
 					      	@else
 					      	 - - 

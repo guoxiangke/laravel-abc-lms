@@ -37,14 +37,11 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with(
-            'user',
             'school',
-            'user.profiles',
-            'user.profiles.contacts',
-            'school',
-            'user.profiles.recommend',
-            'user.profiles.recommend.teacher',
             'paymethod',
+            'user.profiles.contacts',
+            'user.profiles.recommend.profiles',
+            'user.profiles.recommend.teacher',
             )
             ->orderBy('school_id')
             ->orderBy('active', 'desc')

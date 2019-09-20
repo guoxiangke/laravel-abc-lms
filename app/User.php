@@ -51,41 +51,6 @@ class User extends Authenticatable implements HasMedia
     //@see ClassRecordPolicy 谁可以评论 //谁可以查看
     const ADMIN_ROLES = ['developer', 'manager'];
 
-    public function school()
-    {
-        return $this->hasOne(School::class);
-    }
-
-    public function teacher()
-    {
-        return $this->hasOne(Teacher::class);
-    }
-
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
-    public function agency()
-    {
-        return $this->hasOne(Agency::class);
-    }
-
-    public function profiles()
-    {
-        return $this->hasMany(Profile::class);
-    }
-
-    public function socials()
-    {
-        return $this->hasMany(Social::class);
-    }
-
-    public function paymethod()
-    {
-        return $this->hasOne(PayMethod::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -164,5 +129,63 @@ class User extends Authenticatable implements HasMedia
     public static function getAllReference()
     {
         return self::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+    }
+
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
+
+    public function socials()
+    {
+        return $this->hasMany(Social::class);
+    }
+
+    public function paymethod()
+    {
+        return $this->hasOne(PayMethod::class);
+    }
+
+    public function school()
+    {
+        return $this->hasOne(School::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function agency()
+    {
+        return $this->hasOne(Agency::class);
+    }
+
+    /**
+     * $u->isTeacher();
+     * $u->isStudent();
+     * $u->isAgency();.
+     *
+     * $profile->user->isTeacher();
+     * return null or the Modle of teacher
+     */
+    public function isTeacher()
+    {
+        return $this->teacher;
+    }
+
+    public function isStudent()
+    {
+        return $this->student;
+    }
+
+    public function isAgency()
+    {
+        return $this->agency;
     }
 }
