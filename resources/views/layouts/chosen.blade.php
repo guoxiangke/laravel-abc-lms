@@ -3,7 +3,7 @@
 
     <script type="text/javascript">
         window.onload = function () {
-            $('select').selectize({
+            $('form select').selectize({
                 create: false,
                 sortField: 'text'
             });
