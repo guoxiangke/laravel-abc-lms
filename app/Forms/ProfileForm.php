@@ -38,7 +38,7 @@ class ProfileForm extends Form
             ]);
         $user = Auth::user();
         if ($user->isAdmin()) {
-            $recommend = User::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+            $recommend = User::getAllReference();
             $this->addBefore('submit', 'recommend_uid', 'select', [
                     'label'       => '介绍人',
                     'choices'     => $recommend,

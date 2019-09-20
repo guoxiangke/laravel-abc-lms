@@ -22,7 +22,7 @@ class AgencyForm extends Form
         $profile = $user->profiles->first();
         // $profile = $teacher->profiles->first();
         $contact = $profile->contacts->first();
-        $recommend = Agency::with('profiles')->where('user_id', '<>', $profile->user_id)->get()->pluck('profiles.0.name', 'user_id')->filter()->toArray();
+        $recommend = Agency::getAllReference();
         $this->add('profile_name', 'text', [
                 'rules' => 'required',
                 'value' => $profile->name,

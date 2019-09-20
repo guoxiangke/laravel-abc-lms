@@ -2,8 +2,8 @@
 
 namespace App\Forms\Edit;
 
+use App\User;
 use App\Models\Book;
-use App\Models\Agency;
 use App\Models\Student;
 use Kris\LaravelFormBuilder\Form;
 
@@ -19,8 +19,8 @@ class StudentForm extends Form
         $paymethod = $user->paymethod;
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
-        $recommend = Student::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->union(Agency::with('profiles')->get()->pluck('profiles.0.name', 'user_id'))->filter()->unique()->toArray();
-        // dd($recommend);
+        // 包括代理/学生 + laoshi
+        $recommend = User::getAllReference();
 
         $this->add('profile_name', 'text', [
                 'rules' => 'required',

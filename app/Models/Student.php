@@ -58,4 +58,9 @@ class Student extends Model implements AuditableContract
     {
         return $this->hasMany(Order::class);
     }
+
+    public static function getAllReference()
+    {
+        return self::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->filter()->toArray();
+    }
 }

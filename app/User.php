@@ -159,4 +159,10 @@ class User extends Authenticatable implements HasMedia
             ->where('type', $type)
             ->first();
     }
+
+    // Agency::getRecommends() ProfileNameByUid() for form.
+    public static function getAllReference()
+    {
+        return self::with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Forms\Edit;
 
 use App\User;
+use App\Models\Agency;
+use App\Models\Teacher;
 use App\Models\ClassRecord;
 use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +20,8 @@ class ClassRecordForm extends Form
         $generated_at = $classRecord->generated_at->format('Y-m-d\TH:i');
         $rrule_id = $classRecord->rrule->order->title;
 
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $teachers = Teacher::getAllReference();
+        $agencies = Agency::getAllReference();
 
         $remark = $classRecord->remark;
         $exception = $classRecord->exception;

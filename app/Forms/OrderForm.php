@@ -2,11 +2,13 @@
 
 namespace App\Forms;
 
-use App\User;
 use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Product;
+use App\Models\Student;
+use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Input;
 
@@ -23,9 +25,9 @@ class OrderForm extends Form
                 'rules'   => 'required',
                 'choices' => $products,
             ]);
-        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $students = Student::getAllReference();
+        $teachers = Teacher::getAllReference();
+        $agencies = Agency::getAllReference();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
         $input = Input::all();
 
@@ -34,7 +36,10 @@ class OrderForm extends Form
         $period = null;
         $expiredAt = null;
         $agency = null;
-        $rrule = "DTSTART:2019????T180000Z\nRRULE:FREQ=DAILY;COUNT=?;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
+
+        $now = Carbon::now();
+        $today = $now->format('Ymd');
+        $rrule = 'DTSTART:'.$now->format('Ym??')."T??0000Z\nRRULE:FREQ=DAILY;COUNT=?;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
         if (isset($input['user_id'])) {
             $userId = $input['user_id'];
         }
@@ -55,7 +60,6 @@ class OrderForm extends Form
                 'rules'       => 'required',
                 'choices'     => $students,
                 'selected'    => $userId,
-                'empty_value' => '=== Select ===',
             ])
             ->add('teacher_uid', 'select', [
                 'label'       => 'Teacher',

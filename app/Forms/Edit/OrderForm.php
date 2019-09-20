@@ -2,10 +2,12 @@
 
 namespace App\Forms\Edit;
 
-use App\User;
 use App\Models\Book;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Product;
+use App\Models\Student;
+use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
 
 class OrderForm extends Form
@@ -32,9 +34,9 @@ class OrderForm extends Form
                 'choices'  => $products,
             ]);
 
-        $students = User::role('student')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
-        $teachers = User::role('teacher')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
-        $agencies = User::role('agency')->with('profiles')->get()->pluck('profiles.0.name', 'id')->filter()->toArray();
+        $students = Student::getAllReference();
+        $teachers = Teacher::getAllReference();
+        $agencies = Agency::getAllReference();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
 
         preg_match_all('/\n/', $order->remark, $matches);

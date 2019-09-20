@@ -42,4 +42,11 @@ class Agency extends Model
         return $this
                 ->hasMany(Profile::class, 'recommend_uid', 'user_id');
     }
+
+    // Agency::getAllReference()
+    // ProfileNameByUid() for input form.
+    public static function getAllReference()
+    {
+        return self::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->filter()->toArray();
+    }
 }

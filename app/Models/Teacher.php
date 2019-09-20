@@ -47,4 +47,14 @@ class Teacher extends Model
     {
         return $this->hasOne(PayMethod::class, 'user_id', 'user_id');
     }
+
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class, 'user_id', 'user_id');
+    }
+
+    public static function getAllReference()
+    {
+        return self::with('profiles')->get()->pluck('profiles.0.name', 'user_id')->filter()->toArray();
+    }
 }
