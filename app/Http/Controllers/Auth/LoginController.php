@@ -29,7 +29,19 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    // protected $redirectTo = '/home';
+
+    public function redirectTo()
+    {
+        // User role
+        $user = \Auth::user();
+
+        if ($user->hasRole('teacher')) {
+            return '/class-records';
+        }
+
+        return '/home';
+    }
 
     /**
      * Create a new controller instance.
