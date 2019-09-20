@@ -73,14 +73,9 @@ class StudentController extends Controller
         //$this->authorize('indexByRole');
         // dd($user->toArray());
         //我推荐的学生
-        $students = Profile::with('student', 'contacts', 'recommend')
+        $students = Profile::with('contacts', 'recommend')
             ->where('recommend_uid', $user->id)
-            // ->where('student.id', null)
             ->orderBy('id', 'desc')
-            // ->get()
-            // ->filter(function ($recommed) {
-            //     return $recommed->student;
-            // })
             ->paginate(50);
         // dd($students->toArray());
         return view('students.index4recommend', compact('students'));
@@ -135,7 +130,8 @@ class StudentController extends Controller
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        $user = $request->user();
+        // $user = $request->user();
+        $user = User::find($request->input('user_id'));
 
         //region profile 真实姓名/电话 推荐人uid关联 更改机会
         $profileName = $request->input('profile_name');

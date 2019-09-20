@@ -26,7 +26,7 @@
 				  <tbody>
 					@foreach($students as $profile)
 					    <tr id="{{$profile->id}}">
-						@if($profile->student)
+						@if($profile->user->isStudent())
 					      <th scope="row" data-label="Id"><a href="{{ route('classRecords.indexbyStudent', $profile->student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课情况</a></th>
 						@else
 							<th>暂无试听，请保持跟进<br>

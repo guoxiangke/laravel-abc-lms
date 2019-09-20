@@ -14,6 +14,11 @@ class ProfileController extends Controller
 {
     use FormBuilderTrait;
 
+    public function __construct()
+    {
+        $this->middleware(['admin']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +26,12 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->isAdmin()) {
-            $profiles = Profile::with('recommend')->orderBy('id', 'desc')->paginate(50);
-        } else {
-            $profiles = Profile::with('recommend')->orderBy('id', 'desc')->where('user_id', Auth::id())->paginate(10);
-        }
+        $profiles = Profile::with(
+            'recommend',
+            'user.student',
+            'user.teacher',
+            'user.agency',
+         )->orderBy('id', 'desc')->paginate(50);
 
         return view('profiles.index', compact('profiles'));
     }

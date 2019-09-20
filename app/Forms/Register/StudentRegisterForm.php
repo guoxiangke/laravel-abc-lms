@@ -6,12 +6,19 @@ use App\User;
 use App\Models\Student;
 use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class StudentRegisterForm extends Form
 {
     public function buildForm()
     {
+        $userId = auth()->id();
+        $input = Input::all();
+        if (isset($input['user_id'])) {
+            $userId = $input['user_id'];
+        }
         $this
+            ->add('user_id', 'hidden', ['label' => 'User Id', 'value' => $userId])
             ->add('grade', 'select', [
                 'label'       => '年级',
                 'rules'       => 'required',

@@ -13,6 +13,7 @@
                   <th>Sex</th>
                   <th>Birthday</th>
                   <th>Telephone</th>
+                  <th>Student</th>
                   <th>Recommender</th>
                 </tr>
               </thead>
@@ -27,6 +28,19 @@
                     <td data-label="Sex">{{App\Models\Profile::SEXS[$profile->sex]}}</td>
                     <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('Y-m-d'):'-'}}</td>
                     <td data-label="Telephone">{{$profile->telephone}}</td>
+                    
+                    <td data-label="Student">
+                      @if($profile->user->isAgency())
+                      <button class="btn btn-sm btn-success">代理</button>
+                      @elseif($profile->user->isTeacher())
+                      <button class="btn btn-sm btn-success">老师</button>
+                      @elseif($profile->user->isStudent())
+                      <button class="btn btn-sm btn-outline-success">学生</button>
+                      @else
+                        <a href="{{ route('students.register') }}?user_id={{$profile->user_id}}" class="btn btn-sm btn-outline-danger">登记</a>
+                      @endif
+                    </td>
+                    
                     <td data-label="Recommender">{{$profile->recommend?$profile->recommend->name:'-'}}</td>
                   </tr>
               @endforeach
