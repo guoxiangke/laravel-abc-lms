@@ -125,7 +125,6 @@ class ClassRecordController extends Controller
                 'user.profiles',
                 'teacher',//teacher user!
                 'teacherModel',
-                'teacherModel.zoom',
                 'media',
                 )
             ->orderBy('generated_at', 'desc')
