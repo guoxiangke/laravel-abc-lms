@@ -49,7 +49,7 @@ class TeacherController extends Controller
         $teachers = QueryBuilder::for($teachers)
             ->allowedIncludes(['user.profiles'])
             ->allowedFilters(['user.name', 'user.profiles.name'])
-            ->paginate(100);
+            ->paginate(500);
 
         return view('teachers.index', compact('teachers'));
     }

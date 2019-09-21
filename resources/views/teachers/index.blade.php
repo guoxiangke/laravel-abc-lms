@@ -3,7 +3,7 @@
 @section('title', __('Teachers'))
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
 	<h1>{{__('Teachers')}}</h1>
 	<div class="show-links">
     	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left"></i> {{__('Go Back')}}</a>
@@ -21,13 +21,13 @@
 				    	<th scope="col"># Records</th>
 						<th scope="col">Name</th>
 						<th scope="col">PMI</th>
-						<th scope="col">Login</th>
+						<th scope="col">Rate</th>
 						<th scope="col">辞退/激情/守时/网络/嘈杂/基督</th>
 						<th scope="col">Sex</th>
 						<th scope="col">Birthday</th>
-						<th scope="col">School</th>
-						<th scope="col">Referrer</th>
-						<th scope="col">Rate</th>
+						<th scope="col">Pay</th>
+						<th scope="col">推荐人</th>
+						<th scope="col">Login</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -56,10 +56,8 @@
 					      <td data-label="PMI">
 					      	<a target="_blank" href="{{$teacher->zhumu}}">{{$teacher->pmi}}</a>
 					      </td>
-					      <td data-label="Phone/Password" class="text-left">
-					      	{{$profile?$profile->telephone:'-'}}<br/>
-					      	{{$profile?$profile->name.'123':'XXX123'}}
-					      </td>
+					      <td data-label="Rate"  class="text-right">{{$teacher->price??'-'}}</td>
+					      
 					      <td data-label="辞退/激情/守时/网络/嘈杂">
 					      	<button class="btn btn-sm btn-{{$teacher->active?'outline-primary':'dark'}}">R</button>
 					      	<button class="btn btn-sm btn-{{$teacher->extra_attributes->passion?'outline-primary':'dark'}}">P</button>
@@ -101,7 +99,9 @@
 					      	 - - 
 					      	@endif
 					      </td>
-					      <td data-label="Rate"  class="text-right">{{$teacher->price??'-'}}</td>
+					      <td data-label="Phone/Password" class="text-left">
+					      	{{$profile?$profile->telephone:'-'}}<br/>
+					      </td>
 					    </tr>
 					@endforeach
 				  </tbody>
