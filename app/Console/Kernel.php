@@ -26,8 +26,6 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->everyMinute();
         // $schedule->command('horizon:snapshot')->everyFiveMinutes();
-        // $schedule->command('backup:clean --disable-notifications')->daily()->at('01:00');
-        // $schedule->command('backup:run --disable-notifications')->daily()->at('02:00');
         if (\App::environment(['staging'])) {
             // 通知学生 on qq server. 提前15分钟
             $schedule->command('classrecords:notification')->cron('15,45 * * * *');

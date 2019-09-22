@@ -38,7 +38,6 @@
         "simshaun/recurr": "^4.0",
         "socialiteproviders/facebook": "dev-master",
         "socialiteproviders/weixin": "^4.0",
-        "spatie/laravel-backup": "^6.1",
         "spatie/laravel-medialibrary": "^7.0.0",
         "spatie/laravel-permission": "^2.36",
         "spatie/laravel-query-builder": "^2.0",
