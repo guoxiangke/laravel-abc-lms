@@ -32,10 +32,11 @@ class StudentForm extends Form
                 'empty_value' => '=== Select ===',
             ])
             ->add('telephone', 'tel', [
-                'rules'      => 'required|min:11',
+                'rules'      => 'required|size:14',
                 'label'      => '手机号',
+                'value'      => '+86',
                 'help_block' => [
-                    'text' => '手机号可用于登陆,不带+86，11位',
+                    'text' => '手机号可用于登陆,带+86，共计14位',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
@@ -67,7 +68,7 @@ class StudentForm extends Form
             ->add('recommend_uid', 'select', [
                 'label'       => '介绍人',
                 'choices'     => $recommend, //包括代理/学生
-                'empty_value' => '=== Select ===',
+                'selected'    => 1,
             ])
             ->add('remark', 'textarea', [
                 'label' => '备注',

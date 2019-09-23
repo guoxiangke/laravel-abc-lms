@@ -14,7 +14,7 @@ class StudentObserver
      */
     public function created(Student $student)
     {
-        $title = '学生注册登记成功';
+        $title = '学生登记成功';
         bark_notify($title, $student->user->id);
         ftqq_notify($title, 'None', 'manager');
     }

@@ -29,9 +29,14 @@ class AgencyForm extends Form
                 'label' => '姓名',
             ])
             ->add('telephone', 'tel', [
-                'rules' => 'required|min:11',
-                'value' => $profile->telephone,
-                'label' => '手机号',
+                'label'      => '手机号',
+                'rules'      => 'required|size:14',
+                'value'      => $profile->telephone,
+                'help_block' => [
+                    'text' => '手机号可用于登陆,带+86，共计14位',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
             ])
             ->add('user_password', 'text', [
                 'label'      => '登陆密码',

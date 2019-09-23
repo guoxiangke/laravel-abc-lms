@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Pinyin;
 use App\User;
 use App\Models\Profile;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -57,7 +55,7 @@ class RegisterController extends Controller
             'name'          => ['required', 'string', 'max:25'], //, 'unique:users'
             'sex'           => ['required', 'boolean'],
             'birthday'      => ['required', 'string', 'max:25'],
-            'telephone'     => ['required', 'digits_between:9,13', 'unique:profiles'],
+            'telephone'     => ['required', 'string', 'min:14', 'max:14', 'unique:profiles'],
             'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'      => ['required', 'string', 'min:6', 'confirmed'],
             'recommend_uid' => ['required', 'integer'],
@@ -72,12 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $name = User::pinyin($data['name']);
-        if (! $name) {
-            $name = str_replace(' ', '_', $data['name']);
-        }
-        $name = 'u_'.$name;
-
+        $name = User::getRegisterName($data['name']);
         $user = User::create([
             'name'     => $name, //处理后的用户名
             'email'    => $data['email'],
@@ -92,17 +85,11 @@ class RegisterController extends Controller
                 $userProfile->sex = $data['sex'];
                 $userProfile->birthday = $data['birthday'];
                 $telephone = $data['telephone'];
-                if (Str::startsWith($telephone, '86')) {
-                    $telephone = substr($telephone, 2);
-                } else {
-                    $telephone = '+'.$telephone; //+63XXXX
-                }
                 $userProfile->telephone = $telephone;
                 //如果没有推荐人，都指向用户1，前端默认值为1
                 $userProfile->recommend_uid = $data['recommend_uid'];
                 $userProfile->save();
                 Session::flash('alert-success', '你已经成功申请价值298元的外教体验课！客服将稍后与您联系，请注意微信或来电！');
-                alert()->toast(__('Register Success'), 'success', 'top-center')->autoClose(3000);
                 Log::debug('Create an Profile for '.$user->name, [__CLASS__, __FUNCTION__, __LINE__]);
             } catch (\Exception $e) {
                 Log::error($e->getMessage(), [__CLASS__, __FUNCTION__, __LINE__]);

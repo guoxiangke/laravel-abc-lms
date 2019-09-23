@@ -52,8 +52,9 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
-            ->add('user_email', 'text', [
+            ->add('email', 'email', [
                 'label'      => '登陆邮箱',
+                'rules'      => 'required|email:rfc,dns',
                 'help_block' => [
                     'text' => '不填，默认为：t_姓名@teacher.com',
                     'tag'  => 'small',
@@ -61,10 +62,11 @@ class TeacherForm extends Form
                 ],
             ])
             ->add('telephone', 'tel', [
-                'rules'      => 'required|min:11', //+639158798611
                 'label'      => '手机号',
+                'rules'      => 'required|string|min:12|max:14',
+                'value'      =>  '+63',
                 'help_block' => [
-                    'text' => '13位，带+63',
+                    'text' => '带+63，共计12~14位',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
@@ -72,7 +74,7 @@ class TeacherForm extends Form
             ->add('contact_type', 'select', [
                 'label'   => '联系方式',
                 'choices' => Contact::TYPES,
-                // 'selected' => 1, //'PayPal'
+                'selected' => 0,
                 'empty_value' => '=== Select ===',
             ])
             ->add('contact_number', 'text', [
@@ -108,7 +110,6 @@ class TeacherForm extends Form
                 'label'       => '付款方式（中教必填）',
                 'choices'     => PayMethod::TYPES,
                 'selected'    => 1, //'PayPal'
-                'empty_value' => '=== Select ===',
             ])
             ->add('pay_number', 'text', [
                 'label' => '付款账户ID（中教必填）',

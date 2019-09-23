@@ -188,4 +188,25 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->agency;
     }
+
+    // u_pinyin_2
+    public static function getRegisterName($registerName)
+    {
+        //todo 判定是否汉语拼音检测重名！！
+        //1.检查profiles里相同名字的个数。
+        $count = Profile::where('name', $registerName)->count();
+
+        $name = self::pinyin($registerName);
+        //处理是英文的情况
+        if (! $name) {
+            $name = str_replace(' ', '_', $registerName);
+        }
+        $name = 'u_'.$name;
+        //重名处理
+        if ($count) {
+            $name .= '_'.$count;
+        }
+
+        return $name;
+    }
 }

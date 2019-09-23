@@ -45,8 +45,8 @@ if (! function_exists('ftqq_notify')) {
     //ftqq_notify('title2', "###No MarkDown Body###");
     function ftqq_notify($title, $markdown = 'No MarkDown Body', $sendTo = 'admin')
     {
-        if (config('app.env') !== 'production') {
-            return bark_notify($title, $markdown);
+        if (config('app.env') == 'local') {
+            return;
         }
         $admins = \Config::get('notify.sc');
         $key = $admins[$sendTo];

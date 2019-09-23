@@ -36,11 +36,7 @@ class SchoolForm extends Form
                 ],
             ]
         )
-            ->add('image', 'file', [
-                'label' => 'Logo: todo',
-                'attr'  => ['placeholder' => '学校Logo'],
-            ])
-            ->add('user_email', 'email', [
+            ->add('email', 'email', [
                 'value' => $user->email,
                 'label' => '学校登陆邮箱',
                 'rules' => 'required',
@@ -70,11 +66,11 @@ class SchoolForm extends Form
                 'value' => $profile ? ($profile->birthday ? $profile->birthday->format('Y-m-d') : null) : null,
             ])
             ->add('telephone', 'tel', [
-                'value'      => $profile ? $profile->telephone : null,
-                'rules'      => 'required|min:13',
-                'label'      => '管理员手机号',
+                'rules'      => 'required|min:11|max:14',
+                'label' => '管理员手机号',
+                'value'      => $profile ? $profile->telephone : '+63',
                 'help_block' => [
-                    'text' => '13位，带+63',
+                    'text' => '带+63，共计11~14位',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],

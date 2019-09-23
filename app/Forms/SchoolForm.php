@@ -20,11 +20,7 @@ class SchoolForm extends Form
                 ],
             ]
         )
-            ->add('image', 'file', [
-                'label' => 'Logo: todo',
-                'attr'  => ['placeholder' => '学校Logo'],
-            ])
-            ->add('user_email', 'email', [
+            ->add('email', 'email', [
                 'label' => '学校登陆邮箱',
                 'rules' => 'required',
             ])
@@ -49,8 +45,14 @@ class SchoolForm extends Form
             ])
             ->add('profile_birthday', 'date', ['label' => '管理员生日'])
             ->add('telephone', 'tel', [
-                'rules' => 'required|min:13',
+                'rules'      => 'required|min:11|max:14',
                 'label' => '管理员手机号',
+                'value'      =>  '+63',
+                'help_block' => [
+                    'text' => '带+63，共计11~14位',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
             ])
             ->add('contact_skype', 'text', [
                 'rules' => 'required|min:4',

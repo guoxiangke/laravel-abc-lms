@@ -17,8 +17,14 @@ class AgencyForm extends Form
                 'label' => '姓名',
             ])
             ->add('telephone', 'tel', [
-                'rules' => 'required|min:11',
-                'label' => '手机号',
+                'rules'      => 'required|size:14',
+                'label'      => '手机号',
+                'value'      => '+86',
+                'help_block' => [
+                    'text' => '手机号可用于登陆,带+86，共计14位',
+                    'tag'  => 'small',
+                    'attr' => ['class' => 'form-text text-muted'],
+                ],
             ])
             ->add('user_password', 'text', [
                 'label'      => '登陆密码',
@@ -32,7 +38,7 @@ class AgencyForm extends Form
                 'label'       => '其他联系方式',
                 'rules'       => 'required',
                 'choices'     => Contact::TYPES,
-                'empty_value' => '=== Select ===',
+                'selected'    => 1,
             ])
             ->add('contact_number', 'text', [
                 'rules' => 'required|min:4',

@@ -46,11 +46,11 @@ class StudentForm extends Form
                 'empty_value' => '=== Select ===',
             ])
             ->add('telephone', 'tel', [
-                'rules'      => 'required|min:11',
+                'rules'      => 'required|size:14',
                 'label'      => '手机号',
                 'value'      => $profile->telephone,
                 'help_block' => [
-                    'text' => '手机号可用于登陆,不带+86，11位',
+                    'text' => '手机号可用于登陆,带+86，共计11+3位',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],

@@ -191,7 +191,7 @@
 
         $('form').submit(function(){
             $('#telephone-with-dial-code').val(
-                parseInt($('.selected-dial-code').html()) + $('#telephone').val()
+                $('.selected-dial-code').html() + $('#telephone').val()
             );
         });
 

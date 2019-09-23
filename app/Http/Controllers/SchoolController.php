@@ -69,7 +69,8 @@ class SchoolController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=> 'required|min:13|unique:profiles',
+            'telephone'=> 'required|min:11|max:14|unique:profiles',
+            'email' => 'required|unique:users',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -79,16 +80,12 @@ class SchoolController extends Controller
         // create login user
         $user = User::firstOrNew([
             'name'  => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-            'email' => $request->input('user_email'),
+            'email' => $request->input('email'),
         ]);
         $user->password = Hash::make($request->input('password') ?: 'Dxjy1234');
         $user->save();
         //give role
         $user->assignRole(User::ROLES['school']);
-        //todo
-        // dd(Storage::disk('onedrive')->put('/', $request->file('image'))) ;
-        // $user->addMedia($pathToImage)->toMediaCollection('avatar');
-        // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
 
         //0.save school
         School::firstOrNew([
@@ -173,6 +170,10 @@ class SchoolController extends Controller
      */
     public function update(Request $request, school $school)
     {
+        $this->validate($request, [
+            'telephone'=> 'required|min:11|max:14|unique:profiles,telephone,'.$school->user_id.',user_id',
+            'email' => 'required|unique:users,email,'.$school->user_id.',id',
+        ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -184,19 +185,13 @@ class SchoolController extends Controller
 
         $profile = $user->profiles->first();
         $contact = $profile->contacts->first();
-
-        $user->fill([
-            'name'     => 'school_'.str_replace(' ', '', $request->input('profile_name')),
-            'email'    => $request->input('user_email'),
-            'password' => Hash::make($request->input('password') ?: 'Dxjy1234'),
-        ])->save();
-        //give role
-        // $user->assignRole(User::ROLES['school']);
-
-        //todo
-        // dd(Storage::disk('onedrive')->put('/', $request->file('image'))) ;
-        // $user->addMedia($pathToImage)->toMediaCollection('avatar');
-        // $yourModel->addMedia($pathToFile)->toMediaCollection('big-files', 's3');
+        $name = User::getRegisterName($request->input('profile_name'));
+        $user->name = 's_'.$name;
+        $user->email = $request->input('email');
+        if ($password = $request->input('user_password')) {
+            $user->password = Hash::make($password);
+        }
+        $user->save();
 
         //0.save school
         $school->fill([

@@ -115,7 +115,7 @@
             $('.close').on('click',function(){
                 $(this).parents('.close-it').slideUp('slowly');
             });
-            setTimeout(function(){ $('.close-it').slideUp('slowly')}, 5000);
+            setTimeout(function(){ $('.close-it').slideUp('slowly')}, 10000);
 
             $('a.btn-confirm').click(function(e){
                 let msg = $(this).attr('data-confirm');

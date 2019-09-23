@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Profile;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -74,12 +75,15 @@ class LoginController extends Controller
         $account = $request->get('username');
         if (is_numeric($account)) {
             $field = 'id';
+            if (! Str::startsWith($account, '+')) {
+                $account = "+86{$account}";
+            }
             $account = Profile::select('user_id')->where('telephone', $account)->first();
             $account = ($account == null) ? 0 : $account->user_id;
         } elseif (filter_var($account, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
         } else {
-            $field = 'name'; //禁用用户名登陆，因重名缘故
+            $field = 'name'; //done no need! 禁用用户名登陆，因重名缘故
         }
         $password = $request->get('password');
 

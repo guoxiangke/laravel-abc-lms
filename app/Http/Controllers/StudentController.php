@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\Session;
 use App\Forms\StudentForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\StudentForm as EditForm;
@@ -122,7 +123,7 @@ class StudentController extends Controller
         $profileTelephone = $request->input('telephone');
         if ($profileTelephone) {
             $this->validate($request, [
-                'telephone'=> 'min:11|unique:profiles',
+                'telephone'=> 'required|string|min:14|max:14|unique:profiles',
             ]);
         }
         $form = $formBuilder->create(StudentRegisterForm::class);
@@ -186,18 +187,14 @@ class StudentController extends Controller
         $form = $formBuilder->create(CreateForm::class);
 
         $this->validate($request, [
-            'telephone'=> 'required|min:11|unique:profiles',
+            'telephone'=> 'required|string|min:14|max:14|unique:profiles',
         ]);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         // create login user
         $profileName = $request->input('profile_name');
-        $name = User::pinyin($profileName);
-        if (! $name) {
-            $name = str_replace(' ', '_', $profileName);
-        }
-        $name = 's_'.$name;
+        $name = User::getRegisterName($profileName);
         $email = $name.'_'.Str::random(6).'@student.com';
         $userData = [
             'name'     => $name,
@@ -239,8 +236,7 @@ class StudentController extends Controller
             'remark'     => $request->input('contact_remark'),
         ])->save();
         // $contact = $profile->contact()->save($contact);
-
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', '登记成功！');
 
         return redirect()->route('students.index');
     }
@@ -285,8 +281,10 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
+        $this->validate($request, [
+            'telephone'=> 'required|min:10|max:14|unique:profiles,telephone,'.$student->user_id.',user_id',
+        ]);
         $form = $this->form(EditForm::class);
-
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
@@ -312,13 +310,13 @@ class StudentController extends Controller
         $profileName = $request->input('profile_name');
         $name = $request->input('name'); //英文名！
         if (! $name) {
-            $name = 's_'.User::pinyin($profileName);
+            $name = User::getRegisterName($profileName);
         }
-        // $email = $name . '@student.com';
-        $password = $request->input('password') ?: 'dxjy1234';
-        $password = Hash::make($password);
-        $user->fill(compact('name', 'password'))->save();
-        // $user->assignRole(User::ROLES['student']);
+        $user->name = $name;
+        if ($password = $request->input('password')) {
+            $user->password = Hash::make($password);
+        }
+        $user->save();
 
         $student->fill([
             // 'user_id' => $user->id,

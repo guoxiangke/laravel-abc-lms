@@ -94,7 +94,8 @@ class TeacherController extends Controller
         $form = $formBuilder->create(TeacherRegisterForm::class);
 
         $this->validate($request, [
-            'telephone'=> 'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:12|max:14|unique:profiles',
+            'email' => 'required|unique:users',
         ]);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -112,7 +113,8 @@ class TeacherController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=> 'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:12|max:14|unique:profiles',
+            'email' => 'required|unique:users',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -122,7 +124,7 @@ class TeacherController extends Controller
         // create login user
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type') ?: 0; //0-4
-        $teacherEmail = $request->input('user_email') ?: $teacherUserName.'@teacher.com';
+        $teacherEmail = $request->input('email') ?: $teacherUserName.'@teacher.com';
         $user = User::where('email', $teacherEmail)->first();
 
         if (! $user) {
@@ -243,6 +245,11 @@ class TeacherController extends Controller
      */
     public function update(Request $request, teacher $teacher, FormBuilder $formBuilder)
     {
+        // https://laracasts.com/discuss/channels/laravel/forcing-a-unique-rule-to-ignore-a-given-id?page=1#reply=478201
+        $this->validate($request, [
+            'telephone' => 'required|min:12|max:14|unique:profiles,telephone,'.$teacher->user_id.',user_id',
+            'email' => 'required|unique:users,email,'.$teacher->user_id.',id',
+        ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -258,24 +265,14 @@ class TeacherController extends Controller
         $teacherUserName = 't_'.str_replace(' ', '', $request->input('profile_name'));
         $contactType = $request->input('contact_type') ?: 0; //0-4
 
-        $teacherEmail = $request->input('user_email') ?: $teacherUserName.'@teacher.com';
+        $teacherEmail = $request->input('email') ?: $teacherUserName.'@teacher.com';
 
-        $userData = [
-            'name'     => $teacherUserName,
-            'email'    => $teacherEmail,
-        ];
-
+        $user->name = $teacherUserName;
+        $user->email = $teacherEmail;
         if ($password = $request->input('user_password')) {
-            $userData['password'] = Hash::make($password);
+            $user->password = Hash::make($password);
         }
-
-        try {
-            $user->fill($userData)->save();
-        } catch (\Illuminate\Database\QueryException $e) {
-            Session::flash('alert-danger', '邮箱可能重复了！');
-
-            return redirect()->back()->withErrors($form->getErrors())->withInput();
-        }
+        $user->save();
 
         // $user->assignRole(User::ROLES['teacher']);
         $teacher->fill([

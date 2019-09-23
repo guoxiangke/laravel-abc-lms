@@ -83,7 +83,7 @@ class AgencyController extends Controller
         //必须是没XX角色才可以注册
         $this->authorize('create', Agency::class);
         $this->validate($request, [
-            'telephone'=> 'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:14|max:14|unique:profiles',
         ]);
         $form = $formBuilder->create(AgencyRegisterForm::class);
 
@@ -102,7 +102,7 @@ class AgencyController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->validate($request, [
-            'telephone'=> 'required|min:11|unique:profiles',
+            'telephone'=> 'required|min:14|unique:profiles',
         ]);
         $form = $formBuilder->create(CreateForm::class);
 
@@ -206,6 +206,9 @@ class AgencyController extends Controller
      */
     public function update(Request $request, agency $agency, FormBuilder $formBuilder)
     {
+        $this->validate($request, [
+            'telephone'=> 'required|min:10|max:14|unique:profiles,telephone,'.$agency->user_id.',user_id',
+        ]);
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
@@ -230,16 +233,12 @@ class AgencyController extends Controller
         $contactType = $request->input('contact_type'); //0-3
         $email = $userName.'@'.Contact::TYPES[$contactType].'.com';
 
-        if ($password = $request->input('user_password') ?: 'Agency1234') {
-            $password = Hash::make($password);
+        $user->name = $userName;
+        $user->email = $email;
+        if ($password = $request->input('user_password')) {
+            $user->password = Hash::make($password);
         }
-        $userData = [
-            'name'     => $userName,
-            'email'    => $email,
-            'password' => $password,
-        ];
-        $user->fill($userData)->save();
-        // $user->assignRole(User::ROLES['agency']);
+        $user->save();
 
         $agency->fill([
             // 'user_id' => $user->id,

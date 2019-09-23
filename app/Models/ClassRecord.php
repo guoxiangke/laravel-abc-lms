@@ -5,7 +5,6 @@
 namespace App\Models;
 
 use App\User;
-use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
@@ -225,11 +224,6 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         // return "+8613716587629"; //for test!
         $telephone = $this->user->profiles->first()->telephone;
 
-        //Upyun SMS to chinese no need +86
-
-        // if(! Str::startsWith($telephone, '+')){
-        //     $telephone = "+86{$telephone}";
-        // }
         return $telephone;
     }
 }

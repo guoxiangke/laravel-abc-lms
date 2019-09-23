@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
     //覆盖create！！！
     Route::get('rrules/create/{order}', 'RruleController@create')->name('rrules.create');
 
-    //登陆用户 角色登记
+    //登陆用户 角色登记 todo delete some!!
     Route::get('student/register', 'StudentController@register')->name('students.register');
     Route::get('teacher/register', 'TeacherController@register')->name('teachers.register');
     Route::get('agency/register', 'AgencyController@register')->name('agencies.register');

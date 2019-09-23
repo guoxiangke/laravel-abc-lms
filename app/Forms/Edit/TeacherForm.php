@@ -121,16 +121,17 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
-            ->add('user_email', 'text', [
+            ->add('email', 'text', [
                 'label'      => '登陆邮箱',
+                'rules'      => 'required|email:rfc,dns',
                 'value'      => $user->email,
             ])
             ->add('telephone', 'tel', [
                 'value'      => $profile ? $profile->telephone : null,
-                'rules'      => 'required|min:11', //+639158798611
+                'rules'      => 'required|string|min:12|max:14',
                 'label'      => '手机号',
                 'help_block' => [
-                    'text' => '外教带+63,共计13位；中教带+86',
+                    'text' => '外教带+63,中教带+86,共计12~14位',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
