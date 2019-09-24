@@ -108,7 +108,6 @@
             @yield('content')
         </main>
     </div>
-    @include('sweetalert::alert')
     <script type="text/javascript">
         (function($) {
           $( document ).ready(function() {
