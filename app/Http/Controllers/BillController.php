@@ -80,7 +80,7 @@ class BillController extends Controller
         $postData = $request->all();
         $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('bills.index');
     }
@@ -135,7 +135,7 @@ class BillController extends Controller
         $postData = $request->all();
         $postData['status'] = $request->input('status') ?: 0;
         $bill->fill($postData)->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('bills.index');
     }

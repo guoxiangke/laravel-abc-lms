@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', 'Edit Teacher')
 
 @section('content')
 <div class="container">
-	<h1>Edit Teacher</h1>
+	<h1 class="h3 mb-0 text-gray-800">Edit Teacher</h1>
 
     <div class="show-links">
         <a href="{{ route('teachers.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>

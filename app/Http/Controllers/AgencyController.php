@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\AgencyForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\AgencyForm as EditForm;
 use App\Forms\Register\AgencyRegisterForm;
@@ -172,7 +173,7 @@ class AgencyController extends Controller
         ]);
         $paymethod = $user->paymethod()->save($paymethod);
 
-        alert()->toast('成功创建：'.$request->input('profile_name'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', '成功创建：'.$request->input('profile_name'));
 
         return redirect()->route('agencies.index');
     }
@@ -269,7 +270,7 @@ class AgencyController extends Controller
             'remark' => $request->input('pay_remark'),
         ])->save();
 
-        alert()->toast('Update Success', 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', 'Update Success');
 
         return redirect()->route('agencies.index');
     }
@@ -311,7 +312,7 @@ class AgencyController extends Controller
             'remark'  => $request->input('pay_remark'),
         ]);
         // $paymethod = $user->paymethod()->save($paymethod);
-        alert()->toast(__('Upgrade Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Upgrade Success'));
 
         return redirect()->route('agencies.index');
     }

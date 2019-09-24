@@ -1,14 +1,11 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', 'Create Student')
 
 @section('content')
 <div class="container">
-	<h1>Create Student</h1>
-
-    <div class="show-links">
-        <a href="{{ route('students.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-    </div>
+	<h1 class="h3 mb-0 text-gray-800"><i class="fa fa-fw fa-address-card"></i>Create Student</h1>
+	<br>	
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 

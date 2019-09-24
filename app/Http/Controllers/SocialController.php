@@ -8,6 +8,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Forms\SocialForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
@@ -49,7 +50,7 @@ class SocialController extends Controller
         }
         $data = [$field => $account, 'password' => request('password')];
         if (Auth::attempt($data, true)) {
-            alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
+            Session::flash('alert-success', __('Bind Success'));
             Social::firstOrCreate(
                 [
                     'social_id' => $request->input('social_id'),
@@ -60,7 +61,7 @@ class SocialController extends Controller
 
             return redirect('home');
         } else {
-            alert()->toast(__('Wrong Credentials'), 'error', 'top-center')->autoClose(3000);
+            Session::flash('alert-danger', __('Wrong Credentials'));
 
             return redirect('login');
         }
@@ -77,7 +78,7 @@ class SocialController extends Controller
         // $this->authorize('delete', $social);
 
         $social->delete();
-        alert()->toast(__('Unbind Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Unbind Success'));
 
         return redirect('students');
     }
@@ -146,7 +147,7 @@ class SocialController extends Controller
 
                 return view('socials.create', compact('form'));
             } else {
-                alert()->toast(__('Bind Success'), 'success', 'top-center')->autoClose(3000);
+                Session::flash('alert-success', __('Bind Success'));
                 Social::firstOrCreate(
                     [
                         'social_id' => $socialUser->id,

@@ -4,66 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "543b1a86a257a6c94b55af1cd0279b49",
+    "content-hash": "d33ebbad61ef21a67f8009a5f802ee5d",
     "packages": [
-        {
-            "name": "actuallymab/laravel-comment",
-            "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/actuallymab/laravel-comment.git",
-                "reference": "9eb3455131879c39001e0f1c3f9149679634c350"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/actuallymab/laravel-comment/zipball/9eb3455131879c39001e0f1c3f9149679634c350",
-                "reference": "9eb3455131879c39001e0f1c3f9149679634c350",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|~6.0.0",
-                "php": "^7.1.3"
-            },
-            "require-dev": {
-                "fzaninotto/faker": "^1.8",
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0|~4.0.0",
-                "phpunit/phpunit": "^7.4",
-                "scrutinizer/ocular": "^1.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "\\Actuallymab\\LaravelComment\\LaravelCommentServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Actuallymab\\LaravelComment\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mehmet Aydin Bahadir",
-                    "email": "mehmet.aydin.bahadir@gmail.com"
-                }
-            ],
-            "description": "Just another comment system for your awesome Laravel project.",
-            "homepage": "https://github.com/actuallymab/laravel-comment",
-            "keywords": [
-                "actuallymab",
-                "laravel-comment"
-            ],
-            "time": "2019-09-13T15:01:05+00:00"
-        },
         {
             "name": "aws/aws-sdk-php",
             "version": "3.112.5",
@@ -2420,60 +2362,6 @@
             "time": "2018-11-22T18:33:57+00:00"
         },
         {
-            "name": "lokielse/omnipay-wechatpay",
-            "version": "v3.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lokielse/omnipay-wechatpay.git",
-                "reference": "12dbdd11acae48555957fd34a22e3efc7a497631"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lokielse/omnipay-wechatpay/zipball/12dbdd11acae48555957fd34a22e3efc7a497631",
-                "reference": "12dbdd11acae48555957fd34a22e3efc7a497631",
-                "shasum": ""
-            },
-            "require": {
-                "omnipay/common": "^3.0",
-                "php-http/guzzle6-adapter": "*"
-            },
-            "require-dev": {
-                "omnipay/tests": "^3.0",
-                "squizlabs/php_codesniffer": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Omnipay\\WechatPay\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Loki Else",
-                    "email": "lokielse@gmail.com"
-                }
-            ],
-            "description": "Wechat gateway for Omnipay payment processing library",
-            "homepage": "https://github.com/lokielse/omnipay-wechatpay",
-            "keywords": [
-                "app",
-                "gateway",
-                "omnipay",
-                "pay",
-                "payment",
-                "php",
-                "purchase",
-                "sdk",
-                "wechat",
-                "微信支付"
-            ],
-            "time": "2018-11-02T06:03:53+00:00"
-        },
-        {
             "name": "maennchen/zipstream-php",
             "version": "1.2.0",
             "source": {
@@ -3756,69 +3644,6 @@
             "time": "2019-06-30T09:04:27+00:00"
         },
         {
-            "name": "php-http/guzzle6-adapter",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/guzzle6-adapter.git",
-                "reference": "6074a4b1f4d5c21061b70bab3b8ad484282fe31f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/guzzle6-adapter/zipball/6074a4b1f4d5c21061b70bab3b8ad484282fe31f",
-                "reference": "6074a4b1f4d5c21061b70bab3b8ad484282fe31f",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0",
-                "php": "^7.1",
-                "php-http/httplug": "^2.0",
-                "psr/http-client": "^1.0"
-            },
-            "provide": {
-                "php-http/async-client-implementation": "1.0",
-                "php-http/client-implementation": "1.0",
-                "psr/http-client-implementation": "1.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "php-http/client-integration-tests": "^2.0",
-                "phpunit/phpunit": "^7.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Adapter\\Guzzle6\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                },
-                {
-                    "name": "David de Boer",
-                    "email": "david@ddeboer.nl"
-                }
-            ],
-            "description": "Guzzle 6 HTTP Adapter",
-            "homepage": "http://httplug.io",
-            "keywords": [
-                "Guzzle",
-                "http"
-            ],
-            "time": "2018-12-16T14:44:03+00:00"
-        },
-        {
             "name": "php-http/httplug",
             "version": "v2.0.0",
             "source": {
@@ -4637,72 +4462,6 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
-        },
-        {
-            "name": "realrashid/sweet-alert",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/7bd78445947ef8ce483412afbddb2dec7fc40eb0",
-                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/session": "~5.1",
-                "illuminate/support": "~5.1",
-                "php": "~5.6|~7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": ">=5.4.3",
-                "squizlabs/php_codesniffer": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
-                    ],
-                    "aliases": {
-                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RealRashid\\SweetAlert\\": "src"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rashid Ali",
-                    "email": "realrashid05@gmail.com",
-                    "homepage": "https://realrashid.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "SweetAlert2 for Laravel 5.5.* by Rashid Ali",
-            "homepage": "https://github.com/realrashid/sweet-alert",
-            "keywords": [
-                "alert",
-                "laravel",
-                "notifier",
-                "noty",
-                "sweet",
-                "sweet-alert2"
-            ],
-            "time": "2019-03-29T18:34:57+00:00"
         },
         {
             "name": "sentry/sdk",
@@ -7472,6 +7231,64 @@
     ],
     "packages-dev": [
         {
+            "name": "actuallymab/laravel-comment",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/actuallymab/laravel-comment.git",
+                "reference": "9eb3455131879c39001e0f1c3f9149679634c350"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/actuallymab/laravel-comment/zipball/9eb3455131879c39001e0f1c3f9149679634c350",
+                "reference": "9eb3455131879c39001e0f1c3f9149679634c350",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|~6.0.0",
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.8",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0|~4.0.0",
+                "phpunit/phpunit": "^7.4",
+                "scrutinizer/ocular": "^1.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "\\Actuallymab\\LaravelComment\\LaravelCommentServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Actuallymab\\LaravelComment\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mehmet Aydin Bahadir",
+                    "email": "mehmet.aydin.bahadir@gmail.com"
+                }
+            ],
+            "description": "Just another comment system for your awesome Laravel project.",
+            "homepage": "https://github.com/actuallymab/laravel-comment",
+            "keywords": [
+                "actuallymab",
+                "laravel-comment"
+            ],
+            "time": "2019-09-13T15:01:05+00:00"
+        },
+        {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.2.8",
             "source": {
@@ -9794,6 +9611,72 @@
                 "xunit"
             ],
             "time": "2019-09-14T09:08:39+00:00"
+        },
+        {
+            "name": "realrashid/sweet-alert",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/realrashid/sweet-alert.git",
+                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/7bd78445947ef8ce483412afbddb2dec7fc40eb0",
+                "reference": "7bd78445947ef8ce483412afbddb2dec7fc40eb0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": "~5.1",
+                "illuminate/support": "~5.1",
+                "php": "~5.6|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=5.4.3",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RealRashid\\SweetAlert\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rashid Ali",
+                    "email": "realrashid05@gmail.com",
+                    "homepage": "https://realrashid.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "SweetAlert2 for Laravel 5.5.* by Rashid Ali",
+            "homepage": "https://github.com/realrashid/sweet-alert",
+            "keywords": [
+                "alert",
+                "laravel",
+                "notifier",
+                "noty",
+                "sweet",
+                "sweet-alert2"
+            ],
+            "time": "2019-03-29T18:34:57+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

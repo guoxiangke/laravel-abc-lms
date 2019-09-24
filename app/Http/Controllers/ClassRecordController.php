@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Student;
@@ -89,7 +90,7 @@ class ClassRecordController extends Controller
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        alert()->toast('正在生成，请稍后刷新', 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', '正在生成，请稍后刷新');
 
         ClassRecordsGenerateQueue::dispatch($order, request('days'))->onQueue('high');
 
@@ -124,6 +125,7 @@ class ClassRecordController extends Controller
                 'user',
                 'user.profiles',
                 'teacher',//teacher user!
+                'teacher.profiles',//teacher user!
                 'teacherModel',
                 'media',
                 )
@@ -158,14 +160,14 @@ class ClassRecordController extends Controller
     // admin
     // agency
     //供代理按学生查看上课记录，不显示老师姓名
-    public function indexByStudent(Student $student)
+    public function indexByStudent(User $user)
     {
         //权限 代理和管理员可以拥有本列表
         if (! Auth::user()->hasAnyRole(['agency', 'admin', 'manager'])) {
             abort(403);
         }
         // 如果是代理，只有该学生的代理是他时，才可以查看。
-        if (Auth::user()->hasRole('agency') && $student->user->profiles()->first()->recommend_uid != Auth::id()) {
+        if (Auth::user()->hasRole('agency') && $user->profiles()->first()->recommend_uid != Auth::id()) {
             abort(403);
         }
 
@@ -174,11 +176,11 @@ class ClassRecordController extends Controller
             'user',
             'user.profiles',
                 )
-            ->where('user_id', $student->user_id)
+            ->where('user_id', $user->id)
             ->orderBy('generated_at', 'desc')
             ->paginate(50);
 
-        return view('classRecords.index4agency', compact('classRecords', 'student'));
+        return view('classRecords.index4agency', compact('classRecords', 'user'));
     }
 
     // https://abc.dev/classRecords/teacher/6
@@ -339,7 +341,7 @@ class ClassRecordController extends Controller
         }
 
         $classRecord->fill($data)->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         if (Auth::user()->hasAnyRole(ClassRecord::ALLOW_LIST_ROLES)) {
             return redirect(route('classRecords.indexByRole'));
@@ -383,7 +385,7 @@ class ClassRecordController extends Controller
 
         $classRecord->notify(new TeacherClassNotification($classRecord));
 
-        alert()->toast('已发短信给老师！', 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->back();
     }
@@ -393,7 +395,7 @@ class ClassRecordController extends Controller
         $this->authorize('admin');
 
         // $classRecord->notify(new StudentClassNotification($classRecord));
-        alert()->toast('已发短信给学生！', 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->back();
     }

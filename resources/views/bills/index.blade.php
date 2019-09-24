@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Bills'))
 
 @section('content')
 <div class="container">
-	<h1>{{__('Bills')}}</h1>
+	<h1 class="h3 mb-0 text-gray-800"><i class="fab fa-fw fa-cc-visa"></i>{{__('Bills')}}</h1>
   <div class="show-links">
-    <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
     <a href="{{ route('bills.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
   </div>
     <div class="col-md-12 col-sm-12 p-0"> 

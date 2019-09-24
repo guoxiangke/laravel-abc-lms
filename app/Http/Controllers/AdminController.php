@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -20,17 +23,21 @@ class AdminController extends Controller
     public function genClass()
     {
         Artisan::call('classrecords:generate');
-        alert()->toast('正在生成，请稍后刷新此页', 'success', 'top-center')->autoClose(3000);
-        // return redirect('classRecords');
-        return route('classRecords.index');
+        Session::flash('alert-success', '正在生成，请稍后刷新此页！');
+
+        return redirect(route('classRecords.index'));
     }
 
     // switch user for dev
     // su -i
-    public function su($uid)
+    public function su(User $user)
     {
-        Auth::loginUsingId($uid);
-        alert()->toast('切换登录成功！', 'success', 'top-center')->autoClose(3000);
+        Auth::loginUsingId($user->id);
+
+        Session::flash('alert-success', '切换登录成功！');
+        if ($user->hasRole(['teacher', 'agency', 'student'])) {
+            return redirect(route('classRecords.indexByRole'));
+        }
 
         return redirect('home');
     }

@@ -40,9 +40,9 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
 
     const EXCEPTION_TYPES = [
         '正常', //0
-        '学生请假', //1
+        '请假', //1 //学生请假
         '老师请假', //2
-        '学生旷课', //3
+        '旷课', //3 学生旷课
         '老师异常标记', //老师异常,不给老师算课时，需要给学生补课 4
     ];
 

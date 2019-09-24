@@ -86,11 +86,11 @@ class VideoController extends Controller
                 'end_time' => $request->input('end_time'),
                 'path' => $dest,
             ]);
-            alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+            Session::flash('alert-success', __('Success'));
 
             return redirect()->route('videos.cut', $classRecord);
         } else {
-            alert()->toast('出错了，告诉程序员吧：190803-96', 'error', 'top-center')->autoClose(3000);
+            Session::flash('alert-danger', '出错了，告诉程序员吧：190803-96');
         }
     }
 
@@ -109,8 +109,7 @@ class VideoController extends Controller
         $upyun = new Upyun($config);
         $res = $upyun->delete($video->path);
         if ($res) {
-            alert()->toast('Deleted Success', 'success', 'top-center')->autoClose(3000);
-            // Session::flash('alert-success', 'Upyun文件删除成功！');
+            Session::flash('alert-success', 'Upyun文件删除成功！');
         }
 
         return redirect()->back();

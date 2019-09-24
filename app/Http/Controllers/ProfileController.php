@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Forms\ProfileForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ProfileForm as EditForm;
@@ -78,7 +79,7 @@ class ProfileController extends Controller
             ]
         );
         $profile = $profile->fill($request->except('user_id'))->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('profiles.index');
     }
@@ -131,7 +132,7 @@ class ProfileController extends Controller
         }
 
         $profile = $profile->fill($request->all())->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('profiles.index');
     }

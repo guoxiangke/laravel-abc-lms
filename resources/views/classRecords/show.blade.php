@@ -1,12 +1,12 @@
 @inject('markdown', 'Parsedown')
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('View ClassRecord'))
 
 @section('content')
 <div class="container">
-    <h1>{{__('View ClassRecord')}}</h1>
-
+    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('View ClassRecord')}}</h1>
+    <br>
     <?php
         $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
         if (Auth::user()->hasAnyRole(\App\Models\ClassRecord::ALLOW_LIST_ROLES)) {

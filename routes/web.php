@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('student-recommend', 'StudentController@indexByRecommend')->name('students.recommend');
     Route::get('classRecords/order/{order}', 'ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
     //某个学生的上课记录 for agncy！
-    Route::get('classRecords/student/{student}', 'ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
+    Route::get('classRecords/student/{user}', 'ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
     //某个学生的上课记录 by teacher, only for Admin
     Route::get('classRecords/teacher/{teacher}', 'ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
     //老师/管理人员快速请假标记 ajax
@@ -131,4 +131,8 @@ Route::get('/signout', 'AuthController@signout');
 Route::get('admin/genClass', 'AdminController@genClass')->name('admin.genClass');
 
 // classNotify by role via sms
-Route::get('dev/su/{id}', 'AdminController@su')->name('sudo.su');
+Route::get('dev/su/{user}', 'AdminController@su')->name('sudo.su');
+
+Route::get('/admin', function () {
+    return view('sb-admin2/demo');
+});

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Referrals'))
 
@@ -34,11 +34,8 @@
 
 @section('content')
 <div class="container">
-    <h1><img class="icon-img" src="{{asset('images/icons/63-512.png')}}" alt=""> {{__('Referrals')}}</h1>
-    <div class="show-links">
-        <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-        <a href="{{ route('students.recommend') }}" class="btn btn-outline-dark"><img width="20px" src="{{asset('images/icons/63-512.png')}}" alt=""> 我的{{__('Recommends')}}</a>
-    </div>
+    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('Referrals')}}</h1>
+    <br>
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 

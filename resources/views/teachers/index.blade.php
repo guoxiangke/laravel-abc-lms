@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Teachers'))
 
 @section('content')
 <div class="container">
-	<h1>{{__('Teachers')}}</h1>
+	<h1 class="h3 mb-0 text-gray-800">{{__('Teachers')}}</h1>
 	<div class="show-links">
     	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left"></i> {{__('Go Back')}}</a>
 		<a href="{{ route('teachers.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
@@ -27,7 +27,6 @@
 						<th scope="col">Birthday</th>
 						<th scope="col">Pay</th>
 						<th scope="col">推荐人</th>
-						<th scope="col">Login</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -37,7 +36,6 @@
 					      	<a href="#{{$teacher->id}}"></a>
 					      	<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul"></i></a>
 					      	<a href="https://www.messenger.com/t/{{$teacher->extra_attributes->messenger?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->messenger?'success':'dark'}}" ><i class="fab fa-facebook-messenger"></i></a>
-					      	<a href="{{$teacher->extra_attributes->avatar?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->avatar?'success':'dark'}}" ><i class="far fa-image"></i></a>
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" ><i class="fas fa-user-edit"></i></a>
 						  </th>
 					      @php
@@ -98,9 +96,6 @@
 					      	@else
 					      	 - - 
 					      	@endif
-					      </td>
-					      <td data-label="Phone/Password" class="text-left">
-					      	{{$profile?$profile->telephone:'-'}}<br/>
 					      </td>
 					    </tr>
 					@endforeach

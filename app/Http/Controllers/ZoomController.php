@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Zoom;
 use Illuminate\Http\Request;
 use App\Forms\ZoomForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use App\Forms\Edit\ZoomForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -67,7 +68,7 @@ class ZoomController extends Controller
                 'pmi'      => str_replace(' ', '', $request->input('pmi')),
             ]
         );
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('zooms.index'); //todo last page! or order
     }
@@ -122,7 +123,7 @@ class ZoomController extends Controller
         $zoom = $zoom->fill($data);
         // dd($rrule->toArray());
         $zoom->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('zooms.index');
     }

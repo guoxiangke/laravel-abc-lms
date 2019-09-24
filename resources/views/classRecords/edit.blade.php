@@ -1,10 +1,11 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', 'Edit ClassRecord')
 
 @section('content')
 <div class="container">
-    <h1>Edit ClassRecord</h1>
+    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-book-reader"></i> Edit ClassRecord</h1>
+    <br>
     <?php
         $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
         if (Auth::user()->hasRole('teacher')) {

@@ -200,7 +200,7 @@ class TeacherController extends Controller
             // $paymethod = $user->paymethod()->save($paymethod);
         }
 
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('teachers.index');
     }

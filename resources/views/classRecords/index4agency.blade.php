@@ -1,14 +1,11 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('ClassRecords'))
 
 @section('content')
 <div class="container">
-  <h1><img class="icon-img" src="{{asset('images/icons/37-512.png')}}" alt=""> {{__('ClassRecords')}}</h1>
-  
-  <div class="show-links">
-      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-  </div>
+  <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('ClassRecords')}}</h1>
+  <br>
   
   <div class="col-md-12 col-sm-12 p-0">
       <div class="table-responsive">

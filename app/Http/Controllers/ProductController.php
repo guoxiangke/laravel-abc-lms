@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Forms\ProductForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\ProductForm as EditForm;
@@ -73,7 +74,7 @@ class ProductController extends Controller
             // 'image', //todo
             'remark' => $request->input('remark'),
         ]);
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('products.index');
     }
@@ -127,7 +128,7 @@ class ProductController extends Controller
         }
         $data = $request->all();
         $product->fill($data)->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('products.index');
     }

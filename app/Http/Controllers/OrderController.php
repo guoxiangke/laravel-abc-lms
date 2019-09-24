@@ -11,6 +11,7 @@ use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\OrderForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\OrderForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -155,7 +156,7 @@ class OrderController extends Controller
             ]);
         }
 
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         if ($request->has('trail')) {
             return redirect()->route('orders.trail');
@@ -306,7 +307,7 @@ class OrderController extends Controller
         $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at); //2019-04-09T06:00
         $string = $request->input('rrule');
         $order->rrules->first()->fill(compact('start_at', 'string'))->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('orders.index');
     }

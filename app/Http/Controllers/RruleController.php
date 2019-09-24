@@ -6,8 +6,9 @@ use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Rrule;
 use Illuminate\Http\Request;
-// use App\Repositories\RruleRepository;
 use App\Forms\RruleForm as CreateForm;
+// use App\Repositories\RruleRepository;
+use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\RruleForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -91,9 +92,9 @@ class RruleController extends Controller
             ])
         );
         if ($rrule->wasRecentlyCreated) {
-            alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+            Session::flash('alert-success', __('Success'));
         } else {
-            alert()->toast('已存在相同的计划', 'error', 'top-center')->autoClose(3000);
+            Session::flash('alert-danger', '已存在相同的计划');
         }
 
         return redirect()->route('rrules.index');
@@ -150,7 +151,7 @@ class RruleController extends Controller
         $string = $request->input('string');
         $rrule = $rrule->fill(compact('start_at', 'string'));
         $rrule->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('rrules.index');
     }

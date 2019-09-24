@@ -1,13 +1,12 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('ClassRecords'))
 
 @section('content')
 <div class="container">
-  <h1>{{__('ClassRecords')}}</h1>
+  <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-book-reader"></i> {{__('ClassRecords')}}</h1>
   
   <div class="show-links">
-      <a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
       <button class="btn btn-light">本页记录数量：{{count($classRecords)}}</button>
   </div>
 
@@ -33,7 +32,7 @@
                         Edit
                       </a>
                       
-                      <a class="btn btn-sm btn-{{$classRecord->remark?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Evaluation</a>
+                      <a class="btn btn-sm btn-{{$classRecord->remark?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">评估</a>
                       <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp3')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp3</a>
                       <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp4')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.show', $classRecord->id) }}">Mp4</a>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Forms\BookForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use App\Forms\Edit\BookForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -56,7 +57,7 @@ class BookController extends Controller
     {
         $book = new Book;
         $book->fill($request->all())->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('books.index');
     }
@@ -106,7 +107,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $book->fill($request->all())->save();
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('books.index');
     }

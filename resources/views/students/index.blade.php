@@ -1,14 +1,13 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Students'))
 
 @section('content')
 
 <div class="container">
-	<h1>{{__('Students')}}</h1>
+	<h1 class="h3 mb-0 text-gray-800">{{__('Students')}}</h1>
 	
 	<div class="show-links">
-    	<a href="{{ route('home') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
 		<a href="{{ route('students.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
 		<button class="btn btn-light">本页记录数量：{{count($students)}}</button>
 		@include('shared.search')
@@ -25,7 +24,6 @@
 						<th>Sex</th>
 						<th>Birthday</th>
 						<th>Grade</th>
-						<th>登陆手机</th>
 						<th>QQ/Wechat</th>
 						<th>推荐人</th>
 						<th>微信绑定</th>
@@ -50,16 +48,15 @@
 					    <tr id={{$student->id}}>
 					      <th scope="row" data-label="Id">
 					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
-					      	<a href="{{ route('classRecords.indexbyStudent', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
+					      	<a href="{{ route('classRecords.indexbyStudent', $student->user_id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
 							<a href="{{ route('orders.create') }}?trail=1&user_id={{$student->user->id}}&agency={{$profile->recommend_uid}}" class="btn btn-sm btn-outline-dark text-uppercase">试听</a>
 					  	  </th>
-					      <td data-label="Name">{{$profile->name}}</td>
-					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
-					      <td data-label="Birthday">
-					      	{{$birthday?$birthday->format('Y-m-d'):'-'}}
+					      <td data-label="姓名">{{$profile->name}}</td>
+					      <td data-label="性别">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
+					      <td data-label="生日">
+					      	{{$birthday?$birthday->format('y-m-d'):'-'}}
 					      </td>
-					      <td data-label="Grade">{{ App\Models\Student::GRADES[$student->grade] }}</td>
-					      <td data-label="登陆手机">{{$profile->telephone}}</td>
+					      <td data-label="年级">{{ App\Models\Student::GRADES[$student->grade] }}</td>
 					      <td data-label="QQ/Wechat">
 					      	{{ $contact ?  $contact->number : '-' }}
 					      </td>

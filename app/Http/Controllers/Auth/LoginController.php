@@ -37,8 +37,14 @@ class LoginController extends Controller
         // User role
         $user = \Auth::user();
 
-        if ($user->hasRole('teacher')) {
+        if ($user->hasRole(['teacher', 'agency', 'student'])) {
             return '/class-records';
+        }
+
+        //None of roles, 调整到登记为学生页面
+        $roles = $user->getRoleNames()->count();
+        if (! $roles) {
+            return '/student/register';
         }
 
         return '/home';

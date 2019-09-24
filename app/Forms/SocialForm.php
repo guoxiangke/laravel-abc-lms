@@ -3,6 +3,7 @@
 namespace App\Forms;
 
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Facades\Session;
 
 class SocialForm extends Form
 {
@@ -14,7 +15,7 @@ class SocialForm extends Form
         if (! ($socialUser && $socialType)) {
             abort(403);
         }
-        alert()->toast('Welcome '.$socialUser->nickname ?: $socialUser->name, 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', 'Welcome '.$socialUser->nickname ?: $socialUser->name);
         $this->add('type', 'hidden', [
                 'label' => 'type',
                 'value' => $socialType,

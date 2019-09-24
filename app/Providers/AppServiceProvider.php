@@ -10,6 +10,7 @@ use App\Observers\RruleObserver;
 use App\Observers\ProfileObserver;
 use App\Observers\StudentObserver;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,11 +37,9 @@ class AppServiceProvider extends ServiceProvider
         // Carbon::setLocale('zh');
         URL::forceScheme('https');
 
-        // Flash::levels([
-        //     'success' => 'alert-success',
-        //     'warning' => 'alert-warning',
-        //     'error' => 'alert-error',
-        // ]);
+        Blade::if('env', function ($environment) {
+            return app()->environment($environment);
+        });
 
         //observes
         Rrule::observe(RruleObserver::class);

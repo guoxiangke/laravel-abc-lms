@@ -1,11 +1,11 @@
 @if($model->comments->count() < 1)
-    <div class="alert alert-warning">There are no comments yet.</div>
+    <div class="alert alert-warning">{{__('There are no comments yet.')}}</div>
 @endif
 
 <ul class="list-unstyled">
     @foreach($model->comments->where('parent', null) as $comment)
-        <?php $comment->load('commenter');?>
-        <?php $comment->load('children');?>
+        <?php $comment->load('commenter'); ?>
+        <?php $comment->load('children'); ?>
         @include('comments::_comment')
     @endforeach
 </ul>

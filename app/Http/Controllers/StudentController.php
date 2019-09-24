@@ -66,20 +66,18 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         //谁可以拥有此列表
-        //只有老师、学生、和代理可以拥有本列表
-        // const ALLOW_LIST_ROLES =['agency', 'teacher'];
         if (! $user->hasAnyRole(Student::ALLOW_LIST_ROLES)) {
             abort(403);
         }
         //$this->authorize('indexByRole');
         // dd($user->toArray());
         //我推荐的学生
-        $students = Profile::with('contacts', 'recommend')
+        $profiles = Profile::with('contacts', 'recommend', 'user', 'user.student')
             ->where('recommend_uid', $user->id)
             ->orderBy('id', 'desc')
             ->paginate(50);
-        // dd($students->toArray());
-        return view('students.index4recommend', compact('students'));
+
+        return view('students.index4recommend', compact('profiles'));
     }
 
     /**
@@ -170,7 +168,7 @@ class StudentController extends Controller
         // $student = $user->student()->save($student);
         if ($student) {
             $user->assignRole(User::ROLES['student']);
-            alert()->toast('学员登记成功，欢迎您！', 'success', 'top-center')->autoClose(3000);
+            Session::flash('alert-success', '学员登记成功，欢迎您！');
 
             return redirect()->route('home');
         }
@@ -339,7 +337,7 @@ class StudentController extends Controller
             'recommend_uid' => $request->input('recommend_uid') ?: null,
         ])->save();
 
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('students.index');
     }

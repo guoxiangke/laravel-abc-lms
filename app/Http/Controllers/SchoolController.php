@@ -11,6 +11,7 @@ use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Forms\SchoolForm as CreateForm;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\SchoolForm as EditForm;
@@ -125,7 +126,7 @@ class SchoolController extends Controller
         ]);
         $user->paymethod()->save($paymethod);
 
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('schools.index');
     }
@@ -228,7 +229,7 @@ class SchoolController extends Controller
         ])->save();
         // $user->paymethod()->save($paymethod);
 
-        alert()->toast(__('Success'), 'success', 'top-center')->autoClose(3000);
+        Session::flash('alert-success', __('Success'));
 
         return redirect()->route('schools.index');
     }

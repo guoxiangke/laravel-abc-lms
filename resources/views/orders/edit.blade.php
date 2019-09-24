@@ -1,14 +1,12 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', 'Edit Order')
 
 @section('content')
 <div class="container">
-	<h1>Edit Order</h1>
+	<h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-cart-plus"></i>Edit Order</h1>
     
-    <div class="show-links">
-        <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-    </div>
+	<br>
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12"> 

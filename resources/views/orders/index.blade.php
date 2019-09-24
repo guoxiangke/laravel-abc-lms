@@ -1,16 +1,12 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', $type . __('Orders'))
 
 @section('content')
 <div class="container">
-	<h1>{{ $type }} {{__('Orders')}}</h1>
-  <div class="show-links">
-    
-  </div>
+	<h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-cart-plus"></i> {{ $type }} {{__('Orders')}}</h1>
 
   <div class="show-links">
-      <a href="{{ route('home') }}" class="btn btn-outline-dark mt-1"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
       <a href="{{ route('orders.create') }}" class="btn btn-warning mt-1">{{__('Create')}}</a>
 
       @foreach(App\Models\Order::LIST_BY as $item)
@@ -31,14 +27,14 @@
             <thead>
               <tr>
               	<th scope="col">#</th>
-                <th scope="col">Student</th>
-              	<th scope="col">Teacher</th>
-              	<th scope="col">Agency</th>
-                <th scope="col">Price</th>
-                <th scope="col">Period</th>
+                <th scope="col">学生</th>
+              	<th scope="col">老师</th>
+              	<th scope="col">代理</th>
+                <th scope="col">价格</th>
+                <th scope="col">课时</th>
                 <th scope="col">已上</th>
-                <th scope="col">Status</th>
-                <th scope="col">ExpireAt</th>
+                <th scope="col">状态</th>
+                <th scope="col">过期时间</th>
                 <th scope="col">标记动作</th>
               </tr>
             </thead>
