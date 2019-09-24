@@ -6,6 +6,12 @@
 </li>
 
 @env(['production','local'])
+<li class="nav-item {{url()->current()==route('orders.index')?'active':''}}">
+  <a class="nav-link" href="{{ route('orders.index') }}">
+    <i class="fas fa-fw fa-table"></i>
+    <span>订单列表</span>
+  </a>
+</li>
 <hr class="sidebar-divider">
 <!-- Heading -->
 <div class="sidebar-heading">
@@ -56,7 +62,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-table"></i>
     <span>订单列表</span>
   </a>
   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
