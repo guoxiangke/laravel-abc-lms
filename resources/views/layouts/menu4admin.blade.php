@@ -14,5 +14,8 @@
     <a class="nav-link" href="{{ route('profiles.index') }}">{{__('Profiles')}}</a>
 </li>
 <li class="nav-item">
+    <a class="nav-link" href="{{ route('students.index') }}">{{__('Students')}}</a>
+</li>
+<li class="nav-item">
     <a class="nav-link" href="{{ route('agencies.index') }}">{{__('Agency')}}</a>
 </li>
