@@ -1,4 +1,4 @@
-@extends('sb-admin2.app')
+@extends('layouts.app')
 
 @section('title', 'Create Teacher')
 

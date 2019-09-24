@@ -1,12 +1,20 @@
-@extends('sb-admin2.app')
+@extends('layouts.app')
 
 @section('title', __('ClassRecords'))
 
 @section('content')
 <div class="container">
 
-  <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-book-reader"></i> {{__('ClassRecords')}}</h1>
-  <br>
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{__('ClassRecords')}}</h1>
+      @role('teacher') 
+      @else
+      @if(!Auth::user()->isSocialBind())
+          <a href="{{ route('login.weixin') }}" class="btn btn-outline-success d-sm-none"><i class="fab fa-weixin icon-circle"></i> 微信绑定</a>
+      @endif
+      @endrole
+  </div>
   
   <div class="col-md-12 col-sm-12 p-0">
       <div class="table-responsive">

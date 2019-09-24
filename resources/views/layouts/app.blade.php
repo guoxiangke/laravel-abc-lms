@@ -44,8 +44,13 @@
                                 @auth
                                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                                 @endauth
-                                
                             </li>
+                            @hasanyrole('agency|student|teacher')       
+                                @include('layouts/menu4user')
+                            @endrole
+                            @can('admin')
+                                @include('layouts/menu4admin')
+                            @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -136,6 +141,7 @@
         })(jQuery);
     </script>
     @yield('scripts')
+    @yield('script-su')
     @yield('scripts1')
     @yield('scripts2')
 </body>

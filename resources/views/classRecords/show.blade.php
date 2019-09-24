@@ -1,5 +1,5 @@
 @inject('markdown', 'Parsedown')
-@extends('sb-admin2.app')
+@extends('layouts.app')
 
 @section('title', __('View ClassRecord'))
 
