@@ -123,7 +123,7 @@ class TeacherForm extends Form
             ])
             ->add('email', 'text', [
                 'label'      => '登陆邮箱',
-                'rules'      => 'required|email:rfc,dns',
+                'rules'      => 'required|email:rfc',
                 'value'      => $user->email,
             ])
             ->add('telephone', 'tel', [

@@ -54,7 +54,7 @@ class TeacherForm extends Form
             ])
             ->add('email', 'email', [
                 'label'      => '登陆邮箱',
-                'rules'      => 'required|email:rfc,dns',
+                'rules'      => 'required|email:rfc',
                 'help_block' => [
                     'text' => '不填，默认为：t_姓名@teacher.com',
                     'tag'  => 'small',
