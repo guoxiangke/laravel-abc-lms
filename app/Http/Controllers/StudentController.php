@@ -301,6 +301,12 @@ class StudentController extends Controller
                 'number' => $request->input('contact_number') ?: $request->input('telephone'),
                 'remark' => $request->input('contact_remark'),
             ]);
+        } else {
+            $contact->fill([
+                'type'       => 1, // Contact::TYPES[1] = 'wechat/qq',
+                'number'     => $request->input('contact_number') ?: $request->input('telephone'),
+                'remark'     => $request->input('contact_remark'),
+            ])->save();
         }
 
         // create login user

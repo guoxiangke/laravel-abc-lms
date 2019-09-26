@@ -58,7 +58,7 @@
 					      </td>
 					      <td data-label="年级">{{ App\Models\Student::GRADES[$student->grade] }}</td>
 					      <td data-label="QQ/Wechat">
-					      	{{ $contact ?  $contact->number : '-' }}
+					      	{{ $contact ?  str_replace("+86","",$contact->number) : '-' }}
 					      </td>
 					      <td data-label="推荐人">{{
 					      	$recommend ? $profile->recommend->name : '-' }}</td>
