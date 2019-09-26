@@ -42,10 +42,8 @@ class StudentClassNotification extends Notification
 
         // 注意：需要替换这里的请求参数和 $options['http']['header'] 中的 token
         $msg['mobile'] = str_replace('+86', '', $notifiable->routeNotificationForTwilio()); // 必填参数，多个手机号使用逗号分隔
-        $msg['template_id'] = 2280;  //todo 必填参数，短信模板 ID
-        // 【大象云课堂上课通知】18:00，t_XX老师的课堂即将开始，请查看公号通知准备上课。
-        // todo 【大象云课堂排课通知】您已预约t_XX老师周x-到周x的18:00云课堂，请注意公号通知准备上课。
-        $msg['vars'] = "$time,{$teacherName}"; //'a|b'; // 选填参数，模板变量
+        $msg['template_id'] = 2284;  //todo 必填参数，短信模板 ID
+        $msg['vars'] = "$time上课提醒：{$teacherName}老师的课堂"; //'a|b'; // 选填参数，模板变量
         $upyunSmsToken = config('upyun.token.sms');
         $url = 'https://sms-api.upyun.com/api/messages';
 
