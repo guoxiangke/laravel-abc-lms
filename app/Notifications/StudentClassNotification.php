@@ -43,7 +43,7 @@ class StudentClassNotification extends Notification
         // 注意：需要替换这里的请求参数和 $options['http']['header'] 中的 token
         $msg['mobile'] = str_replace('+86', '', $notifiable->routeNotificationForTwilio()); // 必填参数，多个手机号使用逗号分隔
         $msg['template_id'] = 2284;  //todo 必填参数，短信模板 ID
-        $msg['vars'] = "$time上课提醒：{$teacherName}老师的课堂"; //'a|b'; // 选填参数，模板变量
+        $msg['vars'] = "{$time}上课提醒：{$teacherName}老师的课堂"; //'a|b'; // 选填参数，模板变量
         $upyunSmsToken = config('upyun.token.sms');
         $url = 'https://sms-api.upyun.com/api/messages';
 
