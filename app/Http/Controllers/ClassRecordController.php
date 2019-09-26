@@ -394,7 +394,7 @@ class ClassRecordController extends Controller
     {
         $this->authorize('admin');
 
-        // $classRecord->notify(new StudentClassNotification($classRecord));
+        $classRecord->notify(new StudentClassNotification($classRecord));
         Session::flash('alert-success', __('Success'));
 
         return redirect()->back();

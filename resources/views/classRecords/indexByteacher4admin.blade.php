@@ -109,6 +109,11 @@
                         @if(!$classRecord->remark && $classRecord->generated_at->isToday())
                         <a target="_blank" class="btn btn-sm btn-success text-uppercase" href="https://zhumu.me/j/{{ $classRecord->teacher->teacher->pmi }}">Zoom</a>
                         @endif
+                        
+                        @if($classRecord->generated_at->isToday())
+                        <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给学生吗？" href="{{route('admin.classNotifyStudent', $classRecord->id) }}"><i class="fas fa-sms fa-large"></i></a>
+                        <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给老师吗？" href="{{route('admin.classNotifyTeacher', $classRecord->id) }}"><i class="fab fa-telegram fa-large"></i></a>
+                        @endif
 
                         <a class="btn btn-sm btn-{{$classRecord->remark?'success':'warning'}} text-uppercase" href="{{ route('classRecords.'.($classRecord->remark?'show':'edit'), $classRecord->id) }}">Evaluation</a>
                         <a class="btn btn-sm btn-{{$classRecord->getFirstMedia('mp3')?'success':'warning'}} text-uppercase" href="{{ route('classRecords.'.($classRecord->getFirstMedia('mp3')?'show':'edit'), $classRecord->id) }}">Mp3</a>

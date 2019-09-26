@@ -41,8 +41,9 @@ class TeacherClassNotification extends Notification
         $studentName = $notifiable->user->name;
         $teacherName = $notifiable->teacher->name;
         $message = "【EE-Urgent】Class for {$studentName} at {$time}, Online and send a ready message plz!";
-        \Log::info(__CLASS__, [__FUNCTION__, $message]);
+        $result = (new TwilioSmsMessage())->content($message);
+        \Log::info(__CLASS__, [__FUNCTION__, $message, $result]);
 
-        return (new TwilioSmsMessage())->content($message);
+        return $result;
     }
 }

@@ -52,7 +52,7 @@
                     <td data-label="Student">
                       {{$classRecord->user->profiles->first()->name}}
                       @if($classRecord->generated_at->isToday())
-                      <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给学生吗？" href="{{route('admin.classNotifyStudent', $classRecord->id) }}"><i class="fas fa-mobile-alt fa-large"></i></a>
+                      <a class="btn btn-sm btn-outline-dark btn-confirm" data-confirm="确定发短信给学生吗？" href="{{route('admin.classNotifyStudent', $classRecord->id) }}"><i class="fas fa-sms fa-large"></i></a>
                       @endif
                     </td>
                     <td data-label="老师">
