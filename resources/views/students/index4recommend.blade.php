@@ -5,9 +5,10 @@
 @section('content')
 
 <div class="container">
-
-    <h1 class="h3 mb-0 text-gray-800"><i class="fab fa-fw fa-slideshare"></i> {{__('Recommends')}}</h1>
-    <br>
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    	<h1 class="h3 mb-0 text-gray-800"><i class="fab fa-fw fa-slideshare"></i> {{__('Recommends')}}</h1>
+    	<button class="btn btn-light">本页记录数量：{{count($profiles)}}</button>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col-md-12 col-sm-12 p-0"> 
