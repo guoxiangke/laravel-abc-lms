@@ -73,15 +73,6 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
-            ->add('avatar', 'url', [
-                'label'       => 'Avatar',
-                'value' => $teacher->extra_attributes->avatar,
-                'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
-                    'tag'  => 'small',
-                    'attr' => ['class' => 'form-text text-muted'],
-                ],
-            ])
             ->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),

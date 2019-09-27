@@ -138,7 +138,7 @@ class TeacherForm extends Form
             ])
             ->add('network', 'choice', [
                 'label' => '网络情况',
-                'choices' => ['1' => '准时', '0' => '不准时'],
+                'choices' => ['1' => '稳定', '0' => '不稳定'],
                 'multiple' => false,
             ])
             ->add('noisy', 'choice', [
@@ -149,15 +149,7 @@ class TeacherForm extends Form
             ->add('messenger', 'text', [
                 'label'       => 'Messenger',
                 'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy',
-                    'tag'  => 'small',
-                    'attr' => ['class' => 'form-text text-muted'],
-                ],
-            ])
-            ->add('avatar', 'url', [
-                'label'       => 'Avatar',
-                'help_block'  => [
-                    'text' => 'https://www.facebook.com/messages/t/xxx.yy, then input xxx.yy',
+                    'text' => 'https://www.messenger.com/t/xxx.yy',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
