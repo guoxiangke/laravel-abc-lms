@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Referrals'))
 
@@ -11,7 +11,7 @@
     //}else{
     //    $avatar = $avatar->getPath();
     //}
-    $avatar = public_path('images/icons/51-512.jpg');
+    $avatar = public_path('images/icons/WechatIMG2.png');
     $avatarString = file_get_contents($avatar);
 
     $path = storage_path('app/public/referrals/');
@@ -24,7 +24,7 @@
 
     if(!file_exists($loginQrPath)){
         QrCode::format('png')
-                    ->mergeString($avatarString,.15)
+                    ->mergeString($avatarString,.18)
                     ->size(500)
                     ->margin(2)
                     ->generate($link, $loginQrPath);
@@ -43,9 +43,10 @@
 
             <div class="col-md-4 pt-5  text-center bg-light">
                 <h5 class="display-5">微信专属推荐码</h5>
-                <p class="lead">长按收藏，微信分享</p>
                 <img src="{{$publicQrPath}}"  width="260px" loading="lazy">
+                <p class="lead">长按收藏，微信分享</p>
                 <p>推荐及优惠政策请询问课程顾问</p>
+                <p>或复制分享以下地址给小伙伴<br/>{{$link}}</p>
             </div>
 
         </div>
