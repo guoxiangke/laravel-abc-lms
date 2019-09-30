@@ -44,6 +44,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function ($user) {
             return $user->isAdmin();
         });
+        Gate::define('agency', function ($user) {
+            return $user->isAgency();
+        });
+        Gate::define('student', function ($user) {
+            return $user->isStudent();
+        });
+        Gate::define('teacher', function ($user) {
+            return $user->isTeacher();
+        });
         // $this->authorize('admin'); // in Http/Controllers/*.controller
 
         // https://github.com/spatie/laravel-permission/wiki/Global-%22Admin%22-role

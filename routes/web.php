@@ -120,6 +120,9 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('autologin');
 
     Route::get('charts', 'ChartController@index');
+
+    Route::get('student/import', 'StudentController@import')->name('students.import');
+    Route::post('student/import', 'StudentController@importStore');
 });
 
 //OAuth2 test！！

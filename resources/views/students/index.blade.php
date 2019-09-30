@@ -9,6 +9,7 @@
 	
 	<div class="show-links">
 		<a href="{{ route('students.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
+		<a href="{{ route('students.import') }}" class="btn btn-outline-primary">{{__('Import')}}</a>
 		<button class="btn btn-light">本页记录数量：{{count($students)}}</button>
 		@include('shared.search')
 	</div>

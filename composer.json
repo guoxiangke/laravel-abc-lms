@@ -24,6 +24,7 @@
         "laravelista/comments": "^2.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/oauth2-client": "^2.4",
+        "maatwebsite/excel": "^3.1",
         "mews/captcha": "^2.2",
         "nicolasbeauvais/flysystem-onedrive": "^1.0",
         "omnipay/paypal": "^3.0",

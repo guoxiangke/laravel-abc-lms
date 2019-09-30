@@ -12,6 +12,7 @@ use App\Models\Student;
 use App\Models\PayMethod;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
 use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\Session;
@@ -20,6 +21,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\StudentForm as EditForm;
 use App\Forms\Register\StudentRegisterForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\StudentsImportForm as ImportForm;
 
 class StudentController extends Controller
 {
@@ -27,9 +29,6 @@ class StudentController extends Controller
 
     public function __construct(Student $Student)
     {
-        // $this->classRecord = $classRecord;
-        //中间件让具备指定权限的用户才能访问该资源
-        //只有管理员可以访问所有 /classRecords
         $this->middleware(['admin'], ['only' => ['index']]);
     }
 
@@ -87,6 +86,7 @@ class StudentController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url'    => action('StudentController@store'),
@@ -182,6 +182,7 @@ class StudentController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        $this->authorize('admin');
         $form = $formBuilder->create(CreateForm::class);
 
         $this->validate($request, [
@@ -258,6 +259,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        $this->authorize('admin');
         $form = $this->form(
             EditForm::class,
             [
@@ -279,6 +281,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
+        $this->authorize('admin');
         $this->validate($request, [
             'telephone'=> 'required|min:10|max:14|unique:profiles,telephone,'.$student->user_id.',user_id',
         ]);
@@ -357,5 +360,39 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         //
+    }
+
+    public function import()
+    {
+        //权限
+        // if (! Auth::user()->hasAnyRole(['agency', 'admin', 'manager'])) {
+        //     abort(403);
+        // }
+
+        $form = $this->form(ImportForm::class, [
+            'method' => 'POST',
+            'url'    => action('StudentController@importStore'),
+        ]);
+
+        return view('students.import', compact('form'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function importStore(Request $request, FormBuilder $formBuilder)
+    {
+        //权限
+        if (! Auth::user()->hasAnyRole(['agency', 'admin', 'manager'])) {
+            abort(403);
+        }
+
+        (new StudentsImport)->import($request->file('field_excel'));
+        Session::flash('alert-success', '导入完成！');
+
+        return redirect()->route('students.index');
     }
 }
