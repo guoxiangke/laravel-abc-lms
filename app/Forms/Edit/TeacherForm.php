@@ -73,6 +73,10 @@ class TeacherForm extends Form
                     'attr' => ['class' => 'form-text text-muted'],
                 ],
             ])
+            ->add('timesheet', 'url', [
+                'label'       => 'Timesheet',
+                'value' => $teacher->extra_attributes->timesheet,
+            ])
             ->add('school_id', 'select', [
                 'label'       => 'School',
                 'choices'     => School::all()->pluck('name', 'id')->toArray(),

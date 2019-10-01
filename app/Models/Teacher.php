@@ -14,7 +14,7 @@ class Teacher extends Model
     use HasPriceField;
     use HasSchemalessAttributes;
 
-    const EXTRA_ATTRIBUTES = ['passion', 'ontime', 'messenger', 'christ', 'network', 'noisy'];
+    const EXTRA_ATTRIBUTES = ['passion', 'ontime', 'messenger', 'christ', 'network', 'noisy', 'timesheet'];
     public $casts = [
         'extra_attributes' => 'array',
     ];

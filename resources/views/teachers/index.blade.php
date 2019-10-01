@@ -35,6 +35,7 @@
 					      <th scope="row">
 					      	<a href="#{{$teacher->id}}"></a>
 					      	<a href="{{ route('classRecords.indexbyTeacher', $teacher->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul"></i></a>
+							<a href="{{$teacher->extra_attributes->timesheet?:'#'}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->timesheet?'success':'dark'}}" ><i class="fas fa-calendar-alt"></i></a>
 					      	<a href="https://www.messenger.com/t/{{$teacher->extra_attributes->messenger?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->messenger?'success':'dark'}}" ><i class="fab fa-facebook-messenger"></i></a>
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" ><i class="fas fa-user-edit"></i></a>
 						  </th>
