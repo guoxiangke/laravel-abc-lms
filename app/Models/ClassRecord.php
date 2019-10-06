@@ -24,8 +24,11 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     use HasMediaTrait;
 
     const DISK = 'spaces'; //ClassRecord::DISK upyun
-    // const DOS_CDN='https://dxjy.sfo2.cdn.digitaloceanspaces.com';
-    const DOS_CDN = 'https://upcdn.do.abc-chinaedu.com';
+    const CDN = [
+        'do' => 'https://dxjy.sfo2.cdn.digitaloceanspaces.com',
+        'upyun' => 'https://upcdn.do.abc-chinaedu.com',
+        'onedrive' => '',
+    ];
 
     public function registerMediaCollections()
     {
@@ -176,15 +179,25 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     public function getMp3Attribute()
     {
         if ($firstMedia = $this->getFirstMedia('mp3')) {
-            return self::DOS_CDN.'/'.$firstMedia->getPath();
+            return $firstMedia->getPath();
         }
     }
 
     public function getMp4Attribute()
     {
         if ($firstMedia = $this->getFirstMedia('mp4')) {
-            return self::DOS_CDN.'/'.$firstMedia->getPath();
+            return $firstMedia->getPath();
         }
+    }
+
+    public function getMp3LinkByCdn($cdn = 'upyun')
+    {
+        return self::CDN[$cdn].'/'.$this->mp3;
+    }
+
+    public function getMp4LinkByCdn($cdn = 'upyun')
+    {
+        return self::CDN[$cdn].'/'.$this->mp4;
     }
 
     public function videos()

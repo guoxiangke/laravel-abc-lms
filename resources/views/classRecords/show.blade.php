@@ -55,19 +55,24 @@
         <div class="col-md-12 col-sm-12">
           @if($mp3)
           <div class="mp3">
-              @hasanyrole('manager|admin')
+              @hasanyrole('manager|admin|teacher')
               <audio style="width:100%"
                 controls
                 controlsList="nodownload"
-                src="{{$mp3}}">
+
+                @role('teacher')
+                    src="{{$classRecord->getMp3LinkByCdn('do')}}">
+                @else
+                  src="{{$classRecord->getMp3LinkByCdn('upyun')}}">
+                @endrole
                 preload="none"
                 Your browser does not support the <code>audio</code> element.
               </audio>
             </div>
             @endhasanyrole
 
-            @hasanyrole('student|teacher|agency')
-            <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.cdn.bcebos.com/nocors.html?url={{$mp3}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
+            @hasanyrole('student|agency')
+            <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.cdn.bcebos.com/nocors.html?url={{$classRecord->getMp3LinkByCdn('upyun')}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
             @endhasanyrole
 
           @else
@@ -79,9 +84,7 @@
           @endif
 
           @if($classRecord->remark)
-            <div class="remark alert alert-primary" role="alert"  style="white-space: pre-wrap;">
-                {!! $markdown->line($classRecord->remark) !!}
-            </div>
+            <div class="remark alert alert-primary" role="alert"  style="white-space: pre-wrap;">{!! $markdown->line($classRecord->remark) !!}</div>
           @else
             @role('teacher')
               <a class="btn btn-warning text-uppercase  btn-goback" href="{{ route('classRecords.edit', $classRecord->id) }}#remark">Add Evaluation</a>
@@ -99,14 +102,14 @@
             @hasanyrole('manager|admin|student')
               <hr>
               课堂视频:
-              <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
+              <a href="{{$classRecord->getMp4LinkByCdn('upyun')}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
               </a>（请使用电脑）
               <br>
               文件大小: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}
               <br>
               下载方法: 右键点击视频图标，选择链接另存为...
             @endhasanyrole
-            @hasanyrole('manager|admin')
+            @hasanyrole('manager|admin|teacher')
             <br>
             <div class="row">
               <div class="col-12 col-md-6 col-sm-12">
@@ -115,7 +118,11 @@
                   controls
                   preload="none"
                   controlsList="nodownload">
-                  <source src="{{$mp4}}" type="video/mp4">
+                  @role('teacher')
+                    <source src="{{$classRecord->getMp4LinkByCdn('do')}}" type="video/mp4">
+                  @else
+                    <source src="{{$classRecord->getMp4LinkByCdn('upyun')}}" type="video/mp4">
+                  @endrole
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -128,7 +135,7 @@
             @role('teacher')
               <hr>
               Video Info:
-                <a href="{{$mp4}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
+                <a href="{{$classRecord->getMp4LinkByCdn('do')}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
                 <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
             @endrole
           @endif
