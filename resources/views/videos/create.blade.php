@@ -25,7 +25,7 @@
                   controls
                   preload="none"
                   controlsList="nodownload">
-                  <source src="{{$mp4}}" type="video/mp4">
+                  <source src="{{$classRecord->getMp4LinkByCdn('upyun')}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
