@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
