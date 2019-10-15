@@ -41,6 +41,7 @@
       model_has_roles \
       audits \
       products \
+      comments \
       bills > /tmp/$FILENAME \
     && echo 'backed some tables on qq3.' \
     && echo 'sync to sfo2 ...' \

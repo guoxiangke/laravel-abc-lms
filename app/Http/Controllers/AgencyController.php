@@ -46,6 +46,11 @@ class AgencyController extends Controller
         return view('agencies.index', compact('agencies'));
     }
 
+    public function show(Agency $agency)
+    {
+        return view('agencies.show', compact('agency'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

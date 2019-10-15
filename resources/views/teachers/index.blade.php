@@ -50,7 +50,9 @@
 
 					      @endphp
 					      <td data-label="Name">
-					      	{{$profile?$profile->name:'-'}}
+					      	<a href="{{ route('teachers.show', $teacher->id) }}">
+					      		{{$profile?$profile->name:'-'}}
+					      	</a>
 					      </td>
 					      <td data-label="PMI">
 					      	<a target="_blank" href="{{$teacher->zhumu}}">{{$teacher->pmi}}</a>

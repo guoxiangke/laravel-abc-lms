@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use OwenIt\Auditing\Auditable;
+use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
@@ -12,6 +13,8 @@ class Student extends Model implements AuditableContract
 {
     use SoftDeletes;
     use Auditable;
+    use Commentable;
+
     protected $fillable = [
         'user_id',
         'grade',

@@ -27,7 +27,11 @@
                 @foreach($bills as $bill)
                     <tr id={{$bill->id}}>
                       <th scope="row"><a href="{{ route('bills.edit', $bill->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
-                      <td data-label="type">{{App\Models\Bill::TYPES[$bill->type]}}</td>
+                      <td data-label="type">
+                        <a href="{{ route('bills.show', $bill->id) }}">
+                          {{App\Models\Bill::TYPES[$bill->type]}}
+                        </a>
+                      </td>
                       <td data-label="user">
                         @php
                         $profile = $bill->user->profiles->first();

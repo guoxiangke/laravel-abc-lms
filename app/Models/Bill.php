@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Traits\HasPriceField;
+use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,6 +12,7 @@ class Bill extends Model
 {
     use SoftDeletes;
     use HasPriceField;
+    use Commentable;
     const TYPES = [
         '收入', //0
         '支出', //1

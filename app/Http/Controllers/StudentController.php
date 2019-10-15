@@ -246,9 +246,9 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(agency $agency)
+    public function show(Student $student)
     {
-        //
+        return view('students.show', compact('student'));
     }
 
     /**

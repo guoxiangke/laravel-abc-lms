@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\User;
+use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agency extends Model
 {
     use SoftDeletes;
+    use Commentable;
 
     const TYPES = [
         '银牌代理',

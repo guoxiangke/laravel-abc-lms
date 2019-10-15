@@ -8,6 +8,7 @@ use App\Traits\HasPriceField;
 use OwenIt\Auditing\Auditable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
@@ -17,6 +18,7 @@ class Order extends Model implements AuditableContract
     use SoftDeletes;
     use Auditable;
     use HasPriceField;
+    use Commentable;
     const LIST_BY = ['index', 'trail', 'overdue', 'pause', 'done', 'trash', 'all'];
     // 0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
     const STATU_TRASH = 0;

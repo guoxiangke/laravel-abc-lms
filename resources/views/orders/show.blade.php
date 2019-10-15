@@ -55,6 +55,7 @@
         </tbody>
       </table>
   </div>
+  @include('shared.remark', ['model' => $order])
 
   <abc-calendar></abc-calendar>
 </div>

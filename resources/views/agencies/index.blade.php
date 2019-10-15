@@ -39,7 +39,8 @@
 					      <th scope="row">
 					      	<a href="{{ route('agencies.edit', $agency->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
 					      </th>
-					      <td data-label="Name">{{$profile->name}}</td>
+					      <td data-label="Name">
+					      	<a href="{{ route('agencies.show', $agency->id) }}">{{$profile->name}}</a></td>
 					      <td data-label="Email">{{$agency->user->email}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('m/d'):'-'}}</td>

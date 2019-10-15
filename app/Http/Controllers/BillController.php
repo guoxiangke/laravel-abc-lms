@@ -93,7 +93,7 @@ class BillController extends Controller
      */
     public function show(Bill $bill)
     {
-        //
+        return view('bills.show', compact('bill'));
     }
 
     /**

@@ -52,7 +52,11 @@
 					      	<a href="{{ route('classRecords.indexbyStudent', $student->user_id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
 							<a href="{{ route('orders.create') }}?trail=1&user_id={{$student->user->id}}&agency={{$profile->recommend_uid}}" class="btn btn-sm btn-outline-dark text-uppercase">试听</a>
 					  	  </th>
-					      <td data-label="姓名">{{$profile->name}}</td>
+					      <td data-label="姓名">
+					      	<a href="{{route('students.show',$student->id)}}">
+					      		{{$profile->name}}
+					      	</a>
+					      </td>
 					      <td data-label="性别">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="生日">
 					      	{{$birthday?$birthday->format('y-m-d'):'-'}}
@@ -89,7 +93,7 @@
 					    @endif
 					@endforeach
 				  </tbody>
-				</table>
+			  </table>
 			</div>
 			{{ $students->onEachSide(1)->links() }}
         </div>
