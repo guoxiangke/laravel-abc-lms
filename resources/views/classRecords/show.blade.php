@@ -140,10 +140,8 @@
             @endrole
           @endif
 
-        <hr>
-        <div class="comment">
+        <div class="comment bt-3">
           @comments(['model' => $classRecord])
-          @endcomments
         </div>
 
 

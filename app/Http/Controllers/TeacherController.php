@@ -213,7 +213,7 @@ class TeacherController extends Controller
      */
     public function show(teacher $teacher)
     {
-        //
+        return view('teachers.show', compact('teacher'));
     }
 
     /**
