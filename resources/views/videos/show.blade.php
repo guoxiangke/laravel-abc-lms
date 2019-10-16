@@ -18,7 +18,7 @@
           </div>
           @guest
           <a class="btn-block btn btn-lg btn-success" href="/register/1?video={{$video->class_record_id}}"><i class="fab fa-weixin fa-large"></i>
-              立即注册，免费试听
+              立即注册，预约试听
           </a>
           @endguest
           @auth
