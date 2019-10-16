@@ -18,7 +18,12 @@ class VideoController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['admin']);
+        $this->middleware('admin')->except(['show']);
+    }
+
+    public function show(Video $video)
+    {
+        return view('videos.show', compact('video'));
     }
 
     /**

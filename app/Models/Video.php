@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Mtvs\EloquentHashids\HasHashid;
 use Illuminate\Database\Eloquent\Model;
+use Mtvs\EloquentHashids\HashidRouting;
 
 class Video extends Model
 {
+    use HasHashid, HashidRouting;
+
     protected $fillable = [
         'class_record_id',
         'task_id',

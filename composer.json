@@ -26,6 +26,7 @@
         "league/oauth2-client": "^2.4",
         "maatwebsite/excel": "^3.1",
         "mews/captcha": "^2.2",
+        "mtvs/eloquent-hashids": "^1.1",
         "nicolasbeauvais/flysystem-onedrive": "^1.0",
         "omnipay/paypal": "^3.0",
         "overtrue/laravel-pinyin": "~4.0",

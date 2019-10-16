@@ -125,6 +125,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('student/import', 'StudentController@importStore');
 });
 
+Route::get('videos/{video}', 'VideoController@show')->name('videos.show');
 //OAuth2 test！！
 Route::get('/signin', 'AuthController@signin');
 Route::get('/callback', 'AuthController@callback');

@@ -42,6 +42,7 @@
                 {{ Form::open(['method' => 'DELETE', 'route' => ['videos.destroy', $video->id]]) }}
                    {{$video->start_time}} - {{$video->end_time}} {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
                 {{ Form::close() }}
+                <a target="_blank" class="btn btn-sm btn-success" href="/videos/{{ $video->hashid() }}">Share</a>
                 </div>
                 <video width="70%" height="auto" 
                   controls
