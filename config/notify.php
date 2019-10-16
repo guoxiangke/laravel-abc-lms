@@ -11,4 +11,5 @@ return [
         'admin' => env('SC_KEY_BLUESKY', ''),
         'manager' => env('SC_KEY_MONIKA', ''),
     ],
+    'test_user' => array_map('trim', explode(',', env('CLASS_RECORDS_NOTIFICATION', 1))),
 ];

@@ -48,8 +48,7 @@ class ClassRecordsNotification extends Command
             $now->second = 0;
         }
         ClassRecord::where('generated_at', $now)
-             // todo delete for test users. 175 ran 36rui 9wei 283何梦晓
-            ->whereIn('user_id', [1, 2, 82, 175, 36, 9, 283])
+            ->whereIn('user_id', config('notify.test_user'))
             ->each(function (ClassRecord $classRecord) {
                 // 通知学生
                 // todo $c = $classRecord->user; // ?
