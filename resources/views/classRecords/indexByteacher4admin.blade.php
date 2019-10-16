@@ -8,14 +8,15 @@
   <br>
   
   <div class="col-md-12 col-sm-12 p-0">
+      <p>1-5号显示上个月的统计， 5号以后显示本月统计</p>
       <div class="row mb-2">        
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
             <div class="card-body text-success">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title text-uppercase mb-0">{{ $counts['month'] }}月份</h5>
-                  <span class="h2 font-weight-bold mb-0">{{$counts['total']}}</span>
+                  <h5 class="card-title text-uppercase mb-0">试听/{{ $counts['month'] }}月份总计</h5>
+                  <span class="h2 font-weight-bold mb-0">{{$counts['trail']}} / {{$counts['total']}}</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -48,12 +49,12 @@
             <div class="card-body  text-success">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title mb-0">AOL | Holiday</h5>
-                  <span class="h2 font-weight-bold mb-0">{{$counts['aol']}} | {{$counts['holiday']}}</span>
+                  <h5 class="card-title mb-0">AOL / Holiday</h5>
+                  <span class="h2 font-weight-bold mb-0">{{$counts['aol']}} \ {{$counts['holiday']}}</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-success text-white rounded-circle shadow">
-                    <i class="fas fa-chart-bar"></i>
+                    <i class="fas fa-chart-pie"></i>
                   </div>
                 </div>
               </div>

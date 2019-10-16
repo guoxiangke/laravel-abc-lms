@@ -233,7 +233,11 @@ class ClassRecordController extends Controller
             ->whereBetween('generated_at', $whichMonth)
             ->where('exception', ClassRecord::EXCEPTION_TEACHER)
             ->count();
-
+        $counts['trail'] = Order::where('teacher_uid', $teacher->user_id)
+            ->where('price', 0)
+            ->where('period', 1)
+            ->whereBetween('created_at', $whichMonth)
+            ->count();
         // 'Normal', //0 算给老师工资
         // 'Absent', //学生异常 3-by-Student  算给老师工资
         // + no records!!! no pay!
