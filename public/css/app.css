@@ -16412,11 +16412,6 @@ readers do not read off random characters that represent icons */
   max-width: 25px;
 }
 
-input[name=captcha] {
-  float: right;
-  width: 50%;
-}
-
 /* Adds : after labels */
 
 form label:after {

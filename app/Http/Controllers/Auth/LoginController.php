@@ -25,6 +25,11 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    public function showLoginForm()
+    {
+        return view('sb-admin2.login');
+    }
+
     /**
      * Where to redirect users after login.
      *

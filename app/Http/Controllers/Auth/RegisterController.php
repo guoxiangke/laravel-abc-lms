@@ -27,6 +27,16 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('sb-admin2.register');
+    }
+
+    /**
      * Where to redirect users after registration.
      *
      * @var string
@@ -106,6 +116,6 @@ class RegisterController extends Controller
      */
     public function showRegistrationFormByRecommend(User $user)
     {
-        return view('auth.register', ['uid' => $user->id]);
+        return view('sb-admin2.register', ['uid' => $user->id]);
     }
 }
