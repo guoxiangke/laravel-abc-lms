@@ -138,6 +138,14 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">{{ __('Register') }}</h1>
               </div>
+
+              <div class="errors">
+                <ul class="bg-danger text-white shadow">
+                @foreach($errors->all() as $error)
+                  <li>{{$error}}</li>
+                @endforeach
+                </ul>
+              </div>
               <form method="POST" class="user" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group row">
