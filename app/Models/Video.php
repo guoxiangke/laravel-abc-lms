@@ -18,6 +18,11 @@ class Video extends Model
         'path',
     ];
 
+    public function classRecord()
+    {
+        return $this->belongsTo(ClassRecord::class);
+    }
+
     public function getCdnUrl()
     {
         //'http://updxyy.test.upcdn.net';

@@ -17,12 +17,12 @@
                 </video>
           </div>
           @guest
-          <a class="btn-block btn btn-lg btn-success" href="/register/1?video={{$video->class_record_id}}"><i class="fab fa-weixin fa-large"></i>
+          <a class="btn-block btn btn-lg btn-success" href="/register/{{$video->classRecord->user_id}}?vcrid={{$video->class_record_id}}"><i class="fab fa-weixin fa-large"></i>
               立即注册，预约试听
           </a>
           @endguest
           @auth
-          <a class="btn-block btn btn-lg btn-success" href="/register/{{auth()->id()}}?video={{$video->class_record_id}}"><i class="fab fa-weixin fa-large"></i>
+          <a class="btn-block btn btn-lg btn-success" href="/register/{{auth()->id()}}?vcrid={{$video->class_record_id}}"><i class="fab fa-weixin fa-large"></i>
               分享朋友圈，赢推荐好礼！复制推荐链接或二维码
           </a>
           @endauth

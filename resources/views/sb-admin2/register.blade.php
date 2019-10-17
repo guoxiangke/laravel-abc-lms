@@ -203,6 +203,7 @@
                   </div>
                 </div>
                 <input type="hidden" name="recommend_uid" required value="{{isset($uid)?$uid:1}}"/>
+                <input type="hidden" name="recommend_video_class_record_id" required value="{{Request::get('vcrid')?:0}}"/>
                 <button type="submit" class="btn btn-primary btn-user btn-block">
                         {{ __('Register') }}
                 </button>
