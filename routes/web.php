@@ -12,6 +12,7 @@
 */
 Auth::routes();
 Route::get('/register/{user}', 'Auth\RegisterController@showRegistrationFormByRecommend')->name('register.recommend');
+Route::get('/recommend', 'AnonymousController@recommend')->name('recommend');
 
 //首页
 Route::get('/', function () {

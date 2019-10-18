@@ -235,9 +235,6 @@
     .intl-tel-input.separate-dial-code .selected-flag{
       background: none;
     }
-    .intl-tel-input.separate-dial-code .selected-dial-code{
-      font-size: .5em;
-    }
     .intl-tel-input.allow-dropdown .selected-flag, .intl-tel-input.separate-dial-code .selected-flag{
       width: 79px;
     }
