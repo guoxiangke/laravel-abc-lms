@@ -3,11 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>【福利】免费领青少儿英语原版动画、儿歌，一对一外教体验课</title>
 
@@ -30,7 +28,7 @@
       height: 100%;
     }
     .img-section{
-      width: 100%;
+      max-width: 100%;
     }
     .bottomText {
       position: absolute;
