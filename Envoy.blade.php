@@ -45,10 +45,10 @@
       bills > /tmp/$FILENAME \
     && echo 'backed some tables on qq3.' \
     && echo 'sync to sfo2 ...' \
-    && scp /tmp/$FILENAME root@178.128.14.110:/tmp/ \
+    && scp /tmp/$FILENAME root@52.34.168.85:/tmp/ \
     && rm /tmp/$FILENAME \
     && echo 'synced to sfo2 & deleted on qq3.' \
-    && ssh root@178.128.14.110<< EOF
+    && ssh root@52.34.168.85<< EOF
       cd /var/www/html/lms-abc \
       && echo 'import to sfo2 ...' \
       && docker-compose exec -T db mysql -uroot -proot laravel < /tmp/$FILENAME \
@@ -65,7 +65,7 @@
     echo 'backup all tables on sfo2...'
     docker-compose exec -T db mysqldump -uroot -proot laravel  > /tmp/$FILENAME  \
     && echo 'backup all tables done & scp to qq3...' \
-    && scp -v /tmp/$FILENAME root@154.8.216.229:/tmp/ \
+    && scp /tmp/$FILENAME root@154.8.216.229:/tmp/ \
     && rclone copy /tmp/$FILENAME 501:/backup/abc/db/synced -v \
     && rm /tmp/$FILENAME \
     && ssh root@154.8.216.229<< EOF
@@ -87,11 +87,11 @@
     
     docker-compose exec -T db mysqldump -uroot -proot laravel > /tmp/$FILENAME \
     && echo 'sync to sfo2 ...' \
-    && scp /tmp/$FILENAME root@178.128.14.110:/tmp/ \
+    && scp /tmp/$FILENAME root@52.34.168.85:/tmp/ \
     && echo 'deleted on qq3 ...' \
     && rm /tmp/$FILENAME -rf \
     && echo "Login in SFO2 begin to backup to 501..." \
-    && ssh root@178.128.14.110<< EOF
+    && ssh root@52.34.168.85<< EOF
       echo 'sync to 501 begin...' \
       && rclone copy /tmp/$FILENAME 501:/backup/abc/db/ -v \
       && rm /tmp/$FILENAME -rf \
@@ -102,7 +102,7 @@
 @task('backupEN', ['on' => 'sfo2'])
     cd /var/www/html/lms-abc
     FILENAME=en.lms.abc.$(date '+%Y%m%d%H%M%S').db.backup.sql
-    echo "scp root@154.8.216.229:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
+    echo "scp root@52.34.168.85:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
     # --extended-insert=FALSE --complete-insert=TRUE
     docker-compose exec -T db mysqldump -uroot -proot laravel  > /tmp/$FILENAME \
     && rclone copy /tmp/$FILENAME 501:/backup/abc/db/ -v \
