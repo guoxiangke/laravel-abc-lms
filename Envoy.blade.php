@@ -1,4 +1,4 @@
-@servers(['sfo2' => 'root@178.128.14.110', 'qq3' => 'root@154.8.216.229'])
+@servers(['sfo2' => 'root@52.34.168.85', 'qq3' => 'root@154.8.216.229'])
 
 #step1 CN备份用户相关表后，导出到sfo2，
 #step2 从sfo2合并后的全部sql sync->CN.

@@ -8,7 +8,7 @@
   <meta name="author" content="">
 
   <title>【福利】免费领青少儿英语原版动画、儿歌，一对一外教体验课</title>
-
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
   <!-- Styles -->
@@ -61,10 +61,10 @@
 
 <body class="bg-gradient-warning">
 
-  <div class="container-fluid">
+  <div class="mt-4 p-1">
 
     <!-- Outer Row -->
-    <div class="row justify-content-center pt-4">
+    <div class="">
       
       <img class="img-section section1 pb-2" src="/images/recommend/section1.png">
       <img class="img-section section2" src="/images/recommend/section2.png">
@@ -82,7 +82,6 @@
       </div>
 
       <img class="img-section bottom" src="/images/recommend/bottom.png">
-      <img class="img-section bottomRepick imgEvent" src="/images/recommend/repick.png" style="display: none;">
       <div class="bottomText">名额有限，仅限20分钟内领取</div>
 
     </div>
