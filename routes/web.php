@@ -95,11 +95,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('class-records', 'ClassRecordController@indexByRole')->name('classRecords.indexByRole');
     // 代理： 我的学生
     Route::get('student-recommend', 'StudentController@indexByRecommend')->name('students.recommend');
-    Route::get('classRecords/order/{order}', 'ClassRecordController@indexbyOrder')->name('classRecords.indexbyOrder');
+    Route::get('classRecords/order/{order}', 'ClassRecordController@indexByOrder')->name('classRecords.indexbyOrder');
     //某个学生的上课记录 for agncy！
-    Route::get('classRecords/student/{user}', 'ClassRecordController@indexbyStudent')->name('classRecords.indexbyStudent');
+    Route::get('classRecords/student/{user}', 'ClassRecordController@indexByStudent')->name('classRecords.indexbyStudent');
     //某个学生的上课记录 by teacher, only for Admin
-    Route::get('classRecords/teacher/{teacher}', 'ClassRecordController@indexbyTeacher')->name('classRecords.indexbyTeacher');
+    Route::get('classRecords/teacher/{teacher}', 'ClassRecordController@indexByTeacher')->name('classRecords.indexbyTeacher');
+    //某个代理的上课记录 by agncy, only for Admin
+    Route::get('classRecords/agency/{agency}', 'ClassRecordController@indexByAgency')->name('classRecords.indexByAgency');
     //老师/管理人员快速请假标记 ajax
     Route::post('/classRecords/{classRecord}/exception/{id}', 'ClassRecordController@flagException')->name('classRecords.flagException')->where('id', '[0-4]');
 

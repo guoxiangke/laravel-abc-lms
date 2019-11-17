@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Teacher;
 // use App\Forms\ClassRecordForm as CreateForm;
@@ -247,6 +248,78 @@ class ClassRecordController extends Controller
             ->count();
         // dd($countsThisMonth,$countsLastMonth);
         return view('classRecords.indexByteacher4admin', compact('classRecords', 'counts', 'teacher'));
+    }
+
+    // https://abc.dev/classRecords/agency/4
+    public function indexByAgency(Agency $agency, Request $request)
+    {
+        //权限 只有管理员可以拥有本列表
+        if (! Auth::user()->hasAnyRole(['admin', 'manager'])) {
+            abort(403);
+        }
+
+        $classRecords = ClassRecord::with(
+            'rrule',
+            'user',
+            'user.profiles',
+            'media',
+            'teacher',
+            'teacher.profiles',
+            )
+            ->where('agency_uid', $agency->user_id)
+            ->orderBy('generated_at', 'desc')
+            ->paginate(50);
+        // 1-5号显示上个月的统计
+        // 5-30/31显示本月统计
+        $counts = [];
+        $dt = Carbon::now();
+        if (! $from = $request->query('from')) {
+            $from = Carbon::createFromFormat('Y-m-d', '2019-01-01');
+        } else {
+            $from = Carbon::createFromFormat('Y-m-d', $from);
+        }
+        if (! $to = $request->query('to')) {
+            $to = Carbon::now();
+        } else {
+            $to = Carbon::createFromFormat('Y-m-d', $to);
+        }
+
+        $whichBetween = [$from, $to];
+
+        // 'AOL', //1-by-Student
+        $counts['aol'] = ClassRecord::where('agency_uid', $agency->user_id)
+            ->whereBetween('generated_at', $whichBetween)
+            ->where('exception', ClassRecord::NORMAL_EXCEPTION_STUDENT)
+            ->count();
+        // 'Absent', //学生异常 3-by-Student
+        $counts['absent'] = ClassRecord::where('agency_uid', $agency->user_id)
+            ->whereBetween('generated_at', $whichBetween)
+            ->where('exception', ClassRecord::EXCEPTION_STUDENT)
+            ->count();
+        // 'Holiday', //2 AOL-by-Teacher
+        $counts['holiday'] = ClassRecord::where('agency_uid', $agency->user_id)
+            ->whereBetween('generated_at', $whichBetween)
+            ->where('exception', ClassRecord::NORMAL_EXCEPTION_TEACHER)
+            ->count();
+        // 'EXCEPTION', //Absent-by-Teacher 老师异常,不给老师算课时，需要给学生补课 4
+        $counts['exception'] = ClassRecord::where('agency_uid', $agency->user_id)
+            ->whereBetween('generated_at', $whichBetween)
+            ->where('exception', ClassRecord::EXCEPTION_TEACHER)
+            ->count();
+        $counts['trail'] = Order::where('agency_uid', $agency->user_id)
+            ->where('price', 0)
+            ->where('period', 1)
+            ->whereBetween('created_at', $whichBetween)
+            ->count();
+        // 'Normal', //0 算给老师工资
+        // 'Absent', //学生异常 3-by-Student  算给老师工资
+        // + no records!!! no pay!
+        $counts['total'] = ClassRecord::where('agency_uid', $agency->user_id)
+            ->whereBetween('generated_at', $whichBetween)
+            ->whereIn('exception', [ClassRecord::NO_EXCEPTION, ClassRecord::EXCEPTION_STUDENT])
+            ->count();
+        // dd($countsThisMonth,$countsLastMonth);
+        return view('classRecords.indexByagency4admin', compact('classRecords', 'counts', 'agency', 'whichBetween'));
     }
 
     /**

@@ -37,7 +37,8 @@
 						@endphp
 					    <tr id={{$agency->id}}>
 					      <th scope="row">
-					      	<a href="{{ route('agencies.edit', $agency->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+					      	<a href="{{ route('classRecords.indexByAgency', $agency->id) }}" class="btn btn-sm btn-outline-dark" ><i class="fas fa-list-ul"></i></a>
+					      	<a href="{{ route('agencies.edit', $agency->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" ><i class="fas fa-user-edit"></i></a>
 					      </th>
 					      <td data-label="Name">
 					      	<a href="{{ route('agencies.show', $agency->id) }}">{{$profile->name}}</a></td>
