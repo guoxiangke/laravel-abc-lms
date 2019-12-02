@@ -115,6 +115,7 @@
               CN: {{$classRecord->getMp4LinkByCdn('upyun')}}
               <br/>
               EN：{{$classRecord->getMp4LinkByCdn('do')}}
+            @endhasanyrole
             @hasanyrole('manager|admin|teacher')
             <br>
             <div class="row">
