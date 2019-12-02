@@ -109,6 +109,12 @@
               <br>
               下载方法: 右键点击视频图标，选择链接另存为...
             @endhasanyrole
+
+            @hasanyrole('manager|admin')
+              <hr>
+              CN: {{$classRecord->getMp4LinkByCdn('upyun')}}
+              <br/>
+              EN：{{$classRecord->getMp4LinkByCdn('do')}}
             @hasanyrole('manager|admin|teacher')
             <br>
             <div class="row">

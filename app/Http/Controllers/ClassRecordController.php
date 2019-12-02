@@ -202,7 +202,7 @@ class ClassRecordController extends Controller
             )
             ->where('teacher_uid', $teacher->user_id)
             ->orderBy('generated_at', 'desc')
-            ->paginate(50);
+            ->paginate(100);
         // 1-5号显示上个月的统计
         // 5-30/31显示本月统计
         $counts = [];
