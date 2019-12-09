@@ -42,6 +42,7 @@
       audits \
       products \
       comments \
+      videos \
       bills > /tmp/$FILENAME \
     && echo 'backed some tables on qq3.' \
     && echo 'sync to sfo2 ...' \

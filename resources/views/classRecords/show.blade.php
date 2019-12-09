@@ -112,7 +112,7 @@
 
             @hasanyrole('manager|admin')
               <hr>
-              CN: {{$classRecord->getMp4LinkByCdn('upyun')}}
+              CN：{{$classRecord->getMp4LinkByCdn('upyun')}}
               <br/>
               EN：{{$classRecord->getMp4LinkByCdn('do')}}
             @endhasanyrole

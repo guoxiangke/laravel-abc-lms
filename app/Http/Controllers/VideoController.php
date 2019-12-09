@@ -119,4 +119,27 @@ class VideoController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $videos = Video::with(
+            'classRecord',
+            'classRecord.order',
+            'classRecord.order.user',
+            'classRecord.order.user.profiles',
+            'classRecord.order.teacher',
+            'classRecord.order.teacher.profiles',
+            'classRecord.order.agency',
+            'classRecord.order.agency.profiles',
+            )
+            ->orderBy('id', 'desc')
+            ->paginate(100);
+
+        return view('videos.index', compact('videos'));
+    }
 }
