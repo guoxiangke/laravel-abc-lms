@@ -55,7 +55,6 @@ RUN set -ex; \
   docker-php-ext-configure gd \
     --with-png-dir=/usr \
     --with-jpeg-dir=/usr \
-    --enable-gd-native-ttf \
     --with-freetype-dir=/usr/include/freetype2 \
   ; \
   docker-php-ext-install -j "$(nproc)" \
