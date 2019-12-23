@@ -51,6 +51,11 @@ foreach (App\Models\Order::LIST_BY as $item) {
     Route::get("orders/$item", 'OrderController@index')->middleware('admin')->name("orders.$item");
 }
 
+//后台配置
+Route::group(['prefix'=>'admin', 'middleware' => ['admin']], function () {
+    Route::resource('voteTypes', 'VoteTypeController');
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
@@ -126,6 +131,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('student/import', 'StudentController@import')->name('students.import');
     Route::post('student/import', 'StudentController@importStore');
+
+    Route::post('/classRecord/{classRecord}/rate/{voteType}/{value}', 'ClassRecordController@rate')->name('classRecords.rate');
 });
 
 Route::get('videos/{video}', 'VideoController@show')->name('videos.show');

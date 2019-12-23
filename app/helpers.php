@@ -67,3 +67,19 @@ if (! function_exists('ftqq_notify')) {
         return @file_get_contents('https://sc.ftqq.com/'.$key.'.send', false, $context);
     }
 }
+
+if (! function_exists('getClassesList')) {
+    function getClassesList($dir)
+    {
+        $classes = \File::allFiles($dir);
+        foreach ($classes as $class) {
+            $class->classname = str_replace(
+                [app_path(), '/', '.php'],
+                ['App', '\\', ''],
+                $class->getRealPath()
+            );
+        }
+
+        return $classes;
+    }
+}

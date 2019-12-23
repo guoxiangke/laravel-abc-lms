@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
+use App\Models\Vote;
 use App\Models\Order;
 use App\Models\Agency;
 use App\Models\Student;
-use App\Models\Teacher;
 // use App\Forms\ClassRecordForm as CreateForm;
+use App\Models\Teacher;
+use App\Models\VoteType;
 use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -332,8 +334,18 @@ class ClassRecordController extends Controller
     {
         // $classRecord->load('comments');
         $this->authorize('view', $classRecord);
+        //添加5颗星
+        $starts = 0;
+        $vote_type = 0;
+        foreach (VoteType::get($classRecord) as $key => $voteType) {
+            if ($voteType->type == 5) {
+                $starts = Vote::get($voteType, $classRecord);
+                $vote_type = $voteType;
+                break;
+            }
+        }
 
-        return view('classRecords.show', compact('classRecord'));
+        return view('classRecords.show', compact('classRecord', 'starts', 'vote_type'));
     }
 
     /**
@@ -475,5 +487,17 @@ class ClassRecordController extends Controller
         Session::flash('alert-success', __('Success'));
 
         return redirect()->back();
+    }
+
+    public function rate(Request $request, ClassRecord $classRecord, voteType $voteType, $value)
+    {
+        // todo authorize to studnets!!!
+        $this->authorize('rate', $classRecord);
+
+        $res = Vote::set($voteType, $classRecord, $value);
+
+        return ['success' => $res];
+        // Session::flash('alert-success', __('Success'));
+        // return redirect()->back();
     }
 }

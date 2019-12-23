@@ -5,7 +5,22 @@
 
 @section('content')
 <div class="container">
-    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('View ClassRecord')}}</h1>
+    <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('ClassRecord')}}
+
+      @hasanyrole('manager|admin|teacher')
+        <div class="starrr" 
+          data-starts={{$starts}}
+        >
+        <form class="rate-form" role="form" method="POST" 
+          action="{{ action('ClassRecordController@rate',  [
+          'classRecord' => $classRecord,
+          'voteType' => $vote_type,
+          'value' => 0
+          ])}}">
+          @csrf
+        </form>
+        </div>
+      @endhasanyrole</h1>
     <br>
     <?php
         $goBackLink = route('classRecords.indexbyOrder', $classRecord->order);
@@ -156,8 +171,25 @@
     </div>
 </div>
 @endsection
+@section('styles')
+  <style>
+  .starrr {
+    display: inline-block;
+  }
+  .starrr a {
+    font-size: 16px;
+    padding: 0 1px;
+    cursor: pointer;
+    color: #FFD119;
+    text-decoration: none; 
+  }
 
+  </style>
+@endsection
 @section('scripts')
+<script src="{{ asset('vendor/starrr.js') }}"></script>
+@endsection
+@section('scripts1')
 <script>
     window.onload = function () {
         $('#download').click(function(e){
@@ -175,6 +207,32 @@
               $(this).parent('form').submit();
           }
         });
+
+        $('.starrr').starrr({rating: $('.starrr').data('starts') })
+
+        $('.starrr').on('starrr:change', function(e, value){
+          if(confirm('确定给老师'+value+'颗星吗？')){
+            let old = $('.rate-form').attr('action')
+            //$('.rate-form').attr('action', old.substring(0,old.length-1) + value);
+            let url = old.substring(0,old.length-1) + value
+            // $('.rate-form').submit();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+              url: url,
+              type:"POST",
+              success: function(data) {
+                // console.log(data);
+                if(!data.success){
+                  alert('给星失败，请再试一次！')
+                }
+              }
+            });
+          }
+        })
 
     }
 </script>

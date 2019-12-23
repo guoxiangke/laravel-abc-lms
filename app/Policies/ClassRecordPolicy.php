@@ -28,6 +28,12 @@ class ClassRecordPolicy
             || $classRecord->agency_uid == $user->id; //代理可以查看但不可以评论
     }
 
+    //谁可以打星星？
+    public function rate(User $user, ClassRecord $classRecord)
+    {
+        return $classRecord->user_id == $user->id || $user->isAdmin();
+    }
+
     //谁可以评论？学生可以
     public function comment(User $user, ClassRecord $classRecord)
     {
