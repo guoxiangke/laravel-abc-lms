@@ -11,12 +11,12 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
   <h1>{{$order->title}}</h1>
 
   <div class="show-links">
-      <a href="{{ route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
-      <a href="{{ route('orders.edit', $order->id)}}" class="btn btn-outline-primary">{{__('Edit')}}</a>
+      <a href="{{route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
+      <a href="{{route('classRecords.indexbyOrder', $order) }}" class="btn btn-outline-dark">View in ClassRecords</a>
   </div>
 
   <ul class="list-group list-group-flush">
@@ -25,7 +25,7 @@
         <li class="list-group-item">过期日期: {{$order->expired_at->format('Y.m.d')}}</li>
         <li class="list-group-item">上课时间: {{$rrule->start_at->format('H:i')}}</li>
         <li class="list-group-item">上课计划：{{$rrule->toText()}}
-          <a href="{{route('classRecords.indexbyOrder', $order) }}" class="btn btn-sm btn-outline-dark">Class Records</a>   
+          <a href="{{route('rrules.edit', $rrule->id) }}" class="btn btn-sm btn-outline-danger">Edit this Rrule</a>   
         </li>
       @endforeach
   </ul>

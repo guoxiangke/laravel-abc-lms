@@ -81,7 +81,6 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         foreach ($order->schedules as $rrule) {
             $uniqueTime[] = $rrule->start_at->format('H:i');
         }
-        \Log::error(__CLASS__, [__FUNCTION__, __LINE__, $uniqueTime]);
         $uniqueTime = array_unique($uniqueTime);
         foreach ($uniqueTime as $time) {
             if (in_array($time, $todayClassTimes)) {

@@ -61,9 +61,9 @@ class ClassRecordController extends Controller
     public function indexbyOrder(Order $order)
     {
         $this->authorize('admin');
-
+        $order = Order::with('schedules', 'schedules.classRecords')->find($order->id);
         $classRecords = ClassRecord::with(
-            'rrule',
+            // 'rrule',
             'teacher',
             'teacher.profiles',
             'user',
@@ -82,7 +82,7 @@ class ClassRecordController extends Controller
             ]
         );
 
-        return view('classRecords.index4order', compact('classRecords', 'form'));
+        return view('classRecords.index4order', compact('classRecords', 'form', 'order'));
     }
 
     public function generate(Request $request, Order $order, FormBuilder $formBuilder)
@@ -360,8 +360,9 @@ class ClassRecordController extends Controller
     public function destroy(ClassRecord  $classRecord)
     {
         $this->authorize('delete', $classRecord);
-
-        $classRecord->forceDelete(); // no use of softDelete!!!
+        // @see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
+        // 由于上述唯一约束，如果使用softDelete，再次生成时会冲突！
+        $classRecord->forceDelete();
         Session::flash('alert-success', '删除成功！');
 
         return redirect()->route('classRecords.indexbyOrder', $classRecord->order_id);

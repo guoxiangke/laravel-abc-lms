@@ -1,5 +1,4 @@
 <template>
-    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <v-select :items="localesList" v-model="locale"></v-select>
@@ -17,7 +16,6 @@
                 </vue-cal>
             </div>
         </div>
-    </div>
 </template>
 
 
