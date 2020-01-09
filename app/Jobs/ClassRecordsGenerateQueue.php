@@ -74,9 +74,17 @@ class ClassRecordsGenerateQueue implements ShouldQueue
 
             return;
         }
-        //2节课的情况 + 请假情况！！
+        //2节课的情况 + 请假情况！！-下面情况
+        //引入$uniqueTime变量 处理以下问题：
+        //如果一个学生三个上课时间，1和3是同一个时间点20:00，没有合并rrule的同类项情况
+        $uniqueTime = [];
         foreach ($order->schedules as $rrule) {
-            if (in_array($rrule->start_at->format('H:i'), $todayClassTimes)) {
+            $uniqueTime[] = $rrule->start_at->format('H:i');
+        }
+        \Log::error(__CLASS__, [__FUNCTION__, __LINE__, $uniqueTime]);
+        $uniqueTime = array_unique($uniqueTime);
+        foreach ($uniqueTime as $time) {
+            if (in_array($time, $todayClassTimes)) {
                 try {
                     $classRecord = ClassRecord::firstOrCreate([
                         'rrule_id'     => $rrule->id,

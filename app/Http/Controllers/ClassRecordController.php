@@ -93,9 +93,12 @@ class ClassRecordController extends Controller
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        Session::flash('alert-success', '正在生成，请稍后刷新');
-
-        ClassRecordsGenerateQueue::dispatch($order, request('days'))->onQueue('high');
+        if ($order->isActive()) {
+            ClassRecordsGenerateQueue::dispatch($order, request('days'))->onQueue('high');
+            Session::flash('alert-success', '正在生成，请稍后刷新');
+        } else {
+            Session::flash('alert-error', 'The order is not active!');
+        }
 
         return redirect()->back();
     }
@@ -358,7 +361,7 @@ class ClassRecordController extends Controller
     {
         $this->authorize('delete', $classRecord);
 
-        $classRecord->delete();
+        $classRecord->forceDelete(); // no use of softDelete!!!
         Session::flash('alert-success', '删除成功！');
 
         return redirect()->route('classRecords.indexbyOrder', $classRecord->order_id);
