@@ -244,6 +244,10 @@ class ClassRecordController extends Controller
             ->where('period', 1)
             ->whereBetween('created_at', $whichMonth)
             ->count();
+        // 正式上课订单数量/学生人数（不含试听）
+        $counts['normal'] = Order::where('teacher_uid', $teacher->user_id)
+            ->where('period', '<>', 1)
+            ->count();
         // 'Normal', //0 算给老师工资
         // 'Absent', //学生异常 3-by-Student  算给老师工资
         // + no records!!! no pay!

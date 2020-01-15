@@ -9,6 +9,7 @@
   
   <div class="col-md-12 col-sm-12 p-0">
       <p>1-5号显示上个月的统计， 5号以后显示本月统计</p>
+      <p>正式上课订单数量/学生人数（不含试听） <strong>{{$counts['normal']}}</strong></p>
       <div class="row mb-2">        
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
