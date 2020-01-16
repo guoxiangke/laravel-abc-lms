@@ -239,4 +239,15 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
 
         return $telephone;
     }
+
+    /**
+     * Route notifications for the Facebook channel.
+     * You can either send the notification by providing with the page-scoped user id (PSID) of the recipient to the to($userId).
+     * @return int
+     */
+    public function routeNotificationForFacebook()
+    {
+        // return '2495427007182309';
+        return Social::where('user_id', $this->user_id)->where('type', 2)->pluck('social_id')->first();
+    }
 }

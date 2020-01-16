@@ -6,6 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\Facebook\FacebookChannel;
+use NotificationChannels\Facebook\FacebookMessage;
+use NotificationChannels\Facebook\Components\Button;
+use NotificationChannels\Facebook\Enums\NotificationType;
 
 //紧急短信通知老师上课！ UrgentClassComing for teacher!!!
 class TeacherClassNotification extends Notification
@@ -31,7 +35,22 @@ class TeacherClassNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [FacebookChannel::class]; //, TwilioChannel::class
+    }
+
+    public function toFacebook($notifiable)
+    {
+        return FacebookMessage::create()
+            // ->to($this->user->fb_messenger_user_id) // Optional
+            ->text('One of your invoices has been paid!')
+            ->isUpdate() // Optional
+            ->isTypeRegular() // Optional
+            // Alternate method to provide the notification type.
+            // ->notificationType(NotificationType::REGULAR) // Optional
+            ->buttons([
+                Button::create('Call Us for Support!', '+1(212)555-2368')->isTypePhoneNumber(),
+                // Button::create('Start Chatting', ['invoice_id' => $this->invoice->id])->isTypePostback() // Custom payload sent back to your server
+            ]); // Buttons are optional as well.
     }
 
     public function toTwilio($notifiable)

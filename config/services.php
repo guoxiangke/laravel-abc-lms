@@ -54,6 +54,8 @@ return [
         'client_id' => env('FACEBOOK_KEY'),
         'client_secret' => env('FACEBOOK_SECRET'),
         'redirect' => env('APP_URL', 'https://abc.dev').env('FACEBOOK_REDIRECT_URI'),
+        'page-token' => env('FACEBOOK_PAGE_TOKEN', 'YOUR PAGE TOKEN HERE'),
+        'version' => env('FACEBOOK_GRAPH_API_VERSION', '4.0'),
     ],
 
     'weixin' => [
