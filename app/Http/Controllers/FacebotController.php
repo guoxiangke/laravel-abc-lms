@@ -24,10 +24,16 @@ class FacebotController extends Controller
         // handleMessage(sender_psid, webhook_event.message);
         // handlePostback(sender_psid, webhook_event.postback);
         $message = $webhookEvent['message']['text'];
-        $lastCommand = 'bind';
+        $lastCommand = strtolower(trim($message)); //'bind';
         switch ($lastCommand) {
             case 'bind':
                 $reply = $this->bind($psid);
+                break;
+            case 'register':
+                $reply = 'Register by click: '.route('register');
+                break;
+            case 'ping':
+                $reply = 'Pong';
                 break;
             default:
                 $reply = 'Welcome to apply us, Any question PM Dale plz. https://m.me/xiangkeguo';
@@ -75,7 +81,8 @@ class FacebotController extends Controller
         $social = Social::where('type', Social::TYPE_FB_PSID)->where('social_id', $psid)->first();
         if (! $social) {
             //请回复 bind 绑定您的账户
-            $reply = 'Please click this link https://lms.daxiangyingyu.com/facebook/bind?psid='.base64_encode($psid).' to login and bind EE-LMS account to get class notifications';
+            $link = route('bind.facebook', ['psid'=> base64_encode($psid)]);
+            $reply = 'Please click this link:'.$link.' to login and bind EE-LMS account to get class notifications';
         } else {
             $reply = 'You already Binded!';
         }
