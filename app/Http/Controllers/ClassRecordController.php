@@ -97,7 +97,7 @@ class ClassRecordController extends Controller
             ClassRecordsGenerateQueue::dispatch($order, request('days'))->onQueue('high');
             Session::flash('alert-success', '正在生成，请稍后刷新');
         } else {
-            Session::flash('alert-error', 'The order is not active!');
+            Session::flash('alert-danger', 'The order is not active!');
         }
 
         return redirect()->back();
