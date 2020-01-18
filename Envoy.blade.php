@@ -43,6 +43,8 @@
       products \
       comments \
       videos \
+      votes \ 
+      vote_types \
       bills > /tmp/$FILENAME \
     && echo 'backed some tables on qq3.' \
     && echo 'sync to sfo2 ...' \
