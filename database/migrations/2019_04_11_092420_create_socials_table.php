@@ -25,6 +25,7 @@ class CreateSocialsTable extends Migration
             $table->unsignedTinyInteger('type')->default(1); //1wechat 2facebook
             $table->timestamps();
 
+            // todo add 唯一索引在 user_id + social_id + type //确保一个用户在一个平台唯一绑定
             $table->foreign('user_id')
                ->references('id')
                ->on('users')

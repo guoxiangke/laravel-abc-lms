@@ -46,6 +46,7 @@ Route::get('login/facebook/callback', 'SocialController@handleFacebookProviderCa
 Route::get('/facebook/webhook', 'FacebotController@receive')->middleware('verify');
 //where Facebook sends messages to. No need to attach the middleware to this because the verification is via GET
 Route::post('/facebook/webhook', 'FacebotController@receive');
+Route::get('/facebook/bind', 'FacebotController@bindPsid')->middleware('auth');
 
 Route::resources(['socials' => 'SocialController']); //post need
 

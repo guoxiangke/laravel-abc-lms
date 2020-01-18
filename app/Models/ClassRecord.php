@@ -247,8 +247,6 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
      */
     public function routeNotificationForFacebook()
     {
-        return '3271973086149712';
-
-        return Social::where('user_id', $this->user_id)->where('type', 2)->pluck('social_id')->first();
+        return Social::where('user_id', $this->user_id)->where('type', Social::TYPE_FB_PSID)->pluck('social_id')->first();
     }
 }

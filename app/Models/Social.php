@@ -17,8 +17,10 @@ class Social extends Model
     const TYPE_WECHAT = 1;
     const TYPE_FACEBOOK = 2;
     const TYPE_GITHUB = 3;
+    // A person is assigned a unique page-scoped ID (PSID) for each Facebook Page they start a conversation with. The PSID is used by your Messenger bot to identify a person when sending messages.
+    const TYPE_FB_PSID = 4;
 
-    const TYPES = ['None', '微信', 'Facebook', 'Github'];
+    const TYPES = ['None', '微信', 'Facebook', 'Github', 'PSID'];
 
     public function user()
     {
