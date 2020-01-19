@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Social;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -36,13 +38,17 @@ class FacebotController extends Controller
                 $reply = 'Pong';
                 break;
             default:
-                $reply = 'Welcome to apply us, Any question PM Dale plz. https://m.me/xiangkeguo';
+                $reply = 'Welcome to apply us, Any question PM Dale by click this link: https://m.me/xiangkeguo';
                 break;
         }
 
-        $this->sendTextMessage($psid, $reply);
-
-        return response('EVENT_RECEIVED', 200);
+        if ($this->sendTextMessage($psid, $reply)) {
+            return response('EVENT_RECEIVED', 200);
+        } else {
+            return response()->toJson([
+                'message' => 'EVENT reply Failed',
+            ], 404);
+        }
     }
 
     public function bindPsid(Request $request)
@@ -82,7 +88,7 @@ class FacebotController extends Controller
         if (! $social) {
             //请回复 bind 绑定您的账户
             $link = route('bind.facebook', ['psid'=> base64_encode($psid)]);
-            $reply = 'Please click this link:'.$link.' to login and bind EE-LMS account to get class notifications';
+            $reply = 'Please click this link: '.$link.' to login and bind EE-LMS account to get class notifications';
         } else {
             $reply = 'You already Binded!';
         }
@@ -101,12 +107,18 @@ class FacebotController extends Controller
             ],
         ];
         $pageToken = \Config::get('services.facebook.page-token');
-        $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token='.$pageToken);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($messageData));
-        curl_exec($ch);
+
+        $client = new Client([
+            'headers' => ['Content-Type' => 'application/json'],
+        ]);
+        $url = 'https://graph.facebook.com/v5.0/me/messages?access_token='.$pageToken;
+        $response = $client->post($url, ['body'=>json_encode($messageData)]);
+        if ($response->getStatusCode() == 200) {
+            return true;
+        } else {
+            Log:error(__CLASS__, [__FUNCTION__, __LINE__, 'error!']);
+
+            return false;
+        }
     }
 }
