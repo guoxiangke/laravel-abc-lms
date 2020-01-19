@@ -40,7 +40,7 @@ class FacebotController extends Controller
                 break;
         }
 
-        $this->sendTextMessage($id, $reply);
+        $this->sendTextMessage($psid, $reply);
 
         return response('EVENT_RECEIVED', 200);
     }
