@@ -12,7 +12,7 @@ use NotificationChannels\Facebook\Components\Button;
 use NotificationChannels\Facebook\Enums\NotificationType;
 
 //紧急短信通知老师上课！ UrgentClassComing for teacher!!!
-class TeacherClassNotification extends Notification
+class ClassRecordNotifyByMessenger extends Notification
 {
     use Queueable;
     // protected $classRecord;
@@ -40,17 +40,17 @@ class TeacherClassNotification extends Notification
 
     public function toFacebook($notifiable)
     {
+        $notifiable = $classRecord = ClassRecord::find(1);
+        $time = $notifiable->generated_at->format('H:i D');
+        $studentName = $notifiable->user->name;
+        $template  = "$studentName having class at $time\n".route('classRecords.show',$notifiable->id);
         return FacebookMessage::create()
-            // ->to($this->user->fb_messenger_user_id) // Optional
-            ->text('One of your invoices has been paid!')
-            ->isUpdate() // Optional
-            ->isTypeRegular() // Optional
-            // Alternate method to provide the notification type.
-            // ->notificationType(NotificationType::REGULAR) // Optional
+            ->text($template)
             ->buttons([
-                Button::create('Call Us for Support!', '+1(212)555-2368')->isTypePhoneNumber(),
-                // Button::create('Start Chatting', ['invoice_id' => $this->invoice->id])->isTypePostback() // Custom payload sent back to your server
-            ]); // Buttons are optional as well.
+                Button::create("I am ready", ['id' => $notifiable->id, 'type'=>'ready'])->isTypePostback(),
+                Button::create('I can\'t call', ['id' => $notifiable->id,'type'=>'abscent'])->isTypePostback(),
+                Button::create("Student still offline", ['id' => $notifiable->id,'type'=>'offline'])->isTypePostback(),
+            ]);
     }
 
     public function toTwilio($notifiable)
@@ -61,8 +61,6 @@ class TeacherClassNotification extends Notification
         $teacherName = $notifiable->teacher->name;
         $message = "【EE-Urgent】Class for {$studentName} at {$time}, Online and send a ready message plz!";
         $result = (new TwilioSmsMessage())->content($message);
-        \Log::info(__CLASS__, [__FUNCTION__, $result]);
-
         return $result;
     }
 }

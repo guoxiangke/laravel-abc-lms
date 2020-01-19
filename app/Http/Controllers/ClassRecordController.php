@@ -18,10 +18,10 @@ use App\Forms\ClassGenForm as GenForm;
 use App\Jobs\ClassRecordsGenerateQueue;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use App\Notifications\ClassRecordNotifyBySms;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\Edit\ClassRecordForm as EditForm;
-use App\Notifications\StudentClassNotification;
-use App\Notifications\TeacherClassNotification;
+use App\Notifications\ClassRecordNotifyByMessenger;
 
 class ClassRecordController extends Controller
 {
@@ -480,7 +480,7 @@ class ClassRecordController extends Controller
     {
         $this->authorize('admin');
 
-        $classRecord->notify(new TeacherClassNotification($classRecord));
+        $classRecord->notify(new ClassRecordNotifyByMessenger($classRecord));
 
         Session::flash('alert-success', __('Success'));
 
@@ -491,7 +491,7 @@ class ClassRecordController extends Controller
     {
         $this->authorize('admin');
 
-        $classRecord->notify(new StudentClassNotification($classRecord));
+        $classRecord->notify(new ClassRecordNotifyBySms($classRecord));
         Session::flash('alert-success', __('Success'));
 
         return redirect()->back();

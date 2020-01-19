@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Yansongda\LaravelNotificationWechat\WechatChannel;
 use Yansongda\LaravelNotificationWechat\WechatMessage;
 
-class ClassComing extends Notification
+class ClassRecordNotifyByWechat extends Notification
 {
     use Queueable;
 

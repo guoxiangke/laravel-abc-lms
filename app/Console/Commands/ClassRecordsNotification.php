@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
+use App\Models\Social;
 use App\Models\ClassRecord;
 use Illuminate\Console\Command;
-use App\Notifications\ClassComing;
+use App\Notifications\ClassRecordNotifyByWechat;
+use App\Notifications\ClassRecordNotifyByMessenger;
 
 class ClassRecordsNotification extends Command
 {
@@ -51,10 +53,15 @@ class ClassRecordsNotification extends Command
             ->whereIn('user_id', config('notify.test_user'))
             ->each(function (ClassRecord $classRecord) {
                 // 通知学生
-                // todo $c = $classRecord->user; // ?
                 $classRecord->user->socials->map(function ($social) use ($classRecord) {
-                    if ($social->type == 1) {
-                        $classRecord->user->notify(new ClassComing($classRecord, $social->social_id));
+                    if ($social->type == Social::TYPE_WECHAT) {
+                        $classRecord->user->notify(new ClassRecordNotifyByWechat($classRecord, $social->social_id));
+                    }
+                });
+                // 通知老师
+                $classRecord->teacher->socials->map(function ($social) use ($classRecord) {
+                    if ($social->type == Social::TYPE_FB_PSID) {
+                        $classRecord->notify(new ClassRecordNotifyByMessenger($classRecord));
                     }
                 });
             });

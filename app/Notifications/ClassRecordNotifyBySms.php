@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 
 //紧急Upyun短信通知学生上课！ UrgentClassComing for student!!!
-class StudentClassNotification extends Notification
+class ClassRecordNotifyBySms extends Notification
 {
     use Queueable;
     // protected $classRecord;

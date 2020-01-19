@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\ClassRecord;
 use Illuminate\Console\Command;
-use App\Notifications\ClassComing;
 
 class ClassRecordsReminder extends Command
 {
@@ -49,7 +48,6 @@ class ClassRecordsReminder extends Command
         }
         ClassRecord::where('generated_at', $now)->each(function (ClassRecord $classRecord) {
             // 通知老师
-            // $classRecord->teacher->notify(new ClassComing($classRecord));
 
             // 通知管理员
             $teacher = $classRecord->teacher->profiles->first()->name;
@@ -58,7 +56,6 @@ class ClassRecordsReminder extends Command
             $title = "$student 将在 $date 上课, 老师：$teacher";
             $zoom = 'https://zoom.us/j/'.$classRecord->teacher->teacher->pmi;
             bark_notify($title.$classRecord->order->title, $zoom, false, 'ipad');
-            // ftqq_notify($title, '###No MarkDown Body###', 'manager');
         });
     }
 }
