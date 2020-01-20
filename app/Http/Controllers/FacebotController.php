@@ -83,7 +83,7 @@ class FacebotController extends Controller
     }
 
     // bind Psid
-    public function bindPsid(Request $request)
+    public function bind(Request $request)
     {
         $data = $request->all();
         // 3271973086149712 《====》 MzI3MTk3MzA4NjE0OTcxMg==

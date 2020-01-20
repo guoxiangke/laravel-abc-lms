@@ -25,11 +25,13 @@ class CreateSocialsTable extends Migration
             $table->unsignedTinyInteger('type')->default(1); //1wechat 2facebook
             $table->timestamps();
 
-            // todo add 唯一索引在 user_id + social_id + type //确保一个用户在一个平台唯一绑定
             $table->foreign('user_id')
                ->references('id')
                ->on('users')
                ->onDelete('cascade');
+            // add 唯一索引在 user_id + social_id + type //确保一个用户在一个平台唯一绑定
+            // todo alert table.
+            $table->unique(['user_id', 'social_id', 'type']);
         });
     }
 
