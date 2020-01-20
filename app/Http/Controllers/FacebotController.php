@@ -17,7 +17,7 @@ class FacebotController extends Controller
         $data = $data['entry'][0];
         $type = 'messages';
         // Gets the body of the webhook event
-        // Log::error(print_r($data,1)); // check Postback Button
+        Log::debug(__CLASS__, [__FUNCTION__, __LINE__, $data]); // check Postback Button
         if (isset($data['postback'])) {
             //messaging_postbacks
             $psid = $data['sender']['id'];
@@ -39,8 +39,8 @@ class FacebotController extends Controller
             //Message with fallback attachment from link scraping
             $psid = $data['sender']['id'];
             $context = $data['message']['text']; //URL_SENT_BY_THE_USER
-            $attachmentsTitle = $data['message']['attachments']['title'];
-            $attachmentsURL = $data['message']['attachments']['URL'];
+            $attachmentsTitle = $data['message']['attachments'][0]['title'];
+            $attachmentsURL = $data['message']['attachments'][0]['URL'];
         //todo
         } elseif (isset($data['message'])) {
             //Text Message
@@ -49,8 +49,8 @@ class FacebotController extends Controller
         //todo
         } elseif (isset($data['messaging'])) {
             //Message with blob attachment
-            $psid = $data['messaging']['sender']['id'];
-            $context = $data['messaging']['message']['text'];
+            $psid = $data['messaging'][0]['sender']['id'];
+            $context = $data['messaging'][0]['message']['text'];
             //done!
         }
         // We want our bot to be able to handle two types of webhook events: messages and messaging_postback. The name of the event type is not included in the event body, but we can determine it by checking for certain object properties.
