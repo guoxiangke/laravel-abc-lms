@@ -60,7 +60,7 @@ class FacebotController extends Controller
         $lastCommand = strtolower(trim($context)); //'bind';
         switch ($lastCommand) {
             case 'bind':
-                $reply = $this->bind($psid);
+                $reply = $this->getBindLink($psid);
                 break;
             case 'register':
                 $reply = 'Register by click: '.route('register');
@@ -82,6 +82,7 @@ class FacebotController extends Controller
         }
     }
 
+    // bind Psid
     public function bindPsid(Request $request)
     {
         $data = $request->all();
@@ -108,18 +109,21 @@ class FacebotController extends Controller
         } else {
             Session::flash('alert-danger', 'Bind faild! Retry!');
         }
+        Session::flash('alert-warning', 'Already binded!');
+        Session::flash('alert-danger', 'Please close this page, don\'t upload CN-LMS');
 
         return redirect('/home');
     }
 
-    private function bind($psid)
+    private function getBindLink($psid)
     {
         //check if binded already?
         $social = Social::where('type', Social::TYPE_FB_PSID)->where('social_id', $psid)->first();
         if (! $social) {
             //请回复 bind 绑定您的账户
-            $link = route('bind.facebook', ['psid'=> base64_encode($psid)]);
-            $reply = 'Please click this link: '.$link.' to login and bind EE-LMS account to get class notifications';
+            // $link = route('facebook.bind', ['psid'=> base64_encode($psid)]);
+            $link = 'https://lms.abc-chinaedu.com/facebook/bind?psid='.base64_encode($psid);
+            $reply = 'Please click this link: '.$link.' to login and bind ElephantEnglish LMS account to get class notifications';
         } else {
             $reply = 'You already Binded!';
         }
