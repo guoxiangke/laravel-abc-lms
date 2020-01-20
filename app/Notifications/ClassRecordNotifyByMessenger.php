@@ -39,16 +39,16 @@ class ClassRecordNotifyByMessenger extends Notification
 
     public function toFacebook($notifiable)
     {
-        $time = $notifiable->generated_at->format('H:i D');
+        $time = $notifiable->generated_at->format('F j H:i D');
         $studentName = $notifiable->user->name;
-        $template = "$studentName having class at $time\n".route('classRecords.show', $notifiable->id);
+        $template = "Student: $studentName\nTime: $time\nActions:\n1. Click Ready button in 5 minutes before the class.\n2. Click Emergency button if you can call the student.\n3. Click Offline button if student is not online in 3~5 minutes.\nMore actions(AOL/Absence):".route('classRecords.show', $notifiable->id);
 
         return FacebookMessage::create()
             ->text($template)
             ->buttons([
-                Button::create('I am ready', ['id' => $notifiable->id, 'type'=>'ready'])->isTypePostback(),
-                Button::create('I can\'t call', ['id' => $notifiable->id, 'type'=>'abscent'])->isTypePostback(),
-                Button::create('Student still offline', ['id' => $notifiable->id, 'type'=>'offline'])->isTypePostback(),
+                Button::create('1. Ready', ['id' => $notifiable->id, 'type'=>'ready'])->isTypePostback(),
+                Button::create('2. Emergency', ['id' => $notifiable->id, 'type'=>'abscent'])->isTypePostback(),
+                Button::create('3. Offline', ['id' => $notifiable->id, 'type'=>'offline'])->isTypePostback(),
             ]);
     }
 
