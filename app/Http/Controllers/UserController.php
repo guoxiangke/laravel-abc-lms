@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 // 引入 laravel-permission 模型
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 // 用于输出一次性信息
 use Spatie\Permission\Models\Permission;
@@ -70,11 +71,7 @@ class UserController extends Controller
             }
         }
         // 重定向到 users.index 视图并显示消息
-        return redirect()->route('users.index')
-            ->with(
-                'flash_message',
-                'User successfully added.'
-            );
+        return redirect()->route('users.index');
     }
 
     /**
@@ -125,6 +122,7 @@ class UserController extends Controller
             $input = $request->only(['name', 'email']);
         }
         $roles = $request['roles']; // 获取所有角色
+        $input['password'] = Hash::make($input['password']);
         $user->fill($input)->save();
 
         if (isset($roles)) {
@@ -148,10 +146,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with(
-                'flash_message',
-                'User successfully deleted.'
-            );
+        return redirect()->route('users.index');
     }
 }
