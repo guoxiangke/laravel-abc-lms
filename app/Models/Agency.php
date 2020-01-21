@@ -21,8 +21,8 @@ class Agency extends Model
     // logo 
     // todo 代理类型的应用！
     const TYPES = [
-        '银牌代理',
-        '金牌代理',
+        '个人代理',//银牌🥈
+        '机构代理',//金牌🏅️
         //add  more
     ];
 

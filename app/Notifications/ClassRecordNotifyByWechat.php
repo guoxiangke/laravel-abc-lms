@@ -54,7 +54,7 @@ class ClassRecordNotifyByWechat extends Notification
         return WechatMessage::create()
             ->to($this->openId)
             ->template('Ryh6URaE8sLcuYYeoh63l81dOpQ-FxB0c023hdZz5Ik')
-            ->url('https://lms.abc-chinaedu.com/login/wechat')
+            ->url(config('app.url_cn').'/login/wechat')
             ->data($data);
     }
 }

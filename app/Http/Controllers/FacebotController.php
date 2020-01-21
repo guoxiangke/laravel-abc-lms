@@ -143,7 +143,7 @@ class FacebotController extends Controller
         if (! $social) {
             //请回复 bind 绑定您的账户
             // $link = route('facebook.bind', ['psid'=> base64_encode($psid)]);
-            $link = 'https://lms.abc-chinaedu.com/facebook/bind?psid='.base64_encode($psid);
+            $link = config('app.url_cn').'/facebook/bind?psid='.base64_encode($psid);
             $reply = 'Please click this link: '.$link.' to login and bind ElephantEnglish LMS account to get class notifications';
         } else {
             $reply = 'You already Binded!';
