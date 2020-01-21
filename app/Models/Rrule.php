@@ -24,12 +24,22 @@ class Rrule extends Model implements AuditableContract
         'type', //'AOL', 0 'SCHEDULE',1
         'order_id',
         'start_at',
+        'status',
         // 'period',//'次数'
     ];
 
     const TYPE_AOL = 0;
     const TYPE_SCHEDULE = 1;
     const TYPES = ['AOL', 'Schedule'];
+    
+    const STATU_INACTIVE = 0;
+    const STATU_ACTIVE = 1;
+    const STATU_OVERDUE = 2;
+    const STATUS = [
+        '暂停',
+        '正常',
+        '过期',
+    ];
 
     const BYDAYS = [
         'SU'=> 0,

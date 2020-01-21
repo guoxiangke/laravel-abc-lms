@@ -21,11 +21,26 @@
 
   <ul class="list-group list-group-flush">
       @foreach($order->rrules as $rrule)
-        <li class="list-group-item  border-primary">开始日期: {{$rrule->start_at->format('Y.m.d')}}</li>
-        <li class="list-group-item">过期日期: {{$order->expired_at->format('Y.m.d')}}</li>
+        @php
+        switch ($rrule->status) {
+            case 1:
+                $bg = 'bg-success';
+                break;
+            case 0:
+                $bg = 'bg-warning';
+                break;
+            case 2:
+                $bg = 'bg-danger';
+                break;
+            default:
+                break;
+        }
+        @endphp
+        <li class="list-group-item  border-primary {{$bg}}">规则状态: {{\App\Models\Rrule::STATUS[$rrule->status]}}</li>
+        <li class="list-group-item">规则时段: {{$rrule->start_at->format('Y.m.d')}} ～ {{$order->expired_at->format('Y.m.d')}}</li>
         <li class="list-group-item">上课时间: {{$rrule->start_at->format('H:i')}}</li>
         <li class="list-group-item">上课计划：{{$rrule->toText()}}
-          <a href="{{route('rrules.edit', $rrule->id) }}" class="btn btn-sm btn-outline-danger">Edit this Rrule</a>   
+          <a href="{{route('rrules.edit', $rrule->id) }}" class="btn btn-sm btn-outline-danger">Edit</a>   
         </li>
       @endforeach
   </ul>

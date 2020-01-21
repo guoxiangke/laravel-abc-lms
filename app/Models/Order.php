@@ -84,7 +84,8 @@ class Order extends Model implements AuditableContract
     {
         return $this
                 ->hasMany(Rrule::class, 'order_id', 'id')
-                ->where('rrules.type', Rrule::TYPE_SCHEDULE);
+                ->where('rrules.type', Rrule::TYPE_SCHEDULE)
+                ->where('rrules.status', Rrule::STATU_ACTIVE);
     }
 
     //请假计划
@@ -94,7 +95,8 @@ class Order extends Model implements AuditableContract
     {
         return $this
                 ->hasMany(Rrule::class, 'order_id', 'id')
-                ->where('rrules.type', Rrule::TYPE_AOL);
+                ->where('rrules.type', Rrule::TYPE_AOL)
+                ->where('rrules.status', Rrule::STATU_ACTIVE);
     }
 
     public function book()

@@ -147,13 +147,14 @@ class RruleController extends Controller
         }
         //https://stackoverflow.com/questions/1809494/post-unchecked-html-checkboxes
         $start_at = $request->input('start_at');
+        $status = $request->input('status');
         $start_at = Carbon::createFromFormat('Y-m-d\TH:i', $start_at); //2019-04-09T06:00
         $string = $request->input('string');
-        $rrule = $rrule->fill(compact('start_at', 'string'));
+        $rrule = $rrule->fill(compact('start_at', 'string', 'status'));
         $rrule->save();
         Session::flash('alert-success', __('Success'));
 
-        return redirect()->route('rrules.index');
+        return redirect()->route('orders.show', $rrule->order->id);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Forms\Edit;
 
 use Kris\LaravelFormBuilder\Form;
+use App\Models\Rrule;
 
 class RruleForm extends Form
 {
@@ -17,6 +18,12 @@ class RruleForm extends Form
                     'label' => '订单Id',
                     'rules' => 'required',
                     'value' => $rrule->order->title,
+            ])
+            ->add('status', 'select', [
+                'label'    => '日期规则状态',
+                'rules'    => 'required',
+                'choices'  => Rrule::STATUS,
+                'selected' => $rrule->status,
             ])
             ->add('start_at', 'datetime-local', [
                 'label' => '日期时间',

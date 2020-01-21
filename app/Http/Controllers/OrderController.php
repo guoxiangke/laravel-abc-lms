@@ -191,7 +191,6 @@ class OrderController extends Controller
         // //     // $order->getDiffAols(),
         //     $order->regenRruleSchedule(),
         // );
-
         collect($order->regenRruleSchedule())
             ->map(function ($startDateString) use (&$events) {
                 $start = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
