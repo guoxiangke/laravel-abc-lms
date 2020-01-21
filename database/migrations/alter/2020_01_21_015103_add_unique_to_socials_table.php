@@ -9,7 +9,7 @@ class AddUniqueToSocialsTable extends Migration
     /**
      * Run the migrations.
      * Add 唯一索引在 social_id + type //确保一个用户在一个平台唯一绑定
-     * php artisan migrate --path=/database/migrations/alert.
+     * php artisan migrate --path=/database/migrations/alter.
      * @return void
      */
     public function up()

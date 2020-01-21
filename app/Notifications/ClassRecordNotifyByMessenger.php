@@ -41,7 +41,7 @@ class ClassRecordNotifyByMessenger extends Notification
     {
         $time = $notifiable->generated_at->format('F j H:i D');
         $studentName = $notifiable->user->name;
-        $template = "Student: $studentName\nTime: $time\nActions:\n😎Click Ready button in 5 minutes before the class.\n😱Click Emergency button if you can call the student.\n🤔Click Offline button if student is not online in 3~5 minutes.\nMore(AOL/Absence) click".route('classRecords.show', $notifiable->id);
+        $template = "Student: $studentName\nTime: $time\nActions:\n😎Click Ready button in 5 minutes before the class.\n😱Click Emergency button if you can't call the student.\n🤔Click Offline button if student is not online in 3~5 minutes.\nFor AOL/Absence click ".route('classRecords.show', $notifiable->id);
 
         return FacebookMessage::create()
             ->text($template)
