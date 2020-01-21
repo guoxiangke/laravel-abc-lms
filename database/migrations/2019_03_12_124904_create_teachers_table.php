@@ -21,6 +21,9 @@ class CreateTeachersTable extends Migration
             $table->unsignedBigInteger('zoom_id')->nullable();
             $table->unsignedInteger('price'); //0-100价格amount，单位分
             // ALTER TABLE `teachers` Add COLUMN `price` int NOT NULL DEFAULT(0) AFTER zoom_id;
+            $table->string('pmi')->nullable();
+            $table->schemalessAttributes('extra_attributes');
+            $table->boolean('active')->default(1);
 
             $table->timestamps();
             $table->softDeletes();

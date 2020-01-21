@@ -29,9 +29,9 @@ class CreateSocialsTable extends Migration
                ->references('id')
                ->on('users')
                ->onDelete('cascade');
-            // add 唯一索引在 user_id + social_id + type //确保一个用户在一个平台唯一绑定
-            // todo alert table.
-            $table->unique(['user_id', 'social_id', 'type']);
+            // add 唯一索引在 social_id + type //确保一个用户在一个平台唯一绑定
+            // php artisan migrate --path=/database/migrations/alert
+            $table->unique(['social_id', 'type']);
         });
     }
 
