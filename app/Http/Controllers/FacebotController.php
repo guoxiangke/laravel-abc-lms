@@ -47,6 +47,16 @@ class FacebotController extends Controller
             $psid = $data['message']['sender']['id'];
             $context = $data['message']['text'];
         //todo
+        } elseif (isset($data['messaging']['reaction'])) {
+            //Message reaction
+            $psid = $data['messaging'][0]['sender']['id'];
+            // reacted 'like' to - 'last message text'
+            $context = $data['messaging'][0]['message']['text'];
+
+            $reaction = $data['messaging'][0]['reaction']['reaction']; //like
+            $emoji = $data['messaging'][0]['reaction']['emoji']; //👍
+            $type = 'reaction';
+        //done!
         } elseif (isset($data['messaging'])) {
             //Message with blob attachment
             $psid = $data['messaging'][0]['sender']['id'];
@@ -56,20 +66,31 @@ class FacebotController extends Controller
         // We want our bot to be able to handle two types of webhook events: messages and messaging_postback. The name of the event type is not included in the event body, but we can determine it by checking for certain object properties.
         // handleMessage(sender_psid, webhook_event.message);
         // handlePostback(sender_psid, webhook_event.postback);
-
-        $lastCommand = strtolower(trim($context)); //'bind';
-        switch ($lastCommand) {
-            case 'bind':
-                $reply = $this->getBindLink($psid);
+        switch ($type) {
+            case 'reaction':
+                $reply = 'Thanks!👍';
+                // code...
                 break;
-            case 'register':
-                $reply = 'Register by click: '.route('register');
+            case 'messaging_postbacks':
+                $reply = 'Got it! 👍';
+                // code...
                 break;
-            case 'ping':
-                $reply = 'Pong';
-                break;
-            default:
-                $reply = 'Welcome to apply us, Any question PM Dale by click this link: https://m.me/xiangkeguo';
+            default: // $type == messages
+                $lastCommand = strtolower(trim($context)); //'bind';
+                switch ($lastCommand) {
+                    case 'bind':
+                        $reply = $this->getBindLink($psid);
+                        break;
+                    case 'register':
+                        $reply = 'Register by click: '.route('register');
+                        break;
+                    case 'ping':
+                        $reply = 'Pong';
+                        break;
+                    default:
+                        $reply = 'Welcome to apply us, Any question PM Dale by click this link: https://m.me/xiangkeguo';
+                        break;
+                }
                 break;
         }
 
