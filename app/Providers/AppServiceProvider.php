@@ -3,15 +3,18 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use App\Models\Agency;
 use App\Models\Rrule;
 use App\Models\Profile;
 use App\Models\Student;
 use App\Observers\RruleObserver;
 use App\Observers\ProfileObserver;
 use App\Observers\StudentObserver;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {

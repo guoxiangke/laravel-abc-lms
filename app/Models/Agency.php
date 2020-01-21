@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+use App\Traits\HasSchemalessAttributes;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +12,14 @@ class Agency extends Model
 {
     use SoftDeletes;
     use Commentable;
-
+    use HasSchemalessAttributes;
+    // todo 应用以下属性
+    const EXTRA_ATTRIBUTES = ['slogan','introduction','address','tel'];
+    public $casts = [
+        'extra_attributes' => 'array',
+    ];
+    // logo 
+    // todo 代理类型的应用！
     const TYPES = [
         '银牌代理',
         '金牌代理',
@@ -22,6 +30,7 @@ class Agency extends Model
         'user_id',
         'type',
         'discount', //0-99+%折扣
+        'name', //机构名字
     ];
 
     public function user()

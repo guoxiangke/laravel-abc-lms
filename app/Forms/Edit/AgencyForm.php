@@ -91,7 +91,10 @@ class AgencyForm extends Form
                 'value' => $paymethod->remark,
                 'attr'  => ['rows' => 2],
             ])
-
+            ->add('agency_name', 'text', [
+                'rules' => 'required',
+                'label' => '代理机构名称',
+            ])
             ->add('agency_type', 'select', [
                 'label'       => '代理类型',
                 'choices'     => Agency::TYPES,

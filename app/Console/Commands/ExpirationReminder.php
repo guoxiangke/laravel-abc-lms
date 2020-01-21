@@ -44,7 +44,7 @@ class ExpirationReminder extends Command
 
                 $left = $order->period - $count;
                 if ($left <= 7) {
-                    bark_notify('到期提醒', "还剩{$left}天！{$order->title}");
+                    bark_notify('到期提醒', "还剩{$left}次课！{$order->title}");
                     ftqq_notify("{$left}天到期提醒{$order->title}", '', 'manager');
                 }
             });

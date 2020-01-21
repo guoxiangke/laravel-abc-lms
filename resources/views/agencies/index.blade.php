@@ -20,8 +20,8 @@
 				  <thead>
 				    <tr>
 				    	<th>#</th>
+						<th>User</th>
 						<th>Name</th>
-						<th>Email</th>
 						<th>Sex</th>
 						<th>Birthday</th>
 						<th>Telephone</th>
@@ -42,7 +42,7 @@
 					      </th>
 					      <td data-label="Name">
 					      	<a href="{{ route('agencies.show', $agency->id) }}">{{$profile->name}}</a></td>
-					      <td data-label="Email">{{$agency->user->email}}</td>
+					      <td data-label="Email">{{$agency->name?:'-'}}</td>
 					      <td data-label="Sex">{{ App\Models\Profile::SEXS[$profile->sex] }}</td>
 					      <td data-label="Birthday">{{$profile->birthday?$profile->birthday->format('m/d'):'-'}}</td>
 					      <td data-label="Telephone">{{$profile->telephone}}</td>

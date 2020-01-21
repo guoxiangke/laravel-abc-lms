@@ -135,13 +135,14 @@ class AgencyController extends Controller
 
         $user->assignRole(User::ROLES['agency']);
 
-        Agency::firstOrNew([
+        $agency = Agency::firstOrNew([
             'user_id' => $user->id,
             'type'    => $request->input('agency_type'),
             // 'discount' => $request->input('agency_discount'),
             // 'agency_uid' => $request->input('agency_id'),
-        ])->save();
-        // $agency = $user->agency()->save($agency);
+        ]);
+        $agency->name = $request->input('agency_name');
+        $agency->save();
 
         //确保只有一个手机号
         $profile = Profile::firstOrNew([
@@ -247,7 +248,7 @@ class AgencyController extends Controller
         $user->save();
 
         $agency->fill([
-            // 'user_id' => $user->id,
+            'name' => $request->input('agency_name'),
             'type'     => $request->input('agency_type'),
             'discount' => $request->input('agency_discount'),
         ])->save();

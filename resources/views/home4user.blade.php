@@ -32,17 +32,17 @@
           <div class="text-center">
             <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="/vendor/sb-admin2/undraw_posting_photo.svg" alt="">
           </div>
-          <p>{{ Auth::user()->profiles->first()->name }}，您好，欢迎您使用{{ config('app.name', 'Laravel') }}</p>
+          <p>{{ Auth::user()->getShowName() }}，您好，欢迎您使用{{ config('app.name', 'Laravel') }}</p>
           <p>您可以点击顶部的菜单（或顶部的三横线）进入不同选项。</p>
 
       @role('teacher') 
       @else
-      @if(!Auth::user()->isSocialBind())
-      <div class="d-sm-none">
-          绑定微信后，下次您可以在微信中一键登录👉
-          <a href="{{ route('login.weixin') }}" class="btn btn-outline-success"><i class="fab fa-weixin icon-circle"></i> 微信绑定</a>
-          </div>
-      @endif
+        @if(!Auth::user()->isSocialBind())
+        <div class="d-sm-none">
+            绑定微信后，下次您可以在微信中一键登录👉
+            <a href="{{ route('login.weixin') }}" class="btn btn-outline-success"><i class="fab fa-weixin icon-circle"></i> 微信绑定</a>
+            </div>
+        @endif
       @endrole
 
         @hasanyrole('student|teacher|agency|manager|admin')

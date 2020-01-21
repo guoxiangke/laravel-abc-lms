@@ -30,20 +30,9 @@ class AgencyUpgradeForm extends Form
                 'value' => $profile->telephone,
                 'label' => '手机号',
             ])
-            ->add('pay_method', 'select', [
-                'label'       => '付款方式',
-                'rules'       => 'required',
-                'choices'     => PayMethod::TYPES,
-                'selected'    => 1, //'PayPal'
-                'empty_value' => '=== Select ===',
-            ])
-            ->add('pay_number', 'text', [
+            ->add('name', 'text', [
                 'rules' => 'required',
-                'label' => '付款账户ID',
-            ])
-            ->add('pay_remark', 'textarea', [
-                'label' => '付款方式备注',
-                'attr'  => ['rows' => 2],
+                'label' => '代理机构名称',
             ])
             ->add('type', 'select', [
                 'label'       => '代理类型',
@@ -60,6 +49,21 @@ class AgencyUpgradeForm extends Form
                 'label'       => '介绍人/推荐人',
                 'choices'     => Agency::getAllReference(),
                 'empty_value' => '=== Select ===',
+            ])
+            ->add('pay_method', 'select', [
+                'label'       => '付款方式',
+                'rules'       => 'required',
+                'choices'     => PayMethod::TYPES,
+                'selected'    => 1, //'PayPal'
+                'empty_value' => '=== Select ===',
+            ])
+            ->add('pay_number', 'text', [
+                'rules' => 'required',
+                'label' => '付款账户ID',
+            ])
+            ->add('pay_remark', 'textarea', [
+                'label' => '付款方式备注',
+                'attr'  => ['rows' => 2],
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
