@@ -79,8 +79,11 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         //如果一个学生三个上课时间，1和3是同一个时间点20:00，没有合并rrule的同类项情况
         $uniqueTime = [];
         foreach ($order->schedules as $rrule) {
-            $uniqueTime[$rrule->start_at->format('H:i')] = $rrule;
-            //如果有两个重复项，忽略了第一个rrule
+            // rrule规则暂停时，不生成记录 （rrule暂停功能）
+            if ($rrule->status == Rrule::STATU_ACTIVE) {
+                //去重：如果有两个重复项，忽略了第一个rrule
+                $uniqueTime[$rrule->start_at->format('H:i')] = $rrule;
+            }
         }
         // $uniqueTime = array_unique($uniqueTime);
         foreach ($uniqueTime as $time => $rrule) {
