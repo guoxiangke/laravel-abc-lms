@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Models\Rrule;
 use App\Models\ClassRecord;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
