@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Rrule;
@@ -170,18 +169,11 @@ class OrderController extends Controller
      *
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
+     * @bug： 如果今日的课没有生成，日历表上会把今天的空出来，并显示多加1天的课
      */
     public function show(Order $order)
     {
         $events = [];
-        // dd($order->hasClassToday());
-        if (! $order->isActive()) {
-            //todo
-            // return redirect()->back()->with('message', 'order is not Active.');
-        }
-        // $order->load('user');
-        // $order->load('user.profiles');
-
         // dd(
         //     // Rrule::find(1)->classRecords()->exceptions()->get()->toArray(),//->exceptions()->get()->toArray(),
         //     $order->regenAolsSchedule(),
@@ -202,11 +194,7 @@ class OrderController extends Controller
                     'start'   => $startDateString,
                     'end'     => $start->addMinutes(25)->format('Y-m-d H:i:s'),
                     'title'   => $start->subMinutes(25)->format('m/d H:i').'有课',
-                    'icon'    => 'lunch',
                     'class'   => 'schedule',
-                    'content' => '<i class="v-icon material-icons">directions_run</i>',
-                    // 'background' =>  true,
-                    'contentFull' => 'xxx',
                 ];
             });
 
@@ -217,38 +205,29 @@ class OrderController extends Controller
                     'start'   => $startDateString,
                     'end'     => Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->addMinutes(25)->format('Y-m-d H:i:s'),
                     'title'   => $start->format('m/d H:i').' 计划请假',
-                    'icon'    => 'lunch',
                     'class'   => 'aol',
-                    'content' => '<i class="v-icon material-icons">directions_run</i>',
-                    // 'background' =>  true,
-                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
 
         $order->classRecords()//historyRecords
             ->each(function ($classRecord) use (&$events, $order) {
                 $link = route('classRecords.index', $order->id);
-                $now = Carbon::now()->format('Y-m-d ');
-                $isToday = $classRecord->generated_at->format('Y-m-d ') == $now;
+                $now = Carbon::now()->format('Y-m-d');
+                $isToday = $classRecord->generated_at->format('Y-m-d') == $now;
                 $title = $isToday ? '⚠️今日有课' : '上课记录';
                 if ($classRecord->exception) {
                     //学生老师/正常/异常请假
                     $title = ClassRecord::EXCEPTION_TYPES[$classRecord->exception];
                 }
+                $startDateString = $classRecord->generated_at->format('Y-m-d H:i:s');
                 $events[] = [
-                    'start'   => $classRecord->generated_at->format('Y-m-d H:i:s'),
+                    'start'   => $startDateString,
                     'end'     => $classRecord->generated_at->addMinutes(25)->format('Y-m-d H:i:s'),
                     'title'   => $classRecord->generated_at->format('m/d H:i').$title,
-                    'icon'    => 'lunch',
                     'class'   => $isToday ? 'today' : 'history',
-                    'content' => '<i class="v-icon material-icons">directions_run</i>',
-                    // 'background' =>  true,
-                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
                 ];
             });
 
-        // dd($events);
-        // $default_events = json_encode($events);
         return view('orders.show', compact('order', 'events'));
     }
 

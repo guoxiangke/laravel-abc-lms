@@ -209,20 +209,18 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-     * 判断某天是否有课！！
-     * hasClassesByDay / classesToday
-     * 找出今天需要上的2节课 的时间H:i
-     * 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord.
+     * 判断今天/指定日期是否有课！！
+     * 即获取所有上课计划-请假计划得到的日期列表：regenRruleSchedule()
+     * 从其中查找==今天/指定日期的时间点，可以包含多个（例：一天有2个上课记录/每天上2次课的情况）
+     * 包含今天稍早时间的记录/如果0点没有自动生成的话。
      */
     public function hasClass(Carbon $byDay = null)
     {
-        $history = true;
         if (! $byDay) {
             $byDay = Carbon::now();
-            $history = false;
         }
 
-        return $this->regenRruleSchedule($history)->filter(function ($startDateString) use ($byDay) {
+        return $this->regenRruleSchedule()->filter(function ($startDateString) use ($byDay) {
             return Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->format('Y-m-d') == $byDay->format('Y-m-d');
         })->map(function ($dateString) {
             return substr($dateString, 11, 5); //H:i
@@ -230,46 +228,57 @@ class Order extends Model implements AuditableContract
     }
 
     //加上 请假次数 作为schedule rule!
-    public function regenRruleSchedule($history = false)
+    public function regenRruleSchedule()
     {
         //not only for the first 有效上课计划
         // $rrule = $this->schedules->first();
         $rruleSchedulesCollections = new Collection;
         $today = Carbon::now();
+        // 包含了暂停和其他状态的日期规则rrule
         foreach ($this->schedules as $rrule) {
+            /* @var $rule /Recurr/Rule */
+            $rule = $rrule->getRule();
+
+            // 是从今天（某一天）开始的规则，且去除已经上课的次数后重新生成的规则
+            $startDateString = $today->format('Y-m-d ').$rrule->start_at->format('H:i:s');
+            // $startDate = Carbon::parse($startDateString);
+            $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
+            $rule->setStartDate($startDate, true);
             //doneExceptDatesByThisRule
+            //  bug:如果今天的没生成，会造成日历上最后多一个计划记录！
             $doneCount = $this->classDoneRecords()->filter(function ($item) use ($rrule) {
                 if ($item->rrule_id == $rrule->id) {
                     return true;
                 }
             })->count();
-            /* @var $rule /Recurr/Rule */
-            $rule = $rrule->getRule($today->format('Y-m-d').$rrule->start_at->format('H:i'), $doneCount);
+            $rule->setCount($rule->getCount() - $doneCount);
+
             $aols = $this->regenAolsSchedule()->toArray();
+            // 不是每一个上课计划都要扣除-请假计划次数。
             $count = 0; //请假次数
             $allDateStringCollection = Rrule::transByStart($rule);
             $aolsForThisRule = [];
             foreach ($aols as $dateString) {
-                // 该请假日期必须在XX里面 && substr($dateString, 11, 5);//H:i
+                // 该请假日期必须在XX里面 && substr($dateString, 11, 5);//H:i 15:30
                 //in_array($dateString, $allDateStringCollection->toArray()) &&
                 if (substr($dateString, 11, 5) == $rrule->start_at->format('H:i')) {
+                    // 而是 对应的时间 才扣除！！
                     $count++;
                     $aolsForThisRule[] = $dateString;
                 }
             }
-            // dd(Rrule::transByStart($rule), $aols, $count, $aolsForThisRule);
             $rule->setExDates($aolsForThisRule);
-            //不是每一个上课计划都要扣除 请假计划次数。
-            //而是 对应的时间 才扣除！！
             $rule->setCount($rule->getCount() + $count);
 
+            // dd(Rrule::transByStart($rule), $aols, $count, $aolsForThisRule);
             $rruleSchedulesCollections = $rruleSchedulesCollections->merge(
-                Rrule::transByStart($rule)->filter(function ($items) use ($history) {
-                    if ($history) {
+                Rrule::transByStart($rule)->filter(function ($item) {
+                    // 2019-01-01 用于确定今天*稍早时间（已过生成时间和比当前时间早的计划）*是否有课的逻辑
+                    if (substr($item, 0, 10) == Carbon::now()->format('Y-m-d')) {
                         return true;
                     }
-                    //减去历史的,包括今天（用来判断 classesToday）
-                    return new \DateTime($items) >= now();
+                    // * hasClass after now! 对应日历上今天以后的计划条目
+                    return new \DateTime($item) >= now();
                 })
             );
         }

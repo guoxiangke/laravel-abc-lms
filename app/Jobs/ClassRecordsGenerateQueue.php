@@ -90,6 +90,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         foreach ($uniqueTime as $time => $rrule) {
             if (in_array($time, $todayClassTimes)) {
                 try {
+                    // 使用 firstOrCreate 而不是 Create，避免重复生成
                     $classRecord = ClassRecord::firstOrCreate([
                         'rrule_id'     => $rrule->id,
                         'teacher_uid'  => $order->teacher_uid,
