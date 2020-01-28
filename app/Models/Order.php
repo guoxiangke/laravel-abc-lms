@@ -78,14 +78,13 @@ class Order extends Model implements AuditableContract
         return $title;
     }
 
-    //课程记录 一个订单有很多rrule 每个rrule有很多classRecords
-    //上课计划 只有1个，可以修改！
+    //一个订单有很多rrule 每个rrule有很多classRecords
+    //获取订单的所有计划，包括请假计划、上课计划（可以包含多个）
     public function schedules()
     {
         return $this
                 ->hasMany(Rrule::class, 'order_id', 'id')
-                ->where('rrules.type', Rrule::TYPE_SCHEDULE)
-                ->where('rrules.status', Rrule::STATU_ACTIVE);
+                ->where('rrules.type', Rrule::TYPE_SCHEDULE);
     }
 
     //请假计划
@@ -236,9 +235,16 @@ class Order extends Model implements AuditableContract
         //not only for the first 有效上课计划
         // $rrule = $this->schedules->first();
         $rruleSchedulesCollections = new Collection;
+        $today = Carbon::now();
         foreach ($this->schedules as $rrule) {
+            //doneExceptDatesByThisRule
+            $doneCount = $this->classDoneRecords()->filter(function ($item) use ($rrule) {
+                if ($item->rrule_id == $rrule->id) {
+                    return true;
+                }
+            })->count();
             /* @var $rule /Recurr/Rule */
-            $rule = $rrule->getRule();
+            $rule = $rrule->getRule($today->format('Y-m-d').$rrule->start_at->format('H:i'), $doneCount);
             $aols = $this->regenAolsSchedule()->toArray();
             $count = 0; //请假次数
             $allDateStringCollection = Rrule::transByStart($rule);
@@ -256,6 +262,7 @@ class Order extends Model implements AuditableContract
             //不是每一个上课计划都要扣除 请假计划次数。
             //而是 对应的时间 才扣除！！
             $rule->setCount($rule->getCount() + $count);
+
             $rruleSchedulesCollections = $rruleSchedulesCollections->merge(
                 Rrule::transByStart($rule)->filter(function ($items) use ($history) {
                     if ($history) {

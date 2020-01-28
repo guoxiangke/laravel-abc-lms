@@ -206,7 +206,7 @@ class OrderController extends Controller
                     'class'   => 'schedule',
                     'content' => '<i class="v-icon material-icons">directions_run</i>',
                     // 'background' =>  true,
-                    'contentFull' => 'My shopping list is rather long:<br><ul><li>Avocadoes</li><li>Tomatoes</li><li>Potatoes</li><li>Mangoes</li></ul>',
+                    'contentFull' => 'xxx',
                 ];
             });
 

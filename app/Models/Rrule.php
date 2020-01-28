@@ -31,7 +31,7 @@ class Rrule extends Model implements AuditableContract
     const TYPE_AOL = 0;
     const TYPE_SCHEDULE = 1;
     const TYPES = ['AOL', 'Schedule'];
-    
+
     const STATU_INACTIVE = 0;
     const STATU_ACTIVE = 1;
     const STATU_OVERDUE = 2;
@@ -75,11 +75,26 @@ class Rrule extends Model implements AuditableContract
         return $byDayArray;
     }
 
-    public function getRule()
+    /**
+     * @param string|\DateTimeInterface|null $startDate
+     * @param int $doneCount
+     * 默认没有参数，获取的是自身的规则，
+     * 含参数调用时，是从某一天（今天）开始的规则，且去除已经上课的次数后重新生成的规则
+     */
+    public function getRule($startDate = null, $doneCount = 0)
     {
         $timezone = config('app.timezone');
         $rruleString = $this->string;
-        $startDate = $this->start_at;
+        if ($doneCount) {
+            // 带doneCount参数时，去除已经上完的课时数量，后生成的剩下的
+            //RRULE:FREQ=WEEKLY;COUNT=80;INTERVAL=1;WKST=MO;BYDAY=TH,FR
+            preg_match('/COUNT=(\d+)/', $rruleString, $matchs);
+            $total = (int) $matchs[1] - $doneCount;
+            preg_replace('/COUNT=(\d+)/', 'COUNT='.$total, $rruleString);
+        }
+        if (! $startDate) {
+            $startDate = $this->start_at;
+        }
         $rule = new \Recurr\Rule($rruleString, $startDate, null, $timezone);
 
         return $rule;
