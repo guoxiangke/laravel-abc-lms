@@ -40,7 +40,7 @@ class RruleForm extends Form
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU",
                 ],
                 'help_block' => [
-                    'text' => '创建时共2行，第一行：第一次请假日期+时间(忽略)，第二行：请假规律 <a target="_blank" href="https://jakubroztocil.github.io/rrule/">Gen a rule.toString()/点击生成内容</a><br/>⚠️编辑时共1行，即只有第二行内容，默认已填充<br/>COUNT=？是总请假天数（或上课计划课时数）',
+                    'text' => '创建时共2行，第一行：第一次请假日期+时间(不可忽略，必须与上课的计划相同的时间)，第二行：请假规律 <a target="_blank" href="https://jakubroztocil.github.io/rrule/">Gen a rule.toString()/点击生成内容</a><br/>COUNT=？是总请假天数（或上课计划课时数）',
                     'tag'  => 'small',
                     'attr' => ['class' => 'form-text text-muted'],
                 ],

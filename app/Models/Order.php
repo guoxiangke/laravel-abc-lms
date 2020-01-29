@@ -146,34 +146,22 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-     * 所有de上课计划的上课历史记录/包含异常.
+     * 已生成的课程记录/包含异常.
      */
     public function classRecords()
     {
-        $classRecords = new Collection;
-        foreach ($this->schedules as $rrule) {
-            $classRecords = $classRecords->merge($rrule->classRecords);
-        }
-
-        return  $classRecords;
+        return $this->hasMany(ClassRecord::class);
     }
 
     /**
-     * 已上课时
-     * exception = [0,3]
-     * 舍弃：$rrule->classRecords()->noPack().
+     * 已完成的课时，请假的不计算在内
+     * exception = [0,3].
      */
     public function classDoneRecords()
     {
-        return $this->classRecords()->filter(function ($classRecord) {
+        return $this->classRecords()->get()->filter(function ($classRecord) {
             return in_array($classRecord->exception, ClassRecord::EXCEPTIONS_NONEED_PATCH);
         });
-
-        // $classRecords = new Collection;
-        // foreach ($this->schedules as $rrule) {
-        //    $classRecords = $classRecords->merge($rrule->classRecords()->noPack()->get());
-        // }
-        // return  $classRecords;
     }
 
     /**
@@ -192,20 +180,14 @@ class Order extends Model implements AuditableContract
         if ($exception == 'absent') {
             $exceptionInt = ClassRecord::EXCEPTION_STUDENT;
         }
+        // 老师异常：台风
         if ($exception == 'exception') {
             $exceptionInt = ClassRecord::EXCEPTION_TEACHER;
-        } //老师异常：龙卷风
+        }
 
-        return $this->classRecords()->filter(function ($classRecord) use ($exceptionInt) {
+        return $this->classRecords()->get()->filter(function ($classRecord) use ($exceptionInt) {
             return  $classRecord->exception == $exceptionInt;
         });
-
-        // $classRecords = new Collection;
-        // foreach ($this->schedules as $rrule) {
-        // // dd($rrule->classRecords()->byException($exceptionInt)->get());
-        //    $classRecords = $classRecords->merge($rrule->classRecords()->byException($exceptionInt)->get());
-        // }
-        // return  $classRecords;
     }
 
     /**
@@ -234,18 +216,21 @@ class Order extends Model implements AuditableContract
         // $rrule = $this->schedules->first();
         $rruleSchedulesCollections = new Collection;
         $today = Carbon::now();
+
+        $aols = $this->regenAolsSchedule(); //->toArray()
         // 包含了暂停和其他状态的日期规则rrule
         foreach ($this->schedules as $rrule) {
             /* @var $rule /Recurr/Rule */
             $rule = $rrule->getRule();
 
-            // 是从今天（某一天）开始的规则，且去除已经上课的次数后重新生成的规则
+            // 重新计算规则：1.从今天开始 2.去除已经上课的次数 3.过去已请假的课程次数不算 4.去除计划请假次数+count
+            // 1.从今天开始
             $startDateString = $today->format('Y-m-d ').$rrule->start_at->format('H:i:s');
-            // $startDate = Carbon::parse($startDateString);
+
             $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
-            $rule->setStartDate($startDate, true);
-            //doneExceptDatesByThisRule
-            //  bug:如果今天的没生成，会造成日历上最后多一个计划记录！
+            $rule->setStartDate($startDate);
+            // 2.去除已经上课的次数 doneExceptDatesByThisRule
+            // bug:如果今天的没生成，会造成日历上最后多一个计划记录！
             $doneCount = $this->classDoneRecords()->filter(function ($item) use ($rrule) {
                 if ($item->rrule_id == $rrule->id) {
                     return true;
@@ -253,22 +238,23 @@ class Order extends Model implements AuditableContract
             })->count();
             $rule->setCount($rule->getCount() - $doneCount);
 
-            $aols = $this->regenAolsSchedule()->toArray();
-            // 不是每一个上课计划都要扣除-请假计划次数。
+            // 处理请假规则 begin
             $count = 0; //请假次数
             $allDateStringCollection = Rrule::transByStart($rule);
-            $aolsForThisRule = [];
-            foreach ($aols as $dateString) {
-                // 该请假日期必须在XX里面 && substr($dateString, 11, 5);//H:i 15:30
-                //in_array($dateString, $allDateStringCollection->toArray()) &&
-                if (substr($dateString, 11, 5) == $rrule->start_at->format('H:i')) {
-                    // 而是 对应的时间 才扣除！！
-                    $count++;
-                    $aolsForThisRule[] = $dateString;
+            // $aolsForThisRule = [];
+            $aolsForThisRule = $aols->filter(function ($item) use ($rrule) {
+                if ($item->format('H:i') == $rrule->start_at->format('H:i')) {
+                    // 而是 对应的时间 才扣除
+                    return true;
                 }
-            }
-            $rule->setExDates($aolsForThisRule);
-            $rule->setCount($rule->getCount() + $count);
+            })->map(function ($item) {
+                return $item->format('Y-m-d H:i:s');
+            });
+            $count = $aolsForThisRule->count();
+
+            $rule->setExDates($aolsForThisRule->toArray()); // 排除一些计划请假的日期
+            $rule->setCount($rule->getCount() + $count); // 顺延
+            // 处理请假规则 end
 
             // dd(Rrule::transByStart($rule), $aols, $count, $aolsForThisRule);
             $rruleSchedulesCollections = $rruleSchedulesCollections->merge(
@@ -288,21 +274,19 @@ class Order extends Model implements AuditableContract
 
     /**
      * 大于今天的请假计划 + 历史记录的（学生和老师）正常请假计划.
+     * 已测试.
      */
     public function regenAolsSchedule()
     {
         $aolsDateStringCollection = $this->getAllAols()->filter(function ($items) {
             //减去历史的
-            return Carbon::createFromFormat('Y-m-d H:i:s', $items) >= Carbon::now();
+            return $items >= Carbon::now();
         });
 
         //region 第二部分 for 已生成的记录，又标记为XXXX ！改变历史 把请假的天数+进去！
         $classRecordNormalExecptionAddToAol = new Collection;
-
-        foreach ($this->schedules as $rrule) {
-            foreach ($rrule->classRecords()->exceptions()->get() as  $classRecord) {
-                $classRecordNormalExecptionAddToAol->push($classRecord->generated_at->format('Y-m-d H:i:s'));
-            }
+        foreach ($this->classRecords()->exceptions()->get() as  $classRecord) {
+            $classRecordNormalExecptionAddToAol->push($classRecord->generated_at);
         }
         //endregion
 
@@ -375,7 +359,7 @@ class Order extends Model implements AuditableContract
             return $recurrence->getStart()->format('Y-m-d H:i:s');
         });
 
-        $historyRecords = $this->classRecords()->map(function ($classRecord) {
+        $historyRecords = $this->classRecords()->get()->map(function ($classRecord) {
             return $classRecord->generated_at->format('Y-m-d H:i:s');
         });
 
@@ -386,7 +370,7 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-     * 所有请假计划的StartTime[].
+     * 所有请假计划的StartTime.
      */
     public function getAllAols()
     {
@@ -394,7 +378,7 @@ class Order extends Model implements AuditableContract
     }
 
     /**
-     * 所有上课计划的StartTime[].
+     * 所有上课计划的StartTime.
      */
     public function getAllSchedules()
     {
@@ -405,6 +389,8 @@ class Order extends Model implements AuditableContract
     {
         $recurrenceCollections = new Collection;
         $rrules = $this->$byType;
+        // $this->aols
+        // $this->schedules
         foreach ($rrules as $rrule) {
             //region schedules
             $rule = $rrule->getRule();
@@ -412,7 +398,7 @@ class Order extends Model implements AuditableContract
         }
 
         return $recurrenceCollections->map(function ($recurrence) {
-            return $recurrence->getStart()->format('Y-m-d H:i:s');
+            return $recurrence->getStart();
         });
     }
 }
