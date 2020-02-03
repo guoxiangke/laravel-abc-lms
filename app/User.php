@@ -213,17 +213,18 @@ class User extends Authenticatable implements HasMedia
     public function getShowName()
     {
         $userShowName = $this->name;
-        $profileName = $this->profiles->first()->name;
-        if($profileName){
-            $userShowName = $profileName;
+        $profileName = $this->profiles->first();
+        if ($profileName) {
+            $userShowName = $profileName->name;
         }
 
         if ($this->hasRole('agency')) {
             $agencyName = Agency::where('user_id', $this->id)->pluck('name')->first();
-            if($agencyName){
+            if ($agencyName) {
                 $userShowName = $agencyName;
             }
         }
+
         return $userShowName;
     }
 }
