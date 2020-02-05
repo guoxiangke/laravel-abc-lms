@@ -37,11 +37,10 @@
         </div>
         <div class="col-md-6 col-sm-6"> 
           @foreach($classRecord->videos as $video)
-          <div>
+          <div class="border-bottom pb-2">
                 <div class="mt-3  mb-1">
-                {{ Form::open(['method' => 'DELETE', 'route' => ['videos.destroy', $video->id]]) }}
-                   {{$video->start_time}} - {{$video->end_time}} {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
-                {{ Form::close() }}
+                {{$video->start_time}} - {{$video->end_time}}
+                <br>
                 <a target="_blank" class="btn btn-sm btn-success" href="/videos/{{ $video->hashid() }}">Share</a>
                 </div>
                 <video width="70%" height="auto" 
@@ -50,6 +49,9 @@
                   <source src="{{$video->getCdnUrl()}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
+                {{ Form::open(['method' => 'DELETE', 'route' => ['videos.destroy', $video->hashid()]]) }}
+                   {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}
+                {{ Form::close() }}
           </div>
           @endforeach
         </div>

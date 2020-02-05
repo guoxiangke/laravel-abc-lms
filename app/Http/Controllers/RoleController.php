@@ -92,9 +92,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
         return view('roles.edit', compact('role', 'permissions'));
@@ -107,12 +106,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $role = Role::findOrFail($id); // 通过给定id获取角色
         // 验证 name 和 permission 字段
         $this->validate($request, [
-            'name'        => 'required|max:10|unique:roles',
+            'name'        => 'required|max:15|unique:roles,name,'.$role->id,
             'permissions' => 'nullable',
         ]);
         $input = $request->except(['permissions']);

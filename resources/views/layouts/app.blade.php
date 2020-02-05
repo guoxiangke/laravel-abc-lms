@@ -90,6 +90,9 @@
         </nav>
 
         <main class="py-4">
+            @if($errors->any())
+                {!! implode('', $errors->all('<div class="row alert alert-danger">:message</div>')) !!}
+            @endif
             <div class="flash-message container"  role="alert">
               @foreach (['primary','secondary','success','danger','warning','info','light','dark'] as $msg)
                 @if(Session::has('alert-' . $msg))

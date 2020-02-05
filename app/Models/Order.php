@@ -45,6 +45,7 @@ class Order extends Model implements AuditableContract
         'expired_at', //有效期
         'status', //default 1
         'remark',
+        'student_uid',
     ];
 
     /**
@@ -124,6 +125,12 @@ class Order extends Model implements AuditableContract
         return $this->belongsTo(User::class, 'teacher_uid');
     }
 
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_uid');
+    }
+
+    // creator
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -159,7 +166,8 @@ class Order extends Model implements AuditableContract
      */
     public function classDoneRecords()
     {
-        return $this->classRecords()->get()->filter(function ($classRecord) {
+        // $this->classRecords()->get()  = $this->classRecords->
+        return $this->classRecords->filter(function ($classRecord) {
             return in_array($classRecord->exception, ClassRecord::EXCEPTIONS_NONEED_PATCH);
         });
     }
@@ -185,7 +193,7 @@ class Order extends Model implements AuditableContract
             $exceptionInt = ClassRecord::EXCEPTION_TEACHER;
         }
 
-        return $this->classRecords()->get()->filter(function ($classRecord) use ($exceptionInt) {
+        return $this->classRecords->filter(function ($classRecord) use ($exceptionInt) {
             return  $classRecord->exception == $exceptionInt;
         });
     }
@@ -359,7 +367,7 @@ class Order extends Model implements AuditableContract
             return $recurrence->getStart()->format('Y-m-d H:i:s');
         });
 
-        $historyRecords = $this->classRecords()->get()->map(function ($classRecord) {
+        $historyRecords = $this->classRecords->map(function ($classRecord) {
             return $classRecord->generated_at->format('Y-m-d H:i:s');
         });
 

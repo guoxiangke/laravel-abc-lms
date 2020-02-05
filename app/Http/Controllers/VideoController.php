@@ -8,6 +8,7 @@ use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Upyun\Config as UpyunConfig;
 use App\Forms\VideoForm as CreateForm;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -16,13 +17,9 @@ class VideoController extends Controller
 {
     use FormBuilderTrait;
 
-    public function __construct()
-    {
-        $this->middleware('admin')->except(['show']);
-    }
-
     public function show(Video $video)
     {
+        $this->authorize('view', $video);
         return view('videos.show', compact('video'));
     }
 
@@ -33,20 +30,16 @@ class VideoController extends Controller
      */
     public function cut(ClassRecord  $classRecord)
     {
+        //授权与 ClassRecordPolicy@cut 有关！ 
+        $this->authorize('cut', $classRecord);
         $form = $this->form(
             CreateForm::class,
             [
                 'method' => 'POST',
-                'url'    => action('VideoController@store'),
+                'url'    => action('VideoController@store', ['id'=>$classRecord->id]),
             ],
             ['entity' => $classRecord],
         );
-
-        // $config = new UpyunConfig(config('upyun.bucket'), config('upyun.operator'), config('upyun.password'));
-        // $config->processNotifyUrl = 'https://lms.abc-chinaedu.com/upyun/cut/callback';
-        // $upyun = new Upyun($config);
-        // $result = $upyun->queryProcessResult(['aa3974dd09404e09a1c8e93177f56903']);
-        // dd($result );
         return view('videos.create', compact('form', 'classRecord'));
     }
 
@@ -56,8 +49,9 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, FormBuilder $formBuilder)
+    public function store(ClassRecord  $classRecord, Request $request, FormBuilder $formBuilder)
     {
+        $this->authorize('cut', $classRecord);
         $form = $formBuilder->create(CreateForm::class);
         $this->validate($request, [
             'start_time'=> 'required|regex:/\d{2}:\d{2}/i',
@@ -90,6 +84,7 @@ class VideoController extends Controller
                 'start_time' => $request->input('start_time'),
                 'end_time' => $request->input('end_time'),
                 'path' => $dest,
+                'user_id' => Auth::id(),
             ]);
             Session::flash('alert-success', __('Success'));
 
@@ -107,16 +102,18 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        $video->forceDelete();
-
-        $config = new UpyunConfig(config('upyun.bucket'), config('upyun.operator'), config('upyun.password'));
-        $config->processNotifyUrl = 'https://lms.abc-chinaedu.com/upyun/cut/callback';
-        $upyun = new Upyun($config);
-        $res = $upyun->delete($video->path);
-        if ($res) {
-            Session::flash('alert-success', 'Upyun文件删除成功！');
-        }
-
+        $this->authorize('delete', $video);
+        $video->delete(); 
+        // don't forceDelete it
+        // keep Upyun storage!!!
+        // $config = new UpyunConfig(config('upyun.bucket'), config('upyun.operator'), config('upyun.password'));
+        // $config->processNotifyUrl = 'https://lms.abc-chinaedu.com/upyun/cut/callback';
+        // $upyun = new Upyun($config);
+        // $res = $upyun->delete($video->path);
+        // if ($res) {
+        //     Session::flash('alert-success', 'Upyun文件删除成功！');
+        // }
+        Session::flash('alert-success', '删除成功！');
         return redirect()->back();
     }
 
@@ -127,16 +124,22 @@ class VideoController extends Controller
      */
     public function index()
     {
+        if (! Auth::user()->can(['View any Video'])) {
+            abort(403);
+        }
         $videos = Video::with(
-            'classRecord',
-            'classRecord.order',
-            'classRecord.order.user',
+            'user',
+            'user.profiles',
+            'user.roles',
+            // 'classRecord',
+            // 'classRecord.order',
+            // 'classRecord.order.user',
             'classRecord.order.user.profiles',
-            'classRecord.order.teacher',
+            // 'classRecord.order.teacher',
             'classRecord.order.teacher.profiles',
-            'classRecord.order.agency',
+            // 'classRecord.order.agency',
             'classRecord.order.agency.profiles',
-            )
+            )->withTrashed()
             ->orderBy('id', 'desc')
             ->paginate(100);
 

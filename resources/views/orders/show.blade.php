@@ -12,13 +12,13 @@
 
 @section('content')
 <div class="container">
-  <h1>{{$order->title}}</h1>
+  <h1 class="h3 pb-2 text-gray-800"><i class="fas fa-calendar-alt"></i> {{$order->title}}</h1>
 
   <div class="show-links">
       <a href="{{route('orders.index') }}" class="btn btn-outline-dark"><i class="fas fa-angle-left fa-large"></i> {{__('Go Back')}}</a>
       <a href="{{route('classRecords.indexbyOrder', $order) }}" class="btn btn-outline-dark">View in ClassRecords</a>
   </div>
-
+  @can('Update any Order')
   <ul class="list-group list-group-flush">
       @foreach($order->rrules as $rrule)
         @php
@@ -78,6 +78,7 @@
         </tbody>
       </table>
   </div>
+  @endcan
 
   <abc-calendar></abc-calendar>
 </div>

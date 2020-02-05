@@ -20,6 +20,9 @@ class CreateVideosTable extends Migration
             $table->string('start_time');  // 剪辑开始时间，格式为 HH:MM:SS，默认视频开始时间
             $table->string('end_time');  // 剪辑结束时间，格式为 HH:MM:SS，默认视频结束时间
             $table->string('path');  // 剪辑完成后的存放的Upyun路径，没完成时是null
+            $table->unsignedBigInteger('user_id')->default(1)->comment('剪辑用户id');
+            $table->schemalessAttributes('extra_attributes');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

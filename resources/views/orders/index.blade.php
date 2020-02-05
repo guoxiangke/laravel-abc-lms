@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-	<h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-cart-plus"></i> {{ $type }} {{__('Orders')}}</h1>
+	<h1 class="h3 mb-0 text-gray-800 mb-2"><i class="fas fa-fw fa-cart-plus"></i> {{ $type }} {{__('Orders')}}</h1>
 
   <div class="show-links">
       <a href="{{ route('orders.create') }}" class="btn btn-warning mt-1">{{__('Create')}}</a>
@@ -29,9 +29,11 @@
               	<th scope="col">#</th>
                 <th scope="col">学生</th>
               	<th scope="col">老师</th>
-              	<th scope="col">代理</th>
+                @can('Update any Order')
+                <th scope="col">代理</th>
                 <th scope="col">价格</th>
                 <th scope="col">课时</th>
+                @endcan
                 <th scope="col">已上</th>
                 <th scope="col">状态</th>
                 <th scope="col">过期时间</th>
@@ -48,14 +50,17 @@
                       <a href="{{route('classRecords.indexbyOrder', $order) }}" class="fas fa-list fa-lg" alt="上课记录" title="上课记录"></a>
                       
                       <a href="{{ route('rrules.create', $order) }}" class="fas fa-calendar-times fa-lg" alt="创建计划" title="创建计划"></a>
-
+                      @can('update', $order)
                       <a href="{{ route('orders.edit', $order->id) }}"  class="fas fa-edit fa-lg"></a>
+                      @endcan
                     </td>
-                    <td data-label="Student">{{$order->user->profiles->first()->name}}</td>
+                    <td data-label="Student">{{$order->student->profiles->first()->name}}</td>
                     <td data-label="Teacher">{{$order->teacher->profiles->first()->name}}</td>
+                    @can('Update any Order')
                     <td data-label="Agency">{{$order->agency->profiles->first()->name}}</td>
                     <td data-label="Price">{{$order->price}}</td>
                     <td data-label="Period">{{$order->period}}</td>
+                    @endcan
                     <td data-label="已上">{{$order->classDoneRecords()->count()}}</td>
                     <td data-label="Book">{{App\Models\Order::STATUS[$order->status]}}</td>
                     <td data-label="ExpireAt">{{$order->expired_at->format('Y.m.d')}}</td>
@@ -122,10 +127,14 @@
                       }
                     }
                   })
-                  @role('student')
-                  actions.text('--');
-                  @endrole
+
+                  @if(\Auth::user()->isOnlyHasStudentRole())
+                    actions.text('--');
+                  @endif
                 }
+              },
+              error: function(error) {
+                alert(error.responseJSON.message);
               }
             });
           }

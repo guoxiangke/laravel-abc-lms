@@ -8,11 +8,16 @@ use App\Models\Profile;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ClassRecord;
+use App\Models\Video;
+use App\Models\Order;
 use App\Policies\AgencyPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\TeacherPolicy;
 use App\Policies\ClassRecordPolicy;
+use App\Policies\OrderPolicy;
+
+use App\Policies\VideoPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -30,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Teacher::class     => TeacherPolicy::class,
         // Social::class      => SocialPolicy::class,
         Profile::class     => ProfilePolicy::class,
+        Video::class     => VideoPolicy::class,
+        Order::class     => OrderPolicy::class,
     ];
 
     /**
@@ -53,6 +60,12 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('teacher', function ($user) {
             return $user->isTeacher();
         });
+
+        // 判断用户 只有一个角色，非复杂用户
+        // Gate::define('onlyStudent', function ($user) {
+        //     return $user->isOnlyHasStudentRole();
+        // });
+
         // $this->authorize('admin'); // in Http/Controllers/*.controller
 
         // https://github.com/spatie/laravel-permission/wiki/Global-%22Admin%22-role

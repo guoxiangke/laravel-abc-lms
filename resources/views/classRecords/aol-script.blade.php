@@ -3,9 +3,12 @@
         $('.post-action').click(function(e){
           e.preventDefault();
           var msg = "This action cannot be undone, Are you sure to flag?";
-          @role('student')
-          msg = "为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？";
-          @endrole
+
+          @if(\Auth::user()->isOnlyHasStudentRole())
+            console.log('student role only')
+            msg = "为保证您的课时有效期，您每月只有2次自助请假机会，超过请联系专属课程顾问。本次请假操作不可撤销，确定请假？";
+          @endif
+
           var that = $(this);
           if(!that.hasClass('btn-outline-danger')){
             alert('{{__('NO Action on this status')}}');
@@ -45,10 +48,14 @@
                       }
                     }
                   })
-                  @role('student')
-                  actions.text('--');
-                  @endrole
+
+                  @if(\Auth::user()->isOnlyHasStudentRole())
+                    actions.text('--');
+                  @endif
                 }
+              },
+              error: function(error) {
+                alert(error.responseJSON.message);
               }
             });
           }

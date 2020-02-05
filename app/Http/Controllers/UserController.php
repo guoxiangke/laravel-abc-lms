@@ -118,11 +118,11 @@ class UserController extends Controller
 
         if ($request->input('password')) {
             $input = $request->only(['name', 'email', 'password']);
+            $input['password'] = Hash::make($input['password']);
         } else {
             $input = $request->only(['name', 'email']);
         }
         $roles = $request['roles']; // 获取所有角色
-        $input['password'] = Hash::make($input['password']);
         $user->fill($input)->save();
 
         if (isset($roles)) {

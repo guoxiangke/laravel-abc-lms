@@ -50,7 +50,7 @@
 					      <th scope="row" data-label="Id">
 					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
 					      	<a href="{{ route('classRecords.indexbyStudent', $student->user_id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
-							<a href="{{ route('orders.create') }}?trail=1&user_id={{$student->user->id}}&agency={{$profile->recommend_uid}}" class="btn btn-sm btn-outline-dark text-uppercase">试听</a>
+							<a href="{{ route('orders.create') }}?trail=1&student_uid={{$student->user->id}}&agency_uid={{$profile->recommend_uid}}" class="btn btn-sm btn-outline-dark text-uppercase">试听</a>
 					  	  </th>
 					      <td data-label="姓名">
 					      	<a href="{{route('students.show',$student->id)}}">

@@ -97,7 +97,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                         'generated_at' => $byDay->format('Y-m-d '.$rrule->start_at->format('H:i').':00'),
                         //必须，固定为生成当天的XX开始时间，避免重复生产
                         //@see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
-                        'user_id'    => $order->user_id, //'student_uid',
+                        'user_id'    => $order->student_uid,
                         'agency_uid' => $order->agency_uid,
                         'order_id'   => $order->id,
                     ]);

@@ -7,7 +7,7 @@
 <div class="container">
     <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-share-alt"></i> {{__('ClassRecord')}}
 
-      @hasanyrole('manager|admin|teacher')
+      @hasanyrole('manager|admin|teacher|editor')
         <div class="starrr" 
           data-starts={{$starts}}
         >
@@ -47,8 +47,10 @@
       <a href="{{ route('classRecords.edit', $classRecord->id) }}" class="btn btn-warning">Edit</a>
       @endcan
 
+      @can('cut', $classRecord)
+        <a href="{{ route('videos.cut', $classRecord->id) }}" class="btn btn-warning">Cut</a>
+      @endcan
       @can('delete', $classRecord)
-      <a href="{{ route('videos.cut', $classRecord->id) }}" class="btn btn-warning">Cut</a>
       <div class="d-inline">
       {{ Form::open(['method' => 'DELETE', 'class'=>'d-inline', 'route' => ['classRecords.destroy', $classRecord->id]]) }}
           {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-delete btn-danger']) }}

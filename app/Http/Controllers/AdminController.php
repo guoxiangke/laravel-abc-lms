@@ -40,4 +40,7 @@ class AdminController extends Controller
 
         return redirect('home');
     }
+    public function test(){
+        //dd('test');
+    }
 }

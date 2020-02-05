@@ -8,6 +8,7 @@ use App\Models\Rrule;
 use App\Models\Student;
 use App\Models\ClassRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\OrderForm as CreateForm;
 use Illuminate\Support\Facades\Session;
@@ -21,7 +22,7 @@ class OrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['admin']);
+        // $this->middleware(['admin']);
     }
 
     /**
@@ -31,15 +32,15 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Order::class);
         $orders = Order::with(
-            'user',
-            'user.profiles',
+            'student',
+            'student.profiles',
             'teacher',
             'teacher.profiles',
             'agency',
             'agency.profiles',
-            'schedules',
-            'schedules.classRecords',
+            'classRecords',
         );
         $type = 'Default'; // 默认
         //0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
@@ -98,6 +99,8 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Order::class);
+
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url'    => action('OrderController@store'),
@@ -114,6 +117,7 @@ class OrderController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        $this->authorize('create', Order::class);
         $this->validate($request, [
             'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
         ]);
@@ -123,7 +127,8 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $order = Order::firstOrNew([
-            'user_id'     => $request->input('user_id'), //student_uid
+            'student_uid'     => $request->input('student_uid'), 
+            'user_id'     => Auth::id(),
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
             'book_id'     => $request->input('book_id') ?: 1,
@@ -173,6 +178,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $this->authorize('view', $order);
         $events = [];
         // dd(
         //     // Rrule::find(1)->classRecords()->exceptions()->get()->toArray(),//->exceptions()->get()->toArray(),
@@ -239,6 +245,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorize('update', $order);
         $form = $this->form(
             EditForm::class,
             [
@@ -260,21 +267,27 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order, FormBuilder $formBuilder)
     {
-        $this->validate($request, [
-            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
-        ]);
+        $this->authorize('update', $order);
+        $price = $order->price;
+        if($request->has('price')){
+            $this->validate($request, [
+                'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
+            ]);
+            $price = $request->input('price');
+        }
         $form = $this->form(EditForm::class);
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-
+        
         $order->fill([
-            'user_id'     => $request->input('user_id'), //student_uid
+            'user_id'     => Auth::id(),
+            'student_uid'     => $request->input('student_uid'),
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
             'book_id'     => $request->input('book_id') ?: 1,
             'product_id'  => $request->input('product_id'),
-            'price'       => $request->input('price'),
+            'price'       => $price,
             'period'      => $request->input('period'),
             'expired_at'  => $request->input('expired_at'),
             'remark'      => $request->input('remark'),
@@ -298,13 +311,13 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $this->authorize('delete', $order);
     }
 
     public function flagStatus(Request $request, Order $order, $status)
     {
+        $this->authorize('flag', $order);
         $order->status = $status;
-
         return ['success'=>$order->save()];
     }
 }

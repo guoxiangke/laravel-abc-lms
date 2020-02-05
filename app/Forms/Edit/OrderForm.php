@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Facades\Auth;
 
 class OrderForm extends Form
 {
@@ -41,12 +42,24 @@ class OrderForm extends Form
 
         preg_match_all('/\n/', $order->remark, $matches);
         $rows = count($matches[0]) + 5;
+        
+         //权限判断，不是所有人可以看到价格 see order price!!
+        $user = Auth::user();
+        if($user->can('Update any Order')){
+           $this->add('price', 'text', [
+                'rules' => 'required',
+                'label' => 'Price',
+                'value' => $order->price,
+                'attr'  => ['placeholder' => '成交价,单位元,可带2为小数'],
+            ]);
+        }
+
         $this
-            ->add('user_id', 'select', [
+            ->add('student_uid', 'select', [
                 'label'       => 'Student',
                 'rules'       => 'required',
                 'choices'     => $students,
-                'selected'    => $order->user_id,
+                'selected'    => $order->student_uid,
                 'empty_value' => '=== Select ===',
             ])
             ->add('teacher_uid', 'select', [
@@ -68,12 +81,6 @@ class OrderForm extends Form
                 'selected'    => $order->book_id,
                 'selected'    => 0,
                 'empty_value' => '=== Select ===',
-            ])
-            ->add('price', 'text', [
-                'rules' => 'required',
-                'label' => 'Price',
-                'value' => $order->price,
-                'attr'  => ['placeholder' => '成交价,单位元,可带2为小数'],
             ])
             ->add('period', 'number', [
                 'rules' => 'required',

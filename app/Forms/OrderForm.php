@@ -31,17 +31,17 @@ class OrderForm extends Form
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
         $input = Input::all();
 
-        $userId = null;
+        $studentUid = null;
         $price = null;
         $period = null;
         $expiredAt = null;
-        $agency = null;
+        $agencyUid = null;
 
         $now = Carbon::now();
         $today = $now->format('Ymd');
         $rrule = 'DTSTART:'.$now->format('Ym??')."T??0000Z\nRRULE:FREQ=DAILY;COUNT=?;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
-        if (isset($input['user_id'])) {
-            $userId = $input['user_id'];
+        if (isset($input['student_uid'])) {
+            $studentUid = $input['student_uid'];
         }
         if (isset($input['trail'])) {
             $now = Carbon::now();
@@ -51,15 +51,15 @@ class OrderForm extends Form
             $price = 0.00;
             $expiredAt = $now->addDays(5)->format('Y-m-d');
         }
-        if (isset($input['agency'])) {
-            $agency = $input['agency'];
+        if (isset($input['agency_uid'])) {
+            $agencyUid = $input['agency_uid'];
         }
         $this
-            ->add('user_id', 'select', [
+            ->add('student_uid', 'select', [
                 'label'       => 'Student',
                 'rules'       => 'required',
                 'choices'     => $students,
-                'selected'    => $userId,
+                'selected'    => $studentUid,
             ])
             ->add('teacher_uid', 'select', [
                 'label'       => 'Teacher',
@@ -70,7 +70,7 @@ class OrderForm extends Form
             ->add('agency_uid', 'select', [
                 'label'       => 'Agency',
                 'choices'     => $agencies,
-                'selected'    => $agency,
+                'selected'    => $agencyUid,
                 'empty_value' => '=== Select ===',
             ])
             ->add('book_id', 'select', [

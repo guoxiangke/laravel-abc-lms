@@ -50,12 +50,6 @@ Route::get('/facebook/bind', 'FacebotController@bind')->middleware('auth')->name
 
 Route::resources(['socials' => 'SocialController']); //post need
 
-// https://abc.dev/orders/overdue
-// https://abc.dev/orders/done
-// https://abc.dev/orders/xxxx
-foreach (App\Models\Order::LIST_BY as $item) {
-    Route::get("orders/$item", 'OrderController@index')->middleware('admin')->name("orders.$item");
-}
 
 //后台配置
 Route::group(['prefix'=>'admin', 'middleware' => ['admin']], function () {
@@ -67,6 +61,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', 'RoleController');
     // Route::resource('posts', 'PostController');
     Route::resource('permissions', 'PermissionController');
+
+    // https://abc.dev/orders/overdue
+    // https://abc.dev/orders/done
+    // https://abc.dev/orders/xxxx
+    foreach (App\Models\Order::LIST_BY as $item) {
+        Route::get("orders/$item", 'OrderController@index')->name("orders.$item");
+    }
 
     Route::resources([
         'schools'      => 'SchoolController',
@@ -88,6 +89,7 @@ Route::group(['middleware' => ['auth']], function () {
         'videos'        => 'VideoController',
     ]);
     Route::get('videos/cut/{class_record}', 'VideoController@cut')->name('videos.cut');
+    Route::post('videos/cut/{class_record}', 'VideoController@store')->name('videos.store');
     //升级学生用户为代理用户
     Route::get('agencies/upgrade/{user}', 'AgencyController@upgrade')->name('agencies.upgrade');
     Route::post('agencies/upgrade/{user}', 'AgencyController@upgradeStore')->name('agencies.upgradeStore');
@@ -152,6 +154,7 @@ Route::get('admin/genClass', 'AdminController@genClass')->name('admin.genClass')
 
 // classNotify by role via sms
 Route::get('dev/su/{user}', 'AdminController@su')->name('sudo.su');
+Route::get('dev/test', 'AdminController@test');
 
 Route::get('/admin', function () {
     return view('sb-admin2/demo');

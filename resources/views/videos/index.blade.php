@@ -18,8 +18,9 @@
                 <tr>
                 	<th scope="col">Order</th>
                 	<th scope="col">Druing</th>
-                	<th scope="col">Share</th>
+                	<th scope="col">Share/Status</th>
                 	<th scope="col">path</th>
+                  <th scope="col">Cutter</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,8 +28,16 @@
                     <tr id={{$video->id}}>
                       <td data-label="classRecord" class="text-left"><a href="{{route('orders.show',$video->classRecord->order->id)}}"> {{$video->classRecord->order->title}}</a></td>
                       <td data-label="start_time"><a target="_blank" href="{{route('videos.cut',$video->classRecord->id)}}">{{$video->start_time}}-{{$video->end_time}}</a></td>
-                      <td data-label="Share"><a target="_blank" class="btn btn-sm btn-success" href="/videos/{{ $video->hashid() }}">Share</a></td>
+                      <td data-label="Share">
+                        @if($video->deleted_at)
+                        Inactive
+                        @else
+                          <a target="_blank" class="btn btn-sm btn-success" href="/videos/{{ $video->hashid() }}">Share</a>
+                        @endif
+  
+                      </td>
                       <td data-label="path"><a href="{{route('classRecords.show',$video->class_record_id)}}">{{$video->path}}</a></td>
+                      <td data-label="Share"> {{$video->user->getShowName()}} </td>
                     </tr>
                 @endforeach
               </tbody>
