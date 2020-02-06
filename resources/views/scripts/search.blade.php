@@ -22,9 +22,9 @@
 		$input = $('#studentName').val();
 
 		if(regex.test($input)){
-		  return window.location = window.location.pathname + "?filter[user.name]="+$input;
+		  return window.location = window.location.pathname + "?filter[student.name]="+$input;
 		}else{
-		  return window.location = window.location.pathname + "?filter[user.profiles.name]="+$input;
+		  return window.location = window.location.pathname + "?filter[student.profiles.name]="+$input;
 		}
 		});
 	});

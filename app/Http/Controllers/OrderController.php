@@ -34,11 +34,14 @@ class OrderController extends Controller
     {
         $this->authorize('viewAny', Order::class);
         $orders = Order::with(
+            // 'user',
+            // 'user.profiles',
             'student',
+            // 'student.user',
             'student.profiles',
-            'teacher',
+            // 'teacher',
             'teacher.profiles',
-            'agency',
+            // 'agency',
             'agency.profiles',
             'classRecords',
         );
@@ -85,8 +88,8 @@ class OrderController extends Controller
         $orders = $orders->orderBy('id', 'desc'); //todo debug 第二页有N+1问题 /orders/done?page=1
 
         $orders = QueryBuilder::for($orders)
-            ->allowedIncludes(['user.profiles', 'teacher.profiles', 'agency.profiles'])
-            ->allowedFilters(['user.name', 'user.profiles.name', 'teacher.profiles.name', 'agency.profiles.name'])
+            // ->allowedIncludes(['student.profiles','student'])
+            ->allowedFilters(['student.name', 'student.profiles.name'])
             ->paginate(100);
 
         return view('orders.index', compact('orders', 'type'));
@@ -127,7 +130,7 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
         $order = Order::firstOrNew([
-            'student_uid'     => $request->input('student_uid'), 
+            'student_uid'     => $request->input('student_uid'),
             'user_id'     => Auth::id(),
             'teacher_uid' => $request->input('teacher_uid') ?: 1,
             'agency_uid'  => $request->input('agency_uid') ?: 1,
@@ -269,7 +272,7 @@ class OrderController extends Controller
     {
         $this->authorize('update', $order);
         $price = $order->price;
-        if($request->has('price')){
+        if ($request->has('price')) {
             $this->validate($request, [
                 'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
             ]);
@@ -279,7 +282,7 @@ class OrderController extends Controller
         if (! $form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        
+
         $order->fill([
             'user_id'     => Auth::id(),
             'student_uid'     => $request->input('student_uid'),
@@ -318,6 +321,7 @@ class OrderController extends Controller
     {
         $this->authorize('flag', $order);
         $order->status = $status;
+
         return ['success'=>$order->save()];
     }
 }
