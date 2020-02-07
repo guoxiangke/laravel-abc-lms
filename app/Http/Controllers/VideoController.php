@@ -7,8 +7,8 @@ use App\Models\Video;
 use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Upyun\Config as UpyunConfig;
-use App\Forms\VideoForm as CreateForm;
 use Illuminate\Support\Facades\Auth;
+use App\Forms\VideoForm as CreateForm;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -19,7 +19,6 @@ class VideoController extends Controller
 
     public function show(Video $video)
     {
-        $this->authorize('view', $video);
         return view('videos.show', compact('video'));
     }
 
@@ -30,7 +29,7 @@ class VideoController extends Controller
      */
     public function cut(ClassRecord  $classRecord)
     {
-        //授权与 ClassRecordPolicy@cut 有关！ 
+        //授权与 ClassRecordPolicy@cut 有关！
         $this->authorize('cut', $classRecord);
         $form = $this->form(
             CreateForm::class,
@@ -40,6 +39,7 @@ class VideoController extends Controller
             ],
             ['entity' => $classRecord],
         );
+
         return view('videos.create', compact('form', 'classRecord'));
     }
 
@@ -103,7 +103,7 @@ class VideoController extends Controller
     public function destroy(Video $video)
     {
         $this->authorize('delete', $video);
-        $video->delete(); 
+        $video->delete();
         // don't forceDelete it
         // keep Upyun storage!!!
         // $config = new UpyunConfig(config('upyun.bucket'), config('upyun.operator'), config('upyun.password'));
@@ -114,6 +114,7 @@ class VideoController extends Controller
         //     Session::flash('alert-success', 'Upyun文件删除成功！');
         // }
         Session::flash('alert-success', '删除成功！');
+
         return redirect()->back();
     }
 
@@ -124,20 +125,13 @@ class VideoController extends Controller
      */
     public function index()
     {
-        if (! Auth::user()->can(['View any Video'])) {
-            abort(403);
-        }
+        $this->authorize('viewAny', Video::class);
         $videos = Video::with(
             'user',
             'user.profiles',
             'user.roles',
-            // 'classRecord',
-            // 'classRecord.order',
-            // 'classRecord.order.user',
             'classRecord.order.user.profiles',
-            // 'classRecord.order.teacher',
             'classRecord.order.teacher.profiles',
-            // 'classRecord.order.agency',
             'classRecord.order.agency.profiles',
             )->withTrashed()
             ->orderBy('id', 'desc')

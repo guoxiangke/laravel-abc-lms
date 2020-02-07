@@ -9,10 +9,21 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class VideoPolicy
 {
     use HandlesAuthorization;
-    
+
+    /**
+     * Determine whether the user can view any orders.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $user->hasAnyPermission(['View any Video']);
+    }
+
     /**
      * Determine whether the user can view the video.
-     * 默认公开，可以转发到朋友圈
+     * 默认公开，可以转发到朋友圈.
      * @param  \App\User  $user
      * @param  \App\Models\Video  $video
      * @return mixed
@@ -37,14 +48,7 @@ class VideoPolicy
      */
     public function create(User $user)
     {
-        // visitors cannot
-        if ($user === null) {
-            return false;
-        }
-
-        if ($user->can('Create a Video')) {
-            return true;
-        }
+        return $user->can('Create a Video');
     }
 
     /**
@@ -56,14 +60,7 @@ class VideoPolicy
      */
     public function update(User $user, Video $video)
     {
-        // visitors cannot
-        if ($user === null) {
-            return false;
-        }
-
-        if ($user->can('Update any Video')) {
-            return true;
-        }
+        return $user->can('Update any Video');
     }
 
     /**
@@ -75,14 +72,7 @@ class VideoPolicy
      */
     public function delete(User $user, Video $video)
     {
-        // visitors cannot
-        if ($user === null) {
-            return false;
-        }
-
-        if ($user->can('Delete any Video')) {
-            return true;
-        }
+        return $user->can('Delete any Video');
     }
 
     /**
@@ -94,7 +84,7 @@ class VideoPolicy
      */
     public function restore(User $user, Video $video)
     {
-        //
+        return $user->can('Delete any Video');
     }
 
     /**
@@ -106,6 +96,6 @@ class VideoPolicy
      */
     public function forceDelete(User $user, Video $video)
     {
-        //
+        return $user->can('Delete any Video');
     }
 }
