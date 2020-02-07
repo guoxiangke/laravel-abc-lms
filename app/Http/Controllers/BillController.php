@@ -27,15 +27,15 @@ class BillController extends Controller
     public function index()
     {
         $bills = Bill::with(
-            'user',
+            // 'user',
             'user.profiles',
             // $order->title
-            'order',
-            'order.user',
+            // 'order',
+            // 'order.user',
             'order.user.profiles',
-            'order.teacher',
+            // 'order.teacher',
             'order.teacher.profiles',
-            'order.agency',
+            // 'order.agency',
             'order.agency.profiles'
             )
             ->orderBy('id', 'desc')
