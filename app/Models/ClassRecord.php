@@ -27,6 +27,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
     const CDN = [
         'do' => 'https://dxjy.sfo2.cdn.digitaloceanspaces.com',
         'upyun' => 'https://upcdn.do.abc-chinaedu.com',
+        'updxyy' => 'http://updxyy.test.upcdn.net',
         'onedrive' => '',
     ];
 
