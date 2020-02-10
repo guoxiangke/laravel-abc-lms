@@ -66,7 +66,7 @@ class Order extends Model implements AuditableContract
     {
         //190101-studentName-TeacherName-AgencyName-20-159
         $title = $this->created_at->format('ymd')
-                .'-'.$this->user->profiles->first()->name
+                .'-'.$this->student->profiles->first()->name
                 .'-'.$this->teacher->profiles->first()->name
                 .'-'.$this->agency->profiles->first()->name
                 .'-'.$this->period;

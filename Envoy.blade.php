@@ -10,7 +10,7 @@
 @story('deploy')
     deploy01
     rmQueue
-    # rmScheduler
+    #rmScheduler
 @endstory
 
 @story('backup')
@@ -173,6 +173,16 @@
 
     echo "Backup On CN begin ..."
     echo "scp root@154.8.216.229:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
+    
+    docker-compose exec -T db mysqldump -uroot -proot laravel > /tmp/$FILENAME
+@endtask
+
+@task('backupEN4dev', ['on' => 'sfo2'])
+    cd /var/www/html/lms-abc
+    FILENAME=en.lms.abc.$(date '+%Y%m%d%H%M%S').db.backup.sql
+
+    echo "Backup On CN begin ..."
+    echo "scp root@52.34.168.85:/tmp/$FILENAME /tmp/ && mysql -uroot abc < /tmp/$FILENAME"
     
     docker-compose exec -T db mysqldump -uroot -proot laravel > /tmp/$FILENAME
 @endtask
