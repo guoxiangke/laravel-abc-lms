@@ -238,13 +238,13 @@ class Order extends Model implements AuditableContract
             $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
             $rule->setStartDate($startDate);
             // 2.去除已经上课的次数 doneExceptDatesByThisRule
-            // bug:如果今天的没生成，会造成日历上最后多一个计划记录！
             $doneCount = $this->classDoneRecords()->filter(function ($item) use ($rrule) {
                 if ($item->rrule_id == $rrule->id) {
                     return true;
                 }
             })->count();
-            $rule->setCount($rule->getCount() - $doneCount);
+            // bug:如果今天的没生成，会造成日历上最后少一个计划记录！
+            $rule->setCount($rule->getCount() - $doneCount + 1);
 
             // 处理请假规则 begin
             $count = 0; //请假次数
@@ -261,7 +261,7 @@ class Order extends Model implements AuditableContract
             $count = $aolsForThisRule->count();
 
             $rule->setExDates($aolsForThisRule->toArray()); // 排除一些计划请假的日期
-            $rule->setCount($rule->getCount() + $count); // 顺延
+            // $rule->setCount($rule->getCount() + $count); // 顺延
             // 处理请假规则 end
 
             // dd(Rrule::transByStart($rule), $aols, $count, $aolsForThisRule);
