@@ -117,13 +117,13 @@ class RoleController extends Controller
         $role->fill($input)->save();
 
         $permissions = $request['permissions'];
+
+        // 移除与角色关联的所有权限
+        $p_all = Permission::all(); //获取所有权限
+        foreach ($p_all as $p) {
+            $role->revokePermissionTo($p);
+        }
         if ($permissions) {
-            $p_all = Permission::all(); //获取所有权限
-
-            foreach ($p_all as $p) {
-                $role->revokePermissionTo($p); // 移除与角色关联的所有权限
-            }
-
             foreach ($permissions as $permission) {
                 $p = Permission::where('id', '=', $permission)->firstOrFail(); //从数据库中获取相应权限
                 $role->givePermissionTo($p);  // 分配权限到角色

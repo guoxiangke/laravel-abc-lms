@@ -452,27 +452,26 @@ class ClassRecordController extends Controller
     {
         //权限判断
         //如果有'Update any ClassRecord Status'这个权限，不必逐一判断
-        if(! $this->authorize('status', $classRecord)){
-            switch ($exception) {
-                case ClassRecord::NORMAL_EXCEPTION_TEACHER://2老师请假
-                case ClassRecord::EXCEPTION_STUDENT://3学生旷课
-                    // 老师可以编辑，故老师可以点击学生旷课
-                    // 老师可以点击 2老师请假
-                    // 编辑editor可以 
-                    $this->authorize('edit', $classRecord); 
-                    break;
-                case ClassRecord::NORMAL_EXCEPTION_STUDENT://1学生请假
-                    $this->authorize('aol', $classRecord); //aol权限
-                    break;
-                case ClassRecord::NO_EXCEPTION://0归位正常
-                case ClassRecord::EXCEPTION_TEACHER://4老师异常
-                    $this->authorize('reset', $classRecord); //aol权限
-                    break;
-                default:
-                    // return abort('403');
-                    return response('Unauthorized.', 401);
-                    break;
-            }
+
+        switch ($exception) {
+            case ClassRecord::NORMAL_EXCEPTION_TEACHER://2老师请假
+            case ClassRecord::EXCEPTION_STUDENT://3学生旷课
+                // 老师可以编辑，故老师可以点击学生旷课
+                // 老师可以点击 2老师请假
+                // 编辑editor可以
+                $this->authorize('edit', $classRecord);
+                break;
+            case ClassRecord::NORMAL_EXCEPTION_STUDENT://1学生请假
+                $this->authorize('aol', $classRecord); //aol权限
+                break;
+            case ClassRecord::NO_EXCEPTION://0归位正常
+            case ClassRecord::EXCEPTION_TEACHER://4老师异常
+                $this->authorize('reset', $classRecord); //aol权限
+                break;
+            default:
+                // return abort('403');
+                return response('Unauthorized.', 401);
+                break;
         }
 
         $classRecord->exception = $exception;
