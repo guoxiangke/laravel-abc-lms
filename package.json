@@ -27,6 +27,6 @@
         "@fortawesome/fontawesome-free": "^5.8.1",
         "install": "^0.12.2",
         "vue-cal": "^1.45.0",
-        "yarn": "^1.17.3"
+        "yarn": "^1.22.0"
     }
 }
