@@ -204,26 +204,37 @@ class Order extends Model implements AuditableContract
      * 从其中查找==今天/指定日期的时间点，可以包含多个（例：一天有2个上课记录/每天上2次课的情况）
      * 包含今天稍早时间的记录/如果0点没有自动生成的话。
      */
-    public function hasClass(Carbon $byDay = null)
+    public function hasClass($offset = 0)
     {
-        if (! $byDay) {
-            $byDay = Carbon::now();
-        }
+        $byDay = Carbon::now()->subDays($offset);
 
-        return $this->regenRruleSchedule()->filter(function ($startDateString) use ($byDay) {
+        return $this->regenRruleSchedule($offset)->filter(function ($startDateString) use ($byDay) {
             return Carbon::createFromFormat('Y-m-d H:i:s', $startDateString)->format('Y-m-d') == $byDay->format('Y-m-d');
         })->map(function ($dateString) {
             return substr($dateString, 11, 5); //H:i
         })->toArray();
     }
 
+    // get History AOLRecords ByRrule/ALL
+    public function AOLRecords($rrule_id = null)
+    {
+        $query = $this->hasMany(ClassRecord::class, 'order_id', 'id');
+        if ($rrule_id) {
+            return $query->where('rrule_id', $rrule_id);
+        }
+
+        return $query->whereIn('exception', ClassRecord::EXCEPTIONS_NEED_PATCH);
+    }
+
     //加上 请假次数 作为schedule rule!
-    public function regenRruleSchedule()
+    // 现状： 只有未来！
+    // $history/offset/fromDay 包含过去x天的
+    public function regenRruleSchedule($offset = 0)
     {
         //not only for the first 有效上课计划
         // $rrule = $this->schedules->first();
         $rruleSchedulesCollections = new Collection;
-        $today = Carbon::now();
+        $fromDay = Carbon::now()->subDays($offset);
 
         $aols = $this->regenAolsSchedule(); //->toArray()
         // 包含了暂停和其他状态的日期规则rrule
@@ -232,9 +243,8 @@ class Order extends Model implements AuditableContract
             $rule = $rrule->getRule();
 
             // 重新计算规则：1.从今天开始 2.去除已经上课的次数 3.过去已请假的课程次数不算 4.去除计划请假次数+count
-            // 1.从今天开始
-            $startDateString = $today->format('Y-m-d ').$rrule->start_at->format('H:i:s');
-
+            // 1.从今天/从前x天开始
+            $startDateString = $fromDay->format('Y-m-d ').$rrule->start_at->format('H:i:s');
             $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $startDateString);
             $rule->setStartDate($startDate);
             // 2.去除已经上课的次数 doneExceptDatesByThisRule
@@ -247,34 +257,32 @@ class Order extends Model implements AuditableContract
             $rule->setCount($rule->getCount() - $doneCount + 1);
 
             // 处理请假规则 begin
-            $count = 0; //请假次数
+            // 排除一些计划请假的日期
             $allDateStringCollection = Rrule::transByStart($rule);
             // $aolsForThisRule = [];
             $aolsForThisRule = $aols->filter(function ($item) use ($rrule) {
                 if ($item->format('H:i') == $rrule->start_at->format('H:i')) {
-                    // 而是 对应的时间 才扣除
+                    // 而是 xxx对应的时间xxx 才扣除
                     return true;
                 }
             })->map(function ($item) {
                 return $item->format('Y-m-d H:i:s');
             });
-            $count = $aolsForThisRule->count();
+            $aolCounts = $aolsForThisRule->count(); //请假次数
 
             $rule->setExDates($aolsForThisRule->toArray()); // 排除一些计划请假的日期
-            // $rule->setCount($rule->getCount() + $count); // 顺延
+            // $rule->setCount($rule->getCount() + $aolCounts); // 顺延
             // 处理请假规则 end
 
-            // dd(Rrule::transByStart($rule), $aols, $count, $aolsForThisRule);
-            $rruleSchedulesCollections = $rruleSchedulesCollections->merge(
-                Rrule::transByStart($rule)->filter(function ($item) {
-                    // 2019-01-01 用于确定今天*稍早时间（已过生成时间和比当前时间早的计划）*是否有课的逻辑
-                    if (substr($item, 0, 10) == Carbon::now()->format('Y-m-d')) {
-                        return true;
-                    }
-                    // * hasClass after now! 对应日历上今天以后的计划条目
-                    return new \DateTime($item) >= now();
-                })
-            );
+            //排除已经生成的记录（从x天起，到现在！）
+            $AOLRecords = $this->AOLRecords($rrule->id)->where('generated_at', '>=', $fromDay)->get()->map(function ($item) {
+                return $item->generated_at->format('Y-m-d H:i:s');
+            });
+            $rule->setExDates($AOLRecords->toArray());
+            //排除已经生成的记录（从x天起，到现在！） end
+
+            // dd(Rrule::transByStart($rule), $aols, $aolCounts, $doneCount, $aolsForThisRule);
+            $rruleSchedulesCollections = $rruleSchedulesCollections->merge(Rrule::transByStart($rule));
         }
 
         return $rruleSchedulesCollections;

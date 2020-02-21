@@ -42,13 +42,13 @@ class ClassRecordsGenerateQueue implements ShouldQueue
 
         //找出今天/昨天需要上的2节课 的时间H:i
         $byDay = Carbon::now()->subDays($this->offset); //sub方便为过去的日期生成记录！！
-        Log::info(__CLASS__, [$order->title, $order->id, $byDay, 'info']);
-        $todayClassTimes = $order->hasClass($byDay); //H:i
+        Log::debug('checkHasClass', [__CLASS__, __LINE__, $order->title, $order->id, $byDay->format('Y-m-d')]);
+        $todayClassTimes = $order->hasClass($this->offset); //H:i
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
         //标记完成如果 已经上课=订单PERIOD
         $count = $order->classDoneRecords()->count();
         if ($order->period == $count) { // || $order->expired_at<=Carbon::now()
-            Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_COMPLETED']);
+            Log::info('Order::STATU_COMPLETED', [__CLASS__, __LINE__, $order->title, $order->id]);
             $order->status = Order::STATU_COMPLETED;
             $order->save();
 
@@ -60,7 +60,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
 
         //标记过期的订单！
         if ($order->expired_at <= Carbon::now()) {
-            Log::info(__CLASS__, [$order->title, $order->id, 'Order::STATU_OVERDUE']);
+            Log::info('Order::STATU_OVERDUE', [__CLASS__, __LINE__, $order->title, $order->id]);
             $order->status = Order::STATU_OVERDUE;
             $order->save();
 
@@ -71,7 +71,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
 
         if (! $todayClassTimes) {
-            Log::info(__CLASS__, [$order->title, $order->id, 'NoClassTodayOr']);
+            Log::info('NoClassTodayOr', [__CLASS__, __LINE__, $order->title, $order->id]);
 
             return;
         }
@@ -101,11 +101,11 @@ class ClassRecordsGenerateQueue implements ShouldQueue
                         'agency_uid' => $order->agency_uid,
                         'order_id'   => $order->id,
                     ]);
-
+                    Log::info('firstOrCreate', [__CLASS__, __LINE__, $order->title, $order->id, $byDay->format('Y-m-d')]);
                     // $title = $classRecord->wasRecentlyCreated ? 'wasRecentlyCreated' : 'NoRecentlyCreated';
                     // Log::debug($title, [__CLASS__, __FUNCTION__, __LINE__, $order->title, $order->id, $classRecord->id]);
                 } catch (\Exception $e) {
-                    Log::error($e->getMessage(), [__CLASS__, __FUNCTION__, __LINE__, $order->title]);
+                    Log::error('Exception', [__CLASS__, __LINE__, $order->title, $order->id, $e->getMessage()]);
                 }
             }
         }
