@@ -34,6 +34,7 @@ class Bill extends Model
         'paymethod_type',
         'status',
         'remark', //经手人 //收/付款时间etc.
+        'created_at', //入账日期
     ];
 
     public function user()

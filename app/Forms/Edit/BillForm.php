@@ -18,7 +18,12 @@ class BillForm extends Form
         }
 
         $users = User::getAllReference();
-        $orders = Order::with(['user', 'teacher', 'agency', 'user.profiles', 'teacher.profiles', 'agency.profiles'])->active()->get()->map(function ($order) {
+        $orders = Order::with([ // $order->title
+            'student',
+            'student.profiles',
+            'teacher.profiles',
+            'agency.profiles',
+        ])->active()->get()->map(function ($order) {
             return ['id'=>$order->id, 'title'=>$order->title];
         })->pluck('title', 'id')->toArray();
         preg_match_all('/\n/', $bill->remark, $matches);
@@ -29,6 +34,11 @@ class BillForm extends Form
                 'rules'   => 'required',
                 'choices' => Bill::TYPES,
                 'selected'   => $bill->type,
+            ])
+            ->add('created_at', 'datetime-local', [
+                'rules' => 'required',
+                'value' => $bill->created_at->format('Y-m-d\TH:i'),
+                'label' => '入账时间',
             ])
             ->add('user_id', 'select', [
                 'label'    => 'User',

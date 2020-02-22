@@ -13,15 +13,26 @@ class BillForm extends Form
     public function buildForm()
     {
         $users = User::getAllReference();
-        $orders = Order::with(['user', 'teacher', 'agency', 'user.profiles', 'teacher.profiles', 'agency.profiles'])->active()->get()->map(function ($order) {
-            return [$order->id=>$order->title];
-        })->flatten()->toArray();
+        $orders = $orders = Order::with([ // $order->title
+                'student',
+                'student.profiles',
+                'teacher.profiles',
+                'agency.profiles',
+            ])
+            ->active()->get()->map(function ($order) {
+                return [$order->id=>$order->title];
+            })->flatten()->toArray();
         $this
             ->add('type', 'select', [
                 'label'   => '类型',
                 'rules'   => 'required',
                 'choices' => Bill::TYPES,
                 'value'   => 0,
+            ])
+            ->add('created_at', 'datetime-local', [
+                'rules' => 'required',
+                'value' => now()->format('Y-m-d\TH:i'),
+                'label' => '入账时间',
             ])
             ->add('user_id', 'select', [
                 'label'       => 'User',

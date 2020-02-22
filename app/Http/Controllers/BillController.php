@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\Forms\BillForm as CreateForm;
@@ -27,15 +28,9 @@ class BillController extends Controller
     public function index()
     {
         $bills = Bill::with(
-            // 'user',
             'user.profiles',
-            // $order->title
-            // 'order',
-            // 'order.user',
-            'order.user.profiles',
-            // 'order.teacher',
+            'order.student.profiles',
             'order.teacher.profiles',
-            // 'order.agency',
             'order.agency.profiles'
             )
             ->orderBy('id', 'desc')
@@ -79,6 +74,7 @@ class BillController extends Controller
         $bill = new Bill;
         $postData = $request->all();
         $postData['status'] = $request->input('status') ?: 0;
+        $postData['created_at'] = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('created_at'));
         $bill->fill($postData)->save();
         Session::flash('alert-success', __('Success'));
 
@@ -134,6 +130,7 @@ class BillController extends Controller
         }
         $postData = $request->all();
         $postData['status'] = $request->input('status') ?: 0;
+        $postData['created_at'] = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('created_at'));
         $bill->fill($postData)->save();
         Session::flash('alert-success', __('Success'));
 

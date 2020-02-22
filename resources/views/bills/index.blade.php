@@ -45,7 +45,7 @@
                         @endif
                       </td>
                       <td data-label="price">{{App\Models\Bill::CURRENCIES[$bill->currency]}}{{$bill->price}}</td>
-                      <td data-label="Date">{{$bill->created_at->format('md')}}</td>
+                      <td data-label="Date">{{$bill->created_at->format('n.d H:i')}}</td>
                       <td data-label="paymethod">{{App\Models\PayMethod::TYPES[$bill->paymethod_type]}}</td>
                       <td data-label="status">{{App\Models\Bill::STATUS[$bill->status]}}</td>
                       <td data-label="remark">{{$bill->remark}}</td>
