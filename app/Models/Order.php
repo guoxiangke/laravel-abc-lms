@@ -198,13 +198,18 @@ class Order extends Model implements AuditableContract
         });
     }
 
+    //
+    public function hasClassByDay(Carbon $date)
+    {
+    }
+
     /**
      * 判断今天/指定日期是否有课！！
      * 即获取所有上课计划-请假计划得到的日期列表：regenRruleSchedule()
      * 从其中查找==今天/指定日期的时间点，可以包含多个（例：一天有2个上课记录/每天上2次课的情况）
      * 包含今天稍早时间的记录/如果0点没有自动生成的话。
      */
-    public function hasClass($offset = 0)
+    public function getPossiableHasClassArrayFromXDaysBefore($offset = 0)
     {
         $byDay = Carbon::now()->subDays($offset);
 

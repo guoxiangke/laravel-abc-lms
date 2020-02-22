@@ -34,14 +34,9 @@ class OrderController extends Controller
     {
         $this->authorize('viewAny', Order::class);
         $orders = Order::with(
-            // 'user',
-            // 'user.profiles',
             'student',
-            // 'student.user',
             'student.profiles',
-            // 'teacher',
             'teacher.profiles',
-            // 'agency',
             'agency.profiles',
             'classRecords',
         );

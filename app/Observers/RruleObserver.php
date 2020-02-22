@@ -19,7 +19,9 @@ class RruleObserver
     public function created(Rrule $rrule)
     {
         // 针对上课计划 而不是请假计划
+        // 创建订单时，判断今天是否有课，如果有，才生成！
         if ($rrule->type == Rrule::TYPE_SCHEDULE) {
+            \Log::debug(__CLASS__, [__FUNCTION__, __LINE__, $rrule->start_at->diffInDays(now())]);
             ClassRecordsGenerateQueue::dispatch($rrule->order)->onQueue('high');
         }
     }
