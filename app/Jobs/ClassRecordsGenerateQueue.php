@@ -41,7 +41,13 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         $order = $this->order;
         // todo add start_at to orders table!
         // 创建一个订单，start_at不是今天，则不生成
-        if ($startAt = $order->rrules->first()->start_at >= $now = Carbon::now()) {
+        $firstRrule = $order->rrules->first();
+        if(!$firstRrule){
+            Log::error('Order must have a rule!', [__CLASS__, __LINE__, $order->title, $order->id]);
+        }
+        $startAt = $firstRrule->start_at;
+        $now = Carbon::now();
+        if ($startAt >= $now) {
             if ($startAt->format('ymd') != $now->format('ymd')) {
                 Log::info('GenTomorrow', [__CLASS__, __LINE__, $order->title, $order->id]);
 
@@ -52,7 +58,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
         //标记完成如果 已经上课=订单PERIOD
         $count = $order->classDoneRecords()->count();
-        if ($order->period == $count) { // || $order->expired_at<=Carbon::now()
+        if ($order->period == $count) {
             Log::info('Order::STATU_COMPLETED', [__CLASS__, __LINE__, $order->title, $order->id]);
             $order->status = Order::STATU_COMPLETED;
             $order->save();
@@ -64,7 +70,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
 
         //标记过期的订单！
-        if ($order->expired_at <= Carbon::now()) {
+        if ($order->expired_at <= $now) {
             Log::info('Order::STATU_OVERDUE', [__CLASS__, __LINE__, $order->title, $order->id]);
             $order->status = Order::STATU_OVERDUE;
             $order->save();
@@ -76,7 +82,7 @@ class ClassRecordsGenerateQueue implements ShouldQueue
         }
 
         //找出今天/昨天需要上的2节课 的时间H:i
-        $byDay = Carbon::now()->subDays($this->offset); //sub方便为过去的日期生成记录！！
+        $byDay = $now->subDays($this->offset); //sub方便为过去的日期生成记录！！
         $todayClassTimes = $order->getPossiableHasClassArrayFromXDaysBefore($this->offset); //H:i
         Log::debug('checkHasClass', [__CLASS__, __LINE__, $order->title, $order->id, $byDay->format('Y-m-d')]);
         // 然后通过rrule的时间找到对应的rrule_id 然后创建 classRecord
