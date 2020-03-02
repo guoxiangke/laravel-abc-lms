@@ -29,6 +29,7 @@ class BillController extends Controller
     {
         $bills = Bill::with(
             'user.profiles',
+            'user.teacher.paymethod',
             'order.student.profiles',
             'order.teacher.profiles',
             'order.agency.profiles'

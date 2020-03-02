@@ -34,14 +34,22 @@
                       </td>
                       <td data-label="user">
                         @php
-                        $profile = $bill->user->profiles->first();
+                          $profile = $bill->user->profiles->first();
                         @endphp
+
                         @if($bill->order)
-                        <a href="{{ route('orders.edit', $bill->order->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">
-                        {{$profile?$profile->name:"-1-"}}
-                        </a>
+                          <a href="{{ route('orders.edit', $bill->order->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">
+                          {{$profile?$profile->name:"--"}}
+                          </a>
                         @else
-                        {{$profile?$profile->name:"-1-"}}
+                          {{$profile?$profile->name:"--"}}
+                          @if($bill->user->isTeacher())
+                            @if($bill->user->teacher->paymethod)
+                            <a class="btn btn-sm btn-outline-primary" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$bill->user->teacher->paymethod->number}}">
+                            <i class="fab fa-paypal"></i>
+                            </a>
+                            @endif
+                          @endif
                         @endif
                       </td>
                       <td data-label="price">{{App\Models\Bill::CURRENCIES[$bill->currency]}}{{$bill->price}}</td>
