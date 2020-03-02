@@ -16,21 +16,31 @@
                 	<th scope="col">#</th>
                 	<th scope="col">type</th>
                 	<th scope="col">user</th>
+                  <th scope="col">method</th>
                 	<th scope="col">price</th>
                   <th scope="col">Date</th>
-                  <th scope="col">paymethod</th>
-                  <th scope="col">status</th>
                   <th scope="col">remark</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($bills as $bill)
                     <tr id={{$bill->id}}>
-                      <th scope="row"><a href="{{ route('bills.edit', $bill->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a></th>
+                      <th scope="row">
+                        <a href="{{ route('bills.edit', $bill->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+                      </th>
                       <td data-label="type">
                         <a href="{{ route('bills.show', $bill->id) }}">
-                          {{App\Models\Bill::TYPES[$bill->type]}}
+                        @if($bill->type == 1)
+                        <i class="fab fa-cc-visa" title="{{App\Models\Bill::TYPES[$bill->type]}}"></i>
+                        @else
+                        <i class="fas fa-funnel-dollar"></i>
+                        @endif
                         </a>
+                        @if($bill->status ==1)
+                        <i class="fas fa-check-square"></i>
+                        @else
+                        <i class="fas fa-times-circle"></i>
+                        @endif
                       </td>
                       <td data-label="user">
                         @php
@@ -45,18 +55,17 @@
                           {{$profile?$profile->name:"--"}}
                           @if($bill->user->isTeacher())
                             @if($bill->user->teacher->paymethod)
-                            <a class="btn btn-sm btn-outline-primary" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$bill->user->teacher->paymethod->number}}">
+                            <a class="" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$bill->user->teacher->paymethod->number}}">
                             <i class="fab fa-paypal"></i>
                             </a>
                             @endif
                           @endif
                         @endif
                       </td>
+                      <td data-label="paymethod">{{App\Models\PayMethod::TYPES[$bill->paymethod_type]}}</td>
                       <td data-label="price">{{App\Models\Bill::CURRENCIES[$bill->currency]}}{{$bill->price}}</td>
                       <td data-label="Date">{{$bill->created_at->format('n.d H:i')}}</td>
-                      <td data-label="paymethod">{{App\Models\PayMethod::TYPES[$bill->paymethod_type]}}</td>
-                      <td data-label="status">{{App\Models\Bill::STATUS[$bill->status]}}</td>
-                      <td data-label="remark">{{$bill->remark}}</td>
+                      <td data-label="remark"> <div class="remark">{{$bill->remark}}</div></td>
                     </tr>
                 @endforeach
               </tbody>
@@ -65,4 +74,10 @@
         {{ $bills->onEachSide(1)->links() }}
     </div>
 </div>
+<style>
+.remark {
+    height: 50px;
+    overflow-y: auto;
+}
+</style>
 @endsection

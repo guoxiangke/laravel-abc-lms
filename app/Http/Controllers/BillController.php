@@ -34,7 +34,8 @@ class BillController extends Controller
             'order.teacher.profiles',
             'order.agency.profiles'
             )
-            ->orderBy('id', 'desc')
+            ->orderBy('status')
+            ->orderBy('created_at', 'desc')
             ->paginate(100);
 
         return view('bills.index', compact('bills'));
