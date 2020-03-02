@@ -19,14 +19,13 @@ class Order extends Model implements AuditableContract
     use Auditable;
     use HasPriceField;
     use Commentable;
-    const LIST_BY = ['index', 'trail', 'demo', 'overdue', 'pause', 'done', 'trash', 'all'];
+    const LIST_BY = ['index', 'trail', 'demo', 'training', 'overdue', 'pause', 'done', 'trash', 'all'];
     // 0 订单作废 1 订单正常* 2 订单完成  3 订单暂停上课  4 订单过期
     const STATU_TRASH = 0;
     const STATU_ACTIVE = 1;
     const STATU_COMPLETED = 2;
     const STATU_PAUSE = 3;
     const STATU_OVERDUE = 4;
-    const STATU_DEMO = 5;
     const STATUS = [
         '作废',
         '正常',

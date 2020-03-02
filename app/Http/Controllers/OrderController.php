@@ -60,6 +60,14 @@ class OrderController extends Controller
             $orders = $orders->where('period', 1)
                 ->whereIn('student_uid', $demoUids);
         }
+        // Training class
+        if (request()->is('orders/training')) {
+            $type = 'Training';
+            // Role::create(['name' => 'trainer']);
+            $userIds = User::role('trainer')->pluck('id')->toArray();
+            $orders = $orders->where('period', 1)
+                ->whereIn('student_uid', $userIds);
+        }
         // ！试听订单页面
         if ($request->is('orders/trash')) {
             $orders = $orders->where('period', '!=', 1)
