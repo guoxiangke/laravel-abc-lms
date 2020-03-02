@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\User;
 use App\Models\Order;
 use App\Models\Rrule;
 use App\Models\Student;
@@ -45,7 +46,19 @@ class OrderController extends Controller
         // 试听订单页面
         if (request()->is('orders/trail')) {
             $type = 'Trial';
-            $orders = $orders->where('period', 1);
+            // Demo class students Role： demo
+            // Role::create(['name' => 'demo']);
+            $demoUids = User::role('demo')->pluck('id')->toArray();
+            $orders = $orders->where('period', 1)
+                ->whereNotIn('student_uid', $demoUids);
+        }
+        // Demo class
+        if (request()->is('orders/demo')) {
+            $type = 'Demo';
+            // Demo class students Role： demo
+            $demoUids = User::role('demo')->pluck('id')->toArray();
+            $orders = $orders->where('period', 1)
+                ->whereIn('student_uid', $demoUids);
         }
         // ！试听订单页面
         if ($request->is('orders/trash')) {
