@@ -25,12 +25,20 @@
 						<th scope="col">辞退/激情/守时/网络/嘈杂/基督</th>
 						<th scope="col">Sex</th>
 						<th scope="col">Birthday</th>
-						<th scope="col">Pay</th>
 						<th scope="col">推荐人</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 					@foreach($teachers as $teacher)
+						@php
+							$birthday = false;
+							$profile = $teacher->user->profiles->first();
+							if($profile){
+								$birthday = $profile->birthday;
+							}
+							$recommend = $profile->recommend;
+							$school = $teacher->school;
+						@endphp
 					    <tr id="{{$teacher->id}}">
 					      <th scope="row">
 					      	<a href="#{{$teacher->id}}"></a>
@@ -38,17 +46,21 @@
 							<a href="{{$teacher->extra_attributes->timesheet?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->timesheet?'success':'dark disabled'}}" ><i class="fas fa-calendar-alt"></i></a>
 					      	<a href="https://www.messenger.com/t/{{$teacher->extra_attributes->messenger?:''}}" target="_blank" class="btn btn-sm btn-outline-{{$teacher->extra_attributes->messenger?'success':'dark disabled'}}" ><i class="fab fa-facebook-messenger"></i></a>
 					      	<a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-dark text-uppercase" ><i class="fas fa-user-edit"></i></a>
+						  	
+					      	@if($school)
+					      		{{$school->name}}
+					      	@else
+					      		@if($teacher->paymethod)
+					      			<a class="btn btn-sm btn-outline-primary" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$teacher->paymethod->number}}">
+					      				<i class="fab fa-paypal"></i>
+					      			</a>
+					      		@else
+						      		<button class="btn btn-sm btn-outline-dark" >
+						      			<i class="fab fa-paypal"></i>
+						      		</button>
+					      		@endif
+					      	@endif
 						  </th>
-					      @php
-					      	$birthday = false;
-					      	$profile = $teacher->user->profiles->first();
-					      	if($profile){
-						      	$birthday = $profile->birthday;
-						    }
-						    $recommend = $profile->recommend;
-							$school = $teacher->school;
-
-					      @endphp
 					      <td data-label="Name">
 					      	<a href="{{ route('teachers.show', $teacher->id) }}">
 					      		{{$profile?$profile->name:'-'}}
@@ -74,22 +86,6 @@
 					      </td>
 					      <td data-label="Birthday">
 					      	{{ $birthday ? $birthday->format('Y-m-d') : '-' }}
-					      </td>
-					      <td data-label="School">
-					      	@if($school)
-					      		{{$school->name}}
-					      	@else
-					      		@if($teacher->paymethod)
-					      			<a class="btn btn-sm btn-outline-primary" target="_blank" href="https://www.paypal.com/myaccount/transfer/homepage/external/summary?recipient={{$teacher->paymethod->number}}">
-					      				<i class="fab fa-paypal"></i>
-					      			</a>
-					      		@else
-						      		<button class="btn btn-sm btn-outline-dark" >
-						      			<i class="fab fa-paypal"></i>
-						      		</button>
-					      		@endif
-					      	@endif
-
 					      </td>
 					      <td data-label="Referrer">
 					      	@if($recommend)
