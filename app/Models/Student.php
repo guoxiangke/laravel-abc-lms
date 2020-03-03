@@ -23,6 +23,7 @@ class Student extends Model implements AuditableContract
         // 'agency_uid', //@see profile 'recommend_uid',
         'remark',
         'name', //英文名字
+        'creater_uid', // edit own student's profile!
     ];
     const ALLOW_LIST_ROLES = ['agency', 'teacher', 'student']; //indexByRole permission
     //0代表幼儿园 1-9年级 高中1-3(10-12) 大学1-4(13-16) 17成人
@@ -52,7 +53,13 @@ class Student extends Model implements AuditableContract
         // return $this->hasOne(User::class, 'id', 'user_id');
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    
+    public function creater()
+    {
+        return $this->belongsTo(User::class, 'creater_uid', 'id');
+    }
 
+    
     public function profiles()
     {
         return $this->hasMany(Profile::class, 'user_id', 'user_id');

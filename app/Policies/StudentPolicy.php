@@ -11,6 +11,17 @@ class StudentPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view any orders.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $user->hasAnyPermission(['View any Student']);
+    }
+
+    /**
      * Determine whether the user can view the student.
      *
      * @param  \App\User  $user
@@ -19,7 +30,7 @@ class StudentPolicy
      */
     public function view(User $user, Student $student)
     {
-        //
+        return $user->hasAnyPermission(['View any Student']) || $user->id == $student->creater_uid;
     }
 
     /**
@@ -31,10 +42,11 @@ class StudentPolicy
      */
     public function create(User $user)
     {
-        //如果登陆用户没有 角色，则可以创建
-        //如果登陆用户是代理，也可以创建一个吧？
-        return ! $user->hasRole('student')
-            || $user->isAdmin();
+        return $user->hasAnyPermission(['Create a Student']);
+        // //如果登陆用户没有 角色，则可以创建
+        // //如果登陆用户是代理，也可以创建一个吧？
+        // return ! $user->hasRole('student')
+        // || $user->isAdmin();
     }
 
     /**
@@ -46,7 +58,8 @@ class StudentPolicy
      */
     public function update(User $user, Student $student)
     {
-        //
+        return $user->hasAnyPermission(['Update any Student']) 
+            || ($user->hasAnyPermission(['Update own Student'])  &&  $user->id == $student->creater_uid );
     }
 
     /**

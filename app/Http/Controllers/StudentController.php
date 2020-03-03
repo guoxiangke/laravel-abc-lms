@@ -29,7 +29,7 @@ class StudentController extends Controller
 
     public function __construct(Student $Student)
     {
-        $this->middleware(['admin'], ['only' => ['index']]);
+        // $this->middleware(['admin'], ['only' => ['index']]);
     }
 
     /**
@@ -39,6 +39,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Student::class);
         $students = Student::with(
             'user',
             'user.profiles',
@@ -86,7 +87,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $this->authorize('admin');
+        $this->authorize('create', Student::class);
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url'    => action('StudentController@store'),
@@ -161,6 +162,7 @@ class StudentController extends Controller
 
         $student = Student::firstOrCreate([
             'user_id' => $user->id,
+            'creater_uid' => Auth::user()->id,
             'grade'   => $request->input('grade'),
             'name'    => $request->input('english_name') ?: $user->name, //英文名！
         ]);
@@ -182,7 +184,7 @@ class StudentController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
-        $this->authorize('admin');
+        $this->authorize('create', Student::class);
         $form = $formBuilder->create(CreateForm::class);
 
         $this->validate($request, [
@@ -206,6 +208,7 @@ class StudentController extends Controller
 
         $student = Student::firstOrNew([
             'user_id' => $user->id,
+            'creater_uid' => Auth::user()->id,
             'grade'   => $request->input('grade'),
             'remark'  => $request->input('remark'),
             'book_id' => $request->input('book_id'),
@@ -259,7 +262,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $this->authorize('admin');
+        $this->authorize('update', $student);
         $form = $this->form(
             EditForm::class,
             [
@@ -281,7 +284,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student, FormBuilder $formBuilder)
     {
-        $this->authorize('admin');
+        $this->authorize('update', $student);
         $this->validate($request, [
             'telephone'=> 'required|min:10|max:14|unique:profiles,telephone,'.$student->user_id.',user_id',
         ]);

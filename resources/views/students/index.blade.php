@@ -25,7 +25,9 @@
 						<th>Sex</th>
 						<th>Birthday</th>
 						<th>Grade</th>
+						@can('Update any Student')
 						<th>QQ/Wechat</th>
+						@endcan
 						<th>推荐人</th>
 						<th>微信绑定</th>
 				    </tr>
@@ -48,8 +50,10 @@
 						@if($profile)
 					    <tr id={{$student->id}}>
 					      <th scope="row" data-label="Id">
-					      	<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
-					      	<a href="{{ route('classRecords.indexbyStudent', $student->user_id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
+						 	@can('update', $student)
+							<a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-dark text-uppercase">Edit</a>
+							<a href="{{ route('classRecords.indexbyStudent', $student->user_id) }}" class="btn btn-sm btn-outline-dark text-uppercase">上课记录</a>
+							@endcan
 							<a href="{{ route('orders.create') }}?trail=1&student_uid={{$student->user->id}}&agency_uid={{$profile->recommend_uid}}" class="btn btn-sm btn-outline-dark text-uppercase">试听</a>
 					  	  </th>
 					      <td data-label="姓名">
@@ -62,9 +66,11 @@
 					      	{{$birthday?$birthday->format('y-m-d'):'-'}}
 					      </td>
 					      <td data-label="年级">{{ App\Models\Student::GRADES[$student->grade] }}</td>
-					      <td data-label="QQ/Wechat">
+					      @can('Update any Student')
+						  <td data-label="QQ/Wechat">
 					      	{{ $contact ?  str_replace("+86","",$contact->number) : '-' }}
 					      </td>
+						  @endcan
 					      <td data-label="推荐人">{{
 					      	$recommend ? $profile->recommend->name : '-' }}</td>
 					      <td data-label="action">
