@@ -7,6 +7,21 @@
 	<h1 class="h3 mb-0 text-gray-800"><i class="fab fa-fw fa-cc-visa"></i>{{__('Bills')}}</h1>
   <div class="show-links">
     <a href="{{ route('bills.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
+    @php
+      $filters = Request::get('filter');
+      $status = null;
+      if(isset($filters['status'])){
+        $status = $filters['status'];
+        if($status == 0) {
+          $status = 2;
+        }
+      }
+    @endphp
+    <a href="{{ route('bills.index') }}?filter[status]=1" class="btn btn-{{$status==1?'':'outline-'}}primary">收入</a>
+    <a href="{{ route('bills.index') }}?filter[status]=0" class="btn btn-{{$status==2?'':'outline-'}}primary">支出</a>
+    <button class="btn btn-light mt-1">本页记录数量：{{count($bills)}}</button>
+      @include('shared.search')
+
   </div>
     <div class="col-md-12 col-sm-12 p-0"> 
         <div class="table-responsive">
@@ -80,4 +95,38 @@
     overflow-y: auto;
 }
 </style>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+(function($) {
+  $( document ).ready(function() {
+
+    $('#reset').click(function(e){
+    e.preventDefault();
+    return window.location = window.location.pathname;
+    });
+
+    $('#studentName').keypress(function (e) {
+    if (e.which == 13) {
+      $('#search').trigger('click');
+      return false;    //<---- Add this line
+    }
+    });
+
+
+    $('#search').click(function(e){
+    e.preventDefault();
+    var regex = /[a-z]{2}/gi; //pinyin
+    $input = $('#studentName').val();
+
+    if(regex.test($input)){
+      return window.location = window.location.pathname + "?filter[user.name]="+$input;
+    }else{
+      return window.location = window.location.pathname + "?filter[user.profiles.name]="+$input;
+    }
+    });
+  });
+})(jQuery);
+</script>
 @endsection
