@@ -39,7 +39,7 @@ class BillController extends Controller
             ->orderBy('status')
             ->orderBy('created_at', 'desc');
         $bills = QueryBuilder::for($bills)
-            ->allowedFilters(['status', 'user.name', 'user.profiles.name'])
+            ->allowedFilters(['status', 'type', 'user.name', 'user.profiles.name'])
             ->paginate(100);
         return view('bills.index', compact('bills'));
     }

@@ -6,7 +6,6 @@
 <div class="container">
 	<h1 class="h3 mb-0 text-gray-800"><i class="fab fa-fw fa-cc-visa"></i>{{__('Bills')}}</h1>
   <div class="show-links">
-    <a href="{{ route('bills.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
     @php
       $filters = Request::get('filter');
       $status = null;
@@ -16,11 +15,28 @@
           $status = 2;
         }
       }
+
+      
+      $type = null;
+      if(isset($filters['type'])){
+        $type = $filters['type'];
+        if($type == 0) {
+          $type = 2;
+        }
+      }
+      $isActive = false;
+      if(is_null($type) && is_null($status)){
+        $isActive = true;
+      }
     @endphp
-    <a href="{{ route('bills.index') }}?filter[status]=1" class="btn btn-{{$status==1?'':'outline-'}}primary">收入</a>
-    <a href="{{ route('bills.index') }}?filter[status]=0" class="btn btn-{{$status==2?'':'outline-'}}primary">支出</a>
+    
+    <a href="{{ route('bills.index') }}" class="btn btn-{{$isActive?'':'outline-'}}primary">Index</a>
+    <a href="{{ route('bills.index') }}?filter[type]=1" class="btn btn-{{$type==1?'':'outline-'}}primary">收入</a>
+    <a href="{{ route('bills.index') }}?filter[type]=0" class="btn btn-{{$type==2?'':'outline-'}}primary">支出</a>
+    <a href="{{ route('bills.index') }}?filter[status]=0" class="btn btn-{{$status==2?'':'outline-'}}primary">Append</a>
+    <a href="{{ route('bills.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
     <button class="btn btn-light mt-1">本页记录数量：{{count($bills)}}</button>
-      @include('shared.search')
+    @include('shared.search')
 
   </div>
     <div class="col-md-12 col-sm-12 p-0"> 
