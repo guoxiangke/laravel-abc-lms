@@ -31,8 +31,8 @@
     @endphp
     
     <a href="{{ route('bills.index') }}" class="btn btn-{{$isActive?'':'outline-'}}primary">Index</a>
-    <a href="{{ route('bills.index') }}?filter[type]=1" class="btn btn-{{$type==1?'':'outline-'}}primary">收入</a>
-    <a href="{{ route('bills.index') }}?filter[type]=0" class="btn btn-{{$type==2?'':'outline-'}}primary">支出</a>
+    <a href="{{ route('bills.index') }}?filter[type]=1" class="btn btn-{{$type==1?'':'outline-'}}primary">支出</a>
+    <a href="{{ route('bills.index') }}?filter[type]=0" class="btn btn-{{$type==2?'':'outline-'}}primary">收入</a>
     <a href="{{ route('bills.index') }}?filter[status]=0" class="btn btn-{{$status==2?'':'outline-'}}primary">Append</a>
     <a href="{{ route('bills.create') }}" class="btn btn-outline-primary">{{__('Create')}}</a>
     <button class="btn btn-light mt-1">本页记录数量：{{count($bills)}}</button>

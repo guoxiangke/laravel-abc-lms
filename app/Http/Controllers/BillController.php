@@ -6,11 +6,11 @@ use Carbon\Carbon;
 use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\Forms\BillForm as CreateForm;
+use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\Session;
 use App\Forms\Edit\BillForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class BillController extends Controller
 {
@@ -36,11 +36,11 @@ class BillController extends Controller
             'order.agency.profiles'
         );
         $bills = $bills
-            ->orderBy('status')
             ->orderBy('created_at', 'desc');
         $bills = QueryBuilder::for($bills)
             ->allowedFilters(['status', 'type', 'user.name', 'user.profiles.name'])
             ->paginate(100);
+
         return view('bills.index', compact('bills'));
     }
 
