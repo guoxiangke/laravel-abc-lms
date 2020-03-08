@@ -3,8 +3,8 @@
 namespace App\Forms;
 
 use App\User;
-use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
+use Kris\LaravelFormBuilder\Form;
 
 class ProfileForm extends Form
 {
@@ -40,15 +40,15 @@ class ProfileForm extends Form
         if ($user->isAdmin()) {
             $recommend = User::getAllReference();
             $this->addBefore('submit', 'recommend_uid', 'select', [
-                    'label'       => '介绍人',
-                    'choices'     => $recommend,
-                    'empty_value' => '=== Select ===',
-                ]);
+                'label'       => '介绍人',
+                'choices'     => $recommend,
+                'empty_value' => '=== Select ===',
+            ]);
             $this->addBefore('name', 'user_id', 'select', [
-                    'label'       => 'User',
-                    'choices'     => $recommend,
-                    'empty_value' => '=== Select ===',
-                ]);
+                'label'       => 'User',
+                'choices'     => $recommend,
+                'empty_value' => '=== Select ===',
+            ]);
         } else {
             $this->addBefore('name', 'user_id', 'static', ['label' => 'User Id', 'value' => $profile->user_id]);
         }

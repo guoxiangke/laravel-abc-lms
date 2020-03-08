@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Models\Rrule;
+use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 

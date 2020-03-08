@@ -2,9 +2,9 @@
 
 namespace App\Forms\Register;
 
-use App\Models\School;
 use App\Models\Contact;
 use App\Models\PayMethod;
+use App\Models\School;
 use Kris\LaravelFormBuilder\Form;
 
 class TeacherRegisterForm extends Form
@@ -12,10 +12,10 @@ class TeacherRegisterForm extends Form
     public function buildForm()
     {
         $this->add('school_id', 'select', [
-                'label'       => 'School',
-                'choices'     => School::all()->pluck('name', 'id')->toArray(),
-                'empty_value' => '=== Select or Freelancer ===',
-            ])
+            'label'       => 'School',
+            'choices'     => School::all()->pluck('name', 'id')->toArray(),
+            'empty_value' => '=== Select or Freelancer ===',
+        ])
             ->add('profile_name', 'text', ['label' => '姓名*'])
             ->add('user_password', 'text', [
                 'label' => '登陆密码',

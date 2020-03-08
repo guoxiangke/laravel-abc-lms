@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\Edit\ProductForm as EditForm;
+use App\Forms\ProductForm as CreateForm;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Forms\ProductForm as CreateForm;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\Edit\ProductForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class ProductController extends Controller

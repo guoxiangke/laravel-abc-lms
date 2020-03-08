@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\ClassGenForm as GenForm;
+use App\Forms\Edit\ClassRecordForm as EditForm;
+use App\Jobs\ClassRecordsGenerateQueue;
+use App\Models\Agency;
+use App\Models\ClassRecord;
+use App\Models\Order;
+// use App\Forms\ClassRecordForm as CreateForm;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\Vote;
+use App\Models\VoteType;
+use App\Notifications\ClassRecordNotifyByMessenger;
+use App\Notifications\ClassRecordNotifyBySms;
 use App\User;
 use Carbon\Carbon;
-use App\Models\Vote;
-use App\Models\Order;
-use App\Models\Agency;
-use App\Models\Student;
-// use App\Forms\ClassRecordForm as CreateForm;
-use App\Models\Teacher;
-use App\Models\VoteType;
-use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Forms\ClassGenForm as GenForm;
-use App\Jobs\ClassRecordsGenerateQueue;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Notifications\ClassRecordNotifyBySms;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\Edit\ClassRecordForm as EditForm;
-use App\Notifications\ClassRecordNotifyByMessenger;
 
 class ClassRecordController extends Controller
 {
@@ -337,7 +337,7 @@ class ClassRecordController extends Controller
      * @param  \App\Models\ClassRecord  $classRecord
      * @return \Illuminate\Http\Response
      */
-    public function show(ClassRecord  $classRecord)
+    public function show(ClassRecord $classRecord)
     {
         // $classRecord->load('comments');
         $this->authorize('view', $classRecord);
@@ -361,7 +361,7 @@ class ClassRecordController extends Controller
      * @param  \App\ClassRecord  $classRecord
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClassRecord  $classRecord)
+    public function destroy(ClassRecord $classRecord)
     {
         $this->authorize('delete', $classRecord);
         // @see $table->unique(['rrule_id', 'teacher_uid', 'generated_at']);
@@ -378,7 +378,7 @@ class ClassRecordController extends Controller
      * @param  \App\ClassRecord  $classRecord
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClassRecord  $classRecord)
+    public function edit(ClassRecord $classRecord)
     {
         $this->authorize('edit', $classRecord);
 

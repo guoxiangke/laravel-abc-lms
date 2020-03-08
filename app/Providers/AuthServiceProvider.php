@@ -3,23 +3,22 @@
 namespace App\Providers;
 
 use App\Models\Agency;
-use App\Models\Social;
+use App\Models\ClassRecord;
+use App\Models\Order;
 use App\Models\Profile;
+use App\Models\Social;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\ClassRecord;
 use App\Models\Video;
-use App\Models\Order;
 use App\Policies\AgencyPolicy;
+use App\Policies\ClassRecordPolicy;
+use App\Policies\OrderPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\TeacherPolicy;
-use App\Policies\ClassRecordPolicy;
-use App\Policies\OrderPolicy;
-
 use App\Policies\VideoPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

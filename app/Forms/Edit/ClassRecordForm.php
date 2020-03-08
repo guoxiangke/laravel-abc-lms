@@ -2,12 +2,11 @@
 
 namespace App\Forms\Edit;
 
-use App\User;
 use App\Models\Agency;
-use App\Models\Teacher;
 use App\Models\ClassRecord;
-use Kris\LaravelFormBuilder\Form;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
+use Kris\LaravelFormBuilder\Form;
 
 class ClassRecordForm extends Form
 {
@@ -60,18 +59,18 @@ class ClassRecordForm extends Form
         }
 
         $this->add('remark', 'textarea', [
-                'label' => 'Evaluation',
-                'value' => $remark,
-                'attr'  => [
-                    'rows'        => 10,
-                    'placeholder' => "**Book:** ??\r\n**Page:** ??\r\n**Mispronounced word(s):** ??\r\n**Corrected Sentence(s):** ??\r\n**Comment:** ??\r\n**Homework:** ??",
-                ],
-                'help_block' => [
-                    'text' => '**This is bold text**<br/>~~This was mistaken text~~<br/>More <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists" target="_blank">Markdown</a> cheatsheet.<br/><s>You can copy below as a template</s> (Don\'t remove **):<br/>**Book:** 《 Let\'s go 》<br/>**Today\'s lesson:** Page *7-9<br/>**Next lesson:** Page *10<br/><br/>**Mispronounced word(s):**<br/>1. <br/>2.<br/><br/>**Corrected Sentence(s):**<br/>1.<br/>2.<br/><br/>**Comment:**<br/>The student needs to practice reading.<br/><br/>**Homework:**<br/>The student needs to practice reading.<br/>',
-                    'tag'  => 'small',
-                    'attr' => ['class' => 'form-text text-muted'],
-                ],
-            ]);
+            'label' => 'Evaluation',
+            'value' => $remark,
+            'attr'  => [
+                'rows'        => 10,
+                'placeholder' => "**Book:** ??\r\n**Page:** ??\r\n**Mispronounced word(s):** ??\r\n**Corrected Sentence(s):** ??\r\n**Comment:** ??\r\n**Homework:** ??",
+            ],
+            'help_block' => [
+                'text' => '**This is bold text**<br/>~~This was mistaken text~~<br/>More <a href="https://help.github.com/en/articles/basic-writing-and-formatting-syntax#lists" target="_blank">Markdown</a> cheatsheet.<br/><s>You can copy below as a template</s> (Don\'t remove **):<br/>**Book:** 《 Let\'s go 》<br/>**Today\'s lesson:** Page *7-9<br/>**Next lesson:** Page *10<br/><br/>**Mispronounced word(s):**<br/>1. <br/>2.<br/><br/>**Corrected Sentence(s):**<br/>1.<br/>2.<br/><br/>**Comment:**<br/>The student needs to practice reading.<br/><br/>**Homework:**<br/>The student needs to practice reading.<br/>',
+                'tag'  => 'small',
+                'attr' => ['class' => 'form-text text-muted'],
+            ],
+        ]);
 
         $mp3 = $classRecord->getFirstMedia('mp3');
         $helpText = $mp3 ? '<br/>There alread has one mp3.<br/>Store Path: '.$mp3->getPath() : '';

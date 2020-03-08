@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use App\User;
-use Carbon\Carbon;
-use App\Models\Agency;
-use App\Models\Contact;
-use App\Models\Profile;
-use App\Models\Student;
-use App\Models\PayMethod;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Imports\StudentsImport;
-use Illuminate\Support\Facades\Hash;
-use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Support\Facades\Session;
-use App\Forms\StudentForm as CreateForm;
-use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\StudentForm as EditForm;
 use App\Forms\Register\StudentRegisterForm;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\StudentForm as CreateForm;
 use App\Forms\StudentsImportForm as ImportForm;
+use App\Imports\StudentsImport;
+use App\Models\Agency;
+use App\Models\Contact;
+use App\Models\PayMethod;
+use App\Models\Profile;
+use App\Models\Student;
+use App\User;
+use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class StudentController extends Controller
 {

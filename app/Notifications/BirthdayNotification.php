@@ -6,9 +6,9 @@ namespace App\Notifications;
 
 use App\Models\Profile;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Yansongda\LaravelNotificationWechat\WechatChannel;
 use Yansongda\LaravelNotificationWechat\WechatMessage;
 

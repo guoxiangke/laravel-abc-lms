@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
+use App\Jobs\ClassRecordsGenerateQueue;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use App\Jobs\ClassRecordsGenerateQueue;
 
 class ClassRecordsGenerate extends Command
 {

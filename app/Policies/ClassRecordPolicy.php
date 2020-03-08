@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Models\ClassRecord;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClassRecordPolicy
@@ -43,7 +43,7 @@ class ClassRecordPolicy
 
     //上传mp3 mp4 //谁可以编辑 == upload
     //学生可以查看，但不能编辑
-    
+
     public function edit(User $user, ClassRecord $classRecord)
     {
         return $classRecord->teacher_uid == $user->id // 老师可以编辑/上传
@@ -56,14 +56,13 @@ class ClassRecordPolicy
         return $user->isAdmin();
     }
 
-     // 编辑可以查看任意课程记录 并编辑
+    // 编辑可以查看任意课程记录 并编辑
     public function cut(User $user, ClassRecord $classRecord)
     {
         return $user->can('Create a Video');
         // return $user->hasRole(User::ROLES['editor']) || $user->isAdmin();
     }
 
-    
     public function aol(User $user, ClassRecord $classRecord)
     {
         return $classRecord->user_id == $user->id  // 学生可以请假

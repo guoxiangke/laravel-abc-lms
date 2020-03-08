@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use Mtvs\EloquentHashids\HasHashid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mtvs\EloquentHashids\HasHashid;
 use Mtvs\EloquentHashids\HashidRouting;
 
 class Video extends Model

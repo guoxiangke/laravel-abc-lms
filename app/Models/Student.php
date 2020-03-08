@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\User;
-use OwenIt\Auditing\Auditable;
-use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravelista\Comments\Commentable;
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Student extends Model implements AuditableContract
@@ -53,13 +53,12 @@ class Student extends Model implements AuditableContract
         // return $this->hasOne(User::class, 'id', 'user_id');
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    
+
     public function creater()
     {
         return $this->belongsTo(User::class, 'creater_uid', 'id');
     }
 
-    
     public function profiles()
     {
         return $this->hasMany(Profile::class, 'user_id', 'user_id');

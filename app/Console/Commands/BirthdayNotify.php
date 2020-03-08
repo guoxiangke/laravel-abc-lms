@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
 use App\Models\Profile;
-use Illuminate\Console\Command;
 use App\Notifications\BirthdayNotification;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
 
 class BirthdayNotify extends Command

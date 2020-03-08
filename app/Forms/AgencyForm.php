@@ -13,9 +13,9 @@ class AgencyForm extends Form
     {
         //agency_id 上级代理
         $this->add('profile_name', 'text', [
-                'rules' => 'required',
-                'label' => '姓名',
-            ])
+            'rules' => 'required',
+            'label' => '姓名',
+        ])
             ->add('telephone', 'tel', [
                 'rules'      => 'required|size:14',
                 'label'      => '手机号',

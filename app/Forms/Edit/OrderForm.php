@@ -2,14 +2,14 @@
 
 namespace App\Forms\Edit;
 
+use App\Models\Agency;
 use App\Models\Book;
 use App\Models\Order;
-use App\Models\Agency;
 use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
-use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
+use Kris\LaravelFormBuilder\Form;
 
 class OrderForm extends Form
 {
@@ -21,19 +21,19 @@ class OrderForm extends Form
         }
         $rrule = $order->rrules->first();
         $this->add('order', 'static', [
-                'label' => '订单Id',
-                'value' => $order->id,
-            ]);
+            'label' => '订单Id',
+            'value' => $order->id,
+        ]);
 
         $products = Product::all()
                     ->pluck('name', 'id')
                     ->toArray();
         $this->add('product_id', 'select', [
-                'label'    => 'Product',
-                'rules'    => 'required',
-                'selected' => $order->product_id,
-                'choices'  => $products,
-            ]);
+            'label'    => 'Product',
+            'rules'    => 'required',
+            'selected' => $order->product_id,
+            'choices'  => $products,
+        ]);
 
         $students = Student::getAllReference();
         $teachers = Teacher::getAllReference();
@@ -42,11 +42,11 @@ class OrderForm extends Form
 
         preg_match_all('/\n/', $order->remark, $matches);
         $rows = count($matches[0]) + 5;
-        
-         //权限判断，不是所有人可以看到价格 see order price!!
+
+        //权限判断，不是所有人可以看到价格 see order price!!
         $user = Auth::user();
-        if($user->can('Update any Order')){
-           $this->add('price', 'text', [
+        if ($user->can('Update any Order')) {
+            $this->add('price', 'text', [
                 'rules' => 'required',
                 'label' => 'Price',
                 'value' => $order->price,

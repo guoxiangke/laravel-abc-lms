@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\BookForm as CreateForm;
+use App\Forms\Edit\BookForm as EditForm;
 use App\Models\Book;
 use Illuminate\Http\Request;
-use App\Forms\BookForm as CreateForm;
 use Illuminate\Support\Facades\Session;
-use App\Forms\Edit\BookForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 

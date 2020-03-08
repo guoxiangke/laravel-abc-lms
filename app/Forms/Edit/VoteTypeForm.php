@@ -13,10 +13,10 @@ class VoteTypeForm extends Form
             return;
         }
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'label' => 'Name',
-                'value' => $entity->name,
-            ])
+            'rules' => 'required',
+            'label' => 'Name',
+            'value' => $entity->name,
+        ])
             ->add('description', 'text', [
                 'rules' => 'required',
                 'label' => 'Description',

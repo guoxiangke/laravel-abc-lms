@@ -14,10 +14,10 @@ class BookForm extends Form
             return;
         }
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'label' => 'Name',
-                'value' => $book->name,
-            ])
+            'rules' => 'required',
+            'label' => 'Name',
+            'value' => $book->name,
+        ])
             ->add('type', 'select', [
                 'label'       => '类型',
                 'rules'       => 'required',

@@ -2,10 +2,10 @@
 
 namespace App\Forms;
 
-use App\User;
 use App\Models\Bill;
 use App\Models\Order;
 use App\Models\PayMethod;
+use App\User;
 use Kris\LaravelFormBuilder\Form;
 
 class BillForm extends Form
@@ -14,11 +14,11 @@ class BillForm extends Form
     {
         $users = User::getAllReference();
         $orders = $orders = Order::with([ // $order->title
-                'student',
-                'student.profiles',
-                'teacher.profiles',
-                'agency.profiles',
-            ])
+            'student',
+            'student.profiles',
+            'teacher.profiles',
+            'agency.profiles',
+        ])
             ->active()->get()->map(function ($order) {
                 return [$order->id=>$order->title];
             })->flatten()->toArray();

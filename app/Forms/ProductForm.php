@@ -9,9 +9,9 @@ class ProductForm extends Form
     public function buildForm()
     {
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'label' => 'Name',
-            ])
+            'rules' => 'required',
+            'label' => 'Name',
+        ])
             ->add('price', 'text', [
                 'rules' => 'required',
                 'label' => 'Price',

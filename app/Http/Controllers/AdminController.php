@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -40,7 +40,9 @@ class AdminController extends Controller
 
         return redirect('home');
     }
-    public function test(){
+
+    public function test()
+    {
         //dd('test');
     }
 }

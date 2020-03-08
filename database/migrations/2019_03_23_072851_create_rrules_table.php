@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateRrulesTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateRrulesTable extends Migration
             $table->boolean('type')->default(1); //'AOL', 0 'SCHEDULE',1
             //计算属性
             $table->dateTime('start_at');
-            $table->unsignedTinyInteger('status')->default(1)->comment('状态');//0 暂停 1正常 2过期
+            $table->unsignedTinyInteger('status')->default(1)->comment('状态'); //0 暂停 1正常 2过期
             $table->timestamps();
             $table->softDeletes();
 

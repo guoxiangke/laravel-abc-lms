@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddStudentUidToStudentsTable extends Migration
 {
@@ -16,7 +16,6 @@ class AddStudentUidToStudentsTable extends Migration
         Schema::table('students', function (Blueprint $table) {
             $table->unsignedBigInteger('creater_uid')->default(1)->comment('创建者');
             $table->schemalessAttributes('extra_attributes');
-            
 
             $table->foreign('creater_uid')
                ->references('id')->on('users')

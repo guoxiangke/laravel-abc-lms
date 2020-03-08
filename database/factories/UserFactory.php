@@ -1,11 +1,11 @@
 <?php
 
-use App\User;
 use App\Models\Contact;
-use App\Models\Profile;
 use App\Models\PayMethod;
-use Illuminate\Support\Str;
+use App\Models\Profile;
+use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------

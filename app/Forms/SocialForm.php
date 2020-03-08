@@ -2,8 +2,8 @@
 
 namespace App\Forms;
 
-use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Session;
+use Kris\LaravelFormBuilder\Form;
 
 class SocialForm extends Form
 {
@@ -17,9 +17,9 @@ class SocialForm extends Form
         }
         Session::flash('alert-success', 'Welcome '.$socialUser->nickname ?: $socialUser->name);
         $this->add('type', 'hidden', [
-                'label' => 'type',
-                'value' => $socialType,
-            ])
+            'label' => 'type',
+            'value' => $socialType,
+        ])
             ->add('social_id', 'hidden', [
                 'label' => 'type',
                 'value' => $socialUser->id,

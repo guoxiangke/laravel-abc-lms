@@ -125,7 +125,7 @@ return [
     |
     */
 
-     'environments' => [
+    'environments' => [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',

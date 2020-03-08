@@ -4,11 +4,11 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\Facebook\Components\Button;
 use NotificationChannels\Facebook\FacebookChannel;
 use NotificationChannels\Facebook\FacebookMessage;
-use NotificationChannels\Facebook\Components\Button;
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
 
 //紧急短信通知老师上课！ UrgentClassComing for teacher!!!
 class ClassRecordNotifyByMessenger extends Notification

@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\Agency;
 use App\Models\Book;
 use App\Models\Order;
-use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Teacher;
 use Faker\Generator as Faker;

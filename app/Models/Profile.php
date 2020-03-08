@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Profile extends Model implements AuditableContract

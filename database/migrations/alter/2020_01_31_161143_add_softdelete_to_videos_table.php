@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddSoftdeleteToVideosTable extends Migration
 {
@@ -28,7 +28,7 @@ class AddSoftdeleteToVideosTable extends Migration
     public function down()
     {
         Schema::table('videos', function (Blueprint $table) {
-            $table->dropColumn(['user_id','deleted_at','extra_attributes']);
+            $table->dropColumn(['user_id', 'deleted_at', 'extra_attributes']);
         });
     }
 }

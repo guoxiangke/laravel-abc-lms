@@ -47,11 +47,11 @@ class ProfileForm extends Form
         if ($profile->user->isAdmin()) {
             $recommend = User::getAllReference();
             $this->addBefore('submit', 'recommend_uid', 'select', [
-                    'label'       => '介绍人',
-                    'choices'     => $recommend,
-                    'selected'    => $profile->recommend_uid,
-                    'empty_value' => '=== Select ===',
-                ]);
+                'label'       => '介绍人',
+                'choices'     => $recommend,
+                'selected'    => $profile->recommend_uid,
+                'empty_value' => '=== Select ===',
+            ]);
         }
     }
 }

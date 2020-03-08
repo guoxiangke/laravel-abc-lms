@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Carbon\Carbon;
-use App\Models\Contact;
-use App\Models\Profile;
-use App\Models\Teacher;
-use App\Models\PayMethod;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Support\Facades\Session;
-use App\Forms\TeacherForm as CreateForm;
-use Kris\LaravelFormBuilder\FormBuilder;
 use App\Forms\Edit\TeacherForm as EditForm;
 use App\Forms\Register\TeacherRegisterForm;
+use App\Forms\TeacherForm as CreateForm;
+use App\Models\Contact;
+use App\Models\PayMethod;
+use App\Models\Profile;
+use App\Models\Teacher;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TeacherController extends Controller
 {

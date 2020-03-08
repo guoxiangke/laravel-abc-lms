@@ -2,10 +2,10 @@
 
 namespace App\Forms;
 
-use App\Models\School;
 use App\Models\Contact;
-use App\Models\Teacher;
 use App\Models\PayMethod;
+use App\Models\School;
+use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
 
 class TeacherForm extends Form
@@ -15,15 +15,15 @@ class TeacherForm extends Form
         $recommend = Teacher::with(['user', 'user.profiles'])->get()->pluck('user.profiles.0.name', 'user_id')->toArray();
 
         $this->add('school_id', 'select', [
-                'label'       => 'School',
-                'choices'     => School::all()->pluck('name', 'id')->toArray(),
-                'empty_value' => 'Freelancer/自由职业',
-            ])
+            'label'       => 'School',
+            'choices'     => School::all()->pluck('name', 'id')->toArray(),
+            'empty_value' => 'Freelancer/自由职业',
+        ])
             ->add('recommend_uid', 'select', [
-                    'label'       => 'Referrer/推荐人',
-                    'choices'     => $recommend,
-                    'selected'    => null,
-                    'empty_value' => '=== Select ===',
+                'label'       => 'Referrer/推荐人',
+                'choices'     => $recommend,
+                'selected'    => null,
+                'empty_value' => '=== Select ===',
             ])
             ->add(
                 'price',

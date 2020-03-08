@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Models\School;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(School::class, function (Faker $faker) {

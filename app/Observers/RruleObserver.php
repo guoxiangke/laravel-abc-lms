@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Rrule;
 use App\Jobs\ClassRecordsGenerateQueue;
+use App\Models\Rrule;
 
 /**
  * 创建/更新 上课计划时， 自动生成今天的上课记录。

@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use App\User;
 use App\Traits\HasPriceField;
-use Laravelista\Comments\Commentable;
 use App\Traits\HasSchemalessAttributes;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravelista\Comments\Commentable;
 
 class Teacher extends Model
 {
     use SoftDeletes;
     use HasPriceField;
     use HasSchemalessAttributes;
-
     use Commentable;
 
     const EXTRA_ATTRIBUTES = ['passion', 'ontime', 'messenger', 'christ', 'network', 'noisy', 'timesheet'];

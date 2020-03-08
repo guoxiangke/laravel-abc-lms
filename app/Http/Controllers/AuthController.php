@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\TokenStore\TokenCache;
+use Illuminate\Http\Request;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
-use Illuminate\Http\Request;
-use App\TokenStore\TokenCache;
 
 class AuthController extends Controller
 {
@@ -13,14 +13,14 @@ class AuthController extends Controller
     {
         // Initialize the OAuth client
         $oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
-      'clientId'                => env('OAUTH_APP_ID'),
-      'clientSecret'            => env('OAUTH_APP_PASSWORD'),
-      'redirectUri'             => env('OAUTH_REDIRECT_URI'),
-      'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
-      'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
-      'urlResourceOwnerDetails' => '',
-      'scopes'                  => env('OAUTH_SCOPES'),
-    ]);
+            'clientId'                => env('OAUTH_APP_ID'),
+            'clientSecret'            => env('OAUTH_APP_PASSWORD'),
+            'redirectUri'             => env('OAUTH_REDIRECT_URI'),
+            'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
+            'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
+            'urlResourceOwnerDetails' => '',
+            'scopes'                  => env('OAUTH_SCOPES'),
+        ]);
         $authUrl = $oauthClient->getAuthorizationUrl();
         // Save client state so we can validate in callback
         session(['oauthState' => $oauthClient->getState()]);
@@ -45,19 +45,19 @@ class AuthController extends Controller
         if (isset($authCode)) {
             // Initialize the OAuth client
             $oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
-        'clientId'                => env('OAUTH_APP_ID'),
-        'clientSecret'            => env('OAUTH_APP_PASSWORD'),
-        'redirectUri'             => env('OAUTH_REDIRECT_URI'),
-        'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
-        'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
-        'urlResourceOwnerDetails' => '',
-        'scopes'                  => env('OAUTH_SCOPES'),
-      ]);
+                'clientId'                => env('OAUTH_APP_ID'),
+                'clientSecret'            => env('OAUTH_APP_PASSWORD'),
+                'redirectUri'             => env('OAUTH_REDIRECT_URI'),
+                'urlAuthorize'            => env('OAUTH_AUTHORITY').env('OAUTH_AUTHORIZE_ENDPOINT'),
+                'urlAccessToken'          => env('OAUTH_AUTHORITY').env('OAUTH_TOKEN_ENDPOINT'),
+                'urlResourceOwnerDetails' => '',
+                'scopes'                  => env('OAUTH_SCOPES'),
+            ]);
             try {
                 // Make the token request
                 $accessToken = $oauthClient->getAccessToken('authorization_code', [
-          'code' => $authCode,
-        ]);
+                    'code' => $authCode,
+                ]);
                 $graph = new Graph();
                 $graph->setAccessToken($accessToken->getToken());
                 $user = $graph->createRequest('GET', '/me')

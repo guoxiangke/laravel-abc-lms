@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Carbon\Carbon;
-use App\Models\Agency;
-use App\Models\Contact;
-use App\Models\Profile;
-use App\Models\PayMethod;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Spatie\QueryBuilder\QueryBuilder;
 use App\Forms\AgencyForm as CreateForm;
-use Illuminate\Support\Facades\Session;
-use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\AgencyUpgradeForm as UpgradeForm;
 use App\Forms\Edit\AgencyForm as EditForm;
 use App\Forms\Register\AgencyRegisterForm;
+use App\Models\Agency;
+use App\Models\Contact;
+use App\Models\PayMethod;
+use App\Models\Profile;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\AgencyUpgradeForm as UpgradeForm;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class AgencyController extends Controller
 {

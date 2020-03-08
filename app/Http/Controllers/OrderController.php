@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\User;
+use App\Forms\Edit\OrderForm as EditForm;
+use App\Forms\OrderForm as CreateForm;
+use App\Models\ClassRecord;
 use App\Models\Order;
 use App\Models\Rrule;
 use App\Models\Student;
-use App\Models\ClassRecord;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Spatie\QueryBuilder\QueryBuilder;
-use App\Forms\OrderForm as CreateForm;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\Edit\OrderForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OrderController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddStatusToRrulesTable extends Migration
 {
@@ -14,7 +14,7 @@ class AddStatusToRrulesTable extends Migration
     public function up()
     {
         Schema::table('rrules', function (Blueprint $table) {
-            $table->unsignedTinyInteger('status')->default(1)->comment('状态');//0 暂停 1正常 2过期
+            $table->unsignedTinyInteger('status')->default(1)->comment('状态'); //0 暂停 1正常 2过期
         });
     }
 

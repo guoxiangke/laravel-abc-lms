@@ -2,10 +2,10 @@
 
 namespace App\Forms\Edit;
 
-use App\User;
 use App\Models\Bill;
 use App\Models\Order;
 use App\Models\PayMethod;
+use App\User;
 use Kris\LaravelFormBuilder\Form;
 
 class BillForm extends Form

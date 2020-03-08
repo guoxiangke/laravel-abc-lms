@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Socialite;
-use App\Models\Social;
+use App\Forms\SocialForm as CreateForm;
 use App\Models\Profile;
+use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Forms\SocialForm as CreateForm;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Socialite;
 
 class SocialController extends Controller
 {

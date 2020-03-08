@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Models\PayMethod;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(PayMethod::class, function (Faker $faker) {
