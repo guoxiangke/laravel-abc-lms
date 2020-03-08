@@ -10,9 +10,9 @@ class BookForm extends Form
     public function buildForm()
     {
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'label' => 'Name',
-            ])
+            'rules' => 'required',
+            'label' => 'Name',
+        ])
             ->add('type', 'select', [
                 'label'       => '类型',
                 'rules'       => 'required',

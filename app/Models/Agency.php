@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\User;
 use App\Traits\HasSchemalessAttributes;
-use Laravelista\Comments\Commentable;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravelista\Comments\Commentable;
 
 class Agency extends Model
 {
@@ -14,15 +14,15 @@ class Agency extends Model
     use Commentable;
     use HasSchemalessAttributes;
     // todo 应用以下属性
-    const EXTRA_ATTRIBUTES = ['slogan','introduction','address','tel'];
+    const EXTRA_ATTRIBUTES = ['slogan', 'introduction', 'address', 'tel'];
     public $casts = [
         'extra_attributes' => 'array',
     ];
-    // logo 
+    // logo
     // todo 代理类型的应用！
     const TYPES = [
-        '个人代理',//银牌🥈
-        '机构代理',//金牌🏅️
+        '个人代理', //银牌🥈
+        '机构代理', //金牌🏅️
         //add  more
     ];
 

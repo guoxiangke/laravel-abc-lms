@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\User;
 use App\Traits\HasPriceField;
-use Laravelista\Comments\Commentable;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravelista\Comments\Commentable;
 
 class Bill extends Model
 {

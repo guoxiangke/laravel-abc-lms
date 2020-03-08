@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Models\Student;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class StudentPolicy
@@ -58,8 +58,8 @@ class StudentPolicy
      */
     public function update(User $user, Student $student)
     {
-        return $user->hasAnyPermission(['Update any Student']) 
-            || ($user->hasAnyPermission(['Update own Student'])  &&  $user->id == $student->creater_uid );
+        return $user->hasAnyPermission(['Update any Student'])
+            || ($user->hasAnyPermission(['Update own Student']) && $user->id == $student->creater_uid);
     }
 
     /**

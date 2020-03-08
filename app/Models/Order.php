@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasPriceField;
 use App\User;
 use Carbon\Carbon;
-use App\Traits\HasPriceField;
-use OwenIt\Auditing\Auditable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravelista\Comments\Commentable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Order extends Model implements AuditableContract

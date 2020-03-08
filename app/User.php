@@ -3,18 +3,18 @@
 namespace App;
 
 use App\Models\Agency;
+use App\Models\PayMethod;
+use App\Models\Profile;
 use App\Models\School;
 use App\Models\Social;
-use App\Models\Profile;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\PayMethod;
-use Laravelista\Comments\Commenter;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravelista\Comments\Commenter;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -92,15 +92,17 @@ class User extends Authenticatable implements HasMedia
         return $this->isRoot() || $this->hasAnyRole(self::ADMIN_ROLES);
     }
 
-    public function isOnlyHasOneRole() {
+    public function isOnlyHasOneRole()
+    {
         // get the names of the user's roles
         // $roles = $user->getRoleNames(); // Returns a collection
         return $this->getRoleNames()->count() === 1;
     }
 
     // 判断用户有且只有一个角色为student
-    public function isOnlyHasStudentRole(){
-        return $this->hasRole('student') &&  $this->isOnlyHasOneRole();
+    public function isOnlyHasStudentRole()
+    {
+        return $this->hasRole('student') && $this->isOnlyHasOneRole();
     }
 
     //姓名转pinyin和english

@@ -50,7 +50,6 @@ Route::get('/facebook/bind', 'FacebotController@bind')->middleware('auth')->name
 
 Route::resources(['socials' => 'SocialController']); //post need
 
-
 //后台配置
 Route::group(['prefix'=>'admin', 'middleware' => ['admin']], function () {
     Route::resource('voteTypes', 'VoteTypeController');

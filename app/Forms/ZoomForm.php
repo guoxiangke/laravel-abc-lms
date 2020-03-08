@@ -9,9 +9,9 @@ class ZoomForm extends Form
     public function buildForm()
     {
         $this->add('email', 'email', [
-                'rules' => 'required',
-                'label' => '登陆邮箱',
-            ])
+            'rules' => 'required',
+            'label' => '登陆邮箱',
+        ])
             ->add('password', 'text', [
                 'rules' => 'required',
                 'label' => '登陆密码',

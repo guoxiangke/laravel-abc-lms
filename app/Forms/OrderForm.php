@@ -2,15 +2,15 @@
 
 namespace App\Forms;
 
-use Carbon\Carbon;
+use App\Models\Agency;
 use App\Models\Book;
 use App\Models\Order;
-use App\Models\Agency;
 use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
-use Kris\LaravelFormBuilder\Form;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
+use Kris\LaravelFormBuilder\Form;
 
 class OrderForm extends Form
 {
@@ -21,10 +21,10 @@ class OrderForm extends Form
                     ->pluck('name', 'id')
                     ->toArray();
         $this->add('product_id', 'select', [
-                'label'   => 'Product',
-                'rules'   => 'required',
-                'choices' => $products,
-            ]);
+            'label'   => 'Product',
+            'rules'   => 'required',
+            'choices' => $products,
+        ]);
         $students = Student::getAllReference();
         $teachers = Teacher::getAllReference();
         $agencies = Agency::getAllReference();

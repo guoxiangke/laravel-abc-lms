@@ -21,10 +21,10 @@ class AgencyUpgradeForm extends Form
         $contact = $profile->contacts->first();
 
         $this->add('profile_name', 'static', [
-                'rules' => 'required',
-                'value' => $profile->name,
-                'label' => '姓名',
-            ])
+            'rules' => 'required',
+            'value' => $profile->name,
+            'label' => '姓名',
+        ])
             ->add('telephone', 'static', [
                 'rules' => 'required|min:11',
                 'value' => $profile->telephone,

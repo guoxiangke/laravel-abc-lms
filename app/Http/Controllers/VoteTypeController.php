@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\Edit\VoteTypeForm as EditForm;
+use App\Forms\VoteTypeForm as CreateForm;
 use App\Models\VoteType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\VoteTypeForm as CreateForm;
-use App\Forms\Edit\VoteTypeForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class VoteTypeController extends Controller

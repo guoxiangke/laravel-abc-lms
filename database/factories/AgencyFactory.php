@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Models\Agency;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Agency::class, function (Faker $faker) {

@@ -24,10 +24,10 @@ class AgencyForm extends Form
         $contact = $profile->contacts->first();
         $recommend = Agency::getAllReference();
         $this->add('profile_name', 'text', [
-                'rules' => 'required',
-                'value' => $profile->name,
-                'label' => '姓名',
-            ])
+            'rules' => 'required',
+            'value' => $profile->name,
+            'label' => '姓名',
+        ])
             ->add('telephone', 'tel', [
                 'label'      => '手机号',
                 'rules'      => 'required|size:14',

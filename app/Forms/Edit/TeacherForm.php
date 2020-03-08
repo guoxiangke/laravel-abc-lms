@@ -2,10 +2,10 @@
 
 namespace App\Forms\Edit;
 
-use App\Models\School;
 use App\Models\Contact;
-use App\Models\Teacher;
 use App\Models\PayMethod;
+use App\Models\School;
+use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
 
 class TeacherForm extends Form
@@ -29,11 +29,11 @@ class TeacherForm extends Form
         $recommend = Teacher::with(['user', 'user.profiles'])->get()->pluck('user.profiles.0.name', 'user_id')->toArray();
         // dd($teacher->active);
         $this->add('active', 'choice', [
-                'label' => '是否辞职',
-                'choices' => ['0' => '辞职', '1' => '在职'],
-                'selected' => $teacher->active,
-                'multiple' => false,
-            ])
+            'label' => '是否辞职',
+            'choices' => ['0' => '辞职', '1' => '在职'],
+            'selected' => $teacher->active,
+            'multiple' => false,
+        ])
             ->add('passion', 'choice', [
                 'label' => '有无激情',
                 'choices' => ['1' => '有', '0' => '无'],
@@ -84,10 +84,10 @@ class TeacherForm extends Form
                 'empty_value' => 'Freelancer/自由职业',
             ])
             ->add('recommend_uid', 'select', [
-                    'label'       => 'Referrer/推荐人',
-                    'choices'     => $recommend,
-                    'selected'    => $profile ? $profile->recommend_uid : null,
-                    'empty_value' => '=== Select ===',
+                'label'       => 'Referrer/推荐人',
+                'choices'     => $recommend,
+                'selected'    => $profile ? $profile->recommend_uid : null,
+                'empty_value' => '=== Select ===',
             ])
             ->add(
                 'price',

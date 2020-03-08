@@ -13,9 +13,9 @@ class VoteTypeForm extends Form
             $option[$class->classname] = $class->classname;
         }
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'label' => 'name',
-            ])
+            'rules' => 'required',
+            'label' => 'name',
+        ])
             ->add('description', 'text', [
                 'rules' => 'required',
                 'label' => 'description',

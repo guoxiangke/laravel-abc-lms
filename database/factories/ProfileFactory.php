@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Models\Profile;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Profile::class, function (Faker $faker) {

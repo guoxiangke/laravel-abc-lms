@@ -13,10 +13,10 @@ class ZoomForm extends Form
             return;
         }
         $this->add('email', 'email', [
-                'rules' => 'required',
-                'value' => $entity->email,
-                'label' => '登陆邮箱',
-            ])
+            'rules' => 'required',
+            'value' => $entity->email,
+            'label' => '登陆邮箱',
+        ])
             ->add('password', 'text', [
                 'rules' => 'required',
                 'value' => $entity->password,

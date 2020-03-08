@@ -2,8 +2,8 @@
 
 namespace App\Forms\Edit;
 
-use Kris\LaravelFormBuilder\Form;
 use App\Models\Rrule;
+use Kris\LaravelFormBuilder\Form;
 
 class RruleForm extends Form
 {
@@ -15,10 +15,10 @@ class RruleForm extends Form
         }
 
         $this->add('order', 'static', [
-                    'label' => '订单Id',
-                    'rules' => 'required',
-                    'value' => $rrule->order->title,
-            ])
+            'label' => '订单Id',
+            'rules' => 'required',
+            'value' => $rrule->order->title,
+        ])
             ->add('status', 'select', [
                 'label'    => '日期规则状态',
                 'rules'    => 'required',

@@ -43,11 +43,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'dump' => [
-               'dump_binary_path' => env('DB_DUMP_BIN_DIR', '/usr/local/bin/'), //todo only the path, so without `mysqldump` or `pg_dump`
-               'use_single_transaction',
-               'timeout' => 60 * 5, // 5 minute timeout
-               'exclude_tables' => ['table1', 'table2'],
-               'add_extra_option' => '--extended-insert=FALSE --complete-insert=TRUE',
+                'dump_binary_path' => env('DB_DUMP_BIN_DIR', '/usr/local/bin/'), //todo only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+                'exclude_tables' => ['table1', 'table2'],
+                'add_extra_option' => '--extended-insert=FALSE --complete-insert=TRUE',
             ],
 
             'host' => env('DB_HOST', '127.0.0.1'),

@@ -2,11 +2,10 @@
 
 namespace App\Forms\Register;
 
-use App\User;
 use App\Models\Student;
-use Kris\LaravelFormBuilder\Form;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Kris\LaravelFormBuilder\Form;
 
 class StudentRegisterForm extends Form
 {
@@ -65,19 +64,19 @@ class StudentRegisterForm extends Form
                 $recommendUid = $profile->recommend_uid;
                 if ($recommendUid === 1) {
                     $this->add('recommend_telephone', 'tel', [
-                            'label'      => '推荐人手机号',
-                            'help_block' => [
-                                'text' => '若无，可以留空',
-                                'tag'  => 'small',
-                                'attr' => ['class' => 'form-text text-muted'],
-                            ],
-                        ]);
+                        'label'      => '推荐人手机号',
+                        'help_block' => [
+                            'text' => '若无，可以留空',
+                            'tag'  => 'small',
+                            'attr' => ['class' => 'form-text text-muted'],
+                        ],
+                    ]);
                 }
             }
         }
         $this->add('submit', 'submit', [
-                'label' => 'Save',
-                'attr'  => ['class' => 'btn btn-outline-primary'],
-            ]);
+            'label' => 'Save',
+            'attr'  => ['class' => 'btn btn-outline-primary'],
+        ]);
     }
 }

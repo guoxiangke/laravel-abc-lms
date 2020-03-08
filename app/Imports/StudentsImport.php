@@ -2,13 +2,13 @@
 
 namespace App\Imports;
 
-use App\User;
 use App\Models\Contact;
 use App\Models\Profile;
 use App\Models\Student;
-use Illuminate\Support\Str;
+use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

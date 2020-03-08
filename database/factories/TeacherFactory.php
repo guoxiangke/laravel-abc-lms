@@ -1,9 +1,9 @@
 <?php
 
-use App\User;
-use App\Models\Zoom;
 use App\Models\School;
 use App\Models\Teacher;
+use App\Models\Zoom;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Teacher::class, function (Faker $faker) {

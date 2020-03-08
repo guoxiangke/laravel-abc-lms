@@ -2,9 +2,9 @@
 
 namespace App\Forms;
 
-use App\User;
 use App\Models\Book;
 use App\Models\Student;
+use App\User;
 use Kris\LaravelFormBuilder\Form;
 
 class StudentForm extends Form
@@ -14,9 +14,9 @@ class StudentForm extends Form
         // 包括代理/学生 + laoshi
         $recommend = User::getAllReference();
         $this->add('profile_name', 'text', [
-                'rules' => 'required',
-                'label' => '姓名',
-            ])
+            'rules' => 'required',
+            'label' => '姓名',
+        ])
             ->add('profile_sex', 'select', [
                 'label'       => '性别',
                 'rules'       => 'required',

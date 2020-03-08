@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\Edit\SchoolForm as EditForm;
+use App\Forms\SchoolForm as CreateForm;
+use App\Models\Contact;
+use App\Models\PayMethod;
+use App\Models\Profile;
+use App\Models\School;
 use App\User;
 use Carbon\Carbon;
-use App\Models\School;
-use App\Models\Contact;
-use App\Models\Profile;
-use App\Models\PayMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Forms\SchoolForm as CreateForm;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Kris\LaravelFormBuilder\FormBuilder;
-use App\Forms\Edit\SchoolForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class SchoolController extends Controller

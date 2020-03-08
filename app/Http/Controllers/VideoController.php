@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Upyun\Upyun;
-use App\Models\Video;
-use App\Models\ClassRecord;
-use Illuminate\Http\Request;
-use Upyun\Config as UpyunConfig;
-use Illuminate\Support\Facades\Auth;
 use App\Forms\VideoForm as CreateForm;
+use App\Models\ClassRecord;
+use App\Models\Video;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Upyun\Config as UpyunConfig;
+use Upyun\Upyun;
 
 class VideoController extends Controller
 {
@@ -27,7 +27,7 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cut(ClassRecord  $classRecord)
+    public function cut(ClassRecord $classRecord)
     {
         //授权与 ClassRecordPolicy@cut 有关！
         $this->authorize('cut', $classRecord);
@@ -49,7 +49,7 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClassRecord  $classRecord, Request $request, FormBuilder $formBuilder)
+    public function store(ClassRecord $classRecord, Request $request, FormBuilder $formBuilder)
     {
         $this->authorize('cut', $classRecord);
         $form = $formBuilder->create(CreateForm::class);

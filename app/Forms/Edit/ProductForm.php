@@ -13,10 +13,10 @@ class ProductForm extends Form
             return;
         }
         $this->add('name', 'text', [
-                'rules' => 'required',
-                'value' => $product->name,
-                'label' => 'Name',
-            ])
+            'rules' => 'required',
+            'value' => $product->name,
+            'label' => 'Name',
+        ])
             ->add('price', 'text', [
                 'rules' => 'required',
                 'value' => $product->price,

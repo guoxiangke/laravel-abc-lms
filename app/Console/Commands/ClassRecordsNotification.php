@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
-use App\Models\Social;
 use App\Models\ClassRecord;
-use Illuminate\Console\Command;
-use App\Notifications\ClassRecordNotifyByWechat;
+use App\Models\Social;
 use App\Notifications\ClassRecordNotifyByMessenger;
+use App\Notifications\ClassRecordNotifyByWechat;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class ClassRecordsNotification extends Command
 {
