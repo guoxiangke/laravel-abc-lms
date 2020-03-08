@@ -6,10 +6,10 @@ finder:
   not-name:
     - index.php
     - server.php
+    - "*.blade.php"
   exclude:
     - modules
     - node_modules
     - storage
     - vendor
   name: "*.php"
-  not-name: "*.blade.php"
