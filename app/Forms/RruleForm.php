@@ -2,6 +2,7 @@
 
 namespace App\Forms;
 
+use Carbon\Carbon;
 use Kris\LaravelFormBuilder\Form;
 
 class RruleForm extends Form
@@ -9,6 +10,8 @@ class RruleForm extends Form
     public function buildForm()
     {
         $order = $this->getData('entity');
+        $now = Carbon::now();
+        $rrule = 'DTSTART:'.$now->format('Ym??')."T??0000Z\nRRULE:FREQ=DAILY;COUNT=?;INTERVAL=1;WKST=MO;BYDAY=MO,TU,WE,TH,FR,SA,SU";
         if ($order) {
             $this->add('order_id', 'hidden', [
                 'label' => $order->title,
@@ -35,6 +38,7 @@ class RruleForm extends Form
             ->add('string', 'textarea', [
                 'label' => '计划',
                 'rules' => 'required',
+                'value' => $rrule,
                 'attr'  => [
                     'rows'        => 3,
                     'placeholder' => "DTSTART:20190330T180000Z\nRRULE:FREQ=DAILY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU",

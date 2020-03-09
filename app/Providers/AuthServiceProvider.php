@@ -2,23 +2,25 @@
 
 namespace App\Providers;
 
-use App\Models\Agency;
-use App\Models\ClassRecord;
 use App\Models\Order;
-use App\Models\Profile;
+use App\Models\Rrule;
+use App\Models\Video;
+use App\Models\Agency;
 use App\Models\Social;
+use App\Models\Profile;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\Video;
-use App\Policies\AgencyPolicy;
-use App\Policies\ClassRecordPolicy;
+use App\Models\ClassRecord;
 use App\Policies\OrderPolicy;
+use App\Policies\RrulePolicy;
+use App\Policies\VideoPolicy;
+use App\Policies\AgencyPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\StudentPolicy;
 use App\Policies\TeacherPolicy;
-use App\Policies\VideoPolicy;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Policies\ClassRecordPolicy;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         Profile::class     => ProfilePolicy::class,
         Video::class     => VideoPolicy::class,
         Order::class     => OrderPolicy::class,
+        Rrule::class      => RrulePolicy::class,
     ];
 
     /**

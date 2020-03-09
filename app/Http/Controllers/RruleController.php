@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Forms\Edit\RruleForm as EditForm;
-use App\Forms\RruleForm as CreateForm;
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Rrule;
-use Carbon\Carbon;
-// use App\Repositories\RruleRepository;
 use Illuminate\Http\Request;
+use App\Forms\RruleForm as CreateForm;
+// use App\Repositories\RruleRepository;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\RruleForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class RruleController extends Controller
@@ -25,7 +25,7 @@ class RruleController extends Controller
     public function __construct()
     {
         // $this->repository = $repository;
-        $this->middleware(['admin']);
+        // $this->middleware(['admin']);
     }
 
     /**
@@ -38,6 +38,7 @@ class RruleController extends Controller
         // $limit = 10;
         // $columns = ['*'];
         // $rrules = $this->repository->paginate($limit, $columns);
+        $this->authorize('viewAny', Rrule::class);
         $rrules = Rrule::with(
             'order',
             'order.user',
@@ -60,6 +61,7 @@ class RruleController extends Controller
      */
     public function create(Order $order)
     {
+        $this->authorize('create', Rrule::class);
         $form = $this->form(CreateForm::class, [
             'method' => 'POST',
             'url'    => action('RruleController@store'),
@@ -76,6 +78,7 @@ class RruleController extends Controller
      */
     public function store(Request $request, FormBuilder $formBuilder)
     {
+        $this->authorize('create', Rrule::class);
         $form = $formBuilder->create(CreateForm::class);
 
         if (! $form->isValid()) {
@@ -119,6 +122,7 @@ class RruleController extends Controller
      */
     public function edit(Rrule $rrule)
     {
+        $this->authorize('update', $rrule);
         $form = $this->form(
             EditForm::class,
             [
@@ -140,6 +144,7 @@ class RruleController extends Controller
      */
     public function update(Request $request, Rrule $rrule, FormBuilder $formBuilder)
     {
+        $this->authorize('update', $rrule);
         $form = $this->form(EditForm::class);
         // dd($rrule->toArray(),$form->isValid(),$form->getErrors());
         if (! $form->isValid()) {
