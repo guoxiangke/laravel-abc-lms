@@ -5,15 +5,15 @@
 namespace App\Models;
 
 use App\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
-use Laravelista\Comments\Commentable;
 use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Laravelista\Comments\Commentable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class ClassRecord extends Model implements AuditableContract, HasMedia
 {
@@ -28,7 +28,7 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         'do' => 'https://dxjy.sfo2.cdn.digitaloceanspaces.com',
         'upyun' => 'https://upcdn.do.abc-chinaedu.com',
         'updxyy' => 'http://updxyy.test.upcdn.net',
-        'onedrive' => '',
+        'onedrive' => 'https://1drivedo.daxiangyingyu.com/do',
     ];
 
     public function registerMediaCollections()
@@ -42,12 +42,14 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
             ->singleFile();
     }
 
+    // 假期 ==》 老师假期
+    // 请假-  == 老师异常标记
     const EXCEPTION_TYPES = [
         '正常', //0
         '请假', //1 //学生请假
-        '老师请假', //2
+        '假期', //2
         '旷课', //3 学生旷课
-        '老师异常标记', //老师异常,不给老师算课时，需要给学生补课 4
+        '请假-', //老师异常标记 老师异常,不给老师算课时，需要给学生补课 4
     ];
 
     const EXCEPTION_TYPES_EN = [

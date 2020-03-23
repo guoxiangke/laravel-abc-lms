@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Forms\ClassGenForm as GenForm;
-use App\Forms\Edit\ClassRecordForm as EditForm;
-use App\Jobs\ClassRecordsGenerateQueue;
-use App\Models\Agency;
-use App\Models\ClassRecord;
-use App\Models\Order;
-// use App\Forms\ClassRecordForm as CreateForm;
-use App\Models\Student;
-use App\Models\Teacher;
-use App\Models\Vote;
-use App\Models\VoteType;
-use App\Notifications\ClassRecordNotifyByMessenger;
-use App\Notifications\ClassRecordNotifyBySms;
 use App\User;
 use Carbon\Carbon;
+use App\Models\Vote;
+use App\Models\Order;
+use App\Models\Agency;
+use App\Models\Student;
+// use App\Forms\ClassRecordForm as CreateForm;
+use App\Models\Teacher;
+use App\Models\VoteType;
+use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Forms\ClassGenForm as GenForm;
+use App\Jobs\ClassRecordsGenerateQueue;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use App\Notifications\ClassRecordNotifyBySms;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\Edit\ClassRecordForm as EditForm;
+use App\Notifications\ClassRecordNotifyByMessenger;
 
 class ClassRecordController extends Controller
 {
@@ -138,11 +139,17 @@ class ClassRecordController extends Controller
             ->orderBy('generated_at', 'desc')
             ->where($allowRolesMap[$role], $user->id);
             //只让学生看好看的！！！
-            if ($user->hasAnyRole(['student', 'agency'])) {
+
+            if ($user->hasAnyRole(['agency'])) {
+                $classRecords = $classRecords->whereIn('exception', [0, 1, 2, 3, 4]);
+            } elseif ($user->hasAnyRole(['student'])) {
                 //给学生看的状态[0,1,3]
                 $classRecords = $classRecords->whereIn('exception', [0, 1, 3]);
             }
-            $classRecords = $classRecords->paginate(50);
+            // 0,1,3 filter by exception
+            $classRecords = QueryBuilder::for($classRecords)
+                ->allowedFilters(['exception'])
+                ->paginate(100);
             break; //按上下↕️顺序找到第一个角色的即可返回
         }
 
@@ -183,8 +190,11 @@ class ClassRecordController extends Controller
             'user.profiles',
                 )
             ->where('user_id', $user->id)
-            ->orderBy('generated_at', 'desc')
-            ->paginate(50);
+            ->orderBy('generated_at', 'desc');
+
+        $classRecords = QueryBuilder::for($classRecords)
+            ->allowedFilters(['exception'])
+            ->paginate(100);
 
         return view('classRecords.index4agency', compact('classRecords', 'user'));
     }
@@ -276,8 +286,11 @@ class ClassRecordController extends Controller
             'teacher.profiles',
             )
             ->where('agency_uid', $agency->user_id)
-            ->orderBy('generated_at', 'desc')
-            ->paginate(50);
+            ->orderBy('generated_at', 'desc');
+
+        $classRecords = QueryBuilder::for($classRecords)
+            ->allowedFilters(['exception'])
+            ->paginate(100);
         // 1-5号显示上个月的统计
         // 5-30/31显示本月统计
         $counts = [];

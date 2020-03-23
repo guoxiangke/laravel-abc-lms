@@ -2,14 +2,14 @@
 
 namespace App\Forms\Edit;
 
-use App\Models\Agency;
 use App\Models\Book;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
-use Illuminate\Support\Facades\Auth;
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Facades\Auth;
 
 class OrderForm extends Form
 {
@@ -47,7 +47,6 @@ class OrderForm extends Form
         $user = Auth::user();
         if ($user->can('Update any Order')) {
             $this->add('price', 'text', [
-                'rules' => 'required',
                 'label' => 'Price',
                 'value' => $order->price,
                 'attr'  => ['placeholder' => '成交价,单位元,可带2为小数'],

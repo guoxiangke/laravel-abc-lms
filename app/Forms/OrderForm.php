@@ -2,15 +2,15 @@
 
 namespace App\Forms;
 
-use App\Models\Agency;
+use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\Order;
+use App\Models\Agency;
 use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
 use Kris\LaravelFormBuilder\Form;
+use Illuminate\Support\Facades\Input;
 
 class OrderForm extends Form
 {
@@ -32,7 +32,7 @@ class OrderForm extends Form
         $input = Input::all();
 
         $studentUid = null;
-        $price = null;
+        $price = 0;
         $period = null;
         $expiredAt = null;
         $agencyUid = null;
@@ -80,7 +80,6 @@ class OrderForm extends Form
                 'empty_value' => '=== Select ===',
             ])
             ->add('price', 'text', [
-                'rules' => 'required',
                 'label' => 'Price',
                 'value' => $price,
                 'attr'  => ['placeholder' => '成交价,单位元,可带2为小数'],

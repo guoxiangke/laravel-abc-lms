@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Forms\Edit\OrderForm as EditForm;
-use App\Forms\OrderForm as CreateForm;
-use App\Models\ClassRecord;
+use App\User;
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Rrule;
 use App\Models\Student;
-use App\User;
-use Carbon\Carbon;
+use App\Models\ClassRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Forms\OrderForm as CreateForm;
 use Illuminate\Support\Facades\Session;
 use Kris\LaravelFormBuilder\FormBuilder;
+use App\Forms\Edit\OrderForm as EditForm;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class OrderController extends Controller
 {
@@ -137,9 +137,9 @@ class OrderController extends Controller
     public function store(Request $request, FormBuilder $formBuilder)
     {
         $this->authorize('create', Order::class);
-        $this->validate($request, [
-            'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
-        ]);
+        // $this->validate($request, [
+        //     'price'=> 'required|regex:/^\d*(\.\d{1,})?$/',
+        // ]);
         $form = $formBuilder->create(CreateForm::class);
 
         if (! $form->isValid()) {
