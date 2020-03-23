@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('Home'))
 
 @section('content')
     @hasanyrole('manager|admin')
-        @include('home4admin')      
+        @include('dashboard.admin')      
     @else
-        @include('home4user')    
+    	@include('dashboard.user')
     @endrole
 @endsection

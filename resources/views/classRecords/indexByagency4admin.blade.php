@@ -1,12 +1,28 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', __('ClassRecords'))
 
 @section('content')
 <div class="container">
   <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-fw fa-book-reader"></i> {{__('ClassRecords')}}</h1>
-  <br>
-  
+  <div class="show-links">
+      @php
+      $filters = Request::get('filter');
+      $exception = -1;
+      if(isset($filters['exception'])){
+        $exception = $filters['exception'];
+        if($exception == 0) {
+          $exception = -2;
+        }
+      }
+      @endphp
+      <a href="{{ url()->current() }}" class="btn btn-{{$exception==-1?'':'outline-'}}primary mt-1 text-capitalize">ALL</a>
+      <a href="{{ url()->current() }}?filter[exception]=0" class="btn btn-{{$exception==-2?'':'outline-'}}primary mt-1 text-capitalize">正常</a>
+      <a href="{{ url()->current() }}?filter[exception]=3" class="btn btn-{{$exception==3?'':'outline-'}}primary mt-1 text-capitalize">旷课</a>
+      <a href="{{ url()->current() }}?filter[exception]=1,2,4" class="btn btn-{{$exception==1?'':'outline-'}}primary mt-1 text-capitalize">请假</a>
+      <button class="btn btn-light">本页记录数量：{{count($classRecords)}}</button>
+    </div>
+
   <div class="col-md-12 col-sm-12 p-0">
       <div class="row mb-2">        
         <div class="col-xl-3 col-lg-6">
@@ -145,7 +161,7 @@
           </table>
         </div>
       </div>
-      {{ $classRecords->onEachSide(1)->links() }}
+      {{ $classRecords->onEachSide(1)->appends(request()->input())->links() }}
   </div>
 </div>
 @endsection

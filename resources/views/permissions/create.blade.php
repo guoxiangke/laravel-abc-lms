@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 
 @section('title', '| Create Permission')
 

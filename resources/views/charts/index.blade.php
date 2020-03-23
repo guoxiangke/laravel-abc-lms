@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('sb-admin2.app')
 @section('content')
 <div class="container">
     {!! $chart->container() !!}

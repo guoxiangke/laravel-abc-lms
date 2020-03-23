@@ -5,18 +5,27 @@
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-graduation-cap"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }} <sup>2</sup></div>
+    <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }}</div>
   </a>
 
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
+  <!-- Nav Item - Dashboard -->
+<li class="nav-item {{url()->current()==route('home')?'active':''}}">
+  <a class="nav-link" href="/home">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>{{__('Dashboard')}}</span>
+  </a>
+</li>
+
+
   @hasanyrole('agency|student|teacher')       
-    @include('sb-admin2/menu4user')
+    @include('sb-admin2/menu/user')
   @endrole
 
   @can('admin')
-    @include('sb-admin2/menu4admin')
+    @include('sb-admin2/menu/admin')
   @endcan
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

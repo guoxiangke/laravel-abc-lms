@@ -1,10 +1,3 @@
-<li class="nav-item {{url()->current()==route('home')?'active':''}}">
-  <a class="nav-link" href="/home">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
-    <span>{{__('Dashboard')}}</span>
-  </a>
-</li>
-
 @env(['production','local'])
 <li class="nav-item {{url()->current()==route('orders.index')?'active':''}}">
   <a class="nav-link" href="{{ route('orders.index') }}">
@@ -59,25 +52,6 @@
   </a>
 </li>
 
-<!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item">
-  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-    <i class="fas fa-fw fa-table"></i>
-    <span>订单列表</span>
-  </a>
-  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-    <div class="bg-white py-2 collapse-inner rounded">
-      <h6 class="collapse-header">订单相关操作:</h6>
-      @foreach(App\Models\Order::LIST_BY as $item)
-        @php
-          $route = "orders.{$item}";
-          $isActive = url()->current() == route($route);
-        @endphp
-        <a class="collapse-item" href="{{ route($route) }}"><i class="fas fa-fw fa-table"></i> {{ $item }}</a>
-      @endforeach
-    </div>
-  </div>
-</li>
 <!-- Nav Item - Dashboard -->
 <li class="nav-item {{url()->current()==route('bills.index')?'active':''}}">
   <a class="nav-link" href="{{ route('bills.index') }}">
@@ -103,8 +77,8 @@
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="/agencies">{{__('Agency')}}</a>
-      <a class="collapse-item" href="/schools">{{__('Schools')}}</a>
       <a class="collapse-item" href="/students">{{__('Students')}}</a>
+      <a class="collapse-item" href="/schools">{{__('Schools')}}</a>
     </div>
   </div>
 </li>
