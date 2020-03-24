@@ -5,7 +5,7 @@
 namespace App\Models;
 
 use App\User;
-use OwenIt\Auditing\Auditable;
+
 use Illuminate\Support\Facades\Auth;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
@@ -14,13 +14,18 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class ClassRecord extends Model implements AuditableContract, HasMedia
+class ClassRecord extends Model implements HasMedia
 {
     use Notifiable;
     use SoftDeletes;
-    use Auditable;
+    
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
+
     use Commentable;
     use HasMediaTrait;
 

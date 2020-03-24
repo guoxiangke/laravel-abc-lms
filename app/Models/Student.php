@@ -6,13 +6,16 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravelista\Comments\Commentable;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class Student extends Model implements AuditableContract
+
+class Student extends Model
 {
     use SoftDeletes;
-    use Auditable;
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
     use Commentable;
 
     protected $fillable = [

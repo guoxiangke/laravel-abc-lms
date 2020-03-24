@@ -5,13 +5,17 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class Rrule extends Model implements AuditableContract
+
+class Rrule extends Model
 {
     use SoftDeletes;
-    use Auditable;
+    
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'start_at'];
 

@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class Zoom extends Model implements AuditableContract
+
+class Zoom extends Model
 {
     use SoftDeletes;
-    use Auditable;
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
     protected $fillable = [
         'email',
         'password',

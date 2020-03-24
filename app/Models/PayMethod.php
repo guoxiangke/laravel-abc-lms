@@ -5,13 +5,17 @@ namespace App\Models;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class PayMethod extends Model implements AuditableContract
+
+class PayMethod extends Model
 {
     use SoftDeletes;
-    use Auditable;
+    
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
 
     const TYPES = [
         'PayPal',

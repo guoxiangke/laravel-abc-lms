@@ -10,13 +10,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Laravelista\Comments\Commentable;
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class Order extends Model implements AuditableContract
+
+class Order extends Model
 {
     use SoftDeletes;
-    use Auditable;
+    
+    use LogsActivity;
+    protected static $logAttributes = ['*'];
+    protected static $logAttributesToIgnore = [ 'none'];
+    protected static $logOnlyDirty = true;
+
     use HasPriceField;
     use Commentable;
     const LIST_BY = ['index', 'trail', 'demo', 'training', 'overdue', 'pause', 'done', 'trash', 'all'];
