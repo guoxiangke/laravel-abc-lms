@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\User;
 use OwenIt\Auditing\Auditable;
+use Illuminate\Support\Facades\Auth;
 use Laravelista\Comments\Commentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -179,6 +180,33 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         return $this->belongsTo(Rrule::class);
     }
 
+    public function getCdnAttribute()
+    {
+        $user = Auth::user();
+        $cdn = 'upyun'; // 1个月内，且学生
+        if ($user) {
+            if ($user->isTeacher()) {
+                $cdn = 'do'; // 1个月内，且isTeacher
+            }
+        }
+        // 过期了！ 都用最慢的
+        if ($this->created_at->diffInDays(now()) > 30) {
+            $cdn = 'onedrive';
+        }
+
+        return $cdn;
+    }
+
+    public function getMp3LinkAttribute()
+    {
+        return self::CDN[$this->cdn].'/'.$this->mp3;
+    }
+
+    public function getMp4LinkAttribute()
+    {
+        return self::CDN[$this->cdn].'/'.$this->mp4;
+    }
+
     public function getMp3Attribute()
     {
         if ($firstMedia = $this->getFirstMedia('mp3')) {
@@ -191,16 +219,6 @@ class ClassRecord extends Model implements AuditableContract, HasMedia
         if ($firstMedia = $this->getFirstMedia('mp4')) {
             return $firstMedia->getPath();
         }
-    }
-
-    public function getMp3LinkByCdn($cdn = 'upyun')
-    {
-        return self::CDN[$cdn].'/'.$this->mp3;
-    }
-
-    public function getMp4LinkByCdn($cdn = 'upyun')
-    {
-        return self::CDN[$cdn].'/'.$this->mp4;
     }
 
     public function videos()

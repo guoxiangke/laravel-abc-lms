@@ -76,12 +76,7 @@
               <audio style="width:100%"
                 controls
                 controlsList="nodownload"
-
-                @role('teacher')
-                    src="{{$classRecord->getMp3LinkByCdn('do')}}">
-                @else
-                  src="{{$classRecord->getMp3LinkByCdn('upyun')}}">
-                @endrole
+                src="{{$classRecord->mp3_link}}">
                 preload="none"
                 Your browser does not support the <code>audio</code> element.
               </audio>
@@ -89,7 +84,7 @@
             @endhasanyrole
 
             @hasanyrole('student|agency')
-            <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.cdn.bcebos.com/nocors.html?url={{$classRecord->getMp3LinkByCdn('upyun')}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
+            <iframe id="video_top_audio" frameborder="0" width="100%" height="72px" src="https://waveplayer.cdn.bcebos.com/nocors.html?url={{$classRecord->mp3_link}}&tiny=0&auto=0&title={{__('Class Review')}}" allowfullscreen></iframe>
             @endhasanyrole
 
           @else
@@ -119,7 +114,7 @@
             @hasanyrole('manager|admin|student')
               <hr>
               课堂视频:
-              <a href="{{$classRecord->getMp4LinkByCdn('upyun')}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
+              <a href="{{$classRecord->mp4_link}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i>
               </a>（请使用电脑）
               <br>
               文件大小: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}
@@ -129,9 +124,7 @@
 
             @hasanyrole('manager|admin')
               <hr>
-              CN：{{$classRecord->getMp4LinkByCdn('upyun')}}
-              <br/>
-              EN：{{$classRecord->getMp4LinkByCdn('do')}}
+              LINK：{{$classRecord->mp4_link}}
             @endhasanyrole
             @hasanyrole('manager|admin|teacher')
             <br>
@@ -142,11 +135,7 @@
                   controls
                   preload="none"
                   controlsList="nodownload">
-                  @role('teacher')
-                    <source src="{{$classRecord->getMp4LinkByCdn('do')}}" type="video/mp4">
-                  @else
-                    <source src="{{$classRecord->getMp4LinkByCdn('upyun')}}" type="video/mp4">
-                  @endrole
+                  <source src="{{$classRecord->mp4_link}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -159,7 +148,7 @@
             @role('teacher')
               <hr>
               Video Info:
-                <a href="{{$classRecord->getMp4LinkByCdn('do')}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
+                <a href="{{$classRecord->mp4_link}}" download id="download" target="_blank"><i class="fas fa-video fa-1x btn " style="color:#3490DC;"></i></a>
                 <p>Video Size: {{$classRecord->getFirstMedia('mp4')->human_readable_size}}</p>
             @endrole
           @endif
