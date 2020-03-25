@@ -79,7 +79,7 @@ class ClassRecordController extends Controller
             GenForm::class,
             [
                 'method' => 'POST',
-                'url'    => action('ClassRecordController@generate', ['id' => $order->id]),
+                'url'    => action('ClassRecordController@generate', ['order' => $order]),
             ]
         );
 

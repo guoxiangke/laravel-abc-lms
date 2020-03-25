@@ -35,7 +35,7 @@ class VideoController extends Controller
             CreateForm::class,
             [
                 'method' => 'POST',
-                'url'    => action('VideoController@store', ['id'=>$classRecord->id]),
+                'url'    => action('VideoController@store', ['class_record'=>$classRecord]),
             ],
             ['entity' => $classRecord],
         );
