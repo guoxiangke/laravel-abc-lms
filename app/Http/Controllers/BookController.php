@@ -85,7 +85,7 @@ class BookController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('BookController@update', ['id'=>$book->id]),
+                'url'    => action('BookController@update', ['book'=>$book]),
             ],
             ['entity' => $book],
         );

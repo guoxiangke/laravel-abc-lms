@@ -80,7 +80,7 @@ class VoteTypeController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('VoteTypeController@update', ['id'=>$voteType->id]),
+                'url'    => action('VoteTypeController@update', ['voteType'=>$voteType]),
             ],
             ['entity' => $voteType],
         );

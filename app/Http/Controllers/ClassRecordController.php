@@ -399,7 +399,7 @@ class ClassRecordController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('ClassRecordController@update', ['id' => $classRecord->id]),
+                'url'    => action('ClassRecordController@update', ['classRecord' => $classRecord]),
             ],
             ['entity' => $classRecord],
         );

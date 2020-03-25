@@ -96,7 +96,7 @@ class ZoomController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('ZoomController@update', ['id'=>$zoom->id]),
+                'url'    => action('ZoomController@update', ['zoom'=>$zoom]),
             ],
             ['entity' => $zoom],
         );

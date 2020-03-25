@@ -109,7 +109,7 @@ class BillController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('BillController@update', ['id'=>$bill->id]),
+                'url'    => action('BillController@update', ['bill'=>$bill]),
             ],
             ['entity' => $bill],
         );

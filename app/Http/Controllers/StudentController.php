@@ -267,7 +267,7 @@ class StudentController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('StudentController@update', ['id'=>$student->id]),
+                'url'    => action('StudentController@update', ['student'=>$student]),
             ],
             ['entity' => $student],
         );

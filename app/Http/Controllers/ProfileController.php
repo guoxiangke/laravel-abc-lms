@@ -109,7 +109,7 @@ class ProfileController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('ProfileController@update', ['id'=>$profile->id]),
+                'url'    => action('ProfileController@update', ['profile'=>$profile]),
             ],
             ['entity' => $profile],
         );

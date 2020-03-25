@@ -154,7 +154,7 @@ class SchoolController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('SchoolController@update', ['id'=>$school->id]),
+                'url'    => action('SchoolController@update', ['school'=>$school]),
             ],
             ['entity' => $school],
         );

@@ -102,7 +102,7 @@ class ProductController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('ProductController@update', ['id'=>$product->id]),
+                'url'    => action('ProductController@update', ['product'=>$product]),
             ],
             ['entity' => $product],
         );

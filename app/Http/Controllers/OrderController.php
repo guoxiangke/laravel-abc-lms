@@ -269,7 +269,7 @@ class OrderController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('OrderController@update', ['id' => $order->id]),
+                'url'    => action('OrderController@update', ['order' => $order]),
             ],
             ['entity' => $order],
         );

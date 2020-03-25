@@ -228,7 +228,7 @@ class TeacherController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('TeacherController@update', ['id'=>$teacher->id]),
+                'url'    => action('TeacherController@update', ['teacher'=>$teacher]),
             ],
             ['entity' => $teacher],
         );

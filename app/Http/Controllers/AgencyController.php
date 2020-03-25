@@ -196,7 +196,7 @@ class AgencyController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('AgencyController@update', ['id'=>$agency->id]),
+                'url'    => action('AgencyController@update', ['agency'=>$agency]),
             ],
             ['entity' => $agency],
         );

@@ -127,7 +127,7 @@ class RruleController extends Controller
             EditForm::class,
             [
                 'method' => 'PUT',
-                'url'    => action('RruleController@update', ['id'=>$rrule->id]),
+                'url'    => action('RruleController@update', ['rrule'=>$rrule]),
             ],
             ['entity' => $rrule],
         );
