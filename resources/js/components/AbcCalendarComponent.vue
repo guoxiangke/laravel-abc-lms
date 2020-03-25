@@ -1,16 +1,13 @@
 <template>
         <div class="row">
             <div class="col-md-12">
-                <v-select :items="localesList" v-model="locale"></v-select>
                 <vue-cal
                     :disable-views="['years','year']"
                     default-view="month"
                     :events="events"
-                    :locale="locale"
                     :time-from="5 * 60" :time-to="24 * 60" :time-step="15"
                     events-on-month-view="short"
                     class="vuecal--full-height-delete"
-                    :no-event-overlaps="!overlapEvents"
                 >
                     <div slot="no-event">Nothing here 👌</div>
                 </vue-cal>

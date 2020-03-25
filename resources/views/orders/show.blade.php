@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container" id="app">
   <h1 class="h3 pb-2 text-gray-800"><i class="fas fa-calendar-alt"></i> {{$order->title}}</h1>
 
   <div class="show-links">

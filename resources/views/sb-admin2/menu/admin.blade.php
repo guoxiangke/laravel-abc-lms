@@ -5,6 +5,12 @@
     <span>订单列表</span>
   </a>
 </li>
+<li class="nav-item {{url()->current()==route('classRecords.index')?'active':''}}">
+  <a class="nav-link" href="{{ route('classRecords.index') }}">
+    <i class="fas fa-fw fa-book-reader"></i>
+    <span>课程记录</span>
+  </a>
+</li>
 <hr class="sidebar-divider">
 <!-- Heading -->
 <div class="sidebar-heading">
@@ -22,12 +28,6 @@
   <a class="nav-link" href="{{ route('students.index') }}">
     <i class="fas fa-fw fa-cart-plus"></i>
     <span>一键试听</span>
-  </a>
-</li>
-<li class="nav-item {{url()->current()==route('classRecords.index')?'active':''}}">
-  <a class="nav-link" href="{{ route('classRecords.index') }}">
-    <i class="fas fa-fw fa-book-reader"></i>
-    <span>课程记录</span>
   </a>
 </li>
 
