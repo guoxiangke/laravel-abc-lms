@@ -330,6 +330,11 @@ class TeacherController extends Controller
 
         //3. 中教必有 save payment
         if ($request->input('pay_number') || $request->input('pay_remark')) {
+            if ($request->has('pay_remark')) {
+               $this->validate($request, [
+                   'pay_number'=> 'required',
+               ]);
+            }
             if ($paymethod) {
                 $paymethod->fill([
                     // 'user_id' => $user->id,
