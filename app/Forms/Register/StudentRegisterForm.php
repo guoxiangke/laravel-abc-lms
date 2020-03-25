@@ -5,6 +5,7 @@ namespace App\Forms\Register;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\Form;
 
 class StudentRegisterForm extends Form
@@ -12,7 +13,7 @@ class StudentRegisterForm extends Form
     public function buildForm()
     {
         $userId = auth()->id();
-        $input = Input::all();
+        $input = $this->getRequest()->all();
         if (isset($input['user_id'])) {
             $userId = $input['user_id'];
         }

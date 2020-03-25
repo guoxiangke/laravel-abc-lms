@@ -10,7 +10,8 @@ use App\Models\Product;
 use App\Models\Student;
 use App\Models\Teacher;
 use Kris\LaravelFormBuilder\Form;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+
 
 class OrderForm extends Form
 {
@@ -29,7 +30,7 @@ class OrderForm extends Form
         $teachers = Teacher::getAllReference();
         $agencies = Agency::getAllReference();
         $books = Book::where('type', 1)->get()->pluck('name', 'id')->toArray();
-        $input = Input::all();
+        $input = $this->getRequest()->all();
 
         $studentUid = null;
         $price = 0;
