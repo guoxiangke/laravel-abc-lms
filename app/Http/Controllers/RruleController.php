@@ -40,12 +40,8 @@ class RruleController extends Controller
         // $rrules = $this->repository->paginate($limit, $columns);
         $this->authorize('viewAny', Rrule::class);
         $rrules = Rrule::with(
-            'order',
-            'order.user',
-            'order.user.profiles',
-            'order.teacher',
+            'order.student.profiles',
             'order.teacher.profiles',
-            'order.agency',
             'order.agency.profiles',
             )
             ->orderBy('id', 'desc')
