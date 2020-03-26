@@ -24,7 +24,7 @@
         @php
         switch ($rrule->status) {
             case 1:
-                $bg = 'bg-success';
+                $bg = 'bg-info';
                 break;
             case 0:
                 $bg = 'bg-warning';
@@ -44,10 +44,10 @@
                 break;
         }
         @endphp
-        <li class="list-group-item  border-primary {{$bg}}">规则状态: {{\App\Models\Rrule::STATUS[$rrule->status]}}</li>
-        <li class="list-group-item">规则时段: {{$rrule->start_at->format('Y.m.d')}} ～ {{$order->expired_at->format('Y.m.d')}}</li>
-        <li class="list-group-item">{{$type}}时间: {{$rrule->start_at->format('H:i')}}</li>
-        <li class="list-group-item">{{$type}}计划：{{$rrule->toText()}}
+        <li class="list-group-item  border-primary {{$bg}} text-white">规则状态: {{\App\Models\Rrule::STATUS[$rrule->status]}}</li>
+        <li class="list-group-item {{$bg}} text-white">规则时段: {{$rrule->start_at->format('Y.m.d')}} ～ {{$order->expired_at->format('Y.m.d')}}</li>
+        <li class="list-group-item {{$bg}} text-white">{{$type}}时间: {{$rrule->start_at->format('H:i')}}</li>
+        <li class="list-group-item {{$bg}} text-white">{{$type}}计划：{{$rrule->toText()}}
           <a href="{{route('rrules.edit', $rrule->id) }}" class="btn btn-sm btn-outline-danger">Edit</a>   
         </li>
       @endforeach
@@ -82,4 +82,12 @@
 
   <abc-calendar></abc-calendar>
 </div>
+@endsection
+
+@section('styles')
+<style>
+    .list-group-flush .list-group-item {
+      padding: .25rem 1.25rem;
+    }
+</style>
 @endsection

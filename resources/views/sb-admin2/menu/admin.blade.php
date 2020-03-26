@@ -1,14 +1,20 @@
-@env(['production','local'])
+<li class="nav-item {{url()->current()==route('teachers.index')?'active':''}}">
+  <a class="nav-link" href="{{ route('teachers.index') }}">
+    <i class="fas fa-fw fa-book-reader"></i>
+    <span>{{__('Teachers')}}</span>
+  </a>
+</li>
+
 <li class="nav-item {{url()->current()==route('orders.index')?'active':''}}">
   <a class="nav-link" href="{{ route('orders.index') }}">
     <i class="fas fa-fw fa-table"></i>
-    <span>订单列表</span>
+    <span>{{__('Orders')}}</span>
   </a>
 </li>
 <li class="nav-item {{url()->current()==route('classRecords.index')?'active':''}}">
   <a class="nav-link" href="{{ route('classRecords.index') }}">
     <i class="fas fa-fw fa-book-reader"></i>
-    <span>课程记录</span>
+    <span>{{__('ClassRecords')}}</span>
   </a>
 </li>
 <hr class="sidebar-divider">
@@ -31,9 +37,6 @@
   </a>
 </li>
 
-@endenv
-
-@env(['staging','local'])
 <!-- Divider -->
 <hr class="sidebar-divider">
 
@@ -60,13 +63,6 @@
   </a>
 </li>
 
-
-<li class="nav-item {{url()->current()==route('teachers.index')?'active':''}}">
-  <a class="nav-link" href="{{ route('teachers.index') }}">
-    <i class="fas fa-fw fa-book-reader"></i>
-    <span>Teachers</span>
-  </a>
-</li>
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
@@ -103,4 +99,3 @@
     </div>
   </div>
 </li>
-@endenv
