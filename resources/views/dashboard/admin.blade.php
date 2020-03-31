@@ -4,9 +4,6 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{__('Dashboard')}}</h1>
     <div class="">
-        <a href="http://123.206.80.254:9002/hooks/lms" target="_blank" class="btn-confirm d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">
-            <i class="fas fa-sync fa-sm text-white-50"></i> 数据同步
-        </a>
         <a href="/admin/genClass" class="btn-confirm d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">
             <i class="fas fa-fw fa-book-reader fa-sm text-white-50"></i> Generate
         </a>
