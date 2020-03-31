@@ -195,7 +195,7 @@ class ClassRecord extends Model implements HasMedia
             }
         }
         // 过期了！ 都用最慢的
-        if ($this->created_at->diffInDays(now()) > 30) {
+        if ($this->updated_at->diffInDays(now()) > 30) {
             $cdn = 'onedrive';
         }
 

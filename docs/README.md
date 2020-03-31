@@ -10,6 +10,8 @@
 	php -d memory_limit=-1 composer remove owen-it/laravel-auditing
 	Schema::drop('audits');
 
+	php -d memory_limit=-1 composer require league/flysystem-aws-s3-v3   --ignore-platform-reqs
+
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/oauth2-client": "^2.4",
 
