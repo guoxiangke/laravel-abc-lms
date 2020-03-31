@@ -40,6 +40,8 @@ services:
       VIRTUAL_HOST: ${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN}
       LETSENCRYPT_EMAIL: ${MAIL_USERNAME}
+    ports:
+      - "8005:80"
     networks:
       - overlay
       - backend

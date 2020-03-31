@@ -21,6 +21,7 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.3",
         "laravelista/comments": "^3.3",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "maatwebsite/excel": "^3.1",
         "mews/captcha": "^3.1",
         "mtvs/eloquent-hashids": "^1.1",
@@ -40,7 +41,6 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
-        "beyondcode/laravel-dump-server": "^1.0",
         "beyondcode/laravel-er-diagram-generator": "^1.1",
         "beyondcode/laravel-query-detector": "^1.0",
         "doctrine/dbal": "^2.9",
